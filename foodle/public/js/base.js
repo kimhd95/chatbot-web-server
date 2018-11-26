@@ -1,4 +1,4 @@
-const URL = 'http://devapifood.jellylab.io';
+const URL = 'http://devapifood.jellylab.io:6001';
 
 function sendReq(info) {
     if(!info.error){
