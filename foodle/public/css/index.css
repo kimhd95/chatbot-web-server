@@ -1,0 +1,13 @@
+.card {
+    border: none;
+    height: 100vh;
+    text-align: center;
+}
+
+.by-email, .by-email a {
+    color: #555555;
+}
+
+.by-email a {
+    text-decoration: none;
+}

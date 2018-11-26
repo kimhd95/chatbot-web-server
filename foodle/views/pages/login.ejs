@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="/css/login.css">
+    <title>푸들</title>
+</head>
+<body>
+    <div class="card">
+        <h6 class="card-header">
+            <a class="back-btn" href="/"><i class="fas fa-chevron-left"></i></a>
+            <span class="page-title">이메일로 로그인</span>
+        </h6>
+        <div id="login" class="card-body">
+            <form action="">
+                <input id="email" class="email" type="email" placeholder="이메일">
+                <input id="pw" class="pw" type="password" placeholder="비밀번호">
+                <button type="button" id="login-btn" class="btn login-btn">로그인</button>
+            </form>
+            <p class="help">
+                <span class="find-pw" data-toggle="modal" data-target="#findPw">비밀번호 찾기</span> 
+                &nbsp;&nbsp;|&nbsp;&nbsp; 
+                <span class="login-issue" data-toggle="modal" data-target="#loginIssue">로그인에 문제가 있나요?</span>
+            </p>
+            <!-- 비밀번호 찾기 -->
+            <div class="modal fade" id="findPw" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">비밀번호 재발급</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>가입하신 이메일 주소를 입력해주세요.</p>
+                            <input class="form-control" type="email" id="signedup-email" placeholder="가입한 이메일">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="reissue-pw">임시 비밀번호 발급</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 로그인 이슈 -->
+            <div class="modal fade" id="loginIssue" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">문의</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <p><span style="color: #ff7f8c; font-weight:600;">support@jellylab.io</span>로 문의 부탁드립니다!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <script src="/js/login.js"></script>
+</body>
+</html>

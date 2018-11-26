@@ -1,0 +1,93 @@
+/* 카드 */
+.card {
+    border: none;
+    text-align: center;
+    height: 100vh;
+}
+
+.card-header {
+    background-color: #ffffff;
+}
+
+.card-header .back-btn {
+    float: left;
+    cursor: pointer;
+    color: black;
+}
+
+.card-header .page-title {
+    margin-right: 16px;
+}
+
+/* 로그인 입력 폼 */
+input {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: none!important;
+    border-radius: 0;
+    border-bottom: 1px solid rgba(0,0,0,.15)!important;
+    font-size: 16px;
+}
+
+/* 로그인 버튼 */
+.login-btn {
+    width: 100%;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    color: #ffffff;
+    background-color: #ff7f8c;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    color: #ff7f8c;
+    background: #ffffff;
+    border: 1px solid #ff7f8c;
+}
+
+/* 헬프 */
+.help {
+    font-size: 14px;
+    color: #666666;
+}
+
+.help span {
+    cursor: pointer;
+}
+
+/* 모달 */
+#findPw .modal-body {
+    text-align: left;
+}
+
+#findPw .modal-body p {
+    font-size: 13px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+}
+
+#findPw .modal-body input {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: none!important;
+    border-radius: 0;
+    border: 1px solid rgba(0,0,0,.15)!important;
+    font-size: 14px;
+}
+
+#findPw .modal-footer {
+    justify-content: center;
+    padding: 12px;
+}
+
+#findPw .modal-footer:hover {
+    color: #ff7f8c;
+}
