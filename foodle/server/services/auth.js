@@ -34,10 +34,24 @@ function getLostIdPasswordPage (req, res){
   });
 }
 
+function getTermsPage (req, res) {
+	res.render('pages/terms.ejs', {
+		url: config.api_url
+	});
+}
+
+function getChatRoomPage (req, res) {
+	res.render('pages/chat.ejs', {
+		url: config.api_url
+	});
+}
+
 module.exports = {
 	getMainPage: getMainPage,
 	getLoginPage: getLoginPage,
 	getSignupPage: getSignupPage,
 	getLogout: getLogout,
-	getLostIdPasswordPage: getLostIdPasswordPage
+	getLostIdPasswordPage: getLostIdPasswordPage,
+	getTermsPage: getTermsPage,
+	getChatRoomPage: getChatRoomPage
 }
