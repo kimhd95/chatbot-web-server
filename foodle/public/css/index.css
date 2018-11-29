@@ -4,10 +4,43 @@
     text-align: center;
 }
 
+.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .by-email, .by-email a {
     color: #555555;
+    font-size: 14px;
 }
 
 .by-email a {
     text-decoration: none;
+}
+
+.social-login {
+    width: 80%;
+    margin: 5px 0;
+    height: 45px;
+    color: #ffffff;
+    border: transparent;
+}
+
+.naver-login {
+}
+
+.facebook-login {
+    /* width: 80%; */
+    height: 50px;
+}
+
+.google-login {
+    /* width: 80%; */
+    height: 50px;
+}
+
+img {
+    border-radius: 10px;
 }
