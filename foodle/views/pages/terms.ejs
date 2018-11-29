@@ -13,44 +13,21 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     
-    <link rel="stylesheet" href="/css/chat.css">
+    <link rel="stylesheet" href="/css/terms.css">
     <title>푸들</title>
 </head>
 <body>
-    <div id="chat-room">
-        <div class="card">
-            <div class="card-header">
-                <span>메뉴추천봇 <span style="color: #ff4747">밥푸들</span></span>
-                <button id="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
-            </div>
-            <div id="messages" class="card-body">
-                <div class="bot-message">
-                    <div class="message-info">
-                        <img class="image" src="/images/poodle.png" alt="고래이미지" style="width: 40px; height: 40px; border-radius: 50%;">
-                        <span class="name">밥푸들</span>
-                        <span class="time"></span>
-                    </div>
-                    <div class="message-text">
-                        안녕! 나는 결정장애를 치료해주는 음식결정 챗봇 푸들이야!
-                    </div>
-                    <br>
-                    <div class="message-button">
-                        <button type="button" class="get-started-button" id="get_started" name="button">시작하기</button>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer">
-              <form class="input-form" action="">
-                  <input id="m" class="form-control myText" type="text" placeholder="메시지를 입력하세요." disabled>
-                  <button class="input-button"><i class="fab fa-telegram-plane send"></i></button>
-              </form>
-            </div>
+    <div class="card">
+        <div class="card-header"></div>
+        <div id="terms-content" class="card-body">
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-secondary back">뒤로가기</button>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-    <script src="/js/base.js"></script>
-    <script src="/js/chat.js"></script>
+    <script src="/js/terms.js"></script>
 </body>
 </html>
