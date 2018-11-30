@@ -15,6 +15,7 @@
     "express": "^4.16.4",
     "http-errors": "~1.6.2",
     "https": "^1.0.0",
+    "moment": "^2.22.2",
     "morgan": "~1.9.0",
     "mysql": "^2.16.0",
     "nodemailer": "^4.7.0",
@@ -22,5 +23,8 @@
     "request": "^2.88.0",
     "serve-static": "^1.13.2",
     "socket.io": "^2.2.0"
-  }
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }

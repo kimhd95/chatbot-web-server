@@ -12,12 +12,16 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    
-    <link rel="stylesheet" href="/css/chat.css">
+    <link rel="stylesheet" href="/css/chat_style.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/css/jquery-ui.theme.min.css">
+
+    <!-- <link rel="stylesheet" href="/css/chat.css"> -->
     <title>푸들</title>
 </head>
 <body>
-    <div id="chat-room">
+    <!-- <div id="chat-room">
         <div class="card">
             <div class="card-header">
                 <span>메뉴추천봇 <span style="color: #ff4747">밥푸들</span></span>
@@ -46,11 +50,77 @@
               </form>
             </div>
         </div>
+    </div> -->
+    <div id="room-active-button" class="bounce animated">
+        <i class="fas fa-comments"></i>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <div id="chat-room" class="fadeInUp animated">
+        <div class="card">
+            <div class="card-header">
+                챗봇
+                <i class="fas fa-chevron-down room-down"></i>
+            </div>
+            <div id="messages" class="card-body">
+                <!-- <div class="bot-message">
+                    <div class="message-info">
+                        <img class="image" src="./whale.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
+                        <span class="name">푸들</span>
+                        <span class="time">오후 2:43</span>
+                    </div>
+                    <div class="message-text">
+                        bot message
+                    </div>
+                </div> -->
+                <div class="bot-message">
+                    <div class="message-info">
+                        <img class="image" src="/images/whale.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
+                        <span class="name">푸들</span>
+                        <span class="time">오후 2:43</span>
+                    </div>
+                    <div class="message-text">
+                        안녕! 나는 결정장애를 치료해주는 음식결정 챗봇 푸들이야!
+                    </div>
+                    <br>
+                    <div class="message-button">
+                        <button type="button" class="messaging-button" id="decide_menu" name="메뉴 고르기">메뉴 고르기</button>
+                        <button type="button" class="messaging-button" id="decide_place" name="중간지점 찾기(서울)">중간지점 찾기(서울)</button>
+                        <button type="button" class="messaging-button" id="decide_history" name="기록 보기">기록 보기</button>
+                        <button type="button" class="messaging-button" id="user_feedback" name="개발팀에게 피드백하기">개발팀에게 피드백하기</button>
+                        <button type="button" class="messaging-button" id="chitchat" name="푸들이랑 대화하기">푸들이랑 대화하기</button>
+
+                    </div>
+                </div>
+                <!-- <div class="user-message">
+                    <div class="message-info">
+                        <span class="time">오후 3:12</span>
+                    </div>
+                    <div class="message-text">
+                        user message
+                    </div>
+                </div> -->
+            </div>
+            <div class="card-footer">
+              <form class="input-form" action="">
+                  <input id="m" class="form-control myText ui-autocomplete-input" type="text" placeholder="메시지를 입력하세요." disabled>
+                  <button disabled class="input-button" id="input-button"><i class="fab fa-telegram-plane send"></i></button>
+              </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- <script src="https://code.jquery.com/jquery.js"></script> -->
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-    <script src="/js/base.js"></script>
-    <script src="/js/chat.js"></script>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- <script src="/js/base.js"></script> -->
+    <!-- <script src="/js/chat.js"></script> -->
+    <script src="/js/event.js"></script>
+    <script src="/js/main.js"></script>
+
 </body>
 </html>

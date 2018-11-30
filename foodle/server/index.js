@@ -9,20 +9,100 @@
 // Express 기본 모듈 불러오기
 const
 	express = require('express'),
-	path = require('path');
+	path = require('path'),
+	request = require('request'),
+	scenario_rule = require('../sockettest/flow/scenario_rule'),
+	info = require('../sockettest/info_update'),
+	info_update = new info();
 
 // Express 미들웨어 불러오기
 const
 	bodyParser = require('body-parser'),
 	cookieParser = require('cookie-parser'),
 	serveStatic = require('serve-static'),
-	morgan = require('morgan');
+	morgan = require('morgan'),
+	http = require('http');
 
 module.exports = function(){
 	let
 		server = express(),
 		create,
 		start;
+
+
+
+	let httpserver = http.createServer(server);
+	let io = require('socket.io').listen(httpserver);
+
+	io.on('connection', function(socket){
+		console.log(socket.id+' user connected');
+		info_update.profile.register(socket.id, function(err){
+			if(err){
+				console.log(err);
+				return err;
+			}else{
+				return;
+			}
+		});
+
+		socket.on('disconnect', function(){
+			console.log(socket.id + 'user disconnected');
+		});
+		socket.on('chat message', function(msg){
+			io.to(socket.id).emit('chat message_self', msg);
+			scenario_rule.scenario_rule(msg, socket);
+			// let info = {
+			//     method: 'POST',
+			//     headers: {'content-type' : 'application/json'},
+			//     url: 'http://jellynlp2-dev.ap-northeast-2.elasticbeanstalk.com/nlp/',
+			//     json: {
+			//         "content" : msg
+			//     },
+			// };
+			// request(info, function (error, response, body) {
+			//     let botMessage = '몰라';
+			//     botMessage = body;
+			//     io.to(socket.id).emit('chat message', botMessage);
+			//     console.log('message: ' + botMessage);
+			// });
+
+			// io.emit('chat message', msg);
+			// console.log('message: ' + msg);
+		});
+
+		socket.on('chat message button', function(msg){
+			io.to(socket.id).emit('chat message_self', msg);
+			let info = {
+					method: 'POST',
+					headers: {'content-type' : 'application/json'},
+					url: 'http://jellynlp2-dev.ap-northeast-2.elasticbeanstalk.com/nlp/',
+					json: {
+							"content" : msg
+					},
+			};
+			request(info, function (error, response, body) {
+					let botMessage = '몰라';
+					botMessage = body;
+					io.to(socket.id).emit('chat message button', botMessage, ['first', '버튼1'], ['second', '버튼2'], ['third', '버튼3']);
+					console.log('message: ' + botMessage);
+			});
+			// io.emit('chat message', msg);
+			// console.log('message: ' + msg);
+		});
+
+		socket.on('chat message button rule', function(msg, val){
+			io.to(socket.id).emit('chat message_self', msg);
+			// io.to(socket.id).emit('chat message button', buttonRule(val, user_id));
+			scenario_rule.scenario_rule(val, socket);
+			// io.emit('chat message', msg);
+			// console.log('message: ' + msg);
+		});
+
+	});
+
+	exports.sendSocketMessage = function(socket_id, message_type, message, ...args){
+		io.to(socket_id).emit(message_type, message, ...args);
+	};
 
 	create = function(config){
 		let routes = require('./routes');
@@ -97,7 +177,7 @@ module.exports = function(){
 			console.log("Express 서버 객체가 종료됩니다.");
 		});
 
-		server.listen(process.env.PORT || port, function () {
+		httpserver.listen(process.env.PORT || port, function () {
 			console.log('process.env.PORT || server.get(\'port\') || 3000: ' + (process.env.PORT || port) + '. Environment (server.get(env)): ' + server.get('env'));
 		});
 	};
