@@ -155,7 +155,7 @@ function signUpReq(email, password, nickname, gender, ageGroup) {
             if (res.success){
                 console.log("signUpReq: success!");
                 alert("회원가입이 성공적으로 완료되었습니다.");
-                location.href = '/';
+                location.href = '/login';
             }else {
                 console.log("signUpReq: fail!");
                 console.log(res);
@@ -185,6 +185,52 @@ function signUpReq(email, password, nickname, gender, ageGroup) {
 }
 
 $(document).ready(() => {
+    $.ajax('http://devapifood.jellylab.io:6001/api/v1/users/verify_token', {
+        method: 'POST',
+        data: null,
+        crossDomain: true,
+        redirect: 'follow',
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (res) {
+            if (res.success) {
+                console.log(res);
+                console.log('verifyToken success');
+                alert('이미 로그인되어 있습니다.');
+                window.location.replace(res.redirect);
+            } else {
+                console.log('verifyToken fail');
+                console.log(res);
+            }
+        },
+        error: function (e) {
+            console.log('ajax call error: login page - verifyToken');
+            if (e.status === 404 && e.responseText.includes("API call URL not found.")) {
+                console.log("check your URL, method(GET/POST)");
+            }else if(e.status === 403){
+                if (e.responseText.includes("No token provided.")) {
+                    console.log("No token, no problem.");
+                }
+                else if (e.responseText.includes("jwt malformed"))
+                    console.log("Malformed token");
+                else if (e.responseText.includes("invalid signature"))
+                    console.log("Modified token");
+                else console.log(e);
+            } else if(e.status === 0){
+                if(navigator.onLine){
+                    console.log('status : 0');
+                }else {
+                    console.log('internet disconnected');
+                    window.location.reload();
+                }
+            } else{
+                console.log('status: ' + e.status + ', message: ' + e.responseText);
+                console.log(e);
+            }
+        }
+    })
+
     $('.access-terms-chk').click(() => {
         if($('.terms input')[1].checked) {
             $('.terms input')[1].checked = false;
