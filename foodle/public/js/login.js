@@ -134,6 +134,7 @@ $(document).ready(() => {
             }
         }
     })
+    
     $('#login-btn').click(() => {
         loginValidationCheck();
     })
