@@ -132,6 +132,7 @@
 
 .terms-color {
     color: #ff7f8c;
+    text-decoration: underline;
     font-weight: 600;
 }
 
@@ -146,7 +147,6 @@ input[type=checkbox] + label {
     padding-left: 35px;
     font-size: 12px;
     line-height: 20px;
-    text-decoration: underline;
     text-decoration-color: rgba(0,0,0,.4);
     color: rgba(0,0,0,.5);
 }

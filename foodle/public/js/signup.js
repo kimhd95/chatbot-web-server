@@ -21,16 +21,11 @@ function agreeTerms(i) {
             $('.terms input')[1].checked = true;
             $('.terms input')[2].checked = true;
         }
-    } else {
-        if($('.terms input')[i].checked){
-            $('.terms input')[i].checked = false;
-            
-        } else {
-            $('.terms input')[i].checked = true;
-            if(i === 1) $('.access-terms').removeClass('access-terms');
-            else if(i === 2) $('.data-terms')[2].removeClass('data-terms');
-        }
-    } 
+    } else if(i === 1){
+        location.href= "/access-terms";
+    } else if(i === 2){
+        location.href= "/data-terms";
+    }
     autoAgree();
 }
 
@@ -142,10 +137,7 @@ function additionalInfoValidationCheck() {
         alert('연령대를 선택해주세요.');
         return;
     }
-    // if(confirm('정말 회원가입 하시겠습니까?')) {
-    //     alert('회원가입이 완료되었습니다.');
-    //     location.href = '/';
-    // }
+    signUpReq(email, password, nickname, gender, ageGroup);
 }
 
 function signUpReq(email, password, nickname, gender, ageGroup) {
@@ -163,7 +155,7 @@ function signUpReq(email, password, nickname, gender, ageGroup) {
             if (res.success){
                 console.log("signUpReq: success!");
                 alert("회원가입이 성공적으로 완료되었습니다.");
-                window.location.replace(window.location.origin);
+                location.href = '/';
             }else {
                 console.log("signUpReq: fail!");
                 console.log(res);
@@ -185,7 +177,6 @@ function signUpReq(email, password, nickname, gender, ageGroup) {
                 }
             } else {
                 console.log('status: ' + e.status + ', message: ' + e.responseText);
-                console.log(e);
             }
             alert("회원가입에 실패했습니다.");
         }
@@ -197,17 +188,18 @@ $(document).ready(() => {
     $('.access-terms-chk').click(() => {
         if($('.terms input')[1].checked) {
             $('.terms input')[1].checked = false;
-            $('#access-terms').removeClass('modal fade').addClass('modal fade access-terms');
-            $('#access-terms').on('show.bs.modal', () => {
-                $('#access-terms')[0].style.display = 'none';
-            })
+        } else {
+            $('.terms input')[1].checked = true;
         }
+        autoAgree();
     })
     $('.data-terms-chk').click(() => {
-        if($('.terms input')[1].checked) {
-            $('.terms input')[1].checked = false;
-            $('#data-terms').removeClass('modal fade').addClass('modal fade data-terms');
+        if($('.terms input')[2].checked) {
+            $('.terms input')[2].checked = false;
+        } else {
+            $('.terms input')[2].checked = true;
         }
+        autoAgree();
     })
     // 출생년도 초기화
     for(let i = 1950; i < new Date().getFullYear()+1; i++) {
@@ -239,7 +231,6 @@ $(document).ready(() => {
     // 가입 완료 터치
     $('.complete-btn').click(() => {
         additionalInfoValidationCheck();
-        signUpReq(email, password, nickname, gender, ageGroup);
     })
     // 패스워드 칠 때 마다 실행
     $('#password').keyup(() => {

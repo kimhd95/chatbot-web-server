@@ -1,0 +1,11 @@
+.card {
+    border: none;
+    height: 100vh;
+    text-align: center;
+}
+
+.card-body {
+    text-align: justify;
+    overflow: scroll;
+    font-size: 13px;
+}
