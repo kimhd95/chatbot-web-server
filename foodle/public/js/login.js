@@ -45,6 +45,36 @@ function reIssueValidationCheck() {
         alert('이메일 형식을 지켜주세요.');
         return;
     }
+    const info = {
+        url: "/api/v1/users/send_new_password",
+        method: "POST",
+        body: {
+            email: email
+        },
+        success: function (res) {
+            $.ajax({
+                url: '/sendNewPassword',
+                async: true,
+                type: 'POST',
+                data: {
+                    email: res[0],
+                    newPassword: res[1]
+                },
+                dataType: 'text',
+                success: function () {
+                    alert('이메일로 임시 비밀번호를 발송해드렸습니다.');
+                },
+                error: function () {
+                    alert('임시 비밀번호 발송 실패.');
+                }
+            });
+        },
+        error: function (e) {
+            console.log(e);
+            alert('임시 비밀번호 발송 실패.');
+        }
+    }
+    sendTokenReq(info);
 }
 
 function login () {
@@ -134,7 +164,7 @@ $(document).ready(() => {
             }
         }
     })
-    
+
     $('#login-btn').click(() => {
         loginValidationCheck();
     })
