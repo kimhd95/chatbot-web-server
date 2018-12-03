@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/chat_style.css">
+    <link rel="stylesheet" href="/css/chat.css">
     <link rel="stylesheet" href="/css/animate.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/css/jquery-ui.theme.min.css">
@@ -51,19 +51,16 @@
             </div>
         </div>
     </div> -->
-    <div id="room-active-button" class="bounce animated">
-        <i class="fas fa-comments"></i>
-    </div>
-    <div id="chat-room" class="fadeInUp animated">
+    <div id="chat-room">
         <div class="card">
             <div class="card-header">
-                챗봇
-                <i class="fas fa-chevron-down room-down"></i>
+                <span>메뉴추천봇 <span style="color: #ff4747">밥푸들</span></span>
+                <button id="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
             </div>
             <div id="messages" class="card-body">
                 <!-- <div class="bot-message">
                     <div class="message-info">
-                        <img class="image" src="./whale.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
+                        <img class="image" src="./poodle.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
                         <span class="name">푸들</span>
                         <span class="time">오후 2:43</span>
                     </div>
@@ -73,7 +70,7 @@
                 </div> -->
                 <div class="bot-message">
                     <div class="message-info">
-                        <img class="image" src="/images/whale.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
+                        <img class="image" src="/images/poodle.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
                         <span class="name">푸들</span>
                         <span class="time">오후 2:43</span>
                     </div>
@@ -87,7 +84,6 @@
                         <button type="button" class="messaging-button" id="decide_history" name="기록 보기">기록 보기</button>
                         <button type="button" class="messaging-button" id="user_feedback" name="개발팀에게 피드백하기">개발팀에게 피드백하기</button>
                         <button type="button" class="messaging-button" id="chitchat" name="푸들이랑 대화하기">푸들이랑 대화하기</button>
-
                     </div>
                 </div>
                 <!-- <div class="user-message">
@@ -117,10 +113,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 
     <script src="/socket.io/socket.io.js"></script>
-    <!-- <script src="/js/base.js"></script> -->
-    <!-- <script src="/js/chat.js"></script> -->
+    <script src="/js/base.js"></script>
     <script src="/js/event.js"></script>
-    <script src="/js/main.js"></script>
-
 </body>
 </html>
