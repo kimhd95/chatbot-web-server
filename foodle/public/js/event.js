@@ -14,7 +14,7 @@ function bot_messaging(message){
       }
   var message_info = `<div class="bot-message">
       <div class="message-info">
-          <img class="image" src="/images/whale.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
+          <img class="image" src="/images/poodle.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
           <span class="name">푸들</span>
           <span class="time">${date}</span>
       </div>
@@ -54,7 +54,7 @@ function bot_messaging_image(image){
       }
   var message_info = `<div class="bot-message">
       <div class="message-info">
-          <img class="image" src="/images/whale.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
+          <img class="image" src="/images/poodle.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
           <span class="name">푸들</span>
           <span class="time">${date}</span>
       </div>
@@ -89,7 +89,7 @@ function bot_messaging_image_carousel(image){
       }
   var message_info = `<div class="bot-message">
       <div class="message-info">
-          <img class="image" src="/images/whale.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
+          <img class="image" src="/images/poodle.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
           <span class="name">푸들</span>
           <span class="time">${date}</span>
       </div>
@@ -271,7 +271,42 @@ function bot_messaging_card_inner_no_image(res_name, res_type, food_name, naver_
       `;
   return(message_info);
 }
-
+function logout() {
+  const info = {
+      url: "/api/v1/users/logout",
+      method: "POST",
+      success: function (res) {
+          if (res.success) {
+              console.log('logout Request: success!');
+              alert('안전하게 로그아웃 되었습니다.');
+              window.location.replace(window.location.origin);
+          } else {
+              console.log('logout Request: fail!');
+              console.log(res);
+              recheckTokenExist("로그아웃");
+          }
+      },
+      error: function (e) {
+          console.log('ajax call error: dashboard - LgOutReq');
+          if(!navigator.onLine){
+              console.log("internet disconnected");
+              window.location.reload();
+          } else{
+              if (e.status === 404 && e.responseText.includes("API call URL not found.")) {
+                  console.log("check your URL, method(GET/POST)");
+                  alert("로그아웃에 실패했습니다.");
+              } else if(e.status===403 && e.responseText.includes("No token")){
+                  console.log('No token given');
+                  window.location.replace(window.location.origin);
+              } else {
+                  console.log("status: " + e.status+ ", message: " + e.responseText);
+                  recheckTokenExist("로그아웃");
+              }
+          }
+      }
+  };
+  sendTokenReq(info);
+}
 
 $(function () {
 
@@ -284,7 +319,7 @@ $(function () {
 // });
 
 
-$('.card-body').on('click', '.messaging-button', function(e) {
+  $('.card-body').on('click', '.messaging-button', function(e) {
      if($(e.target).attr('name') === '메뉴 고르기'){
        $('#m').autocomplete( "enable" );
      }else{
@@ -294,7 +329,7 @@ $('.card-body').on('click', '.messaging-button', function(e) {
      $(".messaging-button").hide();
   });
 
-$('.card-body').on('click', '.messaging-button-check', function(e) {
+  $('.card-body').on('click', '.messaging-button-check', function(e) {
      if($(e.target).attr('name') === '메뉴 고르기'){
        $('#m').autocomplete( "enable" );
      }else{
@@ -396,3 +431,42 @@ $('.card-body').on('click', '.messaging-button-check', function(e) {
         });
 
 });
+
+$(document).ready(() => {
+  let cache = {};
+
+  $('.card-body').on('click', '.arrow-right', function(){
+    $(this).siblings('.choice_carousel').animate({
+    scrollLeft: "+=150px"
+    }, 300);
+  });
+  
+  $('.card-body').on('click', '.arrow-left', function(){
+    $(this).siblings('.choice_carousel').animate({
+    scrollLeft: "-=150px"
+    }, 300);
+  });
+
+    $('#m').autocomplete({
+      source: function( request, response ) {
+        let term = request.term;
+        if ( term in cache ) {
+          response( cache[ term ] );
+          return;
+        }
+
+        $.getJSON( "http://devbotfood.jellylab.io:6001/api/v1/users/get_all_subway", request, function( data, status, xhr ) {
+          cache[ term ] = data;
+          response( data );
+        });
+      },
+      // source: 'http://devbotfood.jellylab.io:6001/api/v1/users/get_all_subway',
+      appendTo: ".card-footer",
+      autoFocus: false,
+      position: { my : "right bottom", at: "right top" },
+    });
+
+    $('#logout-btn').click(() => {
+      logout();
+    })
+})
