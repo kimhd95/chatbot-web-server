@@ -1,8 +1,8 @@
 /* jshint node: true, devel: true */
 'use strict';
 
-const info = require('../../info_update'),
-      index = require('../../../server/index.js'),
+const info = require('../../api/info_update'),
+      index = require('../../server/index'),
       info_update = new info();
 
 

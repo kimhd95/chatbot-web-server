@@ -1,8 +1,8 @@
 /* jshint node: true, devel: true */
 'use strict';
 
-const info = require('../../info_update'),
-      index = require('../../../server/index.js'),
+const info = require('../../api/info_update'),
+      index = require('../../server/index'),
       info_update = new info();
 
 class Toolbox {
@@ -16,7 +16,8 @@ class Toolbox {
           'decide_place': this.decide_place,
           'decide_history': this.decide_history,
           'user_feedback': this.user_feedback,
-          'chitchat': this.chitchat
+          'chitchat': this.chitchat,
+          'test': this.test
       };
       this.execute(key,value,socket,user_data);
 
@@ -127,7 +128,7 @@ class Toolbox {
           return;
         }
       });
-      index.sendSocketMessage(socket.id, 'chat message button', "맛집을 결정했던 기록을 볼 수 있어! 어떻게 보여줄까?",['선택 횟수별 기록 보기','선택 횟수별 기록 보기'],['지역별 기록 보기','지역별 기록 보기'],['이전 기록 보기/1','최근 기록 보기'],['get_started','돌아가기']);
+      index.sendSocketMessage(socket.id, 'chat message button', "맛집을 결정했던 기록을 볼 수 있어! 어떻게 보여줄까?",['history_by_count','선택 횟수별 기록 보기'],['history_by_subway','지역별 기록 보기'],['previous_history1','최근 기록 보기'],['get_started','돌아가기']);
     }
 
     user_feedback(value,socket,user_data){
@@ -143,7 +144,27 @@ class Toolbox {
     }
 
     chitchat(value,socket,user_data){
+      info_update.profile.update_state(socket.id, '5', 'chitchat', function (err) {
+          if(err){
+              console.log("에러 : " + err);
+              return err;
+          }else{
+          return;
+        }
+      });
+      index.sendSocketMessage(socket.id, 'chat message button', "ㅎㅇㅎㅇ");
+    }
 
+    test(value,socket,user_data){
+      info_update.profile.update_state(socket.id, '6', 'test', function (err) {
+          if(err){
+              console.log("에러 : " + err);
+              return err;
+          }else{
+          return;
+        }
+      });
+      index.sendSocketMessage(socket.id, 'chat message button', "체크박스테스트");
     }
 
 

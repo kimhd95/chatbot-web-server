@@ -1,8 +1,8 @@
 /* jshint node: true, devel: true */
 'use strict';
 
-const info = require('../../info_update'),
-      index = require('../../../server/index.js'),
+const info = require('../../api/info_update'),
+      index = require('../../server/index'),
       async = require('async'),
       moment = require('moment'),
 
@@ -31,6 +31,7 @@ class Decide_menu {
       this.strategies = {
           'exitnum': this.exitnum,
           'mood': this.mood,
+          'mood2': this.mood2,
           'before_decide': this.before_decide,
           'semi_final1': this.semi_final1,
           'semi_final2': this.semi_final2,
@@ -81,20 +82,28 @@ class Decide_menu {
                   }
                   return;
               });
-              if(value === '강남역'){
-                index.sendSocketMessage(socket.id, 'chat message button', value +' 몇 번 출구?',['gangnamexit/4','1,2,3,4번'],['gangnamexit/3','5,6,7,8번'],['gangnamexit/2','9,10번'],['gangnamexit/1','11,12번'],['gangnamexit/999','상관없어']);
-              }else if(value === '서울대입구역'){
-                index.sendSocketMessage(socket.id, 'chat message button', value +' 몇 번 출구?',['seoulunivexit/4','1,2번'],['seoulunivexit/3','3,4번'],['seoulunivexit/2','5,6번'],['seoulunivexit/1','7,8번'],['seoulunivexit/999','상관없어']);
-              }else if(value === '성수역'){
-                index.sendSocketMessage(socket.id, 'chat message button', value +' 몇 번 출구?',['seongsuexit/2','1번'],['seongsuexit/1','2번'],['seongsuexit/4','3번'],['seongsuexit/3','4번'],['seongsuexit/999','상관없어']);
-              }else if(value === '신사역'){
-                index.sendSocketMessage(socket.id, 'chat message button', value +' 몇 번 출구?',['sinsaexit/4','1,2,3번'],['sinsaexit/3','4번'],['sinsaexit/2','5번'],['sinsaexit/1','6,7,8(가로수길)번'],['sinsaexit/999','상관없어']);
-              }else if(value === '신촌역'){
-                index.sendSocketMessage(socket.id, 'chat message button', value +' 몇 번 출구?',['sinchonexit/2','1,2번'],['sinchonexit/1','3,4번'],['sinchonexit/4','5,6번'],['sinchonexit/3','7,8번'],['sinchonexit/999','상관없어']);
-              }else if(value === '서면역'){
-                index.sendSocketMessage(socket.id, 'chat message button', value +' 몇 번 출구?',['seomyeonexit/3','1,3,5,7번'],['seomyeonexit/4','2,4,6번'],['seomyeonexit/1','8,10,12번'],['seomyeonexit/2','9,11,13,15번'],['seomyeonexit/999','상관없어']);
-              }else if(value === '센텀시티역'){
-                index.sendSocketMessage(socket.id, 'chat message button', value +' 몇 번 출구?',['centumcityexit/4','1,3,5번'],['centumcityexit/1','2,4,6,8번'],['centumcityexit/3','7,9,11,13번'],['centumcityexit/2','10,12번'],['centumcityexit/999','상관없어']);
+              switch (value) {
+                case '강남역':
+                  index.sendSocketMessage(socket.id, 'chat message button', value +' 몇 번 출구?',['gangnamexit/4','1,2,3,4번'],['gangnamexit/3','5,6,7,8번'],['gangnamexit/2','9,10번'],['gangnamexit/1','11,12번'],['gangnamexit/999','상관없어']);
+                break;
+                case '서울대입구역':
+                  index.sendSocketMessage(socket.id, 'chat message button', value +' 몇 번 출구?',['seoulunivexit/4','1,2번'],['seoulunivexit/3','3,4번'],['seoulunivexit/2','5,6번'],['seoulunivexit/1','7,8번'],['seoulunivexit/999','상관없어']);
+                break;
+                case '성수역':
+                  index.sendSocketMessage(socket.id, 'chat message button', value +' 몇 번 출구?',['seongsuexit/2','1번'],['seongsuexit/1','2번'],['seongsuexit/4','3번'],['seongsuexit/3','4번'],['seongsuexit/999','상관없어']);
+                break;
+                case '신사역':
+                  index.sendSocketMessage(socket.id, 'chat message button', value +' 몇 번 출구?',['sinsaexit/4','1,2,3번'],['sinsaexit/3','4번'],['sinsaexit/2','5번'],['sinsaexit/1','6,7,8(가로수길)번'],['sinsaexit/999','상관없어']);
+                break;
+                case '신촌역':
+                  index.sendSocketMessage(socket.id, 'chat message button', value +' 몇 번 출구?',['sinchonexit/2','1,2번'],['sinchonexit/1','3,4번'],['sinchonexit/4','5,6번'],['sinchonexit/3','7,8번'],['sinchonexit/999','상관없어']);
+                break;
+                case '서면역':
+                  index.sendSocketMessage(socket.id, 'chat message button', value +' 몇 번 출구?',['seomyeonexit/3','1,3,5,7번'],['seomyeonexit/4','2,4,6번'],['seomyeonexit/1','8,10,12번'],['seomyeonexit/2','9,11,13,15번'],['seomyeonexit/999','상관없어']);
+                break;
+                case '센텀시티역':
+                  index.sendSocketMessage(socket.id, 'chat message button', value +' 몇 번 출구?',['centumcityexit/4','1,3,5번'],['centumcityexit/1','2,4,6,8번'],['centumcityexit/3','7,9,11,13번'],['centumcityexit/2','10,12번'],['centumcityexit/999','상관없어']);
+                break;
               }
             }else{
               index.sendSocketMessage(socket.id, 'chat message button', value+' 맛집을 아직 잘 모르겠어... 다시 선택해줘!');
@@ -130,6 +139,30 @@ class Decide_menu {
 
       //예전 버젼
       // index.sendSocketMessage(socket.id, 'chat message button', mood_list[mood_rand],['workmood','직장/비즈니스'],['datemood','데이트'],['friendsum','친구랑 약속'],['family_mood','가족외식'],['alone_mood','혼밥']);
+
+      index.sendSocketMessage(socket.id, 'chat message button', mood_list[mood_rand],['mood/초저렴','초저렴 한끼'],['mood/캐주얼','캐주얼한 식사'],['mood2','친구 or 애인과의 약속']);
+    }
+
+    mood2(value,socket,user_data) {
+      info_update.profile.update_with_mood(socket.id, '약속', function (error) {
+          if(error){
+              console.log("에러 : " + error);
+              return error;
+          }
+          return;
+      });
+      let mood_list = [ '오늘은 밥 누구랑 먹어?',
+          '무슨 약속이야?',
+          '어떤 약속이야?',
+          '누구랑 먹는거야?',
+          '나는 결정장애를 위해 존재하지. 밥 누구랑 먹어?',
+          '요새 사람들중에 80%가 결정장애래. 너만 그런거 아니니까 걱정마 ㅋㅋㅋ 밥 누구랑 먹게?',
+          '누구랑 먹는지에 따라 추천이 달라져! 누구랑 먹어?',
+          '같이 밥 먹는 사람이 누구야?(꺄아)',
+          '누구랑 밥 먹는거야?',
+          '지금 누구랑 밥 먹어?ㅎㅎ'];
+      let mood_leng = mood_list.length;
+      let mood_rand = Math.floor(mood_leng * Math.random());
 
       index.sendSocketMessage(socket.id, 'chat message button', mood_list[mood_rand],['mood/초저렴','초저렴 한끼'],['mood/캐주얼','캐주얼한 식사'],['mood/약속','친구 or 애인과의 약속']);
     }
@@ -248,45 +281,51 @@ class Decide_menu {
     semi_final2(value,socket,user_data) {
       let semi_final1_value;
       let user_select = parseInt(value.split('/')[1]);
-      if(user_select === 1){
-        info_update.profile.update_rest5(socket.id, user_data.rest1, function (error) {
-            if(error){
-                console.log("에러 : " + error);
-                return error;
-            }
-            return;
-        });
-        semi_final1_value = user_data.rest1;
-      }else if(user_select === 2){
-        info_update.profile.update_rest5(socket.id, user_data.rest2, function (error) {
-            if(error){
-                console.log("에러 : " + error);
-                return error;
-            }
-            return;
-        });
-        semi_final1_value = user_data.rest2;
-      }else if(user_select === 3){
-        let user_select_value = [user_data.rest1, user_data.rest2];
-        let rand_select = Math.floor(user_select_value.length * Math.random());
-        semi_final1_value = user_select_value[rand_select];
-        info_update.profile.update_rest5(socket.id, user_select_value[rand_select], function (error) {
-            if(error){
-                console.log("에러 : " + error);
-                return error;
-            }
-            return;
-        });
-        info_update.food.get_restaurant_info(socket.id, parseInt(user_select_value[rand_select]), function(err, val){
-          if(err){
-            console.log(err);
-            return err;
-          }else{
-            index.sendSocketMessage(socket.id, 'chat message button', '챗봇의 선택 : '+val[0].res_name);
-            return;
-          }
+
+      switch (user_select) {
+        case 1:
+          info_update.profile.update_rest5(socket.id, user_data.rest1, function (error) {
+              if(error){
+                  console.log("에러 : " + error);
+                  return error;
+              }
+              return;
           });
+          semi_final1_value = user_data.rest1;
+        break;
+        case 2:
+          info_update.profile.update_rest5(socket.id, user_data.rest2, function (error) {
+              if(error){
+                  console.log("에러 : " + error);
+                  return error;
+              }
+              return;
+          });
+          semi_final1_value = user_data.rest2;
+        break;
+        case 3:
+          let user_select_value = [user_data.rest1, user_data.rest2];
+          let rand_select = Math.floor(user_select_value.length * Math.random());
+          semi_final1_value = user_select_value[rand_select];
+          info_update.profile.update_rest5(socket.id, user_select_value[rand_select], function (error) {
+              if(error){
+                  console.log("에러 : " + error);
+                  return error;
+              }
+              return;
+          });
+          info_update.food.get_restaurant_info(socket.id, parseInt(user_select_value[rand_select]), function(err, val){
+            if(err){
+              console.log(err);
+              return err;
+            }else{
+              index.sendSocketMessage(socket.id, 'chat message button', '챗봇의 선택 : '+val[0].res_name);
+              return;
+            }
+            });
+        break;
       }
+
       info_update.food.get_two_restaurant(socket.id, semi_final1_value, user_data.rest3, function(error, value){
         if(error){
           console.log("에러 : " + error);
@@ -322,45 +361,51 @@ class Decide_menu {
     before_final(value,socket,user_data) {
       let semi_final2_value;
       let user_select = parseInt(value.split('/')[1]);
-      if(user_select === 1){
-        info_update.profile.update_rest6(socket.id, user_data.rest5, function (error) {
-            if(error){
-                console.log("에러 : " + error);
-                return error;
-            }
-            return;
-        });
-        semi_final2_value = user_data.rest5;
-      }else if(user_select === 2){
-        info_update.profile.update_rest6(socket.id, user_data.rest3, function (error) {
-            if(error){
-                console.log("에러 : " + error);
-                return error;
-            }
-            return;
-        });
-        semi_final2_value = user_data.rest3;
-      }else if(user_select === 3){
-        let user_select_value = [user_data.rest5, user_data.rest3];
-        let rand_select = Math.floor(user_select_value.length * Math.random());
-        semi_final2_value = user_select_value[rand_select];
-        info_update.profile.update_rest6(socket.id, user_select_value[rand_select], function (error) {
-            if(error){
-                console.log("에러 : " + error);
-                return error;
-            }
-            return;
-        });
-        info_update.food.get_restaurant_info(socket.id, parseInt(user_select_value[rand_select]), function(err, val){
-          if(err){
-            console.log(err);
-            return err;
-          }else{
-            index.sendSocketMessage(socket.id, 'chat message button', '챗봇의 선택 : '+val[0].res_name);
-            return;
-          }
+
+      switch (user_select) {
+        case 1:
+          info_update.profile.update_rest6(socket.id, user_data.rest5, function (error) {
+              if(error){
+                  console.log("에러 : " + error);
+                  return error;
+              }
+              return;
           });
+          semi_final2_value = user_data.rest5;
+        break;
+        case 2:
+          info_update.profile.update_rest6(socket.id, user_data.rest3, function (error) {
+              if(error){
+                  console.log("에러 : " + error);
+                  return error;
+              }
+              return;
+          });
+          semi_final2_value = user_data.rest3;
+        break;
+        case 3:
+          let user_select_value = [user_data.rest5, user_data.rest3];
+          let rand_select = Math.floor(user_select_value.length * Math.random());
+          semi_final2_value = user_select_value[rand_select];
+          info_update.profile.update_rest6(socket.id, user_select_value[rand_select], function (error) {
+              if(error){
+                  console.log("에러 : " + error);
+                  return error;
+              }
+              return;
+          });
+          info_update.food.get_restaurant_info(socket.id, parseInt(user_select_value[rand_select]), function(err, val){
+            if(err){
+              console.log(err);
+              return err;
+            }else{
+              index.sendSocketMessage(socket.id, 'chat message button', '챗봇의 선택 : '+val[0].res_name);
+              return;
+            }
+            });
+        break;
       }
+
       setTimeout(function() {
         index.sendSocketMessage(socket.id, 'chat message button', '대망의 결승전 고고?' ,['decide_final','고고'],['get_started','처음으로 돌아가기']);
       }, 300);
@@ -435,46 +480,52 @@ class Decide_menu {
     final(value,socket,user_data) {
       let user_select = parseInt(value.split('/')[1]);
       let final_value;
-      if(user_select === 1){
-        info_update.profile.update_rest_final(socket.id, user_data.rest6, function (error) {
-            if(error){
-                console.log("에러 : " + error);
-                return error;
-            }
-            return;
-        });
-        final_value = user_data.rest6;
-      }else if(user_select === 2){
-        info_update.profile.update_rest_final(socket.id, user_data.rest4, function (error) {
-            if(error){
-                console.log("에러 : " + error);
-                return error;
-            }
-            return;
-        });
-        final_value = user_data.rest4;
-      }else if(user_select === 3){
-        let user_select_value = [user_data.rest6, user_data.rest4];
-        let rand_select = Math.floor(user_select_value.length * Math.random());
 
-        info_update.profile.update_rest_final(socket.id, user_select_value[rand_select], function (error) {
-            if(error){
-                console.log("에러 : " + error);
-                return error;
-            }
-            return;
-        });
-        info_update.food.get_restaurant_info(socket.id, parseInt(user_select_value[rand_select]), function(err, val){
-          if(err){
-            console.log(err);
-            return err;
-          }else{
-            index.sendSocketMessage(socket.id, 'chat message button', '챗봇의 선택 : '+val[0].res_name);
-            return;
-          }
+      switch (user_select) {
+        case 1:
+          info_update.profile.update_rest_final(socket.id, user_data.rest6, function (error) {
+              if(error){
+                  console.log("에러 : " + error);
+                  return error;
+              }
+              return;
           });
-        final_value = user_select_value[rand_select];
+          final_value = user_data.rest6;
+        break;
+        case 2:
+          info_update.profile.update_rest_final(socket.id, user_data.rest4, function (error) {
+              if(error){
+                  console.log("에러 : " + error);
+                  return error;
+              }
+              return;
+          });
+          final_value = user_data.rest4;
+        break;
+        case 3:
+          let user_select_value = [user_data.rest6, user_data.rest4];
+          let rand_select = Math.floor(user_select_value.length * Math.random());
+
+          info_update.profile.update_rest_final(socket.id, user_select_value[rand_select], function (error) {
+              if(error){
+                  console.log("에러 : " + error);
+                  return error;
+              }
+              return;
+          });
+          info_update.food.get_restaurant_info(socket.id, parseInt(user_select_value[rand_select]), function(err, val){
+            if(err){
+              console.log(err);
+              return err;
+            }else{
+              index.sendSocketMessage(socket.id, 'chat message button', '챗봇의 선택 : '+val[0].res_name);
+              return;
+            }
+            });
+          final_value = user_select_value[rand_select];
+        break;
       }
+
       info_update.food.get_restaurant_info(socket.id, final_value, function(error, value){
         if(error){
           console.log("에러 : " + error);

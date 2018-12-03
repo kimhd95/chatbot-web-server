@@ -54,7 +54,7 @@ function bot_messaging_image(image){
       }
   var message_info = `<div class="bot-message">
       <div class="message-info">
-          <img class="image" src="./whale.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
+          <img class="image" src="/images/whale.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
           <span class="name">푸들</span>
           <span class="time">${date}</span>
       </div>
@@ -89,7 +89,7 @@ function bot_messaging_image_carousel(image){
       }
   var message_info = `<div class="bot-message">
       <div class="message-info">
-          <img class="image" src="./whale.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
+          <img class="image" src="/images/whale.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
           <span class="name">푸들</span>
           <span class="time">${date}</span>
       </div>
@@ -292,6 +292,17 @@ $('.card-body').on('click', '.messaging-button', function(e) {
      }
      socket.emit('chat message button rule', $(e.target).attr('name'),$(e.target).attr('id'));
      $(".messaging-button").hide();
+  });
+
+$('.card-body').on('click', '.messaging-button-check', function(e) {
+     if($(e.target).attr('name') === '메뉴 고르기'){
+       $('#m').autocomplete( "enable" );
+     }else{
+       $('#m').autocomplete( "disable" );
+     }
+     // socket.emit('chat message button rule', $(e.target).attr('name'),$(e.target).attr('id'));
+     $(e.target).children('input[type=checkbox]').click();
+     // $(".messaging-button").hide();
   });
 
   $('form').submit(function(){

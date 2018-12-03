@@ -11,8 +11,8 @@ const
 	express = require('express'),
 	path = require('path'),
 	request = require('request'),
-	scenario_rule = require('../sockettest/flow/scenario_rule'),
-	info = require('../sockettest/info_update'),
+	scenario_rule = require('../flow/scenario_rule'),
+	info = require('../api/info_update'),
 	info_update = new info();
 
 // Express 미들웨어 불러오기
