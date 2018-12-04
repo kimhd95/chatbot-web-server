@@ -141,6 +141,7 @@ function additionalInfoValidationCheck() {
 }
 
 function signUpReq(email, password, nickname, gender, ageGroup) {
+    spinner = new Spinner(opts).spin(target);
     const info = {
         method: "POST",
         url: '/api/v1/users/register_user',
@@ -153,15 +154,18 @@ function signUpReq(email, password, nickname, gender, ageGroup) {
         },
         success: function (res) {
             if (res.success){
+                spinner.stop();
                 console.log("signUpReq: success!");
                 alert("회원가입이 성공적으로 완료되었습니다.");
                 location.href = '/login';
             }else {
+                spinner.stop();
                 console.log("signUpReq: fail!");
                 console.log(res);
             }
         },
         error: function(e) {
+            spinner.stop();
             console.log('ajax call error: signup page - singUpReq');
             if (e.status === 404 && e.responseText.includes("API call URL not found."))
                 console.log("check your URL, method(GET/POST)");
@@ -248,7 +252,7 @@ $(document).ready(() => {
         autoAgree();
     })
     // 출생년도 초기화
-    for(let i = 1950; i < new Date().getFullYear()+1; i++) {
+    for(let i = 2005; i >= 1950; i--) {
         $('#age-group-list .modal-body').append(`<div class="birth-year" onclick="selectAge(${i})" data-dismiss="modal">${i}</div>`)
     }
     // 기본정보 탭 터치
