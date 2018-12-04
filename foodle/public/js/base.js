@@ -1,5 +1,32 @@
 const URL = 'http://devapifood.jellylab.io:6001';
 
+let opts = {
+    lines: 10,
+    length: 20,
+    width: 12,
+    radius: 42,
+    scale: 1,
+    corners: 1,
+    color: '#ff7f8c',
+    fadeColor: '#ffccd1',
+    opacity: 0.25,
+    rotate: 0,
+    direction: 1,
+    speed: 1,
+    trail: 60,
+    fps: 20,
+    zIndex: 2e9,
+    className: 'spinner',
+    top: '50%',
+    left: '50%',
+    shadow: false,
+    hwaccel: false,
+    position: 'absolute',
+}
+let target = document.getElementById('spinner');
+let spinner;
+
+
 function sendReq(info) {
     if(!info.error){
         info.error = function(e){
@@ -81,3 +108,5 @@ function recheckTokenExist (reqName) {
     };
     sendTokenReq(info);
 }
+
+
