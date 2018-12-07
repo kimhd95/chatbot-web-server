@@ -97,6 +97,7 @@ function login () {
         success: function (res) {
             spinner.stop();
             console.log('loginReq success');
+            sessionStorage.setItem('login', '0');
             alert('성공적으로 로그인되었습니다.');
             window.location.replace(res.redirect);
         },
