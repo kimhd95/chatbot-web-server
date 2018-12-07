@@ -20,7 +20,7 @@
 }
 
 /* 로그인 입력 폼 */
-input {
+.login-form input {
     display: block;
     width: 100%;
     padding: 5px;
@@ -90,4 +90,18 @@ input {
 
 #findPw .modal-footer:hover {
     color: #ff7f8c;
+}
+
+#loginIssue input, #loginIssue textarea {
+    margin-bottom: 10px;
+}
+
+#loginIssue textarea {
+    resize: none;
+}
+
+.send-inq {
+    background: #ff7f8c;
+    border: 1px solid transparent;
+    color: #ffffff;
 }

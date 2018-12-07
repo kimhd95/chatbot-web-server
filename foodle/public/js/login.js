@@ -36,7 +36,7 @@ function loginValidationCheck() {
 }
 function reIssueValidationCheck() {
     email = $('#signedup-email').val();
-    
+
     if(email === '') {
         alert('이메일을 입력해주세요.');
         return;
@@ -45,6 +45,7 @@ function reIssueValidationCheck() {
         alert('이메일 형식을 지켜주세요.');
         return;
     }
+    spinner = new Spinner(opts).spin(target);
     const info = {
         url: "/api/v1/users/send_new_password",
         method: "POST",
@@ -52,22 +53,29 @@ function reIssueValidationCheck() {
             email: email
         },
         success: function (res) {
-            $.ajax({
-                url: '/sendNewPassword',
-                async: true,
-                type: 'POST',
-                data: {
-                    email: res[0],
-                    newPassword: res[1]
-                },
-                dataType: 'text',
-                success: function () {
-                    alert('이메일로 임시 비밀번호를 발송해드렸습니다.');
-                },
-                error: function () {
-                    alert('임시 비밀번호 발송 실패.');
-                }
-            });
+            if (res) {
+                $.ajax({
+                    url: '/sendNewPassword',
+                    async: true,
+                    type: 'POST',
+                    data: {
+                        email: res[0],
+                        newPassword: res[1]
+                    },
+                    dataType: 'text',
+                    success: function (res) {
+                        if (JSON.parse(res).success) {
+                            spinner.stop();
+                            alert('이메일로 임시 비밀번호를 발송해드렸습니다.');
+                            $('#findPw').modal('hide');
+                        }
+                    },
+                    error: function () {
+                        spinner.stop();
+                        alert('임시 비밀번호 발송 실패.');
+                    }
+                });
+            }
         },
         error: function (e) {
             console.log(e);
@@ -78,6 +86,7 @@ function reIssueValidationCheck() {
 }
 
 function login () {
+    spinner = new Spinner(opts).spin(target);
     const info = {
         url: "/api/v1/users/login",
         method: "POST",
@@ -86,11 +95,14 @@ function login () {
             password: password
         },
         success: function (res) {
+            spinner.stop();
             console.log('loginReq success');
+            sessionStorage.setItem('login', '0');
             alert('성공적으로 로그인되었습니다.');
             window.location.replace(res.redirect);
         },
         error: function (e) {
+            spinner.stop();
             console.log('ajax call error: login page - loginReq');
             if (e.status === 403 &&
                 (e.responseText.includes("No doctor account found with given email address.") ||
@@ -119,6 +131,51 @@ function login () {
     sendTokenReq(info);
 }
 
+function sendInquiry () {
+    let name = $('.inq-name').val();
+    let email = $('.inq-email').val();
+    let subject = $('.inq-subject').val();
+    let message = $('.inq-message').val();
+
+    if (name === '') {
+        alert('이름을 입력해주세요.');
+        return;
+    }
+    if (email === '') {
+        alert('이메일을 입력해주세요.');
+        return;
+    }
+    if (subject === '') {
+        alert('제목을 입력해주세요.');
+        return;
+    }
+    if (message === '') {
+        alert('내용을 입력해주세요.');
+        return;
+    }
+    spinner = new Spinner(opts).spin(target);
+    $.ajax({
+        url: '/sendInquiry',
+        async: true,
+        type: 'POST',
+        data: {
+            name: name,
+            email: email,
+            subject: subject,
+            message: message
+        },
+        dataType: 'text',
+        success: function () {
+            spinner.stop();
+            alert('작성하신 문의가 성공적으로 전송되었습니다.');
+            $('#loginIssue').modal('hide');
+        },
+        error: function () {
+            spinner.stop();
+            alert('전송에 실패했습니다.');
+        }
+    })
+}
 $(document).ready(() => {
     $.ajax('http://devapifood.jellylab.io:6001/api/v1/users/verify_token', {
         method: 'POST',
@@ -171,5 +228,9 @@ $(document).ready(() => {
 
     $('#reissue-pw').click(() => {
         reIssueValidationCheck();
+    })
+
+    $('.send-inq').click(() => {
+        sendInquiry();
     })
 });

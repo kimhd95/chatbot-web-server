@@ -1,3 +1,4 @@
+let socialLoginValue;
 function bot_messaging(message){
   let date;
       let hour = new Date().getHours();
@@ -88,28 +89,28 @@ function bot_messaging_image_carousel(image){
           else date = `오후 ${hour%12}:${min}`;
       }
   var message_info = `<div class="bot-message">
-      <div class="message-info">
-          <img class="image" src="/images/poodle.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
-          <span class="name">푸들</span>
-          <span class="time">${date}</span>
-      </div>
-        <div id="${carousel_id}" class="carousel slide" data-ride="carousel" data-wrap="false">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-            <img class="d-block w-100 rest-img" src="${image}" alt="First slide">
-            </div>
-          </div>
-          <a class="carousel-control-prev" href="#${carousel_id}" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-            <a class="carousel-control-next" href="#${carousel_id}" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
+        <div class="message-info">
+            <img class="image" src="/images/poodle.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
+            <span class="name">푸들</span>
+            <span class="time">${date}</span>
         </div>
-      </div>
-  `;
+          <div id="${carousel_id}" class="carousel slide" data-ride="carousel" data-wrap="false">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+              <img class="d-block w-100 rest-img" src="${image}" alt="First slide">
+              </div>
+            </div>
+            <a class="carousel-control-prev" href="#${carousel_id}" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+              <a class="carousel-control-next" href="#${carousel_id}" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+        </div>
+    `;
   return(message_info);
 }
 
@@ -137,9 +138,8 @@ function user_list_update(id){
   return(message_info);
 }
 
-
 function user_messaging(message){
-  let date;
+    let date;
       let hour = new Date().getHours();
       let min = new Date().getMinutes();
       if (hour < 12) {
@@ -152,15 +152,15 @@ function user_messaging(message){
           if (min < 10) date = `오후 ${hour%12}:0${min}`;
           else date = `오후 ${hour%12}:${min}`;
       }
-  var message_info = `<div class="user-message">
-      <div class="message-info">
-          <span class="time">${date}</span>
-      </div>
-      <div class="message-text">
-        ${message}
-      </div>
-  </div>
-`;
+    var message_info = `<div class="user-message">
+        <div class="message-info">
+            <span class="time">${date}</span>
+        </div>
+        <div class="message-text">
+          ${message}
+        </div>
+    </div>
+  `;
   return(message_info);
 }
 
@@ -271,14 +271,33 @@ function bot_messaging_card_inner_no_image(res_name, res_type, food_name, naver_
       `;
   return(message_info);
 }
-function logout() {
-  const info = {
+// google sdk load
+function onLoad () {
+  gapi.load('auth2', () => {
+      gapi.auth2.init();
+  });
+}
+// google logout
+function signOut() {
+  console.log(gapi.auth2);
+  var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+  });
+}
+
+function logout(loginValue) {
+  if (loginValue === '0') {
+    const info = {
       url: "/api/v1/users/logout",
       method: "POST",
+      data: {
+        'token': sessionStorage.getItem('social_token')
+      },
       success: function (res) {
           if (res.success) {
               console.log('logout Request: success!');
-              alert('안전하게 로그아웃 되었습니다.');
+              alert('로그아웃 되었습니다.');
               window.location.replace(window.location.origin);
           } else {
               console.log('logout Request: fail!');
@@ -304,19 +323,33 @@ function logout() {
               }
           }
       }
-  };
-  sendTokenReq(info);
+    };
+    sendTokenReq(info);
+  } else if (loginValue === '1') {
+    console.log('naver logout');
+    alert('로그아웃 되었습니다.');
+  } else if (loginValue === '2') {
+    console.log('facebook logout');
+    
+  } else if (loginValue === '3') {
+    console.log('google logout');
+    signOut();
+  }
+  sessionStorage.clear();
+  localStorage.clear();
+  location.href = '/';
 }
+
 
 $(function () {
 
   var socket = io();
 
-// $('.get-started-button').click(function(){
-//   socket.emit('chat message button rule', '시작하기',$(this).attr('id'));
-//   $(".get-started-button").hide();
-//   // $("input").prop('disabled', false);
-// });
+  // $('.get-started-button').click(function(){
+  //   socket.emit('chat message button rule', '시작하기',$(this).attr('id'));
+  //   $(".get-started-button").hide();
+  //   // $("input").prop('disabled', false);
+  // });
 
 
   $('.card-body').on('click', '.messaging-button', function(e) {
@@ -432,10 +465,17 @@ $(function () {
 
 });
 
+
+
 $(document).ready(() => {
-  $.ajax('http://devapifood.jellylab.io:6001/api/v1/users/verify_token', {
+  let loginValue = sessionStorage.getItem('login');
+  console.log(loginValue);
+  if (loginValue === '0') {
+    const info = {
+      url: '/api/v1/users/verify_token',
       method: 'POST',
       data: null,
+      async: true,
       crossDomain: true,
       redirect: 'follow',
       xhrFields: {
@@ -458,7 +498,7 @@ $(document).ready(() => {
               if (e.responseText.includes("No token provided.")) {
                   console.log("No token, no problem.");
                   alert('로그인해주세요.');
-                  location.href = '/login';
+                  // location.href = '/login';
               }
               else if (e.responseText.includes("jwt malformed"))
                   console.log("Malformed token");
@@ -477,7 +517,13 @@ $(document).ready(() => {
               console.log(e);
           }
       }
-  })
+    }
+    sendTokenReq(info);
+  }
+  
+
+    
+
   let cache = {};
   let nowTime;
   $('.card-body').on('click', '.arrow-right', function(){
@@ -512,7 +558,7 @@ $(document).ready(() => {
   });
 
   $('#logout-btn').click(() => {
-    logout();
+    logout(loginValue);
   });
 
   if (new Date().getHours() < 12) {

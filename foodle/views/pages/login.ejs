@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     
     <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="https://spin.js.org/spin.css">
     <title>푸들</title>
 </head>
 <body>
@@ -23,7 +24,7 @@
             <span class="page-title">이메일로 로그인</span>
         </h6>
         <div id="login" class="card-body">
-            <form action="">
+            <form action="" class="login-form">
                 <input id="email" class="email" type="email" placeholder="이메일">
                 <input id="pw" class="pw" type="password" placeholder="비밀번호">
                 <button type="button" id="login-btn" class="btn login-btn">로그인</button>
@@ -64,18 +65,24 @@
                         </button>
                         </div>
                         <div class="modal-body">
-                            <p><span style="color: #ff7f8c; font-weight:600;">support@jellylab.io</span>로 문의 부탁드립니다!</p>
+                            <input type="text" class="form-control inq-name" placeholder="이름">
+                            <input type="text" class="form-control inq-email" placeholder="이메일">
+                            <input type="text" class="form-control inq-subject" placeholder="제목">
+                            <textarea  class="form-control inq-message"cols="30" rows="10" placeholder="문의사항"></textarea>
+                            <button class="btn send-inq">문의 전송</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div id="spinner"></div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
     <script src="/js/base.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
     <script src="/js/login.js"></script>
 </body>
 </html>
