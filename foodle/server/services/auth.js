@@ -6,12 +6,12 @@ const
 	config = require('../../configs')
 
 function getMainPage(req, res) {
-	return res.render('pages/index.ejs', {
+	res.render('pages/index.ejs', {
 		url: config.api_url
 	});
 }
 function getLoginPage(req, res) {
-	return res.render('pages/login.ejs', {
+	res.render('pages/login.ejs', {
 		url: config.api_url
 	});
 }
