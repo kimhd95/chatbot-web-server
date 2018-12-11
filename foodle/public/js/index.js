@@ -4,11 +4,11 @@ let fbLoginFlag;
 // 구글 로그인
 function onSignIn(googleUser) {
     let profile = googleUser.getBasicProfile();
-    console.log(googleUser.getAuthResponse());
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
     console.log('Name: ' + profile.getName());
     console.log('Image URL: ' + profile.getImageUrl());
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
     if (googleUser.getAuthResponse().id_token) {
         const info = {
             url: '/api/v1/users/social_login',
@@ -47,46 +47,6 @@ function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
       auth2.signOut().then(function () {
         console.log('User signed out.');
-    });
-}
-
-function checkNaverAccessToken (naverLogin) {
-    naverLogin.getLoginStatus((status) => {
-        if (status) {
-          let email = naverLogin.user.getEmail();
-          let name = naverLogin.user.getName();
-          let nickname = naverLogin.user.getNickName();
-          let birthday = naverLogin.user.getBirthday();
-          let age = naverLogin.user.getAge();
-          
-          const info = {
-            url: '/api/v1/users/social_login',
-            method: 'POST',
-            body: {
-                email: email,
-                token: naverLogin.accessToken.accessToken
-            },
-            success: function (res) {
-                if (res.success) {
-                    sessionStorage.setItem('login', '1');
-                    window.location.replace('http://localhost:8001/chat')
-                } else {
-                    console.log(res);
-                }
-            },
-            error: function (e) {
-                console.log(e.responseJSON);
-                if (e.responseJSON.message === 'This email is Already signed up.') {
-                    localStorage.clear();
-                    sessionStorage.clear();
-                    alert('이미 가입된 이메일입니다.');
-                } else {
-                    alert('접근 불가능합니다.');
-                }
-            }
-          }
-          sendTokenReq(info);
-        }
     });
 }
 
@@ -211,6 +171,7 @@ $(document).ready(() => {
               let nickname = naverLogin.user.getNickName();
               let birthday = naverLogin.user.getBirthday();
               let age = naverLogin.user.getAge();
+              console.log(birthday);
               const info = {
                 url: '/api/v1/users/social_login',
                 method: 'POST',
@@ -221,6 +182,7 @@ $(document).ready(() => {
                 success: function (res) {
                     if (res.success) {
                         sessionStorage.setItem('login', '1');
+                        sessionStorage.setItem('email', email);
                         window.location.replace('http://localhost:8001/chat')                        
                     } else {
                         console.log(res);
@@ -245,7 +207,6 @@ $(document).ready(() => {
 
     // 네이버 로그인 버튼 클릭
     $('#naverIdLogin').click(() => {
-        // checkNaverAccessToken(naverLogin);
     })
     
     // 페이스북 로그인 버튼 클릭
