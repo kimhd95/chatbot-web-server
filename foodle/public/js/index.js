@@ -1,6 +1,3 @@
-
-let fbLoginFlag;
-
 // 구글 로그인
 function onSignIn(googleUser) {
     let profile = googleUser.getBasicProfile();
@@ -10,19 +7,21 @@ function onSignIn(googleUser) {
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 
     if (googleUser.getAuthResponse().id_token) {
+        console.log(gapi.auth2);
+
         const info = {
             url: '/api/v1/users/social_login',
             method: 'POST',
             body: {
                 email: profile.getEmail(),
+                name: profile.getName(),
                 token: googleUser.getAuthResponse().id_token
             },
             success: function (res) {
-                console.log(res);
                 if (res.success) {
                     console.log(res);
                     sessionStorage.setItem('login', '3');
-                    window.location.replace('http://localhost:8001/chat')
+                    window.location.replace(res.redirect)
                 } else {
                     console.log(res);
                 }
@@ -177,13 +176,14 @@ $(document).ready(() => {
                 method: 'POST',
                 body: {
                     email: email,
+                    name: name,
                     token: naverLogin.accessToken.accessToken
                 },
                 success: function (res) {
                     if (res.success) {
                         sessionStorage.setItem('login', '1');
                         sessionStorage.setItem('email', email);
-                        window.location.replace('http://localhost:8001/chat')                        
+                        window.location.replace(res.redirect)                        
                     } else {
                         console.log(res);
                     }
@@ -191,7 +191,7 @@ $(document).ready(() => {
                 error: function (e) {
                     console.log(e.responseJSON);
                     if (e.responseJSON.message === 'This email is Already signed up.') {
-                        window.location.replace('http://localhost:8001')    
+                        window.location.replace(res.redirect)    
                         localStorage.clear();
                         sessionStorage.clear();
                         alert('이미 가입된 이메일입니다.');
