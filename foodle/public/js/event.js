@@ -1,4 +1,3 @@
-let socialLoginValue;
 function bot_messaging(message){
   let date;
       let hour = new Date().getHours();
@@ -287,7 +286,7 @@ function signOut() {
 }
 
 function logout(loginValue) {
-  if (loginValue === '0') {
+  if (loginValue === '0' || loginValue === null) {
     const info = {
       url: "/api/v1/users/logout",
       method: "POST",
@@ -297,6 +296,8 @@ function logout(loginValue) {
       success: function (res) {
           if (res.success) {
               console.log('logout Request: success!');
+              localStorage.clear();
+              sessionStorage.clear();
               alert('로그아웃 되었습니다.');
               window.location.replace(window.location.origin);
           } else {
@@ -328,18 +329,23 @@ function logout(loginValue) {
   } else if (loginValue === '1') {
     console.log('naver logout');
     alert('로그아웃 되었습니다.');
+    sessionStorage.clear();
+    localStorage.clear();
+    location.href = '/';
   } else if (loginValue === '2') {
     console.log('facebook logout');
-    
+    sessionStorage.clear();
+    localStorage.clear();
+    location.href = '/';
   } else if (loginValue === '3') {
     console.log('google logout');
     signOut();
+    sessionStorage.clear();
+    localStorage.clear();
+    location.href = '/';
   }
-  sessionStorage.clear();
-  localStorage.clear();
-  location.href = '/';
+  
 }
-
 
 $(function () {
 
@@ -469,6 +475,11 @@ $(function () {
 
 $(document).ready(() => {
   let loginValue = sessionStorage.getItem('login');
+  if (loginValue === '0') {
+    $('.social-signed-in')[0].style.display = 'none';
+  } else {
+    $('.email-signed-in')[0].style.display = 'none';
+  }
   console.log(loginValue);
   if (loginValue === '0') {
     const info = {
@@ -560,6 +571,60 @@ $(document).ready(() => {
   $('#logout-btn').click(() => {
     logout(loginValue);
   });
+
+  $('#withdraw-btn').click(() => {
+    if (confirm('정말 탈퇴하시겠습니까? 탈퇴하시면 모든 데이터가 소멸됩니다.')) {
+      const info = {
+        url: '/api/v1/users/member_withdraw',
+        method: 'POST',
+        body: {
+          email: sessionStorage.getItem('email')
+        },
+        success: function(res) {
+          if (res.success) {
+            sessionStorage.clear();
+            localStorage.clear();
+            alert('탈퇴했습니다.');
+            window.location.replace(res.redirect);
+          }
+        },
+        error: function (e) {
+          console.log(e.responseJSON);
+        }
+      }
+  
+      sendReq(info);
+    }
+  })
+
+  $('.decide-withdrawl').click(() => {
+    console.log($('.password').val());
+    if (confirm('정말 탈퇴하시겠습니까? 탈퇴하시면 모든 데이터가 소멸됩니다.')) {
+      const info = {
+        url: '/api/v1/users/member_withdraw',
+        method: 'POST',
+        body: {
+          email: sessionStorage.getItem('email'),
+          password: $('.password').val()
+        },
+        success: function(res) {
+          if (res.success) {
+            sessionStorage.clear();
+            localStorage.clear();
+            alert('탈퇴했습니다.');
+            window.location.replace(res.redirect);
+          }
+        },
+        error: function (e) {
+          console.log(e.responseJSON);
+          if(e.responseJSON.message.indexOf('not match') !== -1) {
+            alert('비밀번호가 틀렸습니다.');
+          }
+        }
+      }
+      sendReq(info);
+    }
+  })
 
   if (new Date().getHours() < 12) {
     nowTime = `오전 ${new Date().getHours()}:${new Date().getMinutes()}`;
