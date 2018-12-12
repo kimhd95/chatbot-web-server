@@ -1,4 +1,3 @@
-let socialLoginValue;
 function bot_messaging(message){
   let date;
       let hour = new Date().getHours();
@@ -287,7 +286,7 @@ function signOut() {
 }
 
 function logout(loginValue) {
-  if (loginValue === '0') {
+  if (loginValue === '0' || loginValue === null) {
     const info = {
       url: "/api/v1/users/logout",
       method: "POST",
@@ -297,6 +296,8 @@ function logout(loginValue) {
       success: function (res) {
           if (res.success) {
               console.log('logout Request: success!');
+              localStorage.clear();
+              sessionStorage.clear();
               alert('로그아웃 되었습니다.');
               window.location.replace(window.location.origin);
           } else {
@@ -328,18 +329,23 @@ function logout(loginValue) {
   } else if (loginValue === '1') {
     console.log('naver logout');
     alert('로그아웃 되었습니다.');
+    sessionStorage.clear();
+    localStorage.clear();
+    location.href = '/';
   } else if (loginValue === '2') {
     console.log('facebook logout');
-    
+    sessionStorage.clear();
+    localStorage.clear();
+    location.href = '/';
   } else if (loginValue === '3') {
     console.log('google logout');
     signOut();
+    sessionStorage.clear();
+    localStorage.clear();
+    location.href = '/';
   }
-  sessionStorage.clear();
-  localStorage.clear();
-  location.href = '/';
+  
 }
-
 
 $(function () {
 
@@ -462,14 +468,21 @@ $(function () {
             $('#messages').scrollTop(1e4);
           }, 100); //execute your function after 2 seconds.
         });
-
 });
 
 
 
 $(document).ready(() => {
   let loginValue = sessionStorage.getItem('login');
-  console.log(loginValue);
+  if (loginValue === '0') {
+    $('.social-signed-in')[0].style.display = 'none';
+    $('.email-signed-in')[0].style.display = 'block';
+    $('.update-password')[0].style.display = 'block';
+  } else {
+    $('.social-signed-in')[0].style.display = 'block';
+    $('.email-signed-in')[0].style.display = 'none';
+    $('.update-password')[0].style.display = 'none';
+  }
   if (loginValue === '0') {
     const info = {
       url: '/api/v1/users/verify_token',
@@ -561,6 +574,116 @@ $(document).ready(() => {
     logout(loginValue);
   });
 
+  $('#withdraw-btn').click(() => {
+    if (confirm('정말 탈퇴하시겠습니까? 탈퇴하시면 모든 데이터가 소멸됩니다.')) {
+      const info = {
+        url: '/api/v1/users/member_withdraw',
+        method: 'POST',
+        body: {
+          email: sessionStorage.getItem('email')
+        },
+        success: function(res) {
+          if (res.success) {
+            sessionStorage.clear();
+            localStorage.clear();
+            alert('탈퇴했습니다.');
+            window.location.replace(res.redirect);
+          }
+        },
+        error: function (e) {
+          console.log(e.responseJSON);
+        }
+      }
+  
+      sendReq(info);
+    }
+  })
+
+  $('.decide-withdrawl').click(() => {
+    if (confirm('정말 탈퇴하시겠습니까? 탈퇴하시면 모든 데이터가 소멸됩니다.')) {
+      const info = {
+        url: '/api/v1/users/member_withdraw',
+        method: 'POST',
+        body: {
+          email: sessionStorage.getItem('email'),
+          password: $('.password').val()
+        },
+        success: function(res) {
+          if (res.success) {
+            sessionStorage.clear();
+            localStorage.clear();
+            alert('탈퇴했습니다.');
+            window.location.replace(res.redirect);
+          }
+        },
+        error: function (e) {
+          console.log(e.responseJSON);
+          if(e.responseJSON.message.indexOf('not match') !== -1) {
+            alert('비밀번호가 틀렸습니다.');
+          }
+        }
+      }
+      sendReq(info);
+    }
+  })
+
+  $('.decide-update-password').click(() => {
+    if ($('.cur-password').val() === '') {
+      alert('현재 비밀번호를 입력하세요.');
+      return;
+    }
+    if ($('.new-password').val() === '') {
+      alert('새 비밀번호를 입력하세요.');
+      return;
+    }
+    if ($('.verify-new-password').val() === '') {
+      alert('새 비밀번호(확인)을 입력하세요.');
+      return;
+    }
+    if ($('.new-password').val() !== $('.verify-new-password').val()) {
+      alert('새 비밀번호가 일치하지 않습니다.');
+      return;
+    }
+    const info = {
+      url: '/api/v1/users/update_password',
+      method: 'POST',
+      body: {
+        email: sessionStorage.getItem('email'),
+        curPassword: $('.cur-password').val(),
+        newPassword: $('.new-password').val(),
+      },
+      success: function (res) {
+        if (res.success) {
+          alert('비밀번호가 변경되었습니다. 변경된 비밀번호로 로그인 바랍니다.');
+          $('.decide-update-password').attr('data-dismiss', 'modal');
+          $('#config-modal').on('hidden.bs.modal', () => {
+            $('.decide-update-password').removeAttr('data-dismiss');
+          })
+          logout(loginValue);
+        }
+      },
+      error: function (e) {
+        if (e.responseJSON.message.indexOf('current') !== -1) {
+          alert('현재 비밀번호가 잘못되었습니다.');
+          return;
+        }
+        else if (e.responseJSON.message.indexOf('longer') !== -1) {
+          alert('비밀번호는 8자리 이상이어야 합니다.');
+          return;
+        }
+        else if (e.responseJSON.message.indexOf('digit') !== -1) {
+          alert('비밀번호는 숫자, 영문, 특수문자 중 2가지 이상을 혼합해야 합니다.');
+          return;
+        }
+        else {
+          alert('비밀번호가 제대로 전달되지 못했습니다. 네트워크를 확인해주세요.');
+          return;
+        }
+      }
+    }
+    sendTokenReq(info);
+    
+  })
   if (new Date().getHours() < 12) {
     nowTime = `오전 ${new Date().getHours()}:${new Date().getMinutes()}`;
   } else if (new Date().getHours() === 12) {

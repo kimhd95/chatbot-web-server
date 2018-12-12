@@ -150,7 +150,8 @@ function signUpReq(email, password, nickname, gender, ageGroup) {
             password: password,
             nickname: nickname,
             gender: gender,
-            ageGroup: ageGroup
+            ageGroup: ageGroup,
+            social: false
         },
         success: function (res) {
             if (res.success){
