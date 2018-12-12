@@ -52,7 +52,8 @@ $(document).ready(() => {
     let naverLogin = new naver.LoginWithNaverId(
 		{
 			clientId: "DnnpK9bi2MdliAiFZZUQ",
-            callbackUrl: "http://localhost:8001/",
+            // callbackUrl: "http://localhost:8001/",
+            callbackUrl: location.href,
             callbackHandle: true,
 			isPopup: false, /* 팝업을 통한 연동처리 여부 */
 			loginButton: {color: "green", type: 3, height: 50} /* 로그인 버튼의 타입을 지정 */
