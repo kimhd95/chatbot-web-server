@@ -468,7 +468,6 @@ $(function () {
             $('#messages').scrollTop(1e4);
           }, 100); //execute your function after 2 seconds.
         });
-
 });
 
 
@@ -477,10 +476,13 @@ $(document).ready(() => {
   let loginValue = sessionStorage.getItem('login');
   if (loginValue === '0') {
     $('.social-signed-in')[0].style.display = 'none';
+    $('.email-signed-in')[0].style.display = 'block';
+    $('.update-password')[0].style.display = 'block';
   } else {
+    $('.social-signed-in')[0].style.display = 'block';
     $('.email-signed-in')[0].style.display = 'none';
+    $('.update-password')[0].style.display = 'none';
   }
-  console.log(loginValue);
   if (loginValue === '0') {
     const info = {
       url: '/api/v1/users/verify_token',
@@ -598,7 +600,6 @@ $(document).ready(() => {
   })
 
   $('.decide-withdrawl').click(() => {
-    console.log($('.password').val());
     if (confirm('정말 탈퇴하시겠습니까? 탈퇴하시면 모든 데이터가 소멸됩니다.')) {
       const info = {
         url: '/api/v1/users/member_withdraw',
@@ -626,6 +627,63 @@ $(document).ready(() => {
     }
   })
 
+  $('.decide-update-password').click(() => {
+    if ($('.cur-password').val() === '') {
+      alert('현재 비밀번호를 입력하세요.');
+      return;
+    }
+    if ($('.new-password').val() === '') {
+      alert('새 비밀번호를 입력하세요.');
+      return;
+    }
+    if ($('.verify-new-password').val() === '') {
+      alert('새 비밀번호(확인)을 입력하세요.');
+      return;
+    }
+    if ($('.new-password').val() !== $('.verify-new-password').val()) {
+      alert('새 비밀번호가 일치하지 않습니다.');
+      return;
+    }
+    const info = {
+      url: '/api/v1/users/update_password',
+      method: 'POST',
+      body: {
+        email: sessionStorage.getItem('email'),
+        curPassword: $('.cur-password').val(),
+        newPassword: $('.new-password').val(),
+      },
+      success: function (res) {
+        if (res.success) {
+          alert('비밀번호가 변경되었습니다. 변경된 비밀번호로 로그인 바랍니다.');
+          $('.decide-update-password').attr('data-dismiss', 'modal');
+          $('#config-modal').on('hidden.bs.modal', () => {
+            $('.decide-update-password').removeAttr('data-dismiss');
+          })
+          logout(loginValue);
+        }
+      },
+      error: function (e) {
+        if (e.responseJSON.message.indexOf('current') !== -1) {
+          alert('현재 비밀번호가 잘못되었습니다.');
+          return;
+        }
+        else if (e.responseJSON.message.indexOf('longer') !== -1) {
+          alert('비밀번호는 8자리 이상이어야 합니다.');
+          return;
+        }
+        else if (e.responseJSON.message.indexOf('digit') !== -1) {
+          alert('비밀번호는 숫자, 영문, 특수문자 중 2가지 이상을 혼합해야 합니다.');
+          return;
+        }
+        else {
+          alert('비밀번호가 제대로 전달되지 못했습니다. 네트워크를 확인해주세요.');
+          return;
+        }
+      }
+    }
+    sendTokenReq(info);
+    
+  })
   if (new Date().getHours() < 12) {
     nowTime = `오전 ${new Date().getHours()}:${new Date().getMinutes()}`;
   } else if (new Date().getHours() === 12) {

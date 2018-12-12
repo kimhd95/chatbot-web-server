@@ -5,10 +5,7 @@ function onSignIn(googleUser) {
     console.log('Name: ' + profile.getName());
     console.log('Image URL: ' + profile.getImageUrl());
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-
     if (googleUser.getAuthResponse().id_token) {
-        console.log(gapi.auth2);
-
         const info = {
             url: '/api/v1/users/social_login',
             method: 'POST',
@@ -21,7 +18,7 @@ function onSignIn(googleUser) {
                 if (res.success) {
                     console.log(res);
                     sessionStorage.setItem('login', '3');
-                    window.location.replace(res.redirect)
+                    // window.location.replace(res.redirect)
                 } else {
                     console.log(res);
                 }
@@ -115,53 +112,6 @@ $(document).ready(() => {
         sendTokenReq(info);
     }
 
-    // window.fbAsyncInit = function() {
-    //     FB.init({
-    //       appId      : '1966207340338340',
-    //       cookie     : true,  // enable cookies to allow the server to access 
-    //                           // the session
-    //       xfbml      : true,  // parse social plugins on this page
-    //       version    : 'v3.2' // use graph api version 2.8
-    //     });
-    
-    //     FB.AppEvents.logPageView();   
-
-    //     // Now that we've initialized the JavaScript SDK, we call 
-    //     // FB.getLoginStatus().  This function gets the state of the
-    //     // person visiting this page and can return one of three states to
-    //     // the callback you provide.  They can be:
-    //     //
-    //     // 1. Logged into your app ('connected')
-    //     // 2. Logged into Facebook, but not your app ('not_authorized')
-    //     // 3. Not logged into Facebook and can't tell if they are logged into
-    //     //    your app or not.
-    //     //
-    //     // These three cases are handled in the callback function.
-    //     let callback = function (res) {
-    //         console.log(res);
-    //         // statusChangeCallback(res);
-
-    //         if (res.status === 'connected') {
-    //             console.log('logged in');
-    //             fbLoginFlag = true;
-    //         } else {
-    //             console.log('logged out');
-    //             fbLoginFlag = false;
-    //         }
-    //     }
-    //     FB.getLoginStatus(callback);
-    
-    // };
-    // // 페이스북 SDK 로드
-    // (function(d, s, id) {
-    //     var js, fjs = d.getElementsByTagName(s)[0];
-    //     if (d.getElementById(id)) return;
-    //     js = d.createElement(s); js.id = id;
-    //     js.src = "https://connect.facebook.net/en_US/sdk.js";
-    //     fjs.parentNode.insertBefore(js, fjs);
-    // }(document, 'script', 'facebook-jssdk'));
-
-
     window.addEventListener('load', () => {
         naverLogin.getLoginStatus((status) => {
             if (status) {
@@ -203,24 +153,12 @@ $(document).ready(() => {
               sendTokenReq(info);
             }
         });
+        
     })
 
     // 네이버 로그인 버튼 클릭
     $('#naverIdLogin').click(() => {
     })
-    
-    // 페이스북 로그인 버튼 클릭
-    $('.facebook-login').click(() => {
-        if(fbLoginFlag) {
-            FB.logout((res) => {
-                console.log('logout => ', res);
-            })
-        } else {
-            FB.login((res) => {
-                console.log('login => ', res);
-            })
-        }
-    });
 
     // 구글 로그인 버튼 클릭
     $('.google-login').click(() => {

@@ -199,7 +199,7 @@ button {
     border-radius: 0;
 }
 
-.decide-withdrawl {
+.decide-update-password, .decide-withdrawl {
     color: #ffffff;
     background-color: #ff7f8c!important;
     border: 1px solid #ff7f8c!important;
