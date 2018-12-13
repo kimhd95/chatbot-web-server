@@ -16,7 +16,7 @@ function onSignIn(googleUser) {
             },
             success: function (res) {
                 if (res.success) {
-                    console.log(res);
+                    sessionStorage.setItem('email', profile.getEmail());
                     sessionStorage.setItem('login', '3');
                     window.location.replace(res.redirect)
                 } else {
