@@ -277,7 +277,7 @@ function onLoad () {
   });
 }
 // google logout
-function signOut() {
+function googleSignOut() {
   var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
       console.log('User signed out.');
@@ -338,7 +338,7 @@ function logout(loginValue) {
     location.href = '/';
   } else if (loginValue === '3') {
     console.log('google logout');
-    signOut();
+    googleSignOut();
     sessionStorage.clear();
     localStorage.clear();
     location.href = '/';
@@ -583,12 +583,12 @@ $(document).ready(() => {
         },
         success: function(res) {
           if (res.success) {
+            if (sessionStorage.getItem('login') === '3') {
+              googleSignOut();
+            }
             sessionStorage.clear();
             localStorage.clear();
             alert('탈퇴했습니다.');
-            if (sessionStorage.getItem('login') === '3') {
-              signOut();
-            }
             window.location.replace(res.redirect);
           }
         },
