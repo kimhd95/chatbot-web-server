@@ -511,7 +511,7 @@ $(document).ready(() => {
               if (e.responseText.includes("No token provided.")) {
                   console.log("No token, no problem.");
                   alert('로그인해주세요.');
-                  // location.href = '/login';
+                  location.href = '/login';
               }
               else if (e.responseText.includes("jwt malformed"))
                   console.log("Malformed token");

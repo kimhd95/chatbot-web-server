@@ -64,7 +64,7 @@ $(document).ready(() => {
     $('#naverIdLogin_loginButton img')[0].src = '/images/naver2.png';
 
     let loginValue = sessionStorage.getItem('login');
-    if (loginValue === '0') {
+    if (loginValue === '0' || loginValue === null) {
         const info = {
             url: '/api/v1/users/verify_token',
             method: 'POST',
@@ -111,6 +111,9 @@ $(document).ready(() => {
             }
         }
         sendTokenReq(info);
+    } else {
+        alert('이미 로그인되어 있습니다.');
+        location.href='/chat';
     }
 
     window.addEventListener('load', () => {
