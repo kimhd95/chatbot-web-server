@@ -159,6 +159,7 @@ function signUpReq(email, password, nickname, gender, ageGroup) {
                 console.log("signUpReq: success!");
                 alert("회원가입이 성공적으로 완료되었습니다.");
                 sessionStorage.setItem('login', 0);
+                sessionStorage.setItem('email', email);
                 location.href = '/chat';
             }else {
                 spinner.stop();
