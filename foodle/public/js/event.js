@@ -278,7 +278,6 @@ function onLoad () {
 }
 // google logout
 function signOut() {
-  console.log(gapi.auth2);
   var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
       console.log('User signed out.');
@@ -587,6 +586,9 @@ $(document).ready(() => {
             sessionStorage.clear();
             localStorage.clear();
             alert('탈퇴했습니다.');
+            if (sessionStorage.getItem('login') === '3') {
+              signOut();
+            }
             window.location.replace(res.redirect);
           }
         },
