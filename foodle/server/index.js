@@ -36,14 +36,15 @@ module.exports = function(){
 
 	io.on('connection', function(socket){
 		console.log(socket.id+' user connected');
-		info_update.profile.register(socket.id, function(err){
-			if(err){
-				console.log(err);
-				return err;
-			}else{
-				return;
-			}
-		});
+		io.to(socket.id).emit('chat register', socket.id);
+		// info_update.profile.register(socket.id, function(err){
+		// 	if(err){
+		// 		console.log(err);
+		// 		return err;
+		// 	}else{
+		// 		return;
+		// 	}
+		// });
 
 		socket.on('disconnect', function(){
 			console.log(socket.id + 'user disconnected');

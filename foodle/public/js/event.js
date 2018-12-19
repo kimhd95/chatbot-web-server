@@ -343,7 +343,7 @@ function logout(loginValue) {
     localStorage.clear();
     location.href = '/';
   }
-  
+
 }
 
 $(function () {
@@ -389,6 +389,94 @@ $(function () {
     $('#m').val('');
     return false;
   });
+
+  socket.on('chat register', function(socket_id){
+    const info = {
+      url: '/api/v1/users/verify_token',
+      method: 'POST',
+      data: null,
+      async: true,
+      crossDomain: true,
+      redirect: 'follow',
+      xhrFields: {
+          withCredentials: true
+      },
+      success: function (res) {
+          if (res.success) {
+              console.log(res);
+              console.log('verifyToken success');
+              const info = {
+                  method: "POST",
+                  url: '/api/v1/users/update_socket',
+                  body: {
+                      email: res.email,
+                      socket_id: socket_id,
+                  },
+                  success: function (res) {
+                      if (res.success){
+                          console.log("signUpReq: success!");
+                          alert("소켓정보 업데이트 완료.");
+                      }else {
+                          console.log("signUpReq: fail!");
+                          console.log(res);
+                      }
+                  },
+                  error: function(e) {
+                      console.log('ajax call error: signup page - singUpReq');
+                      if (e.status === 404 && e.responseText.includes("API call URL not found."))
+                          console.log("check your URL, method(GET/POST)");
+                      else if ((e.status === 400 && e.responseText.includes("not provided"))
+                          || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
+                          console.log("check your parameters");
+                      } else if(e.status === 0){
+                          if(navigator.onLine){
+                              console.log('status : 0');
+                          }else {
+                              console.log('internet disconnected');
+                              window.location.reload();
+                          }
+                      } else {
+                          console.log('status: ' + e.status + ', message: ' + e.responseText);
+                      }
+                      alert("정보 업데이트가 실패했습니다.");
+                  }
+              };
+              sendReq(info);
+            } else {
+              console.log('verifyToken fail');
+              console.log(res);
+          }
+      },
+      error: function (e) {
+          console.log('ajax call error: login page - verifyToken');
+          if (e.status === 404 && e.responseText.includes("API call URL not found.")) {
+              console.log("check your URL, method(GET/POST)");
+          }else if(e.status === 403){
+              if (e.responseText.includes("No token provided.")) {
+                  console.log("No token, no problem.");
+                  alert('로그인해주세요.');
+                  location.href = '/login';
+              }
+              else if (e.responseText.includes("jwt malformed"))
+                  console.log("Malformed token");
+              else if (e.responseText.includes("invalid signature"))
+                  console.log("Modified token");
+              else console.log(e);
+          } else if(e.status === 0){
+              if(navigator.onLine){
+                  console.log('status : 0');
+              }else {
+                  console.log('internet disconnected');
+                  window.location.reload();
+              }
+          } else{
+              console.log('status: ' + e.status + ', message: ' + e.responseText);
+              console.log(e);
+          }
+      }
+    }
+    sendTokenReq(info);
+        });
 
   socket.on('chat message', function(answer){
           $('#messages').append(bot_messaging(answer));
@@ -478,6 +566,7 @@ $(document).ready(() => {
     $('.email-signed-in')[0].style.display = 'block';
     $('.update-password')[0].style.display = 'block';
   } else {
+    // $('m').val(sessionStorage.getItem('email'));
     $('.social-signed-in')[0].style.display = 'block';
     $('.email-signed-in')[0].style.display = 'none';
     $('.update-password')[0].style.display = 'none';
@@ -532,9 +621,9 @@ $(document).ready(() => {
     }
     sendTokenReq(info);
   }
-  
 
-    
+
+
 
   let cache = {};
   let nowTime;
@@ -543,7 +632,7 @@ $(document).ready(() => {
     scrollLeft: "+=150px"
     }, 300);
   });
-  
+
   $('.card-body').on('click', '.arrow-left', function(){
     $(this).siblings('.choice_carousel').animate({
     scrollLeft: "-=150px"
@@ -596,7 +685,7 @@ $(document).ready(() => {
           console.log(e.responseJSON);
         }
       }
-  
+
       sendReq(info);
     }
   })
@@ -684,7 +773,7 @@ $(document).ready(() => {
       }
     }
     sendTokenReq(info);
-    
+
   })
   if (new Date().getHours() < 12) {
     nowTime = `오전 ${new Date().getHours()}:${new Date().getMinutes()}`;

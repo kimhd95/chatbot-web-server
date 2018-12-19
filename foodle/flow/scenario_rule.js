@@ -18,14 +18,14 @@ exports.scenario_rule = function(val, socket) {
             '많고 많은 외식메뉴 중에 뭘 고를지 모를땐 나를 찾아줘', '앞으로 더 많은 기능을 추가할 예정이니 기다려줘~', '일단은 서울에 있는 맛집을 섭렵한 뒤에 전국으로 진출할 예정이야!(다음엔 해외로..?)', '배고파! 너도 배고프니까 날 불렀겠지?'];
         let leng2 = chlist2.length;
         let rand2 = Math.floor(leng2 * Math.random());
-        info_update.profile.register(socket.id, function(err){
-          if(err){
-            console.log(err);
-            return err;
-          }else{
-            return;
-          }
-        });
+        // info_update.profile.register(socket.id, function(err){
+        //   if(err){
+        //     console.log(err);
+        //     return err;
+        //   }else{
+        //     return;
+        //   }
+        // });
         index.sendSocketMessage(socket.id, 'chat message button', chlist2[rand2], ['decide_menu','메뉴 고르기'],['decide_place','중간지점 찾기(서울)'],['decide_history','기록보기'],['user_feedback','개발팀에게 피드백하기']);
       }else{
       switch (user_data.scenario){
