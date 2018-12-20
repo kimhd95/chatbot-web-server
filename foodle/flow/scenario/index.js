@@ -1,8 +1,8 @@
-/* jshint node: true, devel: true */
-'use strict';
 
-let requireDir = require('require-dir');
-let dir = requireDir('./');
+
+const requireDir = require('require-dir');
+
+const dir = requireDir('./');
 
 
 module.exports = dir;
