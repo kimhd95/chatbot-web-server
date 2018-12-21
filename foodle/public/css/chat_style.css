@@ -136,6 +136,35 @@
   margin-right: 3px;
 }
 
+.checkbox {
+  display:none;
+}
+
+.messaging-button-checkbox {
+  border: 1px solid #175c8e;
+  color: #175c8e;
+  background-color: transparent;
+  border-radius: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 3px;
+}
+
+.messaging-button-finish-checkbox {
+  border: 1px solid #11476f;
+  color: white;
+  background-color: #11476f;
+  border-radius: 4px;
+  padding-left: 25px;
+  padding-right: 25px;
+  margin-right: 3px;
+}
+
+.messaging-button-checkbox-checked {
+  color: white;
+  background-color: #175c8e;
+}
+
 .get-started-button {
   border: 1px solid #175c8e;
   color: #175c8e;

@@ -1,20 +1,18 @@
-function bot_messaging(message){
+function bot_messaging(message) {
   let date;
-      let hour = new Date().getHours();
-      let min = new Date().getMinutes();
-      if (hour < 12) {
-          if (min < 10) date = `오전 ${hour}:0${min}`;
-          else date = `오전 ${hour}:${min}`;
-      } else if (hour === 12) {
-          if (min < 10) date = `오후 ${hour}:0${min}`;
-          else date = `오후 ${hour}:${min}`;
-      } else {
-          if (min < 10) date = `오후 ${hour%12}:0${min}`;
-          else date = `오후 ${hour%12}:${min}`;
-      }
-  var message_info = `<div class="bot-message">
+  const hour = new Date().getHours();
+  const min = new Date().getMinutes();
+  if (hour < 12) {
+    if (min < 10) date = `오전 ${hour}:0${min}`;
+    else date = `오전 ${hour}:${min}`;
+  } else if (hour === 12) {
+    if (min < 10) date = `오후 ${hour}:0${min}`;
+    else date = `오후 ${hour}:${min}`;
+  } else if (min < 10) date = `오후 ${hour % 12}:0${min}`;
+  else date = `오후 ${hour % 12}:${min}`;
+  let message_info = `<div class="bot-message">
       <div class="message-info">
-          <img class="image" src="/images/poodle.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
+          <img class="image" src="/images/poodle.png" alt="푸들" style="width: 30px; height: 30px; border-radius: 50%;">
           <span class="name">푸들</span>
           <span class="time">${date}</span>
       </div>
@@ -24,8 +22,8 @@ function bot_messaging(message){
 
   </div>
   `;
-  if($('.bot-message > .message-info > .time').last().text() === date){
-    if($('#messages > div:last-child').attr('class') === 'bot-message'){
+  if ($('.bot-message > .message-info > .time').last().text() === date) {
+    if ($('#messages > div:last-child').attr('class') === 'bot-message') {
       message_info = `<div class="bot-message">
           <div class="message-text">
               ${message}
@@ -35,137 +33,146 @@ function bot_messaging(message){
       `;
     }
   }
-  return(message_info);
+  return (message_info);
 }
 
-function bot_messaging_image(image){
+function bot_messaging_image(image) {
   let date;
-      let hour = new Date().getHours();
-      let min = new Date().getMinutes();
-      if (hour < 12) {
-          if (min < 10) date = `오전 ${hour}:0${min}`;
-          else date = `오전 ${hour}:${min}`;
-      } else if (hour === 12) {
-          if (min < 10) date = `오후 ${hour}:0${min}`;
-          else date = `오후 ${hour}:${min}`;
-      } else {
-          if (min < 10) date = `오후 ${hour%12}:0${min}`;
-          else date = `오후 ${hour%12}:${min}`;
-      }
-  var message_info = `<div class="bot-message">
+  const hour = new Date().getHours();
+  const min = new Date().getMinutes();
+  if (hour < 12) {
+    if (min < 10) date = `오전 ${hour}:0${min}`;
+    else date = `오전 ${hour}:${min}`;
+  } else if (hour === 12) {
+    if (min < 10) date = `오후 ${hour}:0${min}`;
+    else date = `오후 ${hour}:${min}`;
+  } else if (min < 10) date = `오후 ${hour % 12}:0${min}`;
+  else date = `오후 ${hour % 12}:${min}`;
+  let message_info = `<div class="bot-message">
       <div class="message-info">
-          <img class="image" src="/images/poodle.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
+          <img class="image" src="/images/poodle.png" alt="푸들" style="width: 30px; height: 30px; border-radius: 50%;">
           <span class="name">푸들</span>
           <span class="time">${date}</span>
       </div>
           <img class="img-fluid rest-img" src="${image}"></img>
       </div>
   `;
-  if($('.bot-message > .message-info > .time').last().text() === date){
-    if($('#messages > div:last-child').attr('class') === 'bot-message'){
+  if ($('.bot-message > .message-info > .time').last().text() === date) {
+    if ($('#messages > div:last-child').attr('class') === 'bot-message') {
       message_info = `<div class="bot-message">
           <img class="img-fluid rest-img" src="${image}"></img>
       </div>
       `;
     }
   }
-  return(message_info);
+  return (message_info);
 }
 
-function bot_messaging_image_carousel(image){
-  let carousel_id = 'carousel'+String(Math.floor(Math.random() * 10000) + 1);
+function bot_messaging_image_carousel(image) {
+  const carousel_id = `carousel${String(Math.floor(Math.random() * 10000) + 1)}`;
   let date;
-      let hour = new Date().getHours();
-      let min = new Date().getMinutes();
-      if (hour < 12) {
-          if (min < 10) date = `오전 ${hour}:0${min}`;
-          else date = `오전 ${hour}:${min}`;
-      } else if (hour === 12) {
-          if (min < 10) date = `오후 ${hour}:0${min}`;
-          else date = `오후 ${hour}:${min}`;
-      } else {
-          if (min < 10) date = `오후 ${hour%12}:0${min}`;
-          else date = `오후 ${hour%12}:${min}`;
-      }
-  var message_info = `<div class="bot-message">
-        <div class="message-info">
-            <img class="image" src="/images/poodle.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
-            <span class="name">푸들</span>
-            <span class="time">${date}</span>
-        </div>
-          <div id="${carousel_id}" class="carousel slide" data-ride="carousel" data-wrap="false">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-              <img class="d-block w-100 rest-img" src="${image}" alt="First slide">
-              </div>
+  const hour = new Date().getHours();
+  const min = new Date().getMinutes();
+  if (hour < 12) {
+    if (min < 10) date = `오전 ${hour}:0${min}`;
+    else date = `오전 ${hour}:${min}`;
+  } else if (hour === 12) {
+    if (min < 10) date = `오후 ${hour}:0${min}`;
+    else date = `오후 ${hour}:${min}`;
+  } else if (min < 10) date = `오후 ${hour % 12}:0${min}`;
+  else date = `오후 ${hour % 12}:${min}`;
+  const message_info = `<div class="bot-message">
+      <div class="message-info">
+          <img class="image" src="/images/poodle.png" alt="푸들" style="width: 30px; height: 30px; border-radius: 50%;">
+          <span class="name">푸들</span>
+          <span class="time">${date}</span>
+      </div>
+        <div id="${carousel_id}" class="carousel slide" data-ride="carousel" data-wrap="false">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+            <img class="d-block w-100 rest-img" src="${image}" alt="First slide">
             </div>
-            <a class="carousel-control-prev" href="#${carousel_id}" role="button" data-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-              <a class="carousel-control-next" href="#${carousel_id}" role="button" data-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </a>
           </div>
+          <a class="carousel-control-prev" href="#${carousel_id}" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+            <a class="carousel-control-next" href="#${carousel_id}" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
         </div>
-    `;
-  return(message_info);
+      </div>
+  `;
+  return (message_info);
 }
 
-function carousel_inner(image){
-  var message_info = `
+function carousel_inner(image) {
+  const message_info = `
   <div class="carousel-item">
                 <img class="d-block w-100 rest-img" src="${image}" alt="slide">
   </div>
   `;
-  return(message_info);
+  return (message_info);
 }
 
-function bot_messaging_button(button_id, message){
-  var message_info = `
+function bot_messaging_button(button_id, message) {
+  const message_info = `
           <button type="button" class="messaging-button" id="${button_id}" name="${message}">${message}</button>
   `;
-  return(message_info);
+  return (message_info);
 }
 
-//TODO : 임시로 만들어 놓은 현재 접속자 -> 추후 삭제 해야함
-function user_list_update(id){
-  var message_info = `
+function bot_messaging_button_finish_checkbox(button_id, message) {
+  const message_info = `
+          <br><button type="button" class="messaging-button" style="border: 1px solid #E20000; color: white; background-color: #E20000; border-radius: 5px; padding-left: 25px; padding-right: 25px;" id="${button_id}" name="${message}">${message}</button>
+  `;
+  return (message_info);
+}
+
+function bot_messaging_button_checkbox(button_id, message) {
+  const message_info = `
+          <button type="button" class="messaging-button-checkbox" id="${button_id}" name="${message}"><input type="checkbox" id="${button_id}" class="checkbox"></input>${message}</button>
+  `;
+  return (message_info);
+}
+
+// TODO : 임시로 만들어 놓은 현재 접속자 -> 추후 삭제 해야함
+function user_list_update(id) {
+  const message_info = `
   <p class="user_id">${id}</p>
   `;
-  return(message_info);
+  return (message_info);
 }
 
-function user_messaging(message){
-    let date;
-      let hour = new Date().getHours();
-      let min = new Date().getMinutes();
-      if (hour < 12) {
-          if (min < 10) date = `오전 ${hour}:0${min}`;
-          else date = `오전 ${hour}:${min}`;
-      } else if (hour === 12) {
-          if (min < 10) date = `오후 ${hour}:0${min}`;
-          else date = `오후 ${hour}:${min}`;
-      } else {
-          if (min < 10) date = `오후 ${hour%12}:0${min}`;
-          else date = `오후 ${hour%12}:${min}`;
-      }
-    var message_info = `<div class="user-message">
-        <div class="message-info">
-            <span class="time">${date}</span>
-        </div>
-        <div class="message-text">
-          ${message}
-        </div>
-    </div>
-  `;
-  return(message_info);
+
+function user_messaging(message) {
+  let date;
+  const hour = new Date().getHours();
+  const min = new Date().getMinutes();
+  if (hour < 12) {
+    if (min < 10) date = `오전 ${hour}:0${min}`;
+    else date = `오전 ${hour}:${min}`;
+  } else if (hour === 12) {
+    if (min < 10) date = `오후 ${hour}:0${min}`;
+    else date = `오후 ${hour}:${min}`;
+  } else if (min < 10) date = `오후 ${hour % 12}:0${min}`;
+  else date = `오후 ${hour % 12}:${min}`;
+  const message_info = `<div class="user-message">
+      <div class="message-info">
+          <span class="time">${date}</span>
+      </div>
+      <div class="message-text">
+        ${message}
+      </div>
+  </div>
+`;
+  return (message_info);
 }
 
-function bot_messaging_card(res_name, res_type, food_name, naver_url, map_url, image, image2, image3){
-      let carousel_id = 'carousel'+String(Math.floor(Math.random() * 10000) + 1);
-      var message_info = `<div class="bot-message">
+function bot_messaging_card(res_name, res_type, food_name, naver_url, map_url, image, image2, image3) {
+  const carousel_id = `carousel${String(Math.floor(Math.random() * 10000) + 1)}`;
+  const message_info = `<div class="bot-message">
             <button type="button" class="btn btn-light arrow-left"><</button>
             <button type="button" class="btn btn-light arrow-right">></button>
             <div class="choice_carousel">
@@ -200,12 +207,12 @@ function bot_messaging_card(res_name, res_type, food_name, naver_url, map_url, i
             </div>
           </div>
       `;
-  return(message_info);
+  return (message_info);
 }
 
-function bot_messaging_card_inner(res_name, res_type, food_name, naver_url, map_url, image, image2, image3){
-  let carousel_id = 'carousel'+String(Math.floor(Math.random() * 10000) + 1);
-      var message_info = `
+function bot_messaging_card_inner(res_name, res_type, food_name, naver_url, map_url, image, image2, image3) {
+  const carousel_id = `carousel${String(Math.floor(Math.random() * 10000) + 1)}`;
+  const message_info = `
               <div class="choice_card">
                 <div id="${carousel_id}" class="carousel slide" data-ride="carousel" data-wrap="false">
                   <div class="carousel-inner">
@@ -236,11 +243,11 @@ function bot_messaging_card_inner(res_name, res_type, food_name, naver_url, map_
                 </div>
               </div>
       `;
-  return(message_info);
+  return (message_info);
 }
 
-function bot_messaging_card_no_image(res_name, res_type, food_name, naver_url, map_url){
-      var message_info = `<div class="bot-message">
+function bot_messaging_card_no_image(res_name, res_type, food_name, naver_url, map_url) {
+  const message_info = `<div class="bot-message">
             <button type="button" class="btn btn-light arrow-left"><</button>
             <button type="button" class="btn btn-light arrow-right">></button>
               <div class="choice_card">
@@ -253,12 +260,12 @@ function bot_messaging_card_no_image(res_name, res_type, food_name, naver_url, m
               </div>
           </div>
       `;
-  return(message_info);
+  return (message_info);
 }
 
-function bot_messaging_card_inner_no_image(res_name, res_type, food_name, naver_url, map_url){
-  let carousel_id = 'carousel'+String(Math.floor(Math.random() * 10000) + 1);
-      var message_info = `
+function bot_messaging_card_inner_no_image(res_name, res_type, food_name, naver_url, map_url) {
+  // const carousel_id = `carousel${String(Math.floor(Math.random() * 10000) + 1)}`;
+  const message_info = `
               <div class="choice_card">
                 <div class="choice_card_content">
                   <h5 class="card-title">${res_name}</h5>
@@ -268,8 +275,10 @@ function bot_messaging_card_inner_no_image(res_name, res_type, food_name, naver_
                 </div>
               </div>
       `;
-  return(message_info);
+  return (message_info);
 }
+
+
 // google sdk load
 function onLoad () {
   gapi.load('auth2', () => {
@@ -346,6 +355,110 @@ function logout(loginValue) {
 
 }
 
+function updateChatLog(socket_id) {
+    const chat_log = $("#messages")[0].innerHTML;
+    const info = {
+        method: "POST",
+        url: '/api/v1/users/update_user',
+        body: {
+            kakao_id: socket_id,
+            chat_log: chat_log,
+        },
+        success: function (res) {
+            if (res.success){
+                console.log("update chatlog: success!");
+            }else {
+                console.log("updatechatlog: fail!");
+                console.log(res);
+            }
+        },
+        error: function(e) {
+            console.log('ajax call error: signup page - singUpReq');
+            if (e.status === 404 && e.responseText.includes("API call URL not found."))
+                console.log("check your URL, method(GET/POST)");
+            else if ((e.status === 400 && e.responseText.includes("not provided"))
+                || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
+                console.log("check your parameters");
+            } else if(e.status === 0){
+                if(navigator.onLine){
+                    console.log('status : 0');
+                }else {
+                    console.log('internet disconnected');
+                    window.location.reload();
+                }
+            } else {
+                console.log('status: ' + e.status + ', message: ' + e.responseText);
+            }
+            alert("정보 업데이트가 실패했습니다.");
+        }
+    };
+    sendReq(info);
+}
+
+function getChatLog(email) {
+    const info = {
+        method: "POST",
+        url: '/api/v1/users/get_chat_log',
+        body: {
+            email: email,
+        },
+        success: function (res) {
+            if (res.success){
+                console.log("get chatlog: success!");
+                const init_html = `<hr><br>
+                  <div class="bot-message">
+                    <div class="message-info">
+                        <img class="image" src="/images/poodle.png" alt="푸들" style="width: 30px; height: 30px; border-radius: 50%;">
+                        <span class="name">푸들</span>
+                        <span class="time"></span>
+                    </div>
+                    <div class="message-text">
+                        안녕! 나는 결정장애를 치료해주는 음식결정 챗봇 푸들이야!
+                    </div>
+                    <br>
+                    <div class="message-button">
+                        <button type="button" class="messaging-button" id="decide_menu" name="메뉴 고르기">메뉴 고르기</button>
+                        <button type="button" class="messaging-button" id="decide_place" name="중간지점 찾기(서울)">중간지점 찾기(서울)</button>
+                        <button type="button" class="messaging-button" id="decide_history" name="기록 보기">기록 보기</button>
+                        <button type="button" class="messaging-button" id="user_feedback" name="개발팀에게 피드백하기">개발팀에게 피드백하기</button>
+                        <button type="button" class="messaging-button" id="chitchat" name="푸들이랑 대화하기">푸들이랑 대화하기</button>
+                    </div>
+                </div>`;
+                let user_html = res.message;
+                if (user_html !== null) {
+                    $('#messages').html(user_html+init_html);
+                    $(".bot-message").css({ opacity: 1 });
+                    $(".user-message").css({ opacity: 1 });
+                    $('#messages').scrollTop(1e4);
+                }
+            }else {
+                console.log("getchatlog: fail!");
+                console.log(res);
+            }
+        },
+        error: function(e) {
+            console.log('ajax call error: signup page - singUpReq');
+            if (e.status === 404 && e.responseText.includes("API call URL not found."))
+                console.log("check your URL, method(GET/POST)");
+            else if ((e.status === 400 && e.responseText.includes("not provided"))
+                || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
+                console.log("check your parameters");
+            } else if(e.status === 0){
+                if(navigator.onLine){
+                    console.log('status : 0');
+                }else {
+                    console.log('internet disconnected');
+                    window.location.reload();
+                }
+            } else {
+                console.log('status: ' + e.status + ', message: ' + e.responseText);
+            }
+            alert("채팅로그 불러오기가 실패했습니다.");
+        }
+    };
+    sendReq(info);
+}
+
 $(function () {
 
   var socket = io();
@@ -356,29 +469,49 @@ $(function () {
   //   // $("input").prop('disabled', false);
   // });
 
-
-  $('.card-body').on('click', '.messaging-button', function(e) {
-     if($(e.target).attr('name') === '메뉴 고르기'){
-       $('#m').autocomplete( "enable" );
-     }else{
-       $('#m').autocomplete( "disable" );
-     }
-     socket.emit('chat message button rule', $(e.target).attr('name'),$(e.target).attr('id'));
-     $(".messaging-button").hide();
+  $('body').on('click', '.checkbox', (e) => {
+    const clicked_id = `#${$(e.target).attr('id')}`;
+    $(clicked_id).toggleClass('messaging-button-checkbox-checked');
   });
 
-  $('.card-body').on('click', '.messaging-button-check', function(e) {
-     if($(e.target).attr('name') === '메뉴 고르기'){
-       $('#m').autocomplete( "enable" );
-     }else{
-       $('#m').autocomplete( "disable" );
-     }
-     // socket.emit('chat message button rule', $(e.target).attr('name'),$(e.target).attr('id'));
-     $(e.target).children('input[type=checkbox]').click();
-     // $(".messaging-button").hide();
+  $('body').on('click', '.messaging-button', (e) => {
+    if ($(e.target).attr('name') === '메뉴 고르기') {
+      $('#m').autocomplete('enable');
+    } else {
+      $('#m').autocomplete('disable');
+    }
+    const checked_array = [];
+    if ($(e.target).attr('id') === 'mood2/') {
+      $('.checkbox:checked').each(function () {
+        checked_array.push(this.id);
+      });
+      if (checked_array.length === 0) {
+        socket.emit('chat message button rule', $(e.target).attr('name'), 'no_mood2');
+      } else {
+        socket.emit('chat message button rule', $(e.target).attr('name'), ($(e.target).attr('id') + checked_array));
+        $('.messaging-button').hide();
+        $('.messaging-button-checkbox').hide();
+      }
+    } else {
+      socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id'));
+      $('.checkbox:checked').attr('checked', false);
+      $('.messaging-button').hide();
+      $('.messaging-button-checkbox').hide();
+    }
   });
 
-  $('form').submit(function(){
+  $('body').on('click', '.messaging-button-checkbox', (e) => {
+    if ($(e.target).attr('name') === '메뉴 고르기') {
+      $('#m').autocomplete('enable');
+    } else {
+      $('#m').autocomplete('disable');
+    }
+    // socket.emit('chat message button rule', $(e.target).attr('name'),$(e.target).attr('id'));
+    $(e.target).children('input[type=checkbox]').click();
+    // $(".messaging-button-checkbox").hide();
+  });
+
+  $('body').on("submit", "form", function(){
     if($('#m').val() === "버튼보여줘"){
       socket.emit('chat message button', $('#m').val());
       $("input").prop('disabled', true);
@@ -389,6 +522,20 @@ $(function () {
     $('#m').val('');
     return false;
   });
+
+
+  // $('form').submit(function(){
+  //   alert('됨');
+  //   if($('#m').val() === "버튼보여줘"){
+  //     socket.emit('chat message button', $('#m').val());
+  //     $("input").prop('disabled', true);
+  //
+  //   }else{
+  //   socket.emit('chat message', $('#m').val());
+  //   }
+  //   $('#m').val('');
+  //   return false;
+  // });
 
   socket.on('chat register', function(socket_id){
     const info = {
@@ -401,20 +548,21 @@ $(function () {
       xhrFields: {
           withCredentials: true
       },
-      success: function (res) {
-          if (res.success) {
-              console.log(res);
+      success: function (first_res) {
+          if (first_res.success) {
+              console.log(first_res);
               console.log('verifyToken success');
               const info = {
                   method: "POST",
                   url: '/api/v1/users/update_socket',
                   body: {
-                      email: res.email,
+                      email: first_res.email,
                       socket_id: socket_id,
                   },
                   success: function (res) {
                       if (res.success){
                           console.log("signUpReq: success!");
+                          getChatLog(first_res.email);
                           alert("소켓정보 업데이트 완료.");
                       }else {
                           console.log("signUpReq: fail!");
@@ -478,83 +626,107 @@ $(function () {
     sendTokenReq(info);
         });
 
-  socket.on('chat message', function(answer){
-          $('#messages').append(bot_messaging(answer));
-          $("#messages").scrollTop(1e4);
-        });
+  socket.on('chat message', (answer) => {
+    $('#messages').append(bot_messaging(answer));
+    $('#messages').scrollTop(1e4);
+  });
 
-  socket.on('chat message_self', function(msg){
-          $('#messages').append(user_messaging(msg));
-          // $('#messages').append($('<li>').text(answer));
-          // window.scrollTo(0, document.body.scrollHeight);
-        });
+  socket.on('chat message_self', (msg) => {
+    $('#messages').append(user_messaging(msg)).children(':last').hide()
+      .fadeIn(150);
+    // $('#messages').append($('<li>').text(answer));
+    // window.scrollTo(0, document.body.scrollHeight);
+  });
 
-  //TODO : 임시로 만들어 놓은 현재 접속자 -> 추후 삭제 해야함
-  socket.on('user_list', function(clients){
-          $('.user_id').remove();
-          clients.forEach(function(elements){
-            $('#user_list').append(user_list_update(elements));
-          });
-        });
+  // TODO : 임시로 만들어 놓은 현재 접속자 -> 추후 삭제 해야함
+  socket.on('user_list', (clients) => {
+    $('.user_id').remove();
+    clients.forEach((elements) => {
+      $('#user_list').append(user_list_update(elements));
+    });
+  });
 
-  socket.on('chat message button', function(msg, ...args){
-          let basic_message = $('#messages').append(bot_messaging(msg));
-          for(var i = 0; i<args.length; i++){
-            // basic_message.append(bot_messaging_button(args[i][0],args[i][1]));
-            $('#messages').append(bot_messaging_button(args[i][0],args[i][1]));
-          }
-          if(args.length === 0){
-            $("input").prop('disabled', false);
-            $("#input-button").attr("disabled", false);
-          }else{
-            $("input").prop('disabled', true);
-            $("#input-button").attr("disabled", true);
-          }
-            $("#messages").scrollTop(1e4);
-            // $(".myText").val($("#messages")[0].outerHTML);
-        });
+  socket.on('chat message button', (socket_id, msg, ...args) => {
+    $('#messages').append(bot_messaging(msg)).children(':last').hide()
+      .fadeIn(150);
+    for (let i = 0; i < args.length; i += 1) {
+      // basic_message.append(bot_messaging_button(args[i][0],args[i][1]));
+      $('#messages').append(bot_messaging_button(args[i][0], args[i][1]));
+    }
+    if (args.length === 0) {
+      $('#m').prop('disabled', false);
+      $('#input-button').attr('disabled', false);
+    } else {
+      $('#m').prop('disabled', true);
+      $('#input-button').attr('disabled', true);
+    }
+    $('#messages').scrollTop(1e4);
+    updateChatLog(socket_id);
+    // $(".myText").val($("#messages")[0].outerHTML);
+  });
 
-  socket.on('chat message image', function(msg, button1, button2, ...args){
-          $('#messages').append(bot_messaging_image_carousel(args[0]));
-          for(var i = 0; i<args[1]-1; i++){
-            $('.carousel-inner').last().append(carousel_inner(args[2][i]));
-          }
+  socket.on('chat message button checkbox', (socket_id, msg, ...args) => {
+    $('#messages').append(bot_messaging(msg)).children(':last').hide()
+      .fadeIn(150);
+    const args_length = args.length;
+    for (let i = 0; i < args_length - 1; i += 1) {
+      // basic_message.append(bot_messaging_button(args[i][0],args[i][1]));
+      $('#messages').append(bot_messaging_button_checkbox(args[i][0], args[i][1]));
+    }
+    $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
+    if (args.length === 0) {
+      $('#m').prop('disabled', false);
+      $('#input-button').attr('disabled', false);
+    } else {
+      $('#m').prop('disabled', true);
+      $('#input-button').attr('disabled', true);
+    }
+    $('#messages').scrollTop(1e4);
+    updateChatLog(socket_id);
+    // $(".myText").val($("#messages")[0].outerHTML);
+  });
 
-          $('#messages').append(bot_messaging(msg)).scrollTop(1e4);
-          $('#messages').append(bot_messaging_button(button1[0],button1[1])).append(bot_messaging_button(button2[0],button2[1]));
+  socket.on('chat message image', (socket_id, msg, button1, button2, ...args) => {
+    $('#messages').append(bot_messaging_image_carousel(args[0]));
+    for (let i = 0; i < args[1] - 1; i += 1) {
+      $('.carousel-inner').last().append(carousel_inner(args[2][i]));
+    }
 
-          $("input").prop('disabled', true);
-          setTimeout(function(){
-            $('#messages').scrollTop(1e4);
-          }, 100); //execute your function after 2 seconds.
-        });
+    $('#messages').append(bot_messaging(msg)).scrollTop(1e4);
+    $('#messages').append(bot_messaging_button(button1[0], button1[1])).append(bot_messaging_button(button2[0], button2[1]));
 
-  socket.on('chat message card', function(button1, button2, button3, beer1, beer2){
-          $('#messages').append(bot_messaging_card(beer1[0],beer1[1],beer1[2],beer1[3],beer1[4],beer1[5],beer1[6],beer1[7]));
-          $('.choice_carousel').last().append(bot_messaging_card_inner(beer2[0],beer2[1],beer2[2],beer2[3],beer2[4],beer2[5],beer2[6],beer2[7]));
-          $('#messages').append(bot_messaging_button(button1[0],button1[1])).append(bot_messaging_button(button2[0],button2[1])).append(bot_messaging_button(button3[0],button3[1]));
-          if(button1[0] === 'semi_final2/1' || button1[0] === 'final/1'){
-            $(".choice_card").eq(-2).prepend("<img class='choice_card_winner' src='/images/white.png'></img>");
-          }
-          $("input").prop('disabled', true);
-          $("#input-button").attr("disabled", true);
-          setTimeout(function(){
-            $('#messages').scrollTop(1e4);
-          }, 100); //execute your function after 2 seconds.
-        });
+    $('#m').prop('disabled', true);
+    setTimeout(() => {
+      $('#messages').scrollTop(1e4);
+    }, 100); // execute your function after 2 seconds.
+    updateChatLog(socket_id);
+  });
 
-  socket.on('chat message card no image', function(button1, button2, button3, beer1, beer2){
-          $('#messages').append(bot_messaging_card(beer1[0],beer1[1],beer1[2],beer1[3],beer1[4]));
-          $('.choice_carousel').last().append(bot_messaging_card_inner(beer2[0],beer2[1],beer2[2],beer2[3],beer2[4]));
-          $('#messages').append(bot_messaging_button(button1[0],button1[1])).append(bot_messaging_button(button2[0],button2[1])).append(bot_messaging_button(button3[0],button3[1]));
-          if(button1[0] === 'semi_final2/1' || button1[0] === 'final/1'){
-            $(".choice_card").eq(-2).prepend("<img class='choice_card_winner' src='/images/white.png'></img>");
-          }
-          $("input").prop('disabled', true);
-          setTimeout(function(){
-            $('#messages').scrollTop(1e4);
-          }, 100); //execute your function after 2 seconds.
-        });
+  socket.on('chat message card', (socket_id, button1, button2, button3, beer1, beer2) => {
+    $('#messages').append(bot_messaging_card(beer1[0], beer1[1], beer1[2], beer1[3], beer1[4], beer1[5], beer1[6], beer1[7]));
+    $('.choice_carousel').last().append(bot_messaging_card_inner(beer2[0], beer2[1], beer2[2], beer2[3], beer2[4], beer2[5], beer2[6], beer2[7]));
+    $('#messages').append(bot_messaging_button(button1[0], button1[1])).append(bot_messaging_button(button2[0], button2[1])).append(bot_messaging_button(button3[0], button3[1]));
+    $('#m').prop('disabled', true);
+    $('#input-button').attr('disabled', true);
+    setTimeout(() => {
+      $('#messages').scrollTop(1e4);
+    }, 100); // execute your function after 2 seconds.
+    updateChatLog(socket_id);
+  });
+
+  socket.on('chat message card no image', (socket_id, button1, button2, button3, beer1, beer2) => {
+    $('#messages').append(bot_messaging_card(beer1[0], beer1[1], beer1[2], beer1[3], beer1[4]));
+    $('.choice_carousel').last().append(bot_messaging_card_inner(beer2[0], beer2[1], beer2[2], beer2[3], beer2[4]));
+    $('#messages').append(bot_messaging_button(button1[0], button1[1])).append(bot_messaging_button(button2[0], button2[1])).append(bot_messaging_button(button3[0], button3[1]));
+    // if(button1[0] === 'semi_final2/1' || button1[0] === 'final/1'){
+    //   $(".choice_card").eq(-2).prepend("<img class='choice_card_winner' src='/images/white.png'></img>");
+    // }
+    $('#m').prop('disabled', true);
+    setTimeout(() => {
+      $('#messages').scrollTop(1e4);
+    }, 100); // execute your function after 2 seconds.
+    updateChatLog(socket_id);
+  });
 });
 
 
@@ -622,10 +794,6 @@ $(document).ready(() => {
     sendTokenReq(info);
   }
 
-
-
-
-  let cache = {};
   let nowTime;
   $('.card-body').on('click', '.arrow-right', function(){
     $(this).siblings('.choice_carousel').animate({
@@ -642,6 +810,7 @@ $(document).ready(() => {
   $('#m').autocomplete({
     source: function( request, response ) {
       let term = request.term;
+      let cache = {};
       if ( term in cache ) {
         response( cache[ term ] );
         return;

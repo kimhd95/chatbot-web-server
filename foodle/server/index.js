@@ -49,6 +49,8 @@ module.exports = function(){
 		socket.on('disconnect', function(){
 			console.log(socket.id + 'user disconnected');
 		});
+
+
 		socket.on('chat message', function(msg){
 			io.to(socket.id).emit('chat message_self', msg);
 			scenario_rule.scenario_rule(msg, socket);
@@ -101,8 +103,14 @@ module.exports = function(){
 
 	});
 
-	exports.sendSocketMessage = function(socket_id, message_type, message, ...args){
-		io.to(socket_id).emit(message_type, message, ...args);
+	exports.sendSocketMessage = function (socket_id, message_type, message, ...args) {
+	  return new Promise(((resolve, reject) => {
+	    info_update.profile.create_bot_log(socket_id, message_type, String(message), JSON.stringify(args)).then((result) => {
+	      resolve(io.to(socket_id).emit(message_type, socket_id, message, ...args));
+	    }).catch((e) => {
+	      reject(e);
+	    });
+	  }));
 	};
 
 	create = function(config){
