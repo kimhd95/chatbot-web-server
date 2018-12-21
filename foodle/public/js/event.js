@@ -429,7 +429,9 @@ function getChatLog(email) {
                     $('#messages').html(user_html+init_html);
                     $(".bot-message").css({ opacity: 1 });
                     $(".user-message").css({ opacity: 1 });
-                    $('#messages').scrollTop(1e4);
+                    $('.messaging-button').hide();
+                    $('.messaging-button').slice(-5).show();
+                    $('#messages').scrollTop(1E10);
                 }
             }else {
                 console.log("getchatlog: fail!");
@@ -628,7 +630,7 @@ $(function () {
 
   socket.on('chat message', (answer) => {
     $('#messages').append(bot_messaging(answer));
-    $('#messages').scrollTop(1e4);
+    $('#messages').scrollTop(1E10);
   });
 
   socket.on('chat message_self', (msg) => {
@@ -660,7 +662,7 @@ $(function () {
       $('#m').prop('disabled', true);
       $('#input-button').attr('disabled', true);
     }
-    $('#messages').scrollTop(1e4);
+    $('#messages').scrollTop(1E10);
     updateChatLog(socket_id);
     // $(".myText").val($("#messages")[0].outerHTML);
   });
@@ -681,7 +683,7 @@ $(function () {
       $('#m').prop('disabled', true);
       $('#input-button').attr('disabled', true);
     }
-    $('#messages').scrollTop(1e4);
+    $('#messages').scrollTop(1E10);
     updateChatLog(socket_id);
     // $(".myText").val($("#messages")[0].outerHTML);
   });
@@ -692,12 +694,12 @@ $(function () {
       $('.carousel-inner').last().append(carousel_inner(args[2][i]));
     }
 
-    $('#messages').append(bot_messaging(msg)).scrollTop(1e4);
+    $('#messages').append(bot_messaging(msg)).scrollTop(1E10);
     $('#messages').append(bot_messaging_button(button1[0], button1[1])).append(bot_messaging_button(button2[0], button2[1]));
 
     $('#m').prop('disabled', true);
     setTimeout(() => {
-      $('#messages').scrollTop(1e4);
+      $('#messages').scrollTop(1E10);
     }, 100); // execute your function after 2 seconds.
     updateChatLog(socket_id);
   });
@@ -709,7 +711,7 @@ $(function () {
     $('#m').prop('disabled', true);
     $('#input-button').attr('disabled', true);
     setTimeout(() => {
-      $('#messages').scrollTop(1e4);
+      $('#messages').scrollTop(1E10);
     }, 100); // execute your function after 2 seconds.
     updateChatLog(socket_id);
   });
@@ -723,7 +725,7 @@ $(function () {
     // }
     $('#m').prop('disabled', true);
     setTimeout(() => {
-      $('#messages').scrollTop(1e4);
+      $('#messages').scrollTop(1E10);
     }, 100); // execute your function after 2 seconds.
     updateChatLog(socket_id);
   });

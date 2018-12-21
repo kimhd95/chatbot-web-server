@@ -129,8 +129,9 @@ module.exports = function(){
 		server.set('view engine', 'ejs');
 
 		// -------------- Middleware -------------- //
-		// server.use(bodyParser.json()); // MW: parse json
+		server.use(bodyParser.json({limit:'50mb'})); // MW: parse json
 		server.use(bodyParser.urlencoded({
+			limit: '50mb',
 			extended: true
 		}));
 		server.use(cookieParser());
