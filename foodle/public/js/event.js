@@ -426,12 +426,23 @@ function getChatLog(email) {
                 </div>`;
                 let user_html = res.message;
                 if (user_html !== null) {
+                  if (res.disconn_type === 'permanent') {
                     $('#messages').html(user_html+init_html);
                     $(".bot-message").css({ opacity: 1 });
                     $(".user-message").css({ opacity: 1 });
                     $('.messaging-button').hide();
                     $('.messaging-button').slice(-5).show();
-                    $('#messages').scrollTop(1E10);
+                  } else {
+                    $('#messages').html(user_html);
+                    $(".bot-message").css({ opacity: 1 });
+                    $(".user-message").css({ opacity: 1 });
+                    // $('.messaging-button').hide();
+                    if ($('#messages').children().last().attr('class') !== 'messaging-button' && $('#messages').children().last().attr('class') !== 'message-button') {
+                      $('#m').prop('disabled', false);
+                      $('#input-button').attr('disabled', false);
+                    }
+                  }
+                  $('#messages').scrollTop(1E10);
                 }
             }else {
                 console.log("getchatlog: fail!");
