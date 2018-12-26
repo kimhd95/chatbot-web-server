@@ -620,4 +620,22 @@ Profile.load_user = function (kakaoid) {
   }));
 };
 
+Profile.chitchat = function (kakaoid, message) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const method = 'POST';
+    const url = 'http://54.180.114.150:8888/engine/predict';
+    const json = {
+      content: message,
+    };
+
+    const func = function (error, response, body) {
+      error === null && response.statusCode === 200
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall_worry(kakaoid, method, url, json, func);
+  }));
+};
+
 module.exports = Profile;

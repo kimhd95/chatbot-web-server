@@ -120,8 +120,8 @@ class Toolbox {
   chitchat(value, socket, user_data) {
     (async function () {
       try {
-        await info_update.profile.update_state(socket.id, '5', 'chitchat');
-        index.sendSocketMessage(socket.id, 'chat message button', 'ㅎㅇㅎㅇ');
+        await info_update.profile.update_state(socket.id, '5', 'init');
+        index.sendSocketMessage(socket.id, 'chat message button', '나랑 얘기할래???', ['chitchat', '할래!'], ['get_started', '처음으로 돌아가기']);
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
         console.log(e);
