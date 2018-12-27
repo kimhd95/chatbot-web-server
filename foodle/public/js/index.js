@@ -58,7 +58,7 @@ $(document).ready(() => {
 			isPopup: false, /* 팝업을 통한 연동처리 여부 */
 			loginButton: {color: "green", type: 3, height: 50} /* 로그인 버튼의 타입을 지정 */
 		}
-    );	
+    );
 	/* 설정정보를 초기화하고 연동을 준비 */
     naverLogin.init();
     $('#naverIdLogin_loginButton img')[0].src = '/images/naver2.png';
@@ -78,6 +78,7 @@ $(document).ready(() => {
                 if (res.success) {
                     console.log(res);
                     console.log('verifyToken success');
+                    sessionStorage.setItem('email', res.email);
                     alert('이미 로그인되어 있습니다.');
                     window.location.replace(res.redirect);
                 } else {
@@ -137,7 +138,7 @@ $(document).ready(() => {
                     if (res.success) {
                         sessionStorage.setItem('login', '1');
                         sessionStorage.setItem('email', email);
-                        window.location.replace(res.redirect)                        
+                        window.location.replace(res.redirect)
                     } else {
                         console.log(res);
                     }
@@ -145,7 +146,7 @@ $(document).ready(() => {
                 error: function (e) {
                     console.log(e.responseJSON);
                     if (e.responseJSON.message === 'This email is Already signed up.') {
-                        window.location.replace(res.redirect)    
+                        window.location.replace(res.redirect)
                         localStorage.clear();
                         sessionStorage.clear();
                         alert('이미 가입된 이메일입니다.');
@@ -157,7 +158,7 @@ $(document).ready(() => {
               sendTokenReq(info);
             }
         });
-        
+
     })
 
     // 네이버 로그인 버튼 클릭

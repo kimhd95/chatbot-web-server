@@ -192,6 +192,7 @@ $(document).ready(() => {
                 if (res.success) {
                     console.log(res);
                     console.log('verifyToken success');
+                    sessionStorage.setItem('email', res.email);
                     alert('이미 로그인되어 있습니다.');
                     window.location.replace(res.redirect);
                 } else {
@@ -229,7 +230,7 @@ $(document).ready(() => {
         alert('이미 로그인되어 있습니다.');
         location.href='/chat';
     }
-    
+
 
     $('#login-btn').click(() => {
         loginValidationCheck();

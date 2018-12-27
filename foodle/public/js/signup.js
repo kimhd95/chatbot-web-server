@@ -37,9 +37,9 @@ function autoAgree() {
 function Content() {
     for(let i = 1; i < optLength-1; i++) {
         if($('.email select option')[i].selected){
-            $('.email input')[1].value = $('.email select option')[i].innerHTML; 
+            $('.email input')[1].value = $('.email select option')[i].innerHTML;
         }
-    } 
+    }
 }
 
 function changeStep() {
@@ -120,7 +120,7 @@ function additionalInfoValidationCheck() {
     nickname = $('#nickname').val();
     gender = $('.gender input')[0].checked ? '남성' : ($('.gender input')[1].checked ? '여성' : '');
     ageGroup = $('.age-select-btn')[0].innerHTML;
-    
+
     if(nickname === '') {
         alert('닉네임을 입력해주세요.');
         return;
@@ -206,6 +206,7 @@ $(document).ready(() => {
                 if (res.success) {
                     console.log(res);
                     console.log('verifyToken success');
+                    sessionStorage.setItem('email', res.email);
                     alert('이미 로그인되어 있습니다.');
                     window.location.replace(res.redirect);
                 } else {
@@ -244,7 +245,7 @@ $(document).ready(() => {
         alert('이미 로그인되어 있습니다.');
         location.href="/chat";
     }
-    
+
 
     $('.access-terms-chk').click(() => {
         if($('.terms input')[1].checked) {

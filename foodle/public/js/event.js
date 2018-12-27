@@ -551,93 +551,46 @@ $(function () {
   // });
 
   socket.on('chat register', function(socket_id){
+    let user_email = sessionStorage.getItem('email');
     const info = {
-      url: '/api/v1/users/verify_token',
-      method: 'POST',
-      data: null,
-      async: true,
-      crossDomain: true,
-      redirect: 'follow',
-      xhrFields: {
-          withCredentials: true
-      },
-      success: function (first_res) {
-          if (first_res.success) {
-              console.log(first_res);
-              console.log('verifyToken success');
-              const info = {
-                  method: "POST",
-                  url: '/api/v1/users/update_socket',
-                  body: {
-                      email: first_res.email,
-                      socket_id: socket_id,
-                  },
-                  success: function (res) {
-                      if (res.success){
-                          console.log("signUpReq: success!");
-                          getChatLog(first_res.email);
-                          alert("소켓정보 업데이트 완료.");
-                      }else {
-                          console.log("signUpReq: fail!");
-                          console.log(res);
-                      }
-                  },
-                  error: function(e) {
-                      console.log('ajax call error: signup page - singUpReq');
-                      if (e.status === 404 && e.responseText.includes("API call URL not found."))
-                          console.log("check your URL, method(GET/POST)");
-                      else if ((e.status === 400 && e.responseText.includes("not provided"))
-                          || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
-                          console.log("check your parameters");
-                      } else if(e.status === 0){
-                          if(navigator.onLine){
-                              console.log('status : 0');
-                          }else {
-                              console.log('internet disconnected');
-                              window.location.reload();
-                          }
-                      } else {
-                          console.log('status: ' + e.status + ', message: ' + e.responseText);
-                      }
-                      alert("정보 업데이트가 실패했습니다.");
-                  }
-              };
-              sendReq(info);
+        method: "POST",
+        url: '/api/v1/users/update_socket',
+        body: {
+            email: user_email,
+            socket_id: socket_id,
+        },
+        success: function (res) {
+            if (res.success){
+                console.log("signUpReq: success!");
+                getChatLog(user_email);
+                alert("소켓정보 업데이트 완료.");
+            }else {
+                console.log("signUpReq: fail!");
+                console.log(res);
+            }
+        },
+        error: function(e) {
+            console.log('ajax call error: signup page - singUpReq');
+            if (e.status === 404 && e.responseText.includes("API call URL not found."))
+                console.log("check your URL, method(GET/POST)");
+            else if ((e.status === 400 && e.responseText.includes("not provided"))
+                || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
+                console.log("check your parameters");
+            } else if(e.status === 0){
+                if(navigator.onLine){
+                    console.log('status : 0');
+                }else {
+                    console.log('internet disconnected');
+                    window.location.reload();
+                }
             } else {
-              console.log('verifyToken fail');
-              console.log(res);
-          }
-      },
-      error: function (e) {
-          console.log('ajax call error: login page - verifyToken');
-          if (e.status === 404 && e.responseText.includes("API call URL not found.")) {
-              console.log("check your URL, method(GET/POST)");
-          }else if(e.status === 403){
-              if (e.responseText.includes("No token provided.")) {
-                  console.log("No token, no problem.");
-                  alert('로그인해주세요.');
-                  location.href = '/login';
-              }
-              else if (e.responseText.includes("jwt malformed"))
-                  console.log("Malformed token");
-              else if (e.responseText.includes("invalid signature"))
-                  console.log("Modified token");
-              else console.log(e);
-          } else if(e.status === 0){
-              if(navigator.onLine){
-                  console.log('status : 0');
-              }else {
-                  console.log('internet disconnected');
-                  window.location.reload();
-              }
-          } else{
-              console.log('status: ' + e.status + ', message: ' + e.responseText);
-              console.log(e);
-          }
-      }
-    }
-    sendTokenReq(info);
-        });
+                console.log('status: ' + e.status + ', message: ' + e.responseText);
+            }
+            alert("정보 업데이트가 실패했습니다.");
+        }
+    };
+    sendReq(info);
+  });
 
   socket.on('chat message', (answer) => {
     $('#messages').append(bot_messaging(answer));
@@ -821,6 +774,7 @@ $(document).ready(() => {
   });
 
   $('#m').autocomplete({
+    minLength: 0,
     source: function( request, response ) {
       let term = request.term;
       let cache = {};
@@ -829,15 +783,27 @@ $(document).ready(() => {
         return;
       }
 
-      $.getJSON( "http://devbotfood.jellylab.io:6001/api/v1/users/get_all_subway", request, function( data, status, xhr ) {
-        cache[ term ] = data;
-        response( data );
-      });
+      let user_email = sessionStorage.getItem('email');
+      if (term === '') {
+        $.getJSON( "http://devbotfood.jellylab.io:6001/api/v1/users/get_subway_list_history?email="+user_email, request, function( data, status, xhr ) {
+          cache[ term ] = data;
+          response( data );
+        });
+      } else {
+        $.getJSON( "http://devbotfood.jellylab.io:6001/api/v1/users/get_all_subway", request, function( data, status, xhr ) {
+          cache[ term ] = data;
+          response( data );
+        });
+      }
     },
     // source: 'http://devbotfood.jellylab.io:6001/api/v1/users/get_all_subway',
     appendTo: ".card-footer",
     autoFocus: false,
     position: { my : "right bottom", at: "right top" },
+  });
+
+  $('#m').focus(function(){
+     		$(this).autocomplete("search", $(this).val());
   });
 
   $('#logout-btn').click(() => {
