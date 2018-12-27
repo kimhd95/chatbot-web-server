@@ -796,11 +796,30 @@ $(document).ready(() => {
         });
       }
     },
-    // source: 'http://devbotfood.jellylab.io:6001/api/v1/users/get_all_subway',
+    select: function(event, ui) {
+            if(ui.item.subway) {
+              $('#m').val(ui.item.subway);
+            } else {
+              $('#m').val(ui.item.value);
+            }
+            return false;
+    },
     appendTo: ".card-footer",
     autoFocus: false,
     position: { my : "right bottom", at: "right top" },
-  });
+  }).data('ui-autocomplete')._renderItem = function(ul, item) {
+    if(item.subway) {
+      return $('<li></li>')
+          .data('ui-autocomplete-item', item)
+          .append('<div style="display:flex; justify-content:space-between;"><span>' + item.subway + '</span>' + '<span>' + item.date + '</span></div>')
+          .appendTo(ul);
+    } else {
+      return $('<li></li>')
+          .data('ui-autocomplete-item', item)
+          .append(`<div>${item.value}</div>`)
+          .appendTo(ul);
+    }
+  };
 
   $('#m').focus(function(){
      		$(this).autocomplete("search", $(this).val());
