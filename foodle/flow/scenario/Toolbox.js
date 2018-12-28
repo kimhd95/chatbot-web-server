@@ -58,7 +58,6 @@ class Toolbox {
   decide_menu(value, socket, user_data) {
     (async function () {
       try {
-        await info_update.food.update_user_start(socket.id);
         const verify_limit = await info_update.profile.verify_limit(socket.id, user_data.limit_cnt, user_data.decide_updated_at);
         const { result } = verify_limit;
         if (result === 'success') {

@@ -488,7 +488,7 @@ $(function () {
   });
 
   $('body').on('click', '.messaging-button', (e) => {
-    if ($(e.target).attr('name') === '메뉴 고르기') {
+    if ($(e.target).attr('id') === 'decide_menu') {
       $('#m').autocomplete('enable');
     } else {
       $('#m').autocomplete('disable');
@@ -799,8 +799,10 @@ $(document).ready(() => {
     select: function(event, ui) {
             if(ui.item.subway) {
               $('#m').val(ui.item.subway);
+              $('#input-button').click();
             } else {
               $('#m').val(ui.item.value);
+              $('#input-button').click();
             }
             return false;
     },

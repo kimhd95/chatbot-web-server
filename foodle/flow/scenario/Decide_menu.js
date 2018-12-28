@@ -28,6 +28,7 @@ class Decide_menu {
     }
 
     this.strategies = {
+      'decide_menu': this.decide_menu,
       'exitnum': this.exitnum,
       'mood': this.mood,
       'mood2': this.mood2,
@@ -58,6 +59,29 @@ class Decide_menu {
     }(id, scenario, state));
   }
 
+  decide_menu(value, socket, user_data) {
+    (async function () {
+      try {
+        const verify_limit = await info_update.profile.verify_limit(socket.id, user_data.limit_cnt, user_data.decide_updated_at);
+        const { result } = verify_limit;
+        if (result === 'success') {
+          await info_update.food.update_user_start(socket.id);
+          const chlist = ['어디에서?', '어디에서 먹어?', '밥 먹을 장소를 말해줘', '밥 어디에서 먹어?',
+            '어디에서 만나?', '어디에서 먹게?', '어디서 밥 먹는데?ㅎㅎ',
+            '밥 어디에서 먹는데?(하하)'];
+          const leng = chlist.length;
+          const rand = Math.floor(leng * Math.random());
+          index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}<br>ex) 강남역,신촌역`);
+        } else {
+          index.sendSocketMessage(socket.id, 'chat message button', '한 끼당 메뉴를 3번만 고를 수 있어!', ['get_started', '처음으로 돌아가기']);
+        }
+      } catch (e) {
+        index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
+        console.log(e);
+      }
+    }());
+  }
+
   exitnum(value, socket, user_data) {
     (async function () {
       try {
@@ -70,34 +94,36 @@ class Decide_menu {
           await info_update.profile.update_subway(socket.id, subway);
           switch (subway) {
             case '강남역': {
-              index.sendSocketMessage(socket.id, 'chat message button', `${subway} 몇 번 출구?`, ['gangnamexit/4', '1,2,3,4번'], ['gangnamexit/3', '5,6,7,8번'], ['gangnamexit/2', '9,10번'], ['gangnamexit/1', '11,12번'], ['gangnamexit/999', '상관없어']);
+              index.sendSocketMessage(socket.id, 'chat message button', `${subway} 몇 번 출구?`, ['gangnamexit/4', '1,2,3,4번'], ['gangnamexit/3', '5,6,7,8번'], ['gangnamexit/2', '9,10번'], ['gangnamexit/1', '11,12번'], ['gangnamexit/999', '상관없어'], ['decide_menu', '뒤로가기']);
               break;
             }
             case '서울대입구역': {
-              index.sendSocketMessage(socket.id, 'chat message button', `${subway} 몇 번 출구?`, ['seoulunivexit/4', '1,2번'], ['seoulunivexit/3', '3,4번'], ['seoulunivexit/2', '5,6번'], ['seoulunivexit/1', '7,8번'], ['seoulunivexit/999', '상관없어']);
+              index.sendSocketMessage(socket.id, 'chat message button', `${subway} 몇 번 출구?`, ['seoulunivexit/4', '1,2번'], ['seoulunivexit/3', '3,4번'], ['seoulunivexit/2', '5,6번'], ['seoulunivexit/1', '7,8번'], ['seoulunivexit/999', '상관없어'], ['decide_menu', '뒤로가기']);
               break;
             }
             case '성수역': {
-              index.sendSocketMessage(socket.id, 'chat message button', `${subway} 몇 번 출구?`, ['seongsuexit/2', '1번'], ['seongsuexit/1', '2번'], ['seongsuexit/4', '3번'], ['seongsuexit/3', '4번'], ['seongsuexit/999', '상관없어']);
+              index.sendSocketMessage(socket.id, 'chat message button', `${subway} 몇 번 출구?`, ['seongsuexit/2', '1번'], ['seongsuexit/1', '2번'], ['seongsuexit/4', '3번'], ['seongsuexit/3', '4번'], ['seongsuexit/999', '상관없어'], ['decide_menu', '뒤로가기']);
               break;
             }
             case '신사역': {
-              index.sendSocketMessage(socket.id, 'chat message button', `${subway} 몇 번 출구?`, ['sinsaexit/4', '1,2,3번'], ['sinsaexit/3', '4번'], ['sinsaexit/2', '5번'], ['sinsaexit/1', '6,7,8(가로수길)번'], ['sinsaexit/999', '상관없어']);
+              index.sendSocketMessage(socket.id, 'chat message button', `${subway} 몇 번 출구?`, ['sinsaexit/4', '1,2,3번'], ['sinsaexit/3', '4번'], ['sinsaexit/2', '5번'], ['sinsaexit/1', '6,7,8(가로수길)번'], ['sinsaexit/999', '상관없어'], ['decide_menu', '뒤로가기']);
               break;
             }
             case '신촌역': {
-              index.sendSocketMessage(socket.id, 'chat message button', `${subway} 몇 번 출구?`, ['sinchonexit/2', '1,2번'], ['sinchonexit/1', '3,4번'], ['sinchonexit/4', '5,6번'], ['sinchonexit/3', '7,8번'], ['sinchonexit/999', '상관없어']);
+              index.sendSocketMessage(socket.id, 'chat message button', `${subway} 몇 번 출구?`, ['sinchonexit/2', '1,2번'], ['sinchonexit/1', '3,4번'], ['sinchonexit/4', '5,6번'], ['sinchonexit/3', '7,8번'], ['sinchonexit/999', '상관없어'], ['decide_menu', '뒤로가기']);
               break;
             }
             case '서면역': {
-              index.sendSocketMessage(socket.id, 'chat message button', `${subway} 몇 번 출구?`, ['seomyeonexit/3', '1,3,5,7번'], ['seomyeonexit/4', '2,4,6번'], ['seomyeonexit/1', '8,10,12번'], ['seomyeonexit/2', '9,11,13,15번'], ['seomyeonexit/999', '상관없어']);
+              index.sendSocketMessage(socket.id, 'chat message button', `${subway} 몇 번 출구?`, ['seomyeonexit/3', '1,3,5,7번'], ['seomyeonexit/4', '2,4,6번'], ['seomyeonexit/1', '8,10,12번'], ['seomyeonexit/2', '9,11,13,15번'], ['seomyeonexit/999', '상관없어'], ['decide_menu', '뒤로가기']);
               break;
             }
             case '센텀시티역': {
-              index.sendSocketMessage(socket.id, 'chat message button', `${subway} 몇 번 출구?`, ['centumcityexit/4', '1,3,5번'], ['centumcityexit/1', '2,4,6,8번'], ['centumcityexit/3', '7,9,11,13번'], ['centumcityexit/2', '10,12번'], ['centumcityexit/999', '상관없어']);
+              index.sendSocketMessage(socket.id, 'chat message button', `${subway} 몇 번 출구?`, ['centumcityexit/4', '1,3,5번'], ['centumcityexit/1', '2,4,6,8번'], ['centumcityexit/3', '7,9,11,13번'], ['centumcityexit/2', '10,12번'], ['centumcityexit/999', '상관없어'], ['decide_menu', '뒤로가기']);
               break;
             }
             default:
+              index.sendSocketMessage(socket.id, 'chat message button', `아직 ${subway}에 대한 맛집 정보가 없어ㅠㅠㅠㅠ`, ['decide_menu', '뒤로가기'], ['get_started', '처음으로 돌아가기']);
+              break;
           }
         } else {
           await info_update.profile.update_state(socket.id, '1', 'decide_menu');
