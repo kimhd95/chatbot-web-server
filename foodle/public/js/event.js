@@ -806,6 +806,14 @@ $(document).ready(() => {
             }
             return false;
     },
+    focus: function(event, ui) {
+            if(ui.item.subway) {
+              $('#m').val(ui.item.subway);
+            } else {
+              $('#m').val(ui.item.value);
+            }
+            return false;
+    },
     appendTo: ".card-footer",
     autoFocus: false,
     position: { my : "right bottom", at: "right top" },
