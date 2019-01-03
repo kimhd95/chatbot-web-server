@@ -82,3 +82,4 @@ typings/
 .eslintrc.js
 .eslintrc
 .jshintrc
+./node_modules/
