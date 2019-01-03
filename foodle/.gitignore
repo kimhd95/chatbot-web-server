@@ -84,3 +84,4 @@ typings/
 .jshintrc
 ./node_modules/
 /node_module
+**/node_modules
