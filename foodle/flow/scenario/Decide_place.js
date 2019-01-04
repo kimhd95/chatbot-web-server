@@ -11,6 +11,7 @@ const info_update = new Info();
 
 const sortMap = require('sort-map');
 
+// 기준이 되는 지하철 역에 대한 위도, 경도
 const dictionary = {
   'station': [
     { 'name': '홍대입구역', 'lat': '37.557527', 'lng': '126.9244669' },
@@ -91,7 +92,7 @@ class Decide_place {
   reinit(value, socket, user_data) {
     (async function () {
       try {
-        const body = await info_update.profile.geocoder(user_data.kakao_id, value);
+        const body = await info_update.profile.geocoder(user_data.kakao_id, value); // 카카오 지도 API 이용, 키워드를 통해 위도,경도를 받아온다.
         const re = JSON.parse(body);
         console.log(re.documents[0]);
         if (re.documents[0] === undefined) {
