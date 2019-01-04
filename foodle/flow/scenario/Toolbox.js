@@ -25,7 +25,7 @@ class Toolbox {
 
   execute(key, value, socket, user_data) {
     // this.update_state(socket.id,'1',key);
-    this.strategies[key] == null ? console.log('this strategy does not exist') : this.strategies[key](value, socket, user_data);
+    this.strategies[key] == null ? index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']) : this.strategies[key](value, socket, user_data);
   }
 
   update_state(id, scenario, state) {
