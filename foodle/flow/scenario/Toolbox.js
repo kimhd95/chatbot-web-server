@@ -25,7 +25,7 @@ class Toolbox {
 
   execute(key, value, socket, user_data) {
     // this.update_state(socket.id,'1',key);
-    this.strategies[key] == null ? console.log('this strategy does not exist') : this.strategies[key](value, socket, user_data);
+    this.strategies[key] == null ? index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']) : this.strategies[key](value, socket, user_data);
   }
 
   update_state(id, scenario, state) {
@@ -58,17 +58,28 @@ class Toolbox {
   decide_menu(value, socket, user_data) {
     (async function () {
       try {
+        const user_info = await info_update.profile.load_user(socket.id);
+        const db_subway = await user_info.subway;
+        const db_freq_subway = await user_info.freq_subway;
+        console.log(`decide menu 함수에서 db_subway : ${db_subway}, db_freq_subway : ${db_freq_subway}`);
+        if (db_subway === null) {
+          await info_update.food.update_user_start(socket.id);
+        }
         const verify_limit = await info_update.profile.verify_limit(socket.id, user_data.limit_cnt, user_data.decide_updated_at);
         const { result } = verify_limit;
         if (result === 'success') {
           await info_update.profile.update_state(socket.id, '1', 'decide_menu');
-          await info_update.food.update_user_start(socket.id);
-          const chlist = ['어디에서?', '어디에서 먹어?', '밥 먹을 장소를 말해줘', '밥 어디에서 먹어?',
-            '어디에서 만나?', '어디에서 먹게?', '어디서 밥 먹는데?ㅎㅎ',
-            '밥 어디에서 먹는데?(하하)'];
-          const leng = chlist.length;
-          const rand = Math.floor(leng * Math.random());
-          index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}<br>ex) 강남역,신촌역`);
+          if (user_info.freq_subway === null) {
+            const chlist = ['어디에서?', '어디에서 먹어?', '밥 먹을 장소를 말해줘', '밥 어디에서 먹어?',
+              '어디에서 만나?', '어디에서 먹게?', '어디서 밥 먹는데?ㅎㅎ',
+              '밥 어디에서 먹는데?(하하)'];
+            const leng = chlist.length;
+            const rand = Math.floor(leng * Math.random());
+            index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}<br>ex) 강남역,신촌역`);
+          } else {
+            const revisit = user_info.freq_subway;
+            index.sendSocketMessage(socket.id, 'chat message button', `오늘도 ${revisit}에서 먹는거야?`, [`${revisit}`, '응 맞아!'], ['decide_menu', '다른 곳이야!']);
+          }
         } else {
           index.sendSocketMessage(socket.id, 'chat message button', '한 끼당 메뉴를 3번만 고를 수 있어!', ['get_started', '처음으로 돌아가기']);
         }

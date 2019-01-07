@@ -215,7 +215,7 @@ Food.get_subway_history = function (kakaoid, subway) {
 Food.verify_subway = function (kakaoid, value) {
   const self = this;
   return new Promise(((resolve, reject) => {
-    const name = 'profile.verify_subway';
+    const name = 'food.verify_subway';
     const method = 'POST';
     const url = '/api/v1/users/verify_subway';
     const json = {
@@ -305,6 +305,25 @@ Food.get_image_url = function (kakaoid, message) {
         : reject(error);
     };
     self.apicall_worry(kakaoid, method, url, json, func);
+  }));
+};
+
+Food.get_all_subway = function (kakaoid, term) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'food.get_all_subway';
+    const method = 'GET';
+    const url = '/api/v1/users/get_all_subway?term='+term;
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
   }));
 };
 

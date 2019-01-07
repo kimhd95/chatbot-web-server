@@ -75,5 +75,13 @@ typings/
 # FuseBox cache
 .fusebox/
 
-#DynamoDB Local files 
-.dynamodb/ 
+#DynamoDB Local files
+.dynamodb/
+
+#linter 관련
+.eslintrc.js
+.eslintrc
+.jshintrc
+./node_modules/
+/node_module
+**/node_modules

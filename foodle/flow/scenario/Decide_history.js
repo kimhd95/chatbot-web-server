@@ -14,12 +14,12 @@ class Decide_history {
     let key;
     key = value;
 
-    if (key.includes('history/')) {
-      key = 'history_subway_info';
+    if (key === 'previous_history/1') {
+      key = 'previous_history1';
     } else if (key.includes('previous_history/')) {
       key = 'previous_history_info';
-    } else if (key === 'previous_history/1') {
-      key = 'previous_history1';
+    } else if (key.includes('history/')) {
+      key = 'history_subway_info';
     }
 
     this.strategies = {
@@ -35,7 +35,7 @@ class Decide_history {
 
   execute(key, value, socket, user_data) {
     this.update_state(socket.id, '4', key);
-    this.strategies[key] == null ? console.log('this strategy does not exist') : this.strategies[key](value, socket, user_data);
+    this.strategies[key] == null ? index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']) : this.strategies[key](value, socket, user_data);
   }
 
   update_state(id, scenario, state) {
@@ -76,6 +76,8 @@ class Decide_history {
     }());
   }
 
+  // 마지막 선택 맛집 보기에 대한 시나리오, decide_menu 시나리오를 그대로 이용하였다.
+  // 이후 시나리오 진행을 위해, scenario 번호를 1로 업데이트 시켜준다.
   final_info_direct(value, socket, user_data) {
     (async function () {
       try {
@@ -128,6 +130,7 @@ class Decide_history {
     }());
   }
 
+  // 최근 기록 보기의 첫 페이지
   previous_history1(value, socket, user_data) {
     (async function () {
       try {
@@ -137,7 +140,7 @@ class Decide_history {
           index.sendSocketMessage(socket.id, 'chat message button', '선택한 맛집이 아직 없어...! 다른 메뉴를 선택해줘!', ['get_started', '돌아가기']);
           return;
         }
-        if (history_value.length < 10) {
+        if (history_value.length < 10) { // 기록이 10개 이하면, 해당 갯수만큼 기록을 추가시킨다.
           history_count = history_value.length;
         }
         let todayHistory = '';
@@ -146,9 +149,9 @@ class Decide_history {
           date = `${date.slice(4, 6)}월${date.slice(6, 8)}일`;
           todayHistory += (`${history_value[i].subway} ${history_value[i].res_name} ${date}<br>`);
         }
-        if (history_value.length < 11) {
+        if (history_value.length < 11) { // 기록이 10개 이하이면, 다음 페이지로 갈 기록이 없으므로 돌아가기 버튼만 생성한다.
           index.sendSocketMessage(socket.id, 'chat message button', `최근에 선택했던 ${history_count}개의 맛집을 보여줄게!<br><br>${todayHistory}<br>`, ['get_started', '돌아가기']);
-        } else {
+        } else { // 기록이 10개가 넘으면, 다음 페이지로 가서 추가 기록을 볼 수 있게 한다.
           index.sendSocketMessage(socket.id, 'chat message button', `최근에 선택했던 ${history_count}개의 맛집을 보여줄게!<br><br>${todayHistory}<br>다른 기록도 보여줄까?`, ['previous_history/2', '이전 기록 보기'], ['get_started', '돌아가기']);
         }
         return;
@@ -159,10 +162,11 @@ class Decide_history {
     }());
   }
 
+  // 추가 기록 페이지에 대한 시나리오, value의 / 이후 숫자가 페이지 번호를 나타낸다.
   previous_history_info(value, socket, user_data) {
     (async function () {
       try {
-        const previous_history_count = parseInt(value.split('/')[1]);
+        const previous_history_count = parseInt(value.split('/')[1]); // 기록의 페이지 번호를 나타낸다.
         let history_count = 10;
         const history_value = await info_update.food.get_all_history(user_data.kakao_id);
         if (history_value.length < (previous_history_count * 10)) {
@@ -177,7 +181,7 @@ class Decide_history {
         const previous = `previous_history/${String(previous_history_count - 1)}`;
         const next = `previous_history/${String(previous_history_count + 1)}`;
 
-        if (history_value.length < ((previous_history_count * 10) + 1)) {
+        if (history_value.length < ((previous_history_count * 10) + 1)) { // 앞서 첫 기록 페이지와 마찬가지로, 다음 페이지 생성 여부를 판단.
           index.sendSocketMessage(socket.id, 'chat message button', `이전에 선택했던 ${history_count}개의 맛집을 보여줄게!<br><br>${todayHistory}<br>`, [previous, '다음 기록 보기'], ['get_started', '돌아가기']);
         } else {
           index.sendSocketMessage(socket.id, 'chat message button', `이전에 선택했던 ${history_count}개의 맛집을 보여줄게!<br><br>${todayHistory}<br>다른 기록도 보여줄까?`, [next, '이전 기록 보기'], [previous, '다음 기록 보기'], ['get_started', '돌아가기']);

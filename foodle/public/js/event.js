@@ -131,8 +131,11 @@ function bot_messaging_button_finish_checkbox(button_id, message) {
 }
 
 function bot_messaging_button_checkbox(button_id, message) {
+  const quarter = button_id.slice(-1);
+  const identifier = Math.floor((Math.random() * 90) + 10) + quarter;
+  console.log(identifier);
   const message_info = `
-          <button type="button" class="messaging-button-checkbox" id="${button_id}" name="${message}"><input type="checkbox" id="${button_id}" class="checkbox"></input>${message}</button>
+        <button type="button" class="messaging-button-checkbox" id="${button_id}" name="${message}"><input type="checkbox" id="${button_id}" class="checkbox"></input>${message}</button>
   `;
   return (message_info);
 }
@@ -278,6 +281,16 @@ function bot_messaging_card_inner_no_image(res_name, res_type, food_name, naver_
   return (message_info);
 }
 
+function bot_messaging_map(subway, url){
+  let roughMap;
+  console.log(subway);
+  roughMap = `<div>
+    <a href='http://map.daum.net/link/search/${subway}' target='_blank' ><image class="image" src='${url}' style="width: 300px; height: 200px;"></image></a>
+    <p>이미지 클릭시 지도 자세히 보기</p>
+   </div> `;
+  return roughMap;
+}
+
 
 // google sdk load
 function onLoad () {
@@ -389,7 +402,7 @@ function updateChatLog(socket_id) {
             } else {
                 console.log('status: ' + e.status + ', message: ' + e.responseText);
             }
-            alert("정보 업데이트가 실패했습니다.");
+            alert(e.responseText);
         }
     };
     sendReq(info);
@@ -482,11 +495,6 @@ $(function () {
   //   // $("input").prop('disabled', false);
   // });
 
-  $('body').on('click', '.checkbox', (e) => {
-    const clicked_id = `#${$(e.target).attr('id')}`;
-    $(clicked_id).toggleClass('messaging-button-checkbox-checked');
-  });
-
   $('body').on('click', '.messaging-button', (e) => {
     if ($(e.target).attr('id') === 'decide_menu') {
       $('#m').autocomplete('enable');
@@ -494,12 +502,16 @@ $(function () {
       $('#m').autocomplete('disable');
     }
     const checked_array = [];
-    if ($(e.target).attr('id') === 'mood2/') {
+    if ($(e.target).attr('id') === ('mood2/') || $(e.target).attr('id') === ('exit/')) {
       $('.checkbox:checked').each(function () {
         checked_array.push(this.id);
       });
       if (checked_array.length === 0) {
-        socket.emit('chat message button rule', $(e.target).attr('name'), 'no_mood2');
+        if ($(e.target).attr('id') === ('mood2/')) {
+          socket.emit('chat message button rule', $(e.target).attr('name'), 'no_mood2');
+        } else {
+          socket.emit('chat message button rule', $(e.target).attr('name'), 'no_exit');
+        }
       } else {
         socket.emit('chat message button rule', $(e.target).attr('name'), ($(e.target).attr('id') + checked_array));
         $('.messaging-button').hide();
@@ -519,9 +531,9 @@ $(function () {
     } else {
       $('#m').autocomplete('disable');
     }
-    // socket.emit('chat message button rule', $(e.target).attr('name'),$(e.target).attr('id'));
     $(e.target).children('input[type=checkbox]').click();
-    // $(".messaging-button-checkbox").hide();
+    $(e.target).toggleClass('messaging-button-checkbox-checked');
+    $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked');
   });
 
   $('body').on("submit", "form", function(){
@@ -652,6 +664,34 @@ $(function () {
     // $(".myText").val($("#messages")[0].outerHTML);
   });
 
+  socket.on('chat message map', (msg, ...args) => {
+      $('#messages').append(bot_messaging_map(msg, ...args)).children(':last');
+      $('#m').prop('disabled', true);
+      $('#input-button').attr('disabled', true);
+      $('#messages').scrollTop(1e4);
+    });
+
+  socket.on('chat message button checkbox map', (socket_id, msg, ...args) => {
+      $('#messages').append(bot_messaging(msg)).children(':last').hide()
+        .fadeIn(150);
+      const args_length = args.length;
+      $('#messages').append(bot_messaging_map(args[0], args[1]));
+      for (let i = 2; i < args_length - 1; i += 1) {
+        // basic_message.append(bot_messaging_button(args[i][0],args[i][1]));
+        $('#messages').append(bot_messaging_button_checkbox(args[i][0], args[i][1]));
+      }
+      $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
+      if (args.length === 0) {
+        $('#m').prop('disabled', false);
+        $('#input-button').attr('disabled', false);
+      } else {
+        $('#m').prop('disabled', true);
+        $('#input-button').attr('disabled', true);
+      }
+      $('#messages').scrollTop(1E10);
+      updateChatLog(socket_id);
+  });
+
   socket.on('chat message image', (socket_id, msg, button1, button2, ...args) => {
     $('#messages').append(bot_messaging_image_carousel(args[0]));
     for (let i = 0; i < args[1] - 1; i += 1) {
@@ -693,6 +733,7 @@ $(function () {
     }, 100); // execute your function after 2 seconds.
     updateChatLog(socket_id);
   });
+
 });
 
 
