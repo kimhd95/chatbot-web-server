@@ -65,9 +65,31 @@ class Chitchat {
           const rand2 = Math.floor(leng2 * Math.random());
           await info_update.profile.update_state(socket.id, '100', 'init');
           index.sendSocketMessage(socket.id, 'chat message button', chlist2[rand2], ['decide_menu', '메뉴 고르기'], ['decide_place', '중간지점 찾기(서울)'], ['decide_history', '기록보기'], ['user_feedback', '개발팀에게 피드백하기'], ['chitchat', '푸들이랑 대화하기']);
+        } else if (value == 'recommend') {
+          const verify_limit = await info_update.profile.verify_limit(socket.id, user_data.limit_cnt, user_data.decide_updated_at);
+          const { result } = verify_limit;
+          if(result === 'success') {
+            await info_update.profile.update_state(socket.id, '1', 'decide_menu');
+            const chlist = ['어디에서?', '어디에서 먹어?', '밥 먹을 장소를 말해줘', '밥 어디에서 먹어?',
+              '어디에서 만나?', '어디에서 먹게?', '어디서 밥 먹는데?ㅎㅎ',
+              '밥 어디에서 먹는데?(하하)'];
+            const leng = chlist.length;
+            const rand = Math.floor(leng * Math.random());
+            index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}<br>ex) 강남역,신촌역`);
+          } else {
+            index.sendSocketMessage(socket.id, 'chat message button', '한 끼당 메뉴를 3번만 고를 수 있어!', ['get_started', '처음으로 돌아가기'], ['continue', '계속 대화하기']);
+          }
+
         } else {
-          const bot_answer = await info_update.profile.chitchat(socket.id, value);
-          index.sendSocketMessage(socket.id, 'chat message button', bot_answer);
+          const bot_reply = await info_update.profile.chitchat(socket.id, value);
+          const bot_answer = await bot_reply.answer;
+          const intention_number = await bot_reply.intention_number;
+          console.log(bot_reply);
+          if (intention_number == 7){
+            index.sendSocketMessage(socket.id, 'chat message button', "기다려방ㅎㅎ", ['recommend', '추천받기'], ['continue', '계속 대화하기']);
+          } else {
+            index.sendSocketMessage(socket.id, 'chat message button', bot_answer);
+          }
         }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
