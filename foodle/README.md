@@ -83,7 +83,7 @@ npm start
 
 - scenario와 state에 따라 해당 strategy에 맞게 호출하는 api들이 모여져 있는 module이다. DB의 각 테이블과 연관된 api끼리 같이 묶어놓았다.
 
-[**bin/www**](./bin/www)
+[**server/index**](./server/index)
 
 - 서버의 기본 설정을 담고 있음. socket.io의 서버측 이벤트 코드와, 사용자에게 최종적으로 메세지를 전달하는 역할을 하는 sendSocketMessage 함수를 포함하고 있음.
 
@@ -200,7 +200,7 @@ npm start
 
 #### 6.0 views/index.ejs 수정(메인에서 바로 진입가능한 시나리오에만 해당)
 
-초기 화면에서 바로 진입할 수 있는 시나리오를 만드는 경우, 귀찮지만 index.ejs 코드에서 진입할 수 있는 버튼을 새로 하나 만들어 주어야한다. 
+초기 화면에서 바로 진입할 수 있는 시나리오를 만드는 경우, index.ejs 코드에서 진입할 수 있는 버튼을 새로 하나 만들어 주어야한다. 
 
 ```html
 <div class="message-button">
@@ -217,7 +217,7 @@ npm start
 
 #### 6.1 flow/scenario/Toolbox.js 수정(메인에서 바로 진입가능한 시나리오에만 해당)
 
-현재 기준 코드의 흐름 상, 회원가입과 로그인을 고려하지 않는다. 그러므로, 사용자가 접속시 처음부터 시나리오가 시작되기 때문에, user의 scenario값은 무조건 100이 된다(Toolbox의 시나리오 값). 그러므로, Toolbox 클래스에 새로운 시나리오 버튼에 대한 strategy를 추가 한다.
+user의 초기 scenario값은 100이다(Toolbox의 시나리오 값). 그러므로, Toolbox 클래스에 새로운 시나리오 버튼에 대한 strategy를 추가 한다.
 
 ```javascript
 this.strategies = {
@@ -423,7 +423,29 @@ socket.on('chat message button', (msg, ...args) => {
 
 ## 8. 기타
 
-#### 8-1. 같은 사용자의 연속 메세지 처리
+#### 8-1 사용자 로그인에 따른 처리
+
+사용자의 계정 로그인에 따라, 선택 기록과 메세지를 유지해야 한다. 
+
+그러나, 메세지를 보낼 때 이용하는 웹소켓은 매번 바뀌게 된다.
+
+현 코드 구조 상, sessionStorage에 사용자의 이메일이 저장되므로, 사용자가  접속 할 때 마다, 이메일에 대한 User테이블의 칼럼과 소켓을 동기화 시켜주는 방식을 택하였다.
+
+1. 사용자가 로그인 후 채팅창으로 접속 시, 소켓 번호와 함께 chat register 를 발생시킨다
+
+2. chat register의 클라이언트사이드에서는, 세션에 저장된 사용자의 email과 서버사이드에서 받아온 소켓 번호를 가지고 API서버상의 update_socket를 호출하여, 해당 이메일에 바뀐 소켓을 업데이트 시킨다.
+
+3. 소켓이 업데이트가 되면, 기존의 채팅 기록을 불러오기 위해, getChatLog 함수를 호출한다.
+
+4. getChatLog 함수에선, API서버상의 get_chat_log를 호출하여, 사용자의 최근 채팅기록과 마지막 접속으로부터 접속 끊김과 접속 종료 여부를 판단하고 현재 채팅창을 업데이트한다.
+
+   > 8-4 참고
+
+**사용자의 모든 채팅 마다, 채팅기록을 사용자의 칼럼에 업데이트시킨다 (updateChatLog)**
+
+
+
+#### 8-2. 같은 사용자의 연속 메세지 처리
 
 카카오톡이나, 페이스북 메신저 같은 채팅 어플리케이션을 이용하다 보면 나타나는 특징이 있다. 
 
@@ -449,7 +471,7 @@ if ($('.bot-message > .message-info > .time').last().text() === date) { // 보�
   }
 ```
 
-#### 8-2. 지하철 검색 자동완성 기능
+#### 8-3. 지하철 검색 자동완성 기능
 
 지하철 검색 자동완성 기능을 위해, 가장 보편적인 모듈인 **jquery-ui**의 **autocomplete**을 이용하였다.
 
@@ -470,7 +492,7 @@ if ($(e.target).attr('name') === '메뉴 고르기') {
     }
 ```
 
-#### 8-2-1. 지하철 초성 검색 기능
+#### 8-3-1. 지하철 초성 검색 기능
 
 **jquery-ui**의 **autocomplete**는 한글을 고려하지 않기 때문에, 당연히 초성검색도 지원이 되지 않는다.
 
@@ -486,7 +508,41 @@ Hangul.js의 주된 역할은, 한글 단어의 자모를 분리해주는 역할
 >
 >https://github.com/g1s/Hangul.js
 
-#### 8-3. 음식점 추천 로직
+#### 8-3-2. 최근 검색 기록 자동완성
+
+메뉴 고르기 시나리오에서, 아무 초성이나 단어를 입력하지 않았을 시, 자신이 최근에 선택한 지하철역들과 선택날짜를 최대 5개까지 보여준다.
+
+아무것도 입력하지 않았을 시, 세션에 저장된 email을 가지고, api서버 상의 get_subway_list_history를 호출한다. 해당 결과를 자동완성 결과로 나타낸다.
+
+```javascript
+let user_email = sessionStorage.getItem('email');
+if (term === '') {
+    $.getJSON("http://devbotfood.jellylab.io:6001/api/v1/users/get_subway_list_history?email="+user_email, request, function( data, status, xhr ) {
+        cache[ term ] = data;
+        response( data );
+    });
+} else {
+    $.getJSON( "http://devbotfood.jellylab.io:6001/api/v1/users/get_all_subway", request, function( data, status, xhr ) {
+        cache[ term ] = data;
+        response( data );
+    });
+}
+```
+
+#### 8-4. 접속 끊김과 종료 판단
+
+사용자가 로그인 하게되면, 서버에서 접속 끊김과 접속 종료를 판단하고 이후 시나리오 진행 여부를 결정한다.
+
+| 구분      | 다음 시나리오                                        |
+| --------- | ---------------------------------------------------- |
+| 접속 끊김 | 직전 시나리오를 그대로 이어서 진행                   |
+| 접속 종료 | 직전 시나리오를 무시하고, 초기 toolbox 시나리오 진행 |
+
+접속 끊김과 종료 여부 판단은,  [event.js](./public/javscript/event.js) 의 getChatLog 함수 내에서 이루어지게 된다. 해당 함수 내에서 사용자를 식별하는 세션 내 email과 함께 get_chat_log api를 호출하면,  API서버 상에서 해당 유저의 updated_at 칼럼의 시간과 현재 시간을 비교하여, 10분을 기준으로 접속 끊김, 접속 종료를 판단한다.
+
+**getChatLog보다, updateSocket이 먼저 호출되므로, updated_at이 업데이트되버리는 문제가 있어서, updateSocket에 대한 쿼리에 silent:true 옵션 주어서, updated_at에 영향을 미치지 않도록 하였다.**
+
+#### 8-5. 음식점 추천 로직
 
 좀 더 빠른 쿼리를 위해,
 
@@ -494,13 +550,13 @@ subway, food_type, mood, mood2, taste, food_ingre 에 FullText 인덱스를 추�
 
 exit_quarter에 B-TREE 인덱스를 적용하여, **Full-Text-Search** 방식을 이용하여 음식점 2곳을 선택한다.
 
-#### 8-4. 끼니당 선택 횟수 제한
+#### 8-6. 끼니당 선택 횟수 제한
 
-아침, 점심, 저녁 각각 3번씩만 메뉴 고르기가 가능하다.(물론 현재 회원가입이 없으므로 새로고침하면 다시 된다.)
+아침, 점심, 저녁 각각 3번씩만 메뉴 고르기가 가능하다.
 
 각 User 칼럼에, limit_cnt와, decided_at을 통해, 끼니당 횟수를 판단한다.(verifyLImit 함수)
 
-#### 8-5. 음식점 폐점 여부 판단
+#### 8-7. 음식점 폐점 여부 판단
 
 음식점을 골라줄 때, closedown이 1인 음식점은 추천대상에서 제외되는데, 
 
