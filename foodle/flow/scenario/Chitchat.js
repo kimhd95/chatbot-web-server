@@ -64,7 +64,12 @@ class Chitchat {
           const leng2 = chlist2.length;
           const rand2 = Math.floor(leng2 * Math.random());
           await info_update.profile.update_state(socket.id, '100', 'init');
-          index.sendSocketMessage(socket.id, 'chat message button', chlist2[rand2], ['decide_menu', '메뉴 고르기'], ['decide_place', '중간지점 찾기(서울)'], ['decide_history', '기록보기'], ['user_feedback', '개발팀에게 피드백하기'], ['chitchat', '푸들이랑 대화하기']);
+          if(user_data.registered==='-1'){
+            index.sendSocketMessage(socket.id, 'chat message button', chlist2[rand2], ['decide_menu', '메뉴 고르기'], ['decide_place', '중간지점 찾기(서울)'], ['user_feedback', '개발팀에게 피드백하기'], ['chitchat', '푸들이랑 대화하기']);
+          }
+          else{
+            index.sendSocketMessage(socket.id, 'chat message button', chlist2[rand2], ['decide_menu', '메뉴 고르기'], ['decide_place', '중간지점 찾기(서울)'], ['decide_history', '기록보기'], ['user_feedback', '개발팀에게 피드백하기'], ['chitchat', '푸들이랑 대화하기']);
+          }
         } else {
           const bot_answer = await info_update.profile.chitchat(socket.id, value);
           index.sendSocketMessage(socket.id, 'chat message button', bot_answer);

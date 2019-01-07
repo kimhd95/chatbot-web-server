@@ -100,6 +100,7 @@ function login () {
             sessionStorage.setItem('login', '0');
             sessionStorage.setItem('email', email);
             alert('성공적으로 로그인되었습니다.');
+            // console.log("res.redirect: "+res.redirect);
             window.location.replace(res.redirect);
         },
         error: function (e) {

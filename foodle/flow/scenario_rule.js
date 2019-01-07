@@ -15,6 +15,7 @@ exports.scenario_rule = function (val, socket, msg) {
   (async function () {
     try {
       const user_data = await info_update.profile.load_user(socket.id);
+      // console.log(user_data);
       if (val === 'get_started') {
         const chlist2 = ['그래 뭘 도와줄까?', '난 갈수록 다재다능해지고 있어ㅎㅎ', '세상의 모든 음식을 먹어보는게 내 목표야', '할 줄 아는 건 별로 없지만 골라봐',
           '아 배고프다', '기능 나와라(쭈우욱)', '우리나라는 정말 미식의 나라인듯! 맛있는게 너무 많아',
@@ -22,7 +23,12 @@ exports.scenario_rule = function (val, socket, msg) {
         const leng2 = chlist2.length;
         const rand2 = Math.floor(leng2 * Math.random());
         await info_update.profile.update_state(socket.id, '100', 'init');
-        index.sendSocketMessage(socket.id, 'chat message button', chlist2[rand2], ['decide_menu', '메뉴 고르기'], ['decide_place', '중간지점 찾기(서울)'], ['decide_history', '기록보기'], ['user_feedback', '개발팀에게 피드백하기'], ['chitchat', '푸들이랑 대화하기']);
+        if(user_data.registered==='-1'){
+          index.sendSocketMessage(socket.id, 'chat message button', chlist2[rand2], ['decide_menu', '메뉴 고르기'], ['decide_place', '중간지점 찾기(서울)'], ['user_feedback', '개발팀에게 피드백하기'], ['chitchat', '푸들이랑 대화하기']);
+        }
+        else{
+          index.sendSocketMessage(socket.id, 'chat message button', chlist2[rand2], ['decide_menu', '메뉴 고르기'], ['decide_place', '중간지점 찾기(서울)'], ['decide_history', '기록보기'], ['user_feedback', '개발팀에게 피드백하기'], ['chitchat', '푸들이랑 대화하기']);
+        }
       } else {
         await info_update.profile.create_user_log(socket.id, user_data.scenario, user_data.state, msg);
         switch (user_data.scenario) {
