@@ -131,11 +131,8 @@ function bot_messaging_button_finish_checkbox(button_id, message) {
 }
 
 function bot_messaging_button_checkbox(button_id, message) {
-  const quarter = button_id.slice(-1);
-  const identifier = Math.floor((Math.random() * 90) + 10) + quarter;
-  console.log(identifier);
-  const message_info = `
-        <button type="button" class="messaging-button-checkbox" id="${button_id}" name="${message}"><input type="checkbox" id="${button_id}" class="checkbox"></input>${message}</button>
+  let message_info = `
+        <button type="button" class="messaging-button-checkbox" id="${button_id}" name="${message}"><input type="checkbox" id="${button_id}" class="checkbox" name="${message}"></input>${message}</button>
   `;
   return (message_info);
 }
@@ -502,9 +499,11 @@ $(function () {
       $('#m').autocomplete('disable');
     }
     const checked_array = [];
+    const checked_name_array = [];
     if ($(e.target).attr('id') === ('mood2/') || $(e.target).attr('id') === ('exit/')) {
       $('.checkbox:checked').each(function () {
         checked_array.push(this.id);
+        checked_name_array.push(this.name);
       });
       if (checked_array.length === 0) {
         if ($(e.target).attr('id') === ('mood2/')) {
@@ -513,7 +512,7 @@ $(function () {
           socket.emit('chat message button rule', $(e.target).attr('name'), 'no_exit');
         }
       } else {
-        socket.emit('chat message button rule', $(e.target).attr('name'), ($(e.target).attr('id') + checked_array));
+        socket.emit('chat message button rule', checked_name_array, ($(e.target).attr('id') + checked_array));
         $('.messaging-button').hide();
         $('.messaging-button-checkbox').hide();
       }
@@ -531,7 +530,16 @@ $(function () {
     } else {
       $('#m').autocomplete('disable');
     }
-    $(e.target).children('input[type=checkbox]').click();
+    if ($(e.target).attr('id') === '999' || $(e.target).attr('id') === '상관없음') {
+      $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').prop('checked', false);
+      $('.messaging-button-checkbox:not(:hidden)').removeClass('messaging-button-checkbox-checked');
+      $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').removeClass('messaging-button-checkbox-checked');
+    } else {
+      $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', false);
+      $('.messaging-button-checkbox:not(:hidden)').first().removeClass('messaging-button-checkbox-checked');
+      $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').removeClass('messaging-button-checkbox-checked');
+    }
+    $(e.target).children('input[type=checkbox]').prop('checked', true);
     $(e.target).toggleClass('messaging-button-checkbox-checked');
     $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked');
   });
@@ -652,6 +660,7 @@ $(function () {
       $('#messages').append(bot_messaging_button_checkbox(args[i][0], args[i][1]));
     }
     $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
+    $('.messaging-button-checkbox:not(:hidden)').first().click();
     if (args.length === 0) {
       $('#m').prop('disabled', false);
       $('#input-button').attr('disabled', false);
@@ -681,6 +690,7 @@ $(function () {
         $('#messages').append(bot_messaging_button_checkbox(args[i][0], args[i][1]));
       }
       $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
+      $('.messaging-button-checkbox:not(:hidden)').first().click();
       if (args.length === 0) {
         $('#m').prop('disabled', false);
         $('#input-button').attr('disabled', false);
