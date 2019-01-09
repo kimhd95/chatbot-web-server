@@ -3,44 +3,135 @@
     height: 100vh;
     text-align: center;
 }
-
 .card-body {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
+.title {
+    width: 70%;
+    margin-bottom: 80px;
+}
+.email, .password {
+    padding-left: 0;
+    padding-bottom: 10px;
+    border: 0;
+    border-bottom: 1px solid #61451b;
+    border-radius: 0;
+    margin-bottom: 30px;
+    color: #cccccc;
+}
+.login-btn {
+    background-color: #61451b;
+    border: 1px solid #61451b;
+    color: #ffffff;
+    font-size: 25px;
+    padding: 10px 0;
+    width: 100%;
+}
+.help {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 15px 0;
+    justify-content: space-around;
+}
+.help span {
+    color: #bbbbbb;
+    font-weight: 400;
+}
+.social-login {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+.naver-login, .google-login {
+    height: 70px;
+}
+.signup {
+    width: 100%;
+    margin-top: 15%;
+}
+.signup-deco {
+    width: 50%;
+}
+.signup-btn {
+    position: absolute;
+    right: 25%;
+    left: 25%;
+    margin-top: 2%;
+    color: #61451b;
+}
+/* 비밀번호 찾기 */
+#find-pw .modal-body {
+    text-align: left;
+}
 
-.by-email, .by-email a {
-    color: #555555;
+#find-pw .modal-body p {
+    font-size: 13px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+}
+
+#find-pw .modal-body input {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: none!important;
+    border-radius: 0;
+    border: 1px solid rgba(0,0,0,.15)!important;
     font-size: 14px;
 }
 
-.by-email a {
-    text-decoration: none;
+#find-pw .modal-footer {
+    justify-content: center;
+    padding: 12px;
 }
 
-.social-login {
-    width: 80%;
-    margin: 5px 0;
-    height: 45px;
-    color: #ffffff;
-    border: transparent;
+#find-pw .modal-footer:hover {
+    color: #ff7f8c;
 }
 
-.naver-login {
+@media (max-width: 400px) and (min-width: 375px) {
+    .naver-login, .google-login, .naver-login img {
+        height: 60px;
+    }
+    .signup-deco {
+        width: 55%;
+    }
+    .signup-btn {
+        margin-top: 2.5%;
+    }
 }
 
-.facebook-login {
-    /* width: 80%; */
-    height: 50px;
+@media (max-width: 374px) and (min-width: 350px) {
+    .naver-login, .google-login, .naver-login img {
+        height: 60px;
+    }
+    .signup-deco {
+        width: 55%;
+    }
+    .signup-btn {
+        font-size: 15px;
+        margin-top: 2.5%;
+    }
 }
 
-.google-login {
-    /* width: 80%; */
-    height: 50px;
-}
-
-img {
-    border-radius: 10px;
+@media (max-width: 349px) {
+    .naver-login, .google-login, .naver-login img {
+        height: 50px;
+    }
+    .signup-deco {
+        width: 60%;
+    }
+    .help span {
+        font-size: 15px;
+    }
+    .signup-btn {
+        font-size: 14px;
+        margin-top: 2.5%;
+    }
 }

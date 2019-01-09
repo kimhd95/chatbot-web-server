@@ -20,13 +20,48 @@
 <body>
     <div class="card">
         <div id="main" class="card-body">
-
-            <img src="/images/poodle.png" alt="" style="width: 90%;">
+            <img class="title" src="/images/title.png" alt="title">
+            <input class="form-control email" type="text" placeholder="아이디 (이메일)">
+            <input class="form-control password" type="password" placeholder="비밀번호">
+            <button class="login-btn" id="login-btn">로그인</button>
+            <div class="help">
+                <span id="find-info" data-toggle="modal" data-target="#find-pw">ID/비밀번호 찾기</span>
+                <span id="non-member-login">로그인 없이 이용하기</span>
+            </div>
+            <div class="social-login">
+                <div class="naver-login" id="naverIdLogin"></div>
+                <!-- <img class="naver-login" src="/images/naver.png" alt="naver-login"> -->
+                <img class="google-login" src="/images/google.png" alt="google-login">
+            </div>
+            <div class="signup">
+                    <a href="/signup">
+                        <img class="signup-deco" src="/images/signup-deco.png" alt="signup">
+                        <span class="signup-btn">20초만에 회원가입하기</span>
+                    </a>
+            </div>
+            
+            <div class="modal fade" id="find-pw" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">비밀번호 재발급</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>가입하신 이메일 주소를 입력해주세요.</p>
+                            <input class="form-control" type="email" id="signedup-email" placeholder="가입한 이메일">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="reissue-pw">임시 비밀번호 발급</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <img src="/images/poodle.png" alt="" style="width: 90%;">
 
             <div id="naverIdLogin" style="margin-bottom:10px;"></div>
-
-            <!-- <div id="fb-root"></div> -->
-            <!-- <img class="facebook-login" src="/images/facebook2.png" alt="" style="margin-bottom: 10px;"> -->
             <img class="google-login" src="/images/google2.png" alt="" style="margin-bottom: 10px;">
 
             <div class="g-signin2 google" data-onsuccess="onSignIn" style="display:none;"></div>
@@ -35,7 +70,7 @@
                 <a class="login" href="/login">이메일로 로그인</a>
                 &nbsp;&nbsp;|&nbsp;&nbsp;
                 <a class="signup" href="/signup">이메일로 회원가입</a>
-            </p>
+            </p> -->
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
