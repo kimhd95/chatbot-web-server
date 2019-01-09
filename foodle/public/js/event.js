@@ -1,92 +1,79 @@
-function bot_messaging(message) {
+function getToday() {
+  const year = new Date().getFullYear();
+  const month = new Date().getMonth() + 1;
+  const date = new Date().getDate();
+  let day;
+  switch (new Date().getDay()) {
+    case 0:
+      day = '일요일';
+      break;
+    case 1:
+      day = '월요일';
+      break;
+    case 2:
+      day = '화요일';
+      break;
+    case 3:
+      day = '수요일';
+      break;
+    case 4:
+      day = '목요일';
+      break;
+    case 5:
+      day = '금요일';
+      break;
+    case 6:
+      day = '토요일';
+      break;
+  }
+
+  return `${year}년  ${month}월  ${date}일  ${day}`;
+}
+
+function getTime() {
   let date;
   const hour = new Date().getHours();
   const min = new Date().getMinutes();
   if (hour < 12) {
-    if (min < 10) date = `오전 ${hour}:0${min}`;
-    else date = `오전 ${hour}:${min}`;
+    if (min < 10)
+      date = `오전 ${hour}:0${min}`;
+    else
+      date = `오전 ${hour}:${min}`;
   } else if (hour === 12) {
-    if (min < 10) date = `오후 ${hour}:0${min}`;
-    else date = `오후 ${hour}:${min}`;
-  } else if (min < 10) date = `오후 ${hour % 12}:0${min}`;
-  else date = `오후 ${hour % 12}:${min}`;
+    if (min < 10)
+      date = `오후 ${hour}:0${min}`;
+    else
+      date = `오후 ${hour}:${min}`;
+  } else if (min < 10) {
+    date = `오후 ${hour % 12}:0${min}`;
+  } else {
+    date = `오후 ${hour % 12}:${min}`;
+  }
+  
+  return date;
+}
+
+function bot_messaging(message) {
   let message_info = `<div class="bot-message">
-      <div class="message-info">
-          <img class="image" src="/images/poodle.png" alt="푸들" style="width: 30px; height: 30px; border-radius: 50%;">
-          <span class="name">푸들</span>
-          <span class="time">${date}</span>
-      </div>
       <div class="message-text">
           ${message}
       </div>
-
   </div>
   `;
-  if ($('.bot-message > .message-info > .time').last().text() === date) {
-    if ($('#messages > div:last-child').attr('class') === 'bot-message') {
-      message_info = `<div class="bot-message">
-          <div class="message-text">
-              ${message}
-          </div>
-
-      </div>
-      `;
-    }
-  }
   return (message_info);
 }
 
 function bot_messaging_image(image) {
-  let date;
-  const hour = new Date().getHours();
-  const min = new Date().getMinutes();
-  if (hour < 12) {
-    if (min < 10) date = `오전 ${hour}:0${min}`;
-    else date = `오전 ${hour}:${min}`;
-  } else if (hour === 12) {
-    if (min < 10) date = `오후 ${hour}:0${min}`;
-    else date = `오후 ${hour}:${min}`;
-  } else if (min < 10) date = `오후 ${hour % 12}:0${min}`;
-  else date = `오후 ${hour % 12}:${min}`;
   let message_info = `<div class="bot-message">
-      <div class="message-info">
-          <img class="image" src="/images/poodle.png" alt="푸들" style="width: 30px; height: 30px; border-radius: 50%;">
-          <span class="name">푸들</span>
-          <span class="time">${date}</span>
-      </div>
           <img class="img-fluid rest-img" src="${image}"></img>
       </div>
   `;
-  if ($('.bot-message > .message-info > .time').last().text() === date) {
-    if ($('#messages > div:last-child').attr('class') === 'bot-message') {
-      message_info = `<div class="bot-message">
-          <img class="img-fluid rest-img" src="${image}"></img>
-      </div>
-      `;
-    }
-  }
   return (message_info);
 }
 
 function bot_messaging_image_carousel(image) {
   const carousel_id = `carousel${String(Math.floor(Math.random() * 10000) + 1)}`;
-  let date;
-  const hour = new Date().getHours();
-  const min = new Date().getMinutes();
-  if (hour < 12) {
-    if (min < 10) date = `오전 ${hour}:0${min}`;
-    else date = `오전 ${hour}:${min}`;
-  } else if (hour === 12) {
-    if (min < 10) date = `오후 ${hour}:0${min}`;
-    else date = `오후 ${hour}:${min}`;
-  } else if (min < 10) date = `오후 ${hour % 12}:0${min}`;
-  else date = `오후 ${hour % 12}:${min}`;
   const message_info = `<div class="bot-message">
-      <div class="message-info">
-          <img class="image" src="/images/poodle.png" alt="푸들" style="width: 30px; height: 30px; border-radius: 50%;">
-          <span class="name">푸들</span>
-          <span class="time">${date}</span>
-      </div>
         <div id="${carousel_id}" class="carousel slide" data-ride="carousel" data-wrap="false">
           <div class="carousel-inner">
             <div class="carousel-item active">
@@ -125,7 +112,7 @@ function bot_messaging_button(button_id, message) {
 
 function bot_messaging_button_finish_checkbox(button_id, message) {
   const message_info = `
-          <br><button type="button" class="messaging-button" style="border: 1px solid #E20000; color: white; background-color: #E20000; border-radius: 5px; padding-left: 25px; padding-right: 25px;" id="${button_id}" name="${message}">${message}</button>
+          <br><button type="button" class="messaging-button complete-button" id="${button_id}" name="${message}">${message}</button>
   `;
   return (message_info);
 }
@@ -147,17 +134,7 @@ function user_list_update(id) {
 
 
 function user_messaging(message) {
-  let date;
-  const hour = new Date().getHours();
-  const min = new Date().getMinutes();
-  if (hour < 12) {
-    if (min < 10) date = `오전 ${hour}:0${min}`;
-    else date = `오전 ${hour}:${min}`;
-  } else if (hour === 12) {
-    if (min < 10) date = `오후 ${hour}:0${min}`;
-    else date = `오후 ${hour}:${min}`;
-  } else if (min < 10) date = `오후 ${hour % 12}:0${min}`;
-  else date = `오후 ${hour % 12}:${min}`;
+  let date = getTime();
   const message_info = `<div class="user-message">
       <div class="message-info">
           <span class="time">${date}</span>
@@ -418,12 +395,12 @@ function getChatLog(email) {
                 const init_html = `<hr><br>
                   <div class="bot-message">
                     <div class="message-info">
-                        <img class="image" src="/images/poodle.png" alt="푸들" style="width: 30px; height: 30px; border-radius: 50%;">
-                        <span class="name">푸들</span>
+                        <img class="image" src="/images/poodle.png" alt="외식코기" style="width: 30px; height: 30px; border-radius: 50%;">
+                        <span class="name">외식코기</span>
                         <span class="time"></span>
                     </div>
                     <div class="message-text">
-                        안녕! 나는 결정장애를 치료해주는 음식결정 챗봇 푸들이야!
+                        안녕! 나는 결정장애를 치료해주는 음식 결정 챗봇 외식코기야!
                     </div>
                     <br>
                     <div class="message-button">
@@ -431,7 +408,7 @@ function getChatLog(email) {
                         <button type="button" class="messaging-button" id="decide_place" name="중간지점 찾기(서울)">중간지점 찾기(서울)</button>
                         <button type="button" class="messaging-button" id="decide_history" name="기록 보기">기록 보기</button>
                         <button type="button" class="messaging-button" id="user_feedback" name="개발팀에게 피드백하기">개발팀에게 피드백하기</button>
-                        <button type="button" class="messaging-button" id="chitchat" name="푸들이랑 대화하기">푸들이랑 대화하기</button>
+                        <button type="button" class="messaging-button" id="chitchat" name="외식코기랑 대화하기">외식코기랑 대화하기</button>
                     </div>
                 </div>`;
                 let user_html = res.message;
