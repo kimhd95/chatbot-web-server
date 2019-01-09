@@ -377,9 +377,14 @@ class Decide_menu {
         const user_food_type = value.split('/')[1];
         await info_update.profile.update_food_type(socket.id, user_food_type);
         const foods = await info_update.food.get_restaurant(socket.id, user_data.subway, user_data.exit_quarter, user_data.with_mood, user_data.mood2, user_data.taste, user_food_type, 'x');
-        if (foods.length === 2) {
-          await info_update.profile.update_rest2(user_data.kakao_id, foods[0].id, foods[1].id);
-          index.sendSocketMessage(socket.id, 'chat message button', '2곳을 골라줄테니까 한 번 골라봐!', ['decide_final', '고고'], ['get_started', '안할래']);
+        const foods_info = foods.message;
+        if (foods_info.length === 2) {
+          await info_update.profile.update_rest2(user_data.kakao_id, foods_info[0].id, foods_info[1].id);
+          if (foods.try === 1) {
+            index.sendSocketMessage(socket.id, 'chat message button', '2곳을 골라줄테니까 한 번 골라봐!', ['decide_final', '고고'], ['get_started', '안할래']);
+          } else if (foods.try === 2) {
+            index.sendSocketMessage(socket.id, 'chat message button', `조건에 만족하는 곳이 없어! ${user_data.subway} 전체에서 2곳을 골라줄테니까 한 번 골라봐!`, ['decide_final', '고고'], ['get_started', '안할래']);
+          }
         } else {
           index.sendSocketMessage(socket.id, 'chat message button', '조건에 맞는 식당이 아직 없어... 다시 골라줘!', ['get_started', '돌아가기']);
         }

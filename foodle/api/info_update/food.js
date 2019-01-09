@@ -63,7 +63,7 @@ Food.get_restaurant = function (kakaoid, subway, exit_quarter, with_mood, mood2,
 
     const func = function (error, response, body) {
       error === null
-        ? resolve(body.message)
+        ? resolve(body)
         : reject(error);
     };
     self.apicall(kakaoid, name, method, url, json, func);
