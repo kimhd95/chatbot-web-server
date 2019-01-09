@@ -73,7 +73,7 @@ router.post('/sendInquiry', function (req, res) {
 	let mailOptions = {
 		from: `${req.body.name} <${req.body.email}>`,
 		to: 'support@jellylab.io',
-		subject: `[푸들]${req.body.subject}`,
+		subject: `[외식코기]${req.body.subject}`,
 		html: `<b>연락받을 이메일: ${req.body.email}<b><br><br>${req.body.message}`
 	}
 

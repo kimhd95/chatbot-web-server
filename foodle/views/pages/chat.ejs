@@ -22,14 +22,18 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/css/jquery-ui.theme.min.css">
     <link rel="stylesheet" href="/css/chat.css">
-    <title>푸들</title>
+    <title>외식코기</title>
 </head>
 <body>
     <div id="chat-room">
         <div class="card">
             <div class="card-header">
-                <span>메뉴추천봇 <span style="color: #ff4747">밥푸들</span></span>
-                <button id="config-btn" data-toggle="modal" data-target="#config-modal"><i class="fas fa-cog"></i></button>
+                <div class="info">
+                    <button class="back-btn"><i class="fas fa-chevron-left"></i></button>
+                    <img class="logo" src="/images/chat-logo.png" alt="logo">
+                    <span class="title">외식코기</span>
+                </div>
+                <button id="share-btn" data-toggle="modal" data-target="#config-modal"><i class="fas fa-share-square"></i></button>
                 <div class="modal fade bd-example-modal-sm" id="config-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-sm">
                       <div class="modal-content">
@@ -60,7 +64,7 @@
                 <!-- <div class="bot-message">
                     <div class="message-info">
                         <img class="image" src="./poodle.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
-                        <span class="name">푸들</span>
+                        <span class="name">외식코기</span>
                         <span class="time">오후 2:43</span>
                     </div>
                     <div class="message-text">
@@ -68,13 +72,8 @@
                     </div>
                 </div> -->
                 <div class="bot-message">
-                    <div class="message-info">
-                        <img class="image" src="/images/poodle.png" alt="고래이미지" style="width: 30px; height: 30px; border-radius: 50%;">
-                        <span class="name">푸들</span>
-                        <span class="time"></span>
-                    </div>
                     <div class="message-text">
-                        안녕! 나는 결정장애를 치료해주는 음식결정 챗봇 푸들이야!
+                        안녕! 나는 결정장애를 치료해주는 음식결정 챗봇 외식코기야!
                     </div>
                     <br>
                     <div class="message-button">
@@ -82,7 +81,7 @@
                         <button type="button" class="messaging-button" id="decide_place" name="중간지점 찾기(서울)">중간지점 찾기(서울)</button>
                         <button type="button" class="messaging-button" id="decide_history" name="기록 보기">기록 보기</button>
                         <button type="button" class="messaging-button" id="user_feedback" name="개발팀에게 피드백하기">개발팀에게 피드백하기</button>
-                        <button type="button" class="messaging-button" id="chitchat" name="푸들이랑 대화하기">푸들이랑 대화하기</button>
+                        <button type="button" class="messaging-button" id="chitchat" name="외식코기랑 대화하기">외식코기랑 대화하기</button>
                     </div>
                 </div>
                 <!-- <div class="user-message">

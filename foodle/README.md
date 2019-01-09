@@ -208,7 +208,7 @@ npm start
   <button type="button" class="messaging-button" id="decide_place" name="중간지점 찾기(서울)">중간지점 찾기(서울)</button>
   <button type="button" class="messaging-button" id="decide_history" name="기록 보기">기록 보기</button>
   <button type="button" class="messaging-button" id="user_feedback" name="개발팀에게 피드백하기">개발팀에게 피드백하기</button>
-  <button type="button" class="messaging-button" id="chitchat" name="푸들이랑 대화하기">푸들이랑 대화하기</button>
+  <button type="button" class="messaging-button" id="chitchat" name="외식코기랑 대화하기">외식코기랑 대화하기</button>
 </div>
 
 위 코드에서, 똑같은 형식을 가진 버튼을 하나 만들어 주면 된다.
