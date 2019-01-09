@@ -534,12 +534,13 @@ $(function () {
       $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').prop('checked', false);
       $('.messaging-button-checkbox:not(:hidden)').removeClass('messaging-button-checkbox-checked');
       $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').removeClass('messaging-button-checkbox-checked');
+      $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
     } else {
       $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', false);
       $('.messaging-button-checkbox:not(:hidden)').first().removeClass('messaging-button-checkbox-checked');
       $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').removeClass('messaging-button-checkbox-checked');
     }
-    $(e.target).children('input[type=checkbox]').prop('checked', true);
+    $(e.target).children('input[type=checkbox]').click();
     $(e.target).toggleClass('messaging-button-checkbox-checked');
     $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked');
   });
@@ -661,6 +662,7 @@ $(function () {
     }
     $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
     $('.messaging-button-checkbox:not(:hidden)').first().click();
+    $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
     if (args.length === 0) {
       $('#m').prop('disabled', false);
       $('#input-button').attr('disabled', false);
@@ -691,6 +693,7 @@ $(function () {
       }
       $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
       $('.messaging-button-checkbox:not(:hidden)').first().click();
+      $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
       if (args.length === 0) {
         $('#m').prop('disabled', false);
         $('#input-button').attr('disabled', false);
