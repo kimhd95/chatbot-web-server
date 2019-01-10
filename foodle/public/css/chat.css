@@ -88,6 +88,13 @@
     align-items: flex-end;
 }
 
+.loader {
+  margin-top: -28px;
+  margin-bottom: -25px;
+  width: 50px;
+  height: 50px;
+}
+
 .card-body .bot-message .message-info .image { margin-right: 10px; border-radius: 50%;}
 .card-body .bot-message .message-info .name { margin-right: 5px; font-size: 15px; font-weight: 700; }
 .card-body .bot-message .message-info .time { color: #666666; font-size: 13px; }

@@ -105,11 +105,23 @@ module.exports = function(){
 
 	exports.sendSocketMessage = function (socket_id, message_type, message, ...args) {
 	  return new Promise(((resolve, reject) => {
-					info_update.profile.create_bot_log(socket_id, message_type, String(message), JSON.stringify(args)).then((result) => {
-			      resolve(io.to(socket_id).emit(message_type, socket_id, message, ...args));
-			    }).catch((e) => {
-			      reject(e);
-			    });
+			if(message_type == 'chat message loader') {
+		    info_update.profile.create_bot_log(socket_id, message_type, String(message), JSON.stringify(args)).then((result) => {
+		      return io.to(socket_id).emit(message_type, message, ...args);
+		    }).then((result) => {
+		      setTimeout(() => {
+		        resolve('finish');
+		      }, message + 400);
+		    }).catch((e) => {
+		      reject(e);
+		    });
+			} else {
+				info_update.profile.create_bot_log(socket_id, message_type, String(message), JSON.stringify(args)).then((result) => {
+		      resolve(io.to(socket_id).emit(message_type, socket_id, message, ...args));
+		    }).catch((e) => {
+		      reject(e);
+		    });
+			}
 	  }));
 	};
 

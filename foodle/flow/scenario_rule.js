@@ -14,6 +14,7 @@ const scenario_flow = require('./scenario');
 exports.scenario_rule = function (val, socket, msg) {
   (async function () {
     try {
+      console.log(`scenario_rule에서 val : ${val}`)
       const user_data = await info_update.profile.load_user(socket.id);
       if (val === 'get_started') {
         const chlist2 = ['그래 뭘 도와줄까?', '난 갈수록 다재다능해지고 있어ㅎㅎ', '세상의 모든 음식을 먹어보는게 내 목표야', '할 줄 아는 건 별로 없지만 골라봐',
