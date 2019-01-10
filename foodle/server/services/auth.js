@@ -53,6 +53,13 @@ function getUnsignedChatRoomPage (req, res) {
 	});
 }
 
+function getLobbyPage (req, res) {
+	console.log('로그인 후 로비로 이동');
+	res.render('pages/lobby.ejs', {
+		url: config.api_url
+	})
+}
+
 module.exports = {
 	getMainPage: getMainPage,
 	getLoginPage: getLoginPage,
@@ -61,5 +68,6 @@ module.exports = {
 	getLostIdPasswordPage: getLostIdPasswordPage,
 	getTermsPage: getTermsPage,
 	getChatRoomPage: getChatRoomPage,
-	getUnsignedChatRoomPage: getUnsignedChatRoomPage
+	getUnsignedChatRoomPage: getUnsignedChatRoomPage,
+	getLobbyPage: getLobbyPage
 }

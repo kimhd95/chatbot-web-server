@@ -25,6 +25,8 @@ router.get('/access-terms', authService.getTermsPage);
 router.get('/data-terms', authService.getTermsPage);
 router.get('/chat', authService.getChatRoomPage);
 router.get('/chat_unsigned', authService.getUnsignedChatRoomPage);
+router.get('/lobby', authService.getLobbyPage);
+
 router.post('/sendNewPassword', function (req, res) {
 	let transporter = nodemailer.createTransport({
 		service:'gmail',
