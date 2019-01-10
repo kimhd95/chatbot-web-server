@@ -81,7 +81,7 @@ class Toolbox {
             index.sendSocketMessage(socket.id, 'chat message button', `오늘도 ${revisit}에서 먹는거야?`, [`${revisit}`, '응 맞아!'], ['decide_menu', '다른 곳이야!']);
           }
         } else {
-          index.sendSocketMessage(socket.id, 'chat message button', '한 끼당 메뉴를 3번만 고를 수 있어!', ['get_started', '처음으로 돌아가기']);
+          index.sendSocketMessage(socket.id, 'chat message button', '30분에 메뉴를 5번만 고를 수 있어!', ['get_started', '처음으로 돌아가기']);
         }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
