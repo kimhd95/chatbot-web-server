@@ -5,19 +5,20 @@
 }
 
 .card-header {
-    background-color: #ffffff;
+    background-color: #61451b;
     text-align: center;
 }
 
 .card-header .back-btn {
     float: left;
     cursor: pointer;
-    color: black;
+}
+.card-header .back-btn i {
+    color: #ffffff;
 }
 
-.card-header .next-btn {
-    float: right;
-    cursor: pointer;
+.card-header .page-title {
+    color: #ffffff;
 }
 
 .card-header .complete-btn {
@@ -26,116 +27,54 @@
     display: none;
 }
 
-/* 탭 */
-.tabs {
-    height: 45px;
-    display: flex;
-}
-.tab {
-    width: 50%;
-    height: 50px;
-    position: relative;
-    background: #666666;
-    text-align: center;
-    color: #ffffff;
-    padding: 12.5px 0px;
-}
-#additional-info:after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 0;
-    border-left: 15px solid #ff7f8c;
-    border-top: 25px solid transparent;
-    border-bottom: 25px solid transparent;
-}
-.active {
-    background: #ff7f8c;
-}
-#additional-info.active:after {
-    border-left-color: #666666;
-}
-
 /* 가입 폼 */
-
-.basic-info-form {
-    /* display: none; */
+input:focus {
+    outline: none;
 }
-.additional-info-form {
+input {
+    color: #61451b;
+    font-weight: 500;
+}
+input::placeholder {
+    color: #bbbbbb;
+}
+.card-body {
+    padding: 1.25rem 2rem;
+}
+.input-container {
+    padding: 0 15px;
+}
+
+.second-input-container {
+    padding: 0 15px;
     display: none;
 }
+.logo {
+    width: 50%;
+    margin: 5% 25% 15% 25%;
+}
 
-/* 계정 정보 입력 */
-.email {
+.name-container {
     display: flex;
-    align-items: center;
-    border: 1px solid rgba(0,0,0,.15)!important;
-    height: 40px;
-    margin-bottom: 10px;
-    padding: 5px;
-
 }
 
-.email .platform-list-btn {
-    color: #ffffff;
-    background-color: rgba(0, 0, 0, .3);
-    border: rgba(0, 0, 0, .3);
-    border-radius: 5px;
+.name-container input {
+    border: none;
+    border-bottom: 2px solid #61451b;
 }
 
-.password, .nickname {
-    border: 1px solid rgba(0,0,0,.15)!important;
-    margin-bottom: 10px;
-    height: 40px;
-    padding: 5px;
-
+.first-name {
+    width: 30%;
+    margin-right: 20%;
 }
 
-.gender {
-    margin-bottom: 10px;
-    height: 40px;
-    padding: 5px;
-}
-.password-help {
-    text-align: center;
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-.email input, .password input, .nickname input, .age-group input {
-    display: block;
-    width: 100%;
-    /* margin-bottom: 10px; */
-    font-size: 16px;
+.last-name {
+    width: 50%;
 }
 
-.email input:focus, .password input:focus, .nickname input:focus, .age-group input:focus {
-    outline: none!important;
+.gender-container {
+    margin-top: 10%;
 }
-
-.age-select-btn {
-    border: 1px solid #d3d3d3;
-    background: #d3d3d3;
-    padding: 5px 20px;
-}
-
-#age-group-list .modal-body {
-    padding: 0;
-}
-.birth-year {
-    border-bottom: 1px solid #666666;
-    padding: 10px 0px 10px 10px;
-}
-
-
-.terms-color {
-    color: #ff7f8c;
-    text-decoration: underline;
-    font-weight: 600;
-}
-
 input[type=checkbox] {
     display: none;
 }
@@ -144,11 +83,9 @@ input[type=checkbox] + label {
     display: inline-block;
     cursor: pointer;
     position: relative;
-    padding-left: 35px;
-    font-size: 12px;
+    padding-left: 30px;
     line-height: 20px;
-    text-decoration-color: rgba(0,0,0,.4);
-    color: rgba(0,0,0,.5);
+    margin-right: 25%;
 }
 
 input[type=checkbox] + label:before {
@@ -158,57 +95,170 @@ input[type=checkbox] + label:before {
     position: absolute;
     left: 0;
     top: 0px;
-    background-image: url("./../images/check.png");
+    background-color: #ffffff;
     background-size: cover;
-    border: 1px solid #d2dae2;
-    border-radius: 3px;
+    border: 2px solid #61451b;
     line-height: 13px;
 }
 
 input[type=checkbox]:checked + label:before {
     content: "";
-    background-image: url("./../images/checked.png");
-    border: 1px solid #ff7f8c;
+    background-image: url("./../images/check.png");
 }
 
-.all-agree {
-    text-decoration: none!important;
-    font-weight: 700;
-    font-size: 15px!important;
-}
-.all-agree:before {
-    width: 25px!important;
-    height: 25px!important;
+.gender-text {
+    color: #61451b;
+    font-weight: 600;
+    font-size: 18px;
 }
 
-.access-terms:before, .data-terms:before {
-    margin-left: 7px;
+.email-container {
+    margin-top: 10%;
+    display: flex;
 }
 
-.platform-btn {
+.email {
+    width: 45%;
+    border: none;
+    border-bottom: 2px solid #61451b;
+}
+.at {
+    width: 10%;
     text-align: center;
-    padding: 10px;
+    color: #61451b;
+}
+.platform {
+    width: 35%;
+    border: 2px solid #61451b;
+    border-right: transparent;
+    text-align: center;
+}
+.platform-list-button {
+    width: 10%;
+    border: 2px solid #61451b;
+    text-align: center;
+}
+.platform-list-button i {
+    color: #61451b;
+}
+.password-container {
+    margin-top: 10%;
+}
+.password, .password-check {
+    border: transparent;
+    border-bottom: 2px solid #61451b;
+    padding-bottom: 5px;
+    width: 95%;
+}
+.password-help {
+    color: red;
+    font-size: 14px;
+    font-weight: 600;
+}
+.password-complete {
+    width: 5%;
+    height: 5%;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #61451b;
+}
+.password-complete img {
+    display: none;
+}
+
+.next-button, .signup-button {
+    color: #61451b;
+    border: transparent;
+    border-radius: 4px;
+    background-color: #fcc668;
     width: 100%;
-    /* border-bottom: 1px solid rgba(0, 0, 0, .15); */
-    background-color: #ffffff;
-    color: black;
-    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 10px;
+    margin-top: 20%;
 }
 
-.platform-btn:focus {
-    outline: none;
+.signup-button {
+    display: none;
 }
 
+/* 두번째 페이지 */
+
+.year-container {
+    display: flex;
+    margin-top: 10%;
+}
+.year {
+    width: 30%;
+    border: 2px solid #61451b;
+    border-right: transparent;
+    text-align: center;
+}
+.year-list-button {
+    width: 10%;
+    border: 2px solid #61451b;
+    text-align: center;
+    margin-right: 5px;
+}
+
+.year-list-button i {
+    color: #61451b;
+}
+.phone-container {
+    margin-top: 10%;
+}
+.phone-number {
+    border: none;
+    border-bottom: 2px solid #61451b;
+    width: 100%;
+}
+.terms-container {
+    margin-top: 15%;
+}
+.terms {
+    display: flex;
+    align-items: center;
+    margin-bottom: 7.5px;
+}
+.terms:last-child {
+    margin-top: 15%;
+}
+.terms-text {
+    font-size: 17px;
+    font-weight: 700;
+    color: #61451b;
+    margin-bottom: 0;
+    margin-right: 10px!important;
+}
+
+.show-terms {
+    color: #aaaaaa;
+    font-size: 14px;
+    opacity: 1;
+}
 /* 모달 */
 
 .modal-body {
-    height: calc(100vh - 155px);
     overflow: scroll;
+    padding: 0;
+}
+#platform-list .modal-content button {
+    width: 100%;
+    padding: 10px 0;
+    background-color: #ffffff;
+    border: 0.5px solid #61451b;
+    color: #61451b;
+    font-weight: 500;
+    text-align: left;
+    padding-left: 20px;
 }
 
-/* 컬랩스 */
-
-.collapse .card {
-    height: 20vh;
-    overflow: scroll;
+#year-list .modal-body {
+    width: 100%;
+    height: 100%;
+}
+#year-list .modal-content .birth-year {
+    padding: 10px 0 10px 20px;
+    border: 0.5px solid #61451b;
+    color: #61451b;
+    font-weight: 500;
 }
