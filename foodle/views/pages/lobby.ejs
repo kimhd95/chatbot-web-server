@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+				<link rel="stylesheet" href="/css/swiper.css">
+				<link rel="stylesheet" href="/css/lobby.css">
+        <!-- CSS stylesheet for sliding-swipe-menu -->
+        <link rel="stylesheet" href="/css/slide-and-swipe-menu.css">
+
+
+    </head>
+    <body>
+          <nav class="nav">
+            <div class="bg"></div>
+            <div class="transparent"></div>
+          </nav>
+
+		  			<div class="swiper-slide content">
+		          <div class="upper-screen">
+		            <div class="swiper-container">
+		          		<div class="swiper-wrapper">
+		                <div class="swiper-slide"><div class="upper-img" style="background-image: url('/images/lobby_bg_up_fst.png')">
+											<div class="pagination-space">
+												<div class="pagination" style="background-image:url('/images/lobby_pagination_fst.png')"></div>
+											</div>
+											<div class="textimg-space">
+													<div class="textimg" style="background-image:url('/images/lobby_textimg_up_fst.png')"></div>
+											</div>
+											<div class="button-space"><div class="choose-menu" onclick="location.href='/chat';"></div></div>
+										</div></div>
+										<div class="swiper-slide"><div class="upper-img" style="background-image: url('/images/lobby_bg_up_snd.png')">
+											<div class="pagination-space">
+												<div class="pagination" style="background-image:url('/images/lobby_pagination_snd.png')"></div>
+											</div>
+											<div class="textimg-space">
+													<div class="textimg" style="background-image:url('/images/lobby_textimg_up_snd.png')"></div>
+											</div>
+											<div class="button-space"><div class="choose-menu" onclick="location.href='/chat';"></div></div>
+										</div></div>
+										<div class="swiper-slide"><div class="upper-img" style="background-image: url('/images/lobby_bg_up_trd.png')">
+											<div class="pagination-space">
+												<div class="pagination" style="background-image:url('/images/lobby_pagination_trd.png')"></div>
+											</div>
+											<div class="textimg-space">
+													<div class="textimg" style="background-image:url('/images/lobby_textimg_up_trd.png')"></div>
+											</div>
+											<div class="button-space"><div class="choose-menu" onclick="location.href='/chat';"></div></div>
+										</div></div>
+		              </div>
+		            </div>
+		          </div>
+		  				<div class="menu-button"></div>
+							<div class="lower-screen">
+								<div class="available-space">
+									<div class="plus-sign"></div>
+									<div class="available-textimg"></div>
+								</div>
+								<div class="feature-space">
+									<div class="feature">
+										<div class="middlepoint-img"></div>
+										<div class="emptyspace"></div>
+										<div class="middlepoint-text"></div>
+									</div>
+									<div class="border"></div>
+									<div class="feature">
+										<div class="comingsoon"></div>
+									</div>
+									<div class="border"></div>
+									<div class="feature">
+										<div class="comingsoon"></div>
+									</div>
+								</div>
+								<div class="guide-space">
+									<div class="guide"></div>
+								</div>
+								<div class="info-space">
+									<div class="info"></div>
+								</div>
+							</div>
+		  			</div>
+
+        <!-- jQuery library (served from Google) -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+        <!-- touchSwipe library -->
+        <script src="http://labs.rampinteractive.co.uk/touchSwipe/jquery.touchSwipe.min.js"></script>
+
+        <!-- Slider Javascript file -->
+        <script src="/js/slide-and-swipe-menu.js"></script>
+				<script src="/js/swiper.js"></script>
+        <div class="ssm-overlay ssm-toggle-nav ssm-nav-visible"></div>
+
+        <script>
+          $(document).ready(function() {
+              $('.nav').slideAndSwipe();
+          });
+
+					var swiperImg = new Swiper('.swiper-container', {
+			      slidesPerView: 'auto',
+			      initialSlide: 0,
+			      resistanceRatio: 0,
+			      slideToClickedSlide: false,
+			    });
+				</script>
+    </body>
+</html>

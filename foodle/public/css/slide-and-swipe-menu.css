@@ -1,0 +1,48 @@
+/**
+ * Sliding swipe menu CSS
+ */
+nav {
+  /* box-sizing: content-box; */
+  height: 100%;
+  width: 100%;
+  /* background-size:  */
+  left: 0;
+  top: 0;
+  z-index: 5;
+  position: absolute;
+  /* display:flex; */
+  overflow: hidden;
+  transform: translate(-100%,0);
+  /* pointer-events:; */
+}
+
+nav .bg{
+  /* display: inline-block; */
+  position: absolute;
+  height:100%;
+  width:70%;
+  z-index: 7;
+  background-color: #0a4a3c;
+  overflow: hidden;
+  /* box-sizing: content-box; */
+}
+
+nav .transparent{
+  position: absolute;
+  height:100%;
+  width:100%;
+  z-index:6;
+  background: rgba(0,0,0,0);
+  overflow:hidden;
+}
+.ssm-overlay {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.5);
+  display: none;
+  z-index: 4;
+  /* pointer-events:stroke; */
+}
