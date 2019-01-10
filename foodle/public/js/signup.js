@@ -64,42 +64,42 @@ function firstInfoValidationCheck() {
     pwEng = password.search(/[a-z]/ig);
     pwSpe = password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
-    // if (firstName === '' || firstName === null) {
-    //     alert('성을 입력해주세요.');
-    //     return;
-    // }
-    // if (lastName === '' || lastName === null) {
-    //     alert('이름을 입력해주세요.');
-    //     return;
-    // }
-    // if (email === '') {
-    //     alert('이메일을 입력해주세요.');
-    //     return;
-    // }
-    // if (gender === '' || gender == null) {
-    //     alert('성별을 선택해주세요.');
-    //     return;
-    // }
-    // if (!emailRegExp.test(email)) {
-    //     alert('이메일 형식을 지켜주세요.');
-    //     return;
-    // }
-    // if (password === '') {
-    //     alert('비밀번호를 입력해주세요.');
-    //     return;
-    // }
-    // if (password.length < 8) {
-    //     alert('비밀번호는 8자리 이상이어야 합니다.');
-    //     return;
-    // }
-    // if ((pwNum < 0 && pwEng < 0) || (pwNum < 0 && pwSpe < 0) || (pwEng < 0 && pwSpe < 0)) {
-    //     alert('비밀번호는 숫자, 영문, 특수문자 중 2가지 이상을 혼합해야 합니다.');
-    //     return;
-    // }
-    // if (password !== passwordCheck) {
-    //     alert('비밀번호가 일치하지 않습니다.');
-    //     return;
-    // }
+    if (firstName === '' || firstName === null) {
+        alert('성을 입력해주세요.');
+        return;
+    }
+    if (lastName === '' || lastName === null) {
+        alert('이름을 입력해주세요.');
+        return;
+    }
+    if (email === '') {
+        alert('이메일을 입력해주세요.');
+        return;
+    }
+    if (gender === '' || gender == null) {
+        alert('성별을 선택해주세요.');
+        return;
+    }
+    if (!emailRegExp.test(email)) {
+        alert('이메일 형식을 지켜주세요.');
+        return;
+    }
+    if (password === '') {
+        alert('비밀번호를 입력해주세요.');
+        return;
+    }
+    if (password.length < 8) {
+        alert('비밀번호는 8자리 이상이어야 합니다.');
+        return;
+    }
+    if ((pwNum < 0 && pwEng < 0) || (pwNum < 0 && pwSpe < 0) || (pwEng < 0 && pwSpe < 0)) {
+        alert('비밀번호는 숫자, 영문, 특수문자 중 2가지 이상을 혼합해야 합니다.');
+        return;
+    }
+    if (password !== passwordCheck) {
+        alert('비밀번호가 일치하지 않습니다.');
+        return;
+    }
     $('.next-button')[0].style.display = 'none';
     $('.signup-button')[0].style.display = 'block';
     $('.input-container')[0].style.display = 'none';
@@ -139,10 +139,12 @@ function signUpReq(name, gender, email, password, ageGroup, phone) {
         method: "POST",
         url: '/api/v1/users/register_user',
         body: {
+            name: name,
             email: email,
             password: password,
             gender: gender,
             ageGroup: ageGroup,
+            phone: phone,
             social: false
         },
         success: function (res) {
