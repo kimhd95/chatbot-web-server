@@ -176,8 +176,6 @@ function user_messaging(message) {
 function bot_messaging_card(res_name, res_type, food_name, naver_url, map_url, image, image2, image3) {
   const carousel_id = `carousel${String(Math.floor(Math.random() * 10000) + 1)}`;
   const message_info = `<div class="bot-message">
-            <button type="button" class="btn btn-light arrow-left"><</button>
-            <button type="button" class="btn btn-light arrow-right">></button>
             <div class="choice_carousel">
               <div class="choice_card">
                 <div id="${carousel_id}" class="carousel slide" data-ride="carousel" data-wrap="false">
