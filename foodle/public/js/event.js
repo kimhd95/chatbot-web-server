@@ -484,10 +484,16 @@ $(function () {
         checked_name_array.push(this.name);
       });
       if (checked_array.length === 0) {
-        if ($(e.target).attr('id') === ('mood2/')) {
-          socket.emit('chat message button rule', $(e.target).attr('name'), 'no_mood2');
-        } else {
-          socket.emit('chat message button rule', $(e.target).attr('name'), 'no_exit');
+        switch ($(e.target).attr('id')) {
+          case 'mood2/':
+            socket.emit('chat message button rule', $(e.target).attr('name'), 'no_mood2');
+            break;
+          case 'exit/':
+            socket.emit('chat message button rule', $(e.target).attr('name'), 'no_exit');
+            break;
+          case 'drink_type/':
+            socket.emit('chat message button rule', $(e.target).attr('name'), 'no_drink_type');
+            break;
         }
       } else {
         socket.emit('chat message button rule', checked_name_array, ($(e.target).attr('id') + checked_array));

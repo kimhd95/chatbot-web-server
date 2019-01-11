@@ -25,6 +25,7 @@ class Decide_drink {
       'decide_drink': this.decide_drink,
       'exitnum': this.exitnum,
       'drink_type': this.drink_type,
+      'no_drink_type': this.no_drink_type,
     };
     this.execute(key, value, socket, user_data);
   }
@@ -230,6 +231,19 @@ class Decide_drink {
       }
     }());
   }
+
+  no_drink_type(value, socket, user_data) {
+    (async function () {
+      try {
+        index.sendSocketMessage(socket.id, 'chat message button', '술 종류를 적어도 하나는 선택해줘!');
+      } catch (e) {
+        index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
+        console.log(e);
+      }
+    }());
+  }
+
+
 }
 
 module.exports = Decide_drink;
