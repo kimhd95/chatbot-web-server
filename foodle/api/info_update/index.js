@@ -3,7 +3,8 @@
 
 let list  = [
     'profile',
-    'food'
+    'food',
+    'drink'
 ];
 
 let List = function() {
