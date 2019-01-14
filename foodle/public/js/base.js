@@ -29,6 +29,7 @@ let spinner;
 
 
 function sendReq(info) {
+    // console.log("info.error: "+info.error)
     if(!info.error){
         info.error = function(e){
             console.log('ajax call error');

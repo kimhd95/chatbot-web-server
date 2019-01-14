@@ -174,6 +174,7 @@ $(document).ready(() => {
     $('#naverIdLogin_loginButton img')[0].src = '/images/naver.png';
 
     let loginValue = sessionStorage.getItem('login');
+    // console.log("loginValue: "+loginValue)
     if (loginValue === '0' || loginValue === null) {
         const info = {
             url: '/api/v1/users/verify_token',

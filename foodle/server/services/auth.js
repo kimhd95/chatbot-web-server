@@ -46,6 +46,20 @@ function getChatRoomPage (req, res) {
 	});
 }
 
+function getUnsignedChatRoomPage (req, res) {
+	console.log('로그인없이 이용');
+	res.render('pages/chat_unsigned.ejs', {
+		url: config.api_url
+	});
+}
+
+function getLobbyPage (req, res) {
+	console.log('로그인 후 로비로 이동');
+	res.render('pages/lobby.ejs', {
+		url: config.api_url
+	})
+}
+
 module.exports = {
 	getMainPage: getMainPage,
 	getLoginPage: getLoginPage,
@@ -53,5 +67,7 @@ module.exports = {
 	getLogout: getLogout,
 	getLostIdPasswordPage: getLostIdPasswordPage,
 	getTermsPage: getTermsPage,
-	getChatRoomPage: getChatRoomPage
+	getChatRoomPage: getChatRoomPage,
+	getUnsignedChatRoomPage: getUnsignedChatRoomPage,
+	getLobbyPage: getLobbyPage
 }
