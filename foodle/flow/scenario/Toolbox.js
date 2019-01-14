@@ -78,13 +78,8 @@ class Toolbox {
             index.sendSocketMessage(socket.id, 'chat message button', '70% 이상의 사람들이 메뉴를 고를 때 결정장애를 겪는대...🚋 이.제.부.턴.!! 내가 동물지능(?)으로 그날그날 너의 기분과 상황에 맞는 메뉴를 결정해줄게 렛츠고😆', ['decide_menu', '렛츠고!']);
             await info_update.profile.update_state(socket.id, '1', 'decide_menu');
           } else {
-            index.sendSocketMessage(socket.id, 'chat message button', '한 끼당 메뉴를 3번만 고를 수 있어!', ['get_started', '처음으로 돌아가기']);
+            index.sendSocketMessage(socket.id, 'chat message button', '한 끼당 메뉴를 5번만 고를 수 있어!', ['get_started', '처음으로 돌아가기']);
           }
-<<<<<<< HEAD
-        } else {
-          index.sendSocketMessage(socket.id, 'chat message button', '30분에 메뉴를 5번만 고를 수 있어!', ['get_started', '처음으로 돌아가기']);
-=======
->>>>>>> hyojin
         }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
