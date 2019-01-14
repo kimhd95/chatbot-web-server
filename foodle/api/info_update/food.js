@@ -232,6 +232,26 @@ Food.verify_subway = function (kakaoid, value) {
   }));
 };
 
+Food.verify_subway_drinktype = function (kakaoid, value) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'food.verify_subway_drinktype';
+    const method = 'POST';
+    const url = '/api/v1/users/verify_subway_drinktype';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      subway: value,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body.result)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
 Food.crawl_two_image = function (kakaoid, res1, res2) {
   const self = this;
   return new Promise(((resolve, reject) => {

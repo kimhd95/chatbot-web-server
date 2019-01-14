@@ -150,8 +150,6 @@ function user_messaging(message) {
 function bot_messaging_card(res_name, res_type, food_name, naver_url, map_url, image, image2, image3) {
   const carousel_id = `carousel${String(Math.floor(Math.random() * 10000) + 1)}`;
   const message_info = `<div class="bot-message">
-            <button type="button" class="btn btn-light arrow-left"><</button>
-            <button type="button" class="btn btn-light arrow-right">></button>
             <div class="choice_carousel">
               <div class="choice_card">
                 <div id="${carousel_id}" class="carousel slide" data-ride="carousel" data-wrap="false">
@@ -257,14 +255,43 @@ function bot_messaging_card_inner_no_image(res_name, res_type, food_name, naver_
 
 function bot_messaging_map(subway, url){
   let roughMap;
-  console.log(subway);
   roughMap = `<div>
-    <a href='http://map.daum.net/link/search/${subway}' target='_blank' ><image class="image" src='${url}' style="width: 300px; height: 200px;"></image></a>
+    <a href= 'http://map.daum.net/link/search/${subway}' target='_blank' ><image class="image" src='${url}' style="width: 300px; height: 200px;"></image></a>
     <p>이미지 클릭시 지도 자세히 보기</p>
-   </div> `;
+  </div> `;
   return roughMap;
 }
 
+function bot_messaging_loader(loader_id) {
+  let date;
+  const hour = new Date().getHours();
+  const min = new Date().getMinutes();
+  if (hour < 12) {
+    if (min < 10) date = `오전 ${hour}:0${min}`;
+    else date = `오전 ${hour}:${min}`;
+  } else if (hour === 12) {
+    if (min < 10) date = `오후 ${hour}:0${min}`;
+    else date = `오후 ${hour}:${min}`;
+  } else if (min < 10) date = `오후 ${hour % 12}:0${min}`;
+  else date = `오후 ${hour % 12}:${min}`;
+  let message_info = `<div class="bot-message">
+      <div id="${loader_id}" class="message-text">
+        <img class="loader" src="/images/loader.gif" alt="loader"></img>
+      </div>
+  </div>
+  `;
+  if ($('.bot-message > .message-info > .time').last().text() === date) {
+    if ($('#messages > div:last-child').attr('class') === 'bot-message') {
+      message_info = `<div class="bot-message">
+          <div id="${loader_id}" class="message-text">
+            <img class="loader" src="/images/loader.gif" alt="loader"></img>
+          </div>
+      </div>
+      `;
+    }
+  }
+  return (message_info);
+}
 
 // google sdk load
 function onLoad () {
@@ -687,10 +714,8 @@ $(function () {
     for (let i = 0; i < args[1] - 1; i += 1) {
       $('.carousel-inner').last().append(carousel_inner(args[2][i]));
     }
-
     $('#messages').append(bot_messaging(msg)).scrollTop(1E10);
     $('#messages').append(bot_messaging_button(button1[0], button1[1])).append(bot_messaging_button(button2[0], button2[1]));
-
     $('#m').prop('disabled', true);
     setTimeout(() => {
       $('#messages').scrollTop(1E10);
@@ -724,6 +749,17 @@ $(function () {
     updateChatLog(socket_id);
   });
 
+  socket.on('chat message loader', (time) => {
+      const loader_id = `loader${String(Math.floor(Math.random() * 10000) + 1)}`;
+      $('#messages').append(bot_messaging_loader(loader_id)).children(':last').hide()
+        .fadeIn(150);
+      $(`#${loader_id}`).delay(time + 300).fadeOut(150);
+      $('#m').prop('disabled', true);
+      $('#input-button').attr('disabled', true);
+      $('#messages').scrollTop(1E10);
+      // $(".myText").val($("#messages")[0].outerHTML);
+  });
+
 });
 
 
@@ -738,7 +774,7 @@ $(document).ready(() => {
     // $('m').val(sessionStorage.getItem('email'));
     $('.social-signed-in')[0].style.display = 'block';
     $('.email-signed-in')[0].style.display = 'none';
-    $('.update-password')[0].style.display = 'none';
+    $('.update-password')[0].style.display = 'block';
   }
   if (loginValue === '0') {
     const info = {
@@ -870,6 +906,28 @@ $(document).ready(() => {
     logout(loginValue);
   });
 
+  $('#delete-log-btn').click(() => {
+    if (confirm('채팅기록을 지우시겠습니까? 모든 기록이 지워집니다.')) {
+      const info = {
+        url: '/api/v1/users/delete_chat_log',
+        method: 'POST',
+        body: {
+          email: sessionStorage.getItem('email')
+        },
+        success: function(res) {
+          if (res.success) {
+            alert('채팅로그를 지웠습니다.');
+            window.location.replace('/chat');
+          }
+        },
+        error: function (e) {
+          console.log(e.responseJSON);
+        }
+      }
+      sendReq(info);
+    }
+  });
+
   $('#withdraw-btn').click(() => {
     if (confirm('정말 탈퇴하시겠습니까? 탈퇴하시면 모든 데이터가 소멸됩니다.')) {
       const info = {
@@ -896,7 +954,7 @@ $(document).ready(() => {
 
       sendReq(info);
     }
-  })
+  });
 
   $('.decide-withdrawl').click(() => {
     if (confirm('정말 탈퇴하시겠습니까? 탈퇴하시면 모든 데이터가 소멸됩니다.')) {
@@ -924,7 +982,7 @@ $(document).ready(() => {
       }
       sendReq(info);
     }
-  })
+  });
 
   $('.decide-update-password').click(() => {
     if ($('.cur-password').val() === '') {
@@ -982,7 +1040,7 @@ $(document).ready(() => {
     }
     sendTokenReq(info);
 
-  })
+  });
   if (new Date().getHours() < 12) {
     nowTime = `오전 ${new Date().getHours()}:${new Date().getMinutes()}`;
   } else if (new Date().getHours() === 12) {
@@ -991,4 +1049,4 @@ $(document).ready(() => {
     nowTime = `오후 ${new Date().getHours()%12}:${new Date().getMinutes()}`;
   }
   $('.message-info .time')[0].innerHTML = nowTime;
-})
+});
