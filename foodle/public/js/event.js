@@ -49,7 +49,7 @@ function getTime() {
   } else {
     date = `오후 ${hour % 12}:${min}`;
   }
-  
+
   return date;
 }
 
@@ -118,16 +118,8 @@ function bot_messaging_button_finish_checkbox(button_id, message) {
 }
 
 function bot_messaging_button_checkbox(button_id, message) {
-<<<<<<< HEAD
   let message_info = `
         <button type="button" class="messaging-button-checkbox" id="${button_id}" name="${message}"><input type="checkbox" id="${button_id}" class="checkbox" name="${message}"></input>${message}</button>
-=======
-  const quarter = button_id.slice(-1);
-  const identifier = Math.floor((Math.random() * 90) + 10) + quarter;
-  console.log(identifier);
-  const message_info = `
-        <button type="button" class="messaging-button-checkbox" id="${button_id}" name="${message}"><input type="checkbox" id="${button_id}" class="checkbox"></input>${message}</button>
->>>>>>> origin/food_dev_unsigned
   `;
   return (message_info);
 }
@@ -263,7 +255,6 @@ function bot_messaging_card_inner_no_image(res_name, res_type, food_name, naver_
 
 function bot_messaging_map(subway, url){
   let roughMap;
-<<<<<<< HEAD
   roughMap = `<div>
     <a href= 'http://map.daum.net/link/search/${subway}' target='_blank' ><image class="image" src='${url}' style="width: 300px; height: 200px;"></image></a>
     <p>이미지 클릭시 지도 자세히 보기</p>
@@ -301,16 +292,6 @@ function bot_messaging_loader(loader_id) {
   }
   return (message_info);
 }
-=======
-  console.log(subway);
-  roughMap = `<div>
-    <a href='http://map.daum.net/link/search/${subway}' target='_blank' ><image class="image" src='${url}' style="width: 300px; height: 200px;"></image></a>
-    <p>이미지 클릭시 지도 자세히 보기</p>
-   </div> `;
-  return roughMap;
-}
-
->>>>>>> origin/food_dev_unsigned
 
 // google sdk load
 function onLoad () {
@@ -522,10 +503,7 @@ $(function () {
       $('#m').autocomplete('disable');
     }
     const checked_array = [];
-<<<<<<< HEAD
     const checked_name_array = [];
-=======
->>>>>>> origin/food_dev_unsigned
     if ($(e.target).attr('id') === ('mood2/') || $(e.target).attr('id') === ('exit/')) {
       $('.checkbox:checked').each(function () {
         checked_array.push(this.id);
@@ -556,7 +534,6 @@ $(function () {
     } else {
       $('#m').autocomplete('disable');
     }
-<<<<<<< HEAD
     if ($(e.target).attr('id') === '999' || $(e.target).attr('id') === '상관없음') {
       $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').prop('checked', false);
       $('.messaging-button-checkbox:not(:hidden)').removeClass('messaging-button-checkbox-checked');
@@ -567,8 +544,6 @@ $(function () {
       $('.messaging-button-checkbox:not(:hidden)').first().removeClass('messaging-button-checkbox-checked');
       $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').removeClass('messaging-button-checkbox-checked');
     }
-=======
->>>>>>> origin/food_dev_unsigned
     $(e.target).children('input[type=checkbox]').click();
     $(e.target).toggleClass('messaging-button-checkbox-checked');
     $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked');
@@ -721,11 +696,8 @@ $(function () {
         $('#messages').append(bot_messaging_button_checkbox(args[i][0], args[i][1]));
       }
       $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
-<<<<<<< HEAD
       $('.messaging-button-checkbox:not(:hidden)').first().click();
       $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
-=======
->>>>>>> origin/food_dev_unsigned
       if (args.length === 0) {
         $('#m').prop('disabled', false);
         $('#input-button').attr('disabled', false);
@@ -777,7 +749,6 @@ $(function () {
     updateChatLog(socket_id);
   });
 
-<<<<<<< HEAD
   socket.on('chat message loader', (time) => {
       const loader_id = `loader${String(Math.floor(Math.random() * 10000) + 1)}`;
       $('#messages').append(bot_messaging_loader(loader_id)).children(':last').hide()
@@ -789,8 +760,6 @@ $(function () {
       // $(".myText").val($("#messages")[0].outerHTML);
   });
 
-=======
->>>>>>> origin/food_dev_unsigned
 });
 
 
