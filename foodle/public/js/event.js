@@ -281,11 +281,10 @@ function bot_messaging_card_inner_no_image(res_name, res_type, food_name, naver_
 
 function bot_messaging_map(subway, url){
   let roughMap;
-  console.log(subway);
   roughMap = `<div>
-    <a href='http://map.daum.net/link/search/${subway}' target='_blank' ><image class="image" src='${url}' style="width: 300px; height: 200px;"></image></a>
+    <a href= 'http://map.daum.net/link/search/${subway}' target='_blank' ><image class="image" src='${url}' style="width: 300px; height: 200px;"></image></a>
     <p>이미지 클릭시 지도 자세히 보기</p>
-   </div> `;
+  </div> `;
   return roughMap;
 }
 
@@ -917,6 +916,28 @@ $(document).ready(() => {
     logout(loginValue);
   });
 
+  $('#delete-log-btn').click(() => {
+    if (confirm('채팅기록을 지우시겠습니까? 모든 기록이 지워집니다.')) {
+      const info = {
+        url: '/api/v1/users/delete_chat_log',
+        method: 'POST',
+        body: {
+          email: sessionStorage.getItem('email')
+        },
+        success: function(res) {
+          if (res.success) {
+            alert('채팅로그를 지웠습니다.');
+            window.location.replace('/chat');
+          }
+        },
+        error: function (e) {
+          console.log(e.responseJSON);
+        }
+      }
+      sendReq(info);
+    }
+  });
+
   $('#withdraw-btn').click(() => {
     if (confirm('정말 탈퇴하시겠습니까? 탈퇴하시면 모든 데이터가 소멸됩니다.')) {
       const info = {
@@ -943,7 +964,7 @@ $(document).ready(() => {
 
       sendReq(info);
     }
-  })
+  });
 
   $('.decide-withdrawl').click(() => {
     if (confirm('정말 탈퇴하시겠습니까? 탈퇴하시면 모든 데이터가 소멸됩니다.')) {
@@ -971,7 +992,7 @@ $(document).ready(() => {
       }
       sendReq(info);
     }
-  })
+  });
 
   $('.decide-update-password').click(() => {
     if ($('.cur-password').val() === '') {
@@ -1029,7 +1050,7 @@ $(document).ready(() => {
     }
     sendTokenReq(info);
 
-  })
+  });
   if (new Date().getHours() < 12) {
     nowTime = `오전 ${new Date().getHours()}:${new Date().getMinutes()}`;
   } else if (new Date().getHours() === 12) {
@@ -1038,4 +1059,4 @@ $(document).ready(() => {
     nowTime = `오후 ${new Date().getHours()%12}:${new Date().getMinutes()}`;
   }
   $('.message-info .time')[0].innerHTML = nowTime;
-})
+});
