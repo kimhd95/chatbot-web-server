@@ -784,7 +784,7 @@ $(document).ready(() => {
     // $('m').val(sessionStorage.getItem('email'));
     $('.social-signed-in')[0].style.display = 'block';
     $('.email-signed-in')[0].style.display = 'none';
-    $('.update-password')[0].style.display = 'none';
+    $('.update-password')[0].style.display = 'block';
   }
   if (loginValue === '0') {
     const info = {
