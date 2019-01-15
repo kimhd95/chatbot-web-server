@@ -60,6 +60,13 @@ function getLobbyPage (req, res) {
 	})
 }
 
+function getUnsignedLobbyPage (req, res) {
+	console.log('비회원 로비로 이동');
+	res.render('pages/lobby_unsigned.ejs', {
+		url: config.api_url
+	})
+}
+
 module.exports = {
 	getMainPage: getMainPage,
 	getLoginPage: getLoginPage,
@@ -69,5 +76,6 @@ module.exports = {
 	getTermsPage: getTermsPage,
 	getChatRoomPage: getChatRoomPage,
 	getUnsignedChatRoomPage: getUnsignedChatRoomPage,
-	getLobbyPage: getLobbyPage
+	getLobbyPage: getLobbyPage,
+	getUnsignedLobbyPage: getUnsignedLobbyPage
 }
