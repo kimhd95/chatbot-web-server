@@ -432,6 +432,7 @@ function getChatLog(email) {
                     <br>
                     <div class="message-button">
                         <button type="button" class="messaging-button" id="decide_menu" name="메뉴 고르기">메뉴 고르기</button>
+                        <button type="button" class="messaging-button" id="decide_drink" name="술집 고르기">술집 고르기</button>
                         <button type="button" class="messaging-button" id="decide_place" name="중간지점 찾기(서울)">중간지점 찾기(서울)</button>
                         <button type="button" class="messaging-button" id="decide_history" name="기록 보기">기록 보기</button>
                         <button type="button" class="messaging-button" id="user_feedback" name="개발팀에게 피드백하기">개발팀에게 피드백하기</button>
@@ -445,7 +446,7 @@ function getChatLog(email) {
                     $(".bot-message").css({ opacity: 1 });
                     $(".user-message").css({ opacity: 1 });
                     $('.messaging-button').hide();
-                    $('.messaging-button').slice(-5).show();
+                    $('.messaging-button').slice(-6).show();
                   } else {
                     $('#messages').html(user_html);
                     $(".bot-message").css({ opacity: 1 });
@@ -497,28 +498,35 @@ $(function () {
   // });
 
   $('body').on('click', '.messaging-button', (e) => {
-    if ($(e.target).attr('id') === 'decide_menu') {
+    if ($(e.target).attr('id') === 'decide_menu' || $(e.target).attr('id') === 'decide_drink') {
       $('#m').autocomplete('enable');
     } else {
       $('#m').autocomplete('disable');
     }
-    const checked_array = [];
-    const checked_name_array = [];
-    if ($(e.target).attr('id') === ('mood2/') || $(e.target).attr('id') === ('exit/')) {
+    if ($(e.target).attr('id') === ('mood2/') || $(e.target).attr('id') === ('exit/') || $(e.target).attr('id') === ('drink_type/')) {
+      const checked_array = [];
+      const checked_name_array = [];
       $('.checkbox:checked').each(function () {
         checked_array.push(this.id);
         checked_name_array.push(this.name);
       });
       if (checked_array.length === 0) {
-        if ($(e.target).attr('id') === ('mood2/')) {
-          socket.emit('chat message button rule', $(e.target).attr('name'), 'no_mood2');
-        } else {
-          socket.emit('chat message button rule', $(e.target).attr('name'), 'no_exit');
+        switch ($(e.target).attr('id')) {
+          case 'mood2/':
+            socket.emit('chat message button rule', $(e.target).attr('name'), 'no_mood2');
+            break;
+          case 'exit/':
+            socket.emit('chat message button rule', $(e.target).attr('name'), 'no_exit');
+            break;
+          case 'drink_type/':
+            socket.emit('chat message button rule', $(e.target).attr('name'), 'no_drink_type');
+            break;
         }
       } else {
         socket.emit('chat message button rule', checked_name_array, ($(e.target).attr('id') + checked_array));
         $('.messaging-button').hide();
         $('.messaging-button-checkbox').hide();
+        $('.messaging-button-checkbox').children('input[type=checkbox]').prop('checked', false);
       }
     } else {
       socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id'));
@@ -529,7 +537,7 @@ $(function () {
   });
 
   $('body').on('click', '.messaging-button-checkbox', (e) => {
-    if ($(e.target).attr('name') === '메뉴 고르기') {
+    if ($(e.target).attr('name') === '메뉴 고르기' || $(e.target).attr('name') === '술집 고르기') {
       $('#m').autocomplete('enable');
     } else {
       $('#m').autocomplete('disable');
@@ -662,9 +670,33 @@ $(function () {
     const args_length = args.length;
     for (let i = 0; i < args_length - 1; i += 1) {
       // basic_message.append(bot_messaging_button(args[i][0],args[i][1]));
+      console.log(`${args[i][0]}, ${args[i][1]}`);
       $('#messages').append(bot_messaging_button_checkbox(args[i][0], args[i][1]));
     }
     $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
+    $('.messaging-button-checkbox:not(:hidden)').first().click();
+    $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
+    if (args.length === 0) {
+      $('#m').prop('disabled', false);
+      $('#input-button').attr('disabled', false);
+    } else {
+      $('#m').prop('disabled', true);
+      $('#input-button').attr('disabled', true);
+    }
+    $('#messages').scrollTop(1E10);
+    updateChatLog(socket_id);
+    // $(".myText").val($("#messages")[0].outerHTML);
+  });
+
+  socket.on('chat message button dynamic checkbox', (socket_id, msg, ...args) => {
+    $('#messages').append(bot_messaging(msg)).children(':last').hide()
+      .fadeIn(150);
+    $('#messages').append(bot_messaging_button_checkbox(args[0][0], args[0][1]));
+    const args_length = args[1].length;
+    for (let i = 0; i < args_length; i += 1) {
+      $('#messages').append(bot_messaging_button_checkbox(args[1][i], args[1][i]));
+    }
+    $('#messages').append(bot_messaging_button_finish_checkbox(args[2][0], args[2][1]));
     $('.messaging-button-checkbox:not(:hidden)').first().click();
     $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
     if (args.length === 0) {
