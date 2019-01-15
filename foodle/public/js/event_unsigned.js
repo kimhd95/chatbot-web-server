@@ -125,14 +125,14 @@ function bot_messaging_button(button_id, message) {
 
 function bot_messaging_button_finish_checkbox(button_id, message) {
   const message_info = `
-          <br><button type="button" class="messaging-button" style="border: 1px solid #E20000; color: white; background-color: #E20000; border-radius: 5px; padding-left: 25px; padding-right: 25px;" id="${button_id}" name="${message}">${message}</button>
+          <br><button type="button" class="messaging-button complete-button" id="${button_id}" name="${message}">${message}</button>
   `;
   return (message_info);
 }
 
 function bot_messaging_button_checkbox(button_id, message) {
-  const message_info = `
-          <button type="button" class="messaging-button-checkbox" id="${button_id}" name="${message}"><input type="checkbox" id="${button_id}" class="checkbox"></input>${message}</button>
+  let message_info = `
+        <button type="button" class="messaging-button-checkbox" id="${button_id}" name="${message}"><input type="checkbox" id="${button_id}" class="checkbox" name="${message}"></input>${message}</button>
   `;
   return (message_info);
 }
@@ -144,7 +144,6 @@ function user_list_update(id) {
   `;
   return (message_info);
 }
-
 
 function user_messaging(message) {
   let date;
@@ -278,6 +277,45 @@ function bot_messaging_card_inner_no_image(res_name, res_type, food_name, naver_
   return (message_info);
 }
 
+function bot_messaging_map(subway, url){
+  let roughMap;
+  roughMap = `<div>
+    <a href= 'http://map.daum.net/link/search/${subway}' target='_blank' ><image class="image" src='${url}' style="width: 300px; height: 200px;"></image></a>
+    <p>이미지 클릭시 지도 자세히 보기</p>
+  </div> `;
+  return roughMap;
+}
+
+function bot_messaging_loader(loader_id) {
+  let date;
+  const hour = new Date().getHours();
+  const min = new Date().getMinutes();
+  if (hour < 12) {
+    if (min < 10) date = `오전 ${hour}:0${min}`;
+    else date = `오전 ${hour}:${min}`;
+  } else if (hour === 12) {
+    if (min < 10) date = `오후 ${hour}:0${min}`;
+    else date = `오후 ${hour}:${min}`;
+  } else if (min < 10) date = `오후 ${hour % 12}:0${min}`;
+  else date = `오후 ${hour % 12}:${min}`;
+  let message_info = `<div class="bot-message">
+      <div id="${loader_id}" class="message-text">
+        <img class="loader" src="/images/loader.gif" alt="loader"></img>
+      </div>
+  </div>
+  `;
+  if ($('.bot-message > .message-info > .time').last().text() === date) {
+    if ($('#messages > div:last-child').attr('class') === 'bot-message') {
+      message_info = `<div class="bot-message">
+          <div id="${loader_id}" class="message-text">
+            <img class="loader" src="/images/loader.gif" alt="loader"></img>
+          </div>
+      </div>
+      `;
+    }
+  }
+  return (message_info);
+}
 // function onLoad () {
 // function googleSignOut() {
 
@@ -295,29 +333,41 @@ $(function () {
   //   // $("input").prop('disabled', false);
   // });
 
-  $('body').on('click', '.checkbox', (e) => {
-    const clicked_id = `#${$(e.target).attr('id')}`;
-    $(clicked_id).toggleClass('messaging-button-checkbox-checked');
-  });
+  // $('body').on('click', '.checkbox', (e) => {
+  //   const clicked_id = `#${$(e.target).attr('id')}`;
+  //   $(clicked_id).toggleClass('messaging-button-checkbox-checked');
+  // });
 
   $('body').on('click', '.messaging-button', (e) => {
-    // console.log("e.target: "+e.target);
-    if ($(e.target).attr('id') === 'decide_menu') {
+    if ($(e.target).attr('id') === 'decide_menu' || $(e.target).attr('id') === 'decide_drink') {
       $('#m').autocomplete('enable');
     } else {
       $('#m').autocomplete('disable');
     }
-    const checked_array = [];
-    if ($(e.target).attr('id') === 'mood2/') {
+    if ($(e.target).attr('id') === ('mood2/') || $(e.target).attr('id') === ('exit/') || $(e.target).attr('id') === ('drink_type/')) {
+      const checked_array = [];
+      const checked_name_array = [];
       $('.checkbox:checked').each(function () {
         checked_array.push(this.id);
+        checked_name_array.push(this.name);
       });
       if (checked_array.length === 0) {
-        socket.emit('chat message button rule', $(e.target).attr('name'), 'no_mood2');
+        switch ($(e.target).attr('id')) {
+          case 'mood2/':
+            socket.emit('chat message button rule', $(e.target).attr('name'), 'no_mood2');
+            break;
+          case 'exit/':
+            socket.emit('chat message button rule', $(e.target).attr('name'), 'no_exit');
+            break;
+          case 'drink_type/':
+            socket.emit('chat message button rule', $(e.target).attr('name'), 'no_drink_type');
+            break;
+        }
       } else {
-        socket.emit('chat message button rule', $(e.target).attr('name'), ($(e.target).attr('id') + checked_array));
+        socket.emit('chat message button rule', checked_name_array, ($(e.target).attr('id') + checked_array));
         $('.messaging-button').hide();
         $('.messaging-button-checkbox').hide();
+        $('.messaging-button-checkbox').children('input[type=checkbox]').prop('checked', false);
       }
     } else {
       socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id'));
@@ -328,14 +378,24 @@ $(function () {
   });
 
   $('body').on('click', '.messaging-button-checkbox', (e) => {
-    if ($(e.target).attr('name') === '메뉴 고르기') {
+    if ($(e.target).attr('name') === '메뉴 고르기' || $(e.target).attr('name') === '술집 고르기') {
       $('#m').autocomplete('enable');
     } else {
       $('#m').autocomplete('disable');
     }
-    // socket.emit('chat message button rule', $(e.target).attr('name'),$(e.target).attr('id'));
+    if ($(e.target).attr('id') === '999' || $(e.target).attr('id') === '상관없음') {
+      $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').prop('checked', false);
+      $('.messaging-button-checkbox:not(:hidden)').removeClass('messaging-button-checkbox-checked');
+      $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').removeClass('messaging-button-checkbox-checked');
+      $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
+    } else {
+      $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', false);
+      $('.messaging-button-checkbox:not(:hidden)').first().removeClass('messaging-button-checkbox-checked');
+      $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').removeClass('messaging-button-checkbox-checked');
+    }
     $(e.target).children('input[type=checkbox]').click();
-    // $(".messaging-button-checkbox").hide();
+    $(e.target).toggleClass('messaging-button-checkbox-checked');
+    $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked');
   });
 
   $('body').on("submit", "form", function(){
@@ -515,6 +575,48 @@ $(function () {
     }, 100); // execute your function after 2 seconds.
     // updateChatLog(socket_id);
   });
+
+  socket.on('chat message map', (msg, ...args) => {
+      $('#messages').append(bot_messaging_map(msg, ...args)).children(':last');
+      $('#m').prop('disabled', true);
+      $('#input-button').attr('disabled', true);
+      $('#messages').scrollTop(1e4);
+    });
+
+  socket.on('chat message button checkbox map', (socket_id, msg, ...args) => {
+      if (args.length === 0) {
+        $('#m').prop('disabled', false);
+        $('#input-button').attr('disabled', false);
+      } else {
+        $('#m').prop('disabled', true);
+        $('#input-button').attr('disabled', true);
+      }
+      $('#messages').append(bot_messaging(msg)).children(':last').hide()
+        .fadeIn(150);
+      const args_length = args.length;
+      $('#messages').append(bot_messaging_map(args[0], args[1]));
+      for (let i = 2; i < args_length - 1; i += 1) {
+        // basic_message.append(bot_messaging_button(args[i][0],args[i][1]));
+        $('#messages').append(bot_messaging_button_checkbox(args[i][0], args[i][1]));
+      }
+      $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
+      $('.messaging-button-checkbox:not(:hidden)').first().click();
+      $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
+      $('#messages').scrollTop(1E10);
+      updateChatLog(socket_id);
+  });
+
+  socket.on('chat message loader', (time) => {
+      const loader_id = `loader${String(Math.floor(Math.random() * 10000) + 1)}`;
+      $('#messages').append(bot_messaging_loader(loader_id)).children(':last').hide()
+        .fadeIn(150);
+      $(`#${loader_id}`).delay(time + 300).fadeOut(150);
+      $('#m').prop('disabled', true);
+      $('#input-button').attr('disabled', true);
+      $('#messages').scrollTop(1E10);
+      // $(".myText").val($("#messages")[0].outerHTML);
+  });
+
 });
 
 

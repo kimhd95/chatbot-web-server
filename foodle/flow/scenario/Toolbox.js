@@ -69,7 +69,6 @@ class Toolbox {
           await index.sendSocketMessage(socket.id, 'chat message button', '안녕안녕 반가워! 나는 앞으로 너의 행복한 외식라이프를 책임질 외식코기야🍜🍖');
           index.sendSocketMessage(socket.id, 'chat message button', '70% 이상의 사람들이 메뉴를 고를 때 결정장애를 겪는대...🚋 이.제.부.턴.!! 내가 동물지능(?)으로 그날그날 너의 기분과 상황에 맞는 메뉴를 결정해줄게 렛츠고😆', ['decide_menu', '렛츠고!']);
           await info_update.profile.update_state(socket.id, '1', 'decide_menu');
-          index.sendSocketMessage(socket.id, 'chat message button', '오늘은 어느 곳의 메뉴를 정해볼까? 원하는 곳에서 가까운 지하철역을 입력해줘🚋');
         }
         else {
           const db_subway = await user_info.subway;

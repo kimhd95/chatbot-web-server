@@ -719,6 +719,13 @@ $(function () {
     });
 
   socket.on('chat message button checkbox map', (socket_id, msg, ...args) => {
+      if (args.length === 0) {
+        $('#m').prop('disabled', false);
+        $('#input-button').attr('disabled', false);
+      } else {
+        $('#m').prop('disabled', true);
+        $('#input-button').attr('disabled', true);
+      }
       $('#messages').append(bot_messaging(msg)).children(':last').hide()
         .fadeIn(150);
       const args_length = args.length;
@@ -730,13 +737,6 @@ $(function () {
       $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
       $('.messaging-button-checkbox:not(:hidden)').first().click();
       $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
-      if (args.length === 0) {
-        $('#m').prop('disabled', false);
-        $('#input-button').attr('disabled', false);
-      } else {
-        $('#m').prop('disabled', true);
-        $('#input-button').attr('disabled', true);
-      }
       $('#messages').scrollTop(1E10);
       updateChatLog(socket_id);
   });
