@@ -197,6 +197,40 @@ npm start
 
 **만약, 체크된 값이 아무것도 없을 경우에는, 다음 시나리오로 진행되지 않게하는 예외처리를 하였다.**
 
+#### chat message dynamic checkbox
+
+![chat-message-button](./readme_img/chat-message-dynamic-checkbox.JPG)
+
+**chat message checkbox**와 보여지는 부분은 동일하지만, 서버사이드에서 위 형식을 만들어내는 로직이 다르다.
+
+두 형식 모두 event.js에서 rest parameter로 버튼을 받기 때문에, 동적으로 버튼을 만들 수 있지만, **chat message checkbox**의 경우 API나, 외부 로직에 의해 버튼이 결과값으로 나온 경우, 해당 결과에 따른 버튼 체크박스를 만들 수 없다.
+
+술집 고르기 시나리오에서, 선택한 subway, exit_quarter에서 존재하지 않는 drink_type은 버튼에서 제외해야 하기 때문에, 해당 조건을 만족하는 종류를 결과로 받는 API를 호출한 후 , 결과에 따른 버튼을 생성해야하기 때문에, 위 경우에 해당된다.
+
+
+
+버튼들을 배열에 담아서 인자로 보내주게되면, event.js의 이벤트 상에서, 해당 버튼들 만큼 체크박스 버튼을 생성한다.
+
+```javascript
+//event.js
+
+// 첫번째 버튼, 상관없음 버튼에 해당
+$('#messages').append(bot_messaging_button_checkbox(args[0][0], args[0][1]));
+const args_length = args[1].length;
+for (let i = 0; i < args_length; i += 1) {
+    // 나머지 버튼
+    $('#messages').append(bot_messaging_button_checkbox(args[1][i], args[1][i]));
+}
+// 마지막 버튼, 선택완료 버튼에 해당
+$('#messages').append(bot_messaging_button_finish_checkbox(args[2][0], args[2][1]));
+```
+
+
+
+ 
+
+#### chat message card
+
 ![chat-message-button](./readme_img/chat-message-card.JPG)
 
 모든 사전 시나리오를 진행한 후,  최종 음식점 후보 두 곳에 대한 정보를 보여주고, 유저가 하나의 음식점을 선택할 수 있도록 도와주는 형식이다. 기본적으로, **bootstrap**의 **card** 형식을 이용하였고, 내부 이미지 슬라이드는, 마찬가지로 **bootstrap**의 **carousel** 형식을 이용하였다.   
@@ -309,6 +343,8 @@ scenario_rule.js는, 사용자의 scneario값을 가지고, 알맞은 해당 시
 
 scenario.rule 함수의 swtich문 내에, 새로운 시나리오를 추가시켜 준다.
 
+또한, 시나리오 진행 중, '처음으로 돌아가기' 버튼을 눌렀을 때, 메인 메뉴로 돌아가야되기 때문에, ``if (val === 'get_started')`` 문 다음에 추가된 버튼을 추가한다.
+
 ```javascript
 case '새로운 시나리오의 scenario 번호': {
   (function () {
@@ -316,6 +352,17 @@ case '새로운 시나리오의 scenario 번호': {
   }());
   break;
 }
+
+index.sendSocketMessage(socket.id, 'chat message button', chlist2[rand2], ['decide_menu', '메뉴 고르기'], ['decide_drink', '술집 고르기'], ['decide_place', '중간지점 찾기(서울)'], ['decide_history', '기록보기'], ['user_feedback', '개발팀에게 피드백하기'], ['chitchat', '외식코기랑 대화하기'], ['새로운 시나리오의 button_id', '새로운 시나리오의 button_name']);
+```
+
+#### 6.3 event.js 수정
+
+로그인 후 채팅 로그를 불러오는 과정에서 접속 종료로 판단되면, 이전 시나리오와의 꼬임 방지를 위해, 모든 버튼(messaging-button)을 hide시키고, 초기 시나리오의 버튼 개수만큼 다시 보여준다. 만약, 초기시나리오에 버튼을 추가했으면, 버튼 개수를 수정해주어야 한다.
+
+```javascript
+$('.messaging-button').slice(-6).show();
+// 6을 초기 시나리오의 버튼 개수만큼 수정
 ```
 
 #### 6.* 각종 예외 시나리오

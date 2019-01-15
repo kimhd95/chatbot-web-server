@@ -446,6 +446,7 @@ function getChatLog(email) {
                     $(".bot-message").css({ opacity: 1 });
                     $(".user-message").css({ opacity: 1 });
                     $('.messaging-button').hide();
+                    $('.messaging-button-checkbox').hide();
                     $('.messaging-button').slice(-6).show();
                   } else {
                     $('#messages').html(user_html);
