@@ -1,5 +1,5 @@
 let platform;
-let name, email, password, passwordCheck, gender, ageGroup, phone;
+let name, email, password, passwordCheck, gender, birthYear, phone;
 const emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 const phoneRegExp = /^\d{3}-\d{3,4}-\d{4}$/; 
 let pwNum, pwEng, pwSpe;
@@ -107,14 +107,14 @@ function firstInfoValidationCheck() {
 }
 
 function selectAge(i) {
-    ageGroup = i;
-    $('.year')[0].value = ageGroup;
+    birthYear = i;
+    $('.year')[0].value = birthYear;
 }
 function secondInfoValidationCheck() {
     phone = $('.phone-number').val();
     const allAgreeCheck = $('#all-agree')[0].checked;
 
-    if (ageGroup === '' || ageGroup === null || ageGroup === undefined) {
+    if (birthYear === '' || birthYear === null || birthYear === undefined) {
         alert('출생년도를 선택해주세요.');
         return;
     }
@@ -130,10 +130,10 @@ function secondInfoValidationCheck() {
         alert('약관에 동의해주세요.');
         return;
     }
-    signUpReq(name, gender, email, password, ageGroup, phone);
+    signUpReq(name, gender, email, password, birthYear, phone);
 }
 
-function signUpReq(name, gender, email, password, ageGroup, phone) {
+function signUpReq(name, gender, email, password, birthYear, phone) {
     spinner = new Spinner(opts).spin(target);
     const info = {
         method: "POST",
@@ -143,7 +143,7 @@ function signUpReq(name, gender, email, password, ageGroup, phone) {
             email: email,
             password: password,
             gender: gender,
-            ageGroup: ageGroup,
+            birthYear: birthYear,
             phone: phone,
             social: false
         },
@@ -264,34 +264,10 @@ $(document).ready(() => {
     })
     // 패스워드 칠 때 마다 실행
     $('#password').keyup(() => {
-        // pwNum = $('#password').val().search(/[0-9]/g);
-        // pwEng = $('#password').val().search(/[a-z]/ig);
-        // pwSpe = $('#password').val().search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-        // console.log(pwNum, pwEng, pwSpe);
-        
-        // if ($('#password').val() !== '' && $('#password').val().length >= 8 && !((pwNum < 0 && pwEng < 0) || (pwEng < 0 && pwSpe < 0) || (pwSpe < 0 && pwNum < 0))) {
-        //     $('.password-complete')[0].childNodes[1].style.display = 'block';
-        // } else {
-        //     $('.password-complete')[0].childNodes[1].style.display = 'none';
-        // }
-        // if ($('#password-check').val() !== '') {
-        //     if ($('#password').val() === $('#password-check').val()) {
-        //         $('.password-complete')[1].childNodes[1].style.display = 'block';
-        //     } else {
-        //         $('.password-complete')[1].childNodes[1].style.display = 'none';
-        //     }
-        // }
         passwordValidationCheck();
     });
 
     $('#password-check').keyup(() => {
-        // if ($('#password-check').val() !== '') {
-        //     if ($('#password').val() === $('#password-check').val()) {
-        //         $('.password-complete')[1].childNodes[1].style.display = 'block';
-        //     } else {
-        //         $('.password-complete')[1].childNodes[1].style.display = 'none';
-        //     }
-        // }
         passwordEqualCheck();
     })
 
