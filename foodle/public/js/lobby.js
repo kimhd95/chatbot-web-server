@@ -30,7 +30,7 @@ $(document).ready(() => {
               console.log(res);
               console.log('verifyToken success');
 
-              $('#profile-name').append(res.nickname + " 님");
+              $('#profile-name').append(res.name + " 님");
               // $('#profile-name').addClass('a');
               $('#profile-email').append(res.email);
               // $('#profile-email').addClass('a');
