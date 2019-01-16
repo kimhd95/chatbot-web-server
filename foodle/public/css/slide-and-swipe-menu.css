@@ -112,8 +112,10 @@ nav .bg{
 nav .bg .profile-space{
   display: flex;
   flex-direction: column;
+  /* align-items: stretch; */
+  /* align-items: center; */
   width: 100%;
-  height: 25%;
+  height: 20%;
   background-color: #fff;
   border-bottom: 1px solid #DC7633;
   /* box-shadow: 1px 1px 20px 0px gray; */
@@ -121,26 +123,24 @@ nav .bg .profile-space{
 
 nav .bg .profile-space .name{
   display: flex;
-  align-items: center;
+  /* align-items: ; */
   /* justify-content: center; */
   width:90%;
   height:20%;
   background-color: #fff;
   margin: 10% 0 1% 7%;
   font-size: 7vw;
-  /* color: #DC7633; */
   /* text-align:center; */
 }
 
 nav .bg .profile-space .email{
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   /* justify-content: center; */
   width:90%;
-  height:20%;
+  height:40%;
   background-color: #fff;
   font-size: 4vw;
-  /* color: #DC7633; */
   margin: 1% 0 0 7%;
   /* color: #000; */
 }
