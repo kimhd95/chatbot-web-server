@@ -70,10 +70,10 @@
              * end : close navigation
              */
             function swipeStatus(events, phase, direction, distance) {
-                console.log(events);
-                console.log(phase);
-                console.log(direction);
-                console.log(distance);
+                // console.log(events);
+                // console.log(phase);
+                // console.log(direction);
+                // console.log(distance);
                 if(phase == 'start') {
                     if(nav.hasClass('ssm-nav-visible')) {
                         transInitial = 0;
@@ -106,7 +106,7 @@
 
                        hideNavigation();
                 } else if ((phase == 'end' || phase == 'cancel') && (direction == 'right')) {
-                    console.log('end');
+                    // console.log('end');
                 }
             }
 
@@ -170,7 +170,7 @@
             });
 
             $('.transparent').click(function(e) {
-                console.log('faded area')
+                // console.log('faded area')
                 hideNavigation();
                 e.preventDefault();
             });

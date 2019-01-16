@@ -4,17 +4,17 @@ $(document).ready(() => {
 
   let loginValue = sessionStorage.getItem('login');
   // console.log("loginValue: "+loginValue);
-  if (loginValue === '0') {
-    $('.social-signed-in')[0].style.display = 'none';
-    $('.email-signed-in')[0].style.display = 'block';
-    $('.update-password')[0].style.display = 'block';
-  } else {
-    // $('m').val(sessionStorage.getItem('email'));
-    $('.social-signed-in')[0].style.display = 'block';
-    $('.email-signed-in')[0].style.display = 'none';
-    $('.update-password')[0].style.display = 'none';
-  }
-  if (loginValue === '0') {
+  // if (loginValue === '0') {
+  //   $('.social-signed-in')[0].style.display = 'none';
+  //   $('.email-signed-in')[0].style.display = 'block';
+  //   $('.update-password')[0].style.display = 'block';
+  // } else {
+  //   // $('m').val(sessionStorage.getItem('email'));
+  //   $('.social-signed-in')[0].style.display = 'block';
+  //   $('.email-signed-in')[0].style.display = 'none';
+  //   $('.update-password')[0].style.display = 'none';
+  // }
+  // if (loginValue === '0') {
   const info = {
       url: '/api/v1/users/verify_token',
       method: 'POST',
