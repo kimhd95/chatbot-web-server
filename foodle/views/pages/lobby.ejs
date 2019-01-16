@@ -2,17 +2,62 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="google-signin-client_id" content="1070723419509-ig3u8aapsfjn9ge421rervobr8409qtf.apps.googleusercontent.com">
 				<link rel="stylesheet" href="/css/swiper.css">
 				<link rel="stylesheet" href="/css/lobby.css">
         <!-- CSS stylesheet for sliding-swipe-menu -->
         <link rel="stylesheet" href="/css/slide-and-swipe-menu.css">
-
-
+        <!-- <link rel="stylesheet" href="/css/bootstrap-toggle.min.css"> -->
+        <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     </head>
     <body>
           <nav class="nav">
-            <div class="bg"></div>
+            <div class="bg">
+              <div class="profile-space">
+                <div id="profile-name" class="name"></div>
+                <div id="profile-email" class="email"></div>
+                <div class="change-space">
+                  <div class="account-change"><a>계정 변경</a></div>
+                </div>
+              </div>
+              <div class="ask-space">
+                <div class="notification">
+                  <a>공지사항</a>
+                </div>
+                <div class="FAQ">
+                  <a>FAQ</a>
+                </div>
+                <div class="personal-question">
+                  <a>1:1 문의</a>
+                </div>
+              </div>
+              <div class="alarm-space">
+                <div class="notify">
+                  <div class="option"><a>알림설정</a></div>
+                  <div class="toggle-space">
+                    <label class="switch">
+  <input type="checkbox">
+  <span class="slider round"></span>
+</label>
+                  </div>
+                </div>
+                <div class="open-source"><a>Open source writing</a></div>
+              </div>
+              <div class="account-space">
+                <div class="logout"><a>로그아웃</a></div>
+                <div class="resignation"><a>회원탈퇴</a></div>
+              </div>
+              <div class="company-space">
+                <div class="company-img"></div>
+              </div>
+            </div>
+
             <div class="transparent"></div>
           </nav>
 
@@ -74,14 +119,16 @@
 								<div class="guide-space">
 									<div class="guide"></div>
 								</div>
-								<div class="info-space">
-									<div class="info"></div>
+								<div class="company-space">
+									<div class="company"></div>
 								</div>
 							</div>
 		  			</div>
 
         <!-- jQuery library (served from Google) -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+
 
         <!-- touchSwipe library -->
         <script src="http://labs.rampinteractive.co.uk/touchSwipe/jquery.touchSwipe.min.js"></script>
@@ -89,19 +136,42 @@
         <!-- Slider Javascript file -->
         <script src="/js/slide-and-swipe-menu.js"></script>
 				<script src="/js/swiper.js"></script>
+        <!-- <script src="/js/bootstrap-toggle.min.js"></script> -->
+        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
         <div class="ssm-overlay ssm-toggle-nav ssm-nav-visible"></div>
 
         <script>
-          $(document).ready(function() {
-              $('.nav').slideAndSwipe();
-          });
+          // $(document).ready(function() {
+          //
+          // });
+          $(function() {
+            $('#toggle-event').change(function() {
+              $('#console-event').html('Toggle: ' + $(this).prop('checked'))
+            })
+          })
 
 					var swiperImg = new Swiper('.swiper-container', {
 			      slidesPerView: 'auto',
 			      initialSlide: 0,
-			      resistanceRatio: 0,
+			      // resistanceRatio: 0,
 			      slideToClickedSlide: false,
 			    });
 				</script>
+
+
+        <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+        <!-- <script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script> -->
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script> -->
+        <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script> -->
+
+        <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/base.js"></script>
+        <script src="/js/lobby.js"></script>
+
+
+
+        <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
     </body>
 </html>
