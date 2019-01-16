@@ -1,7 +1,7 @@
 let platform;
 let name, email, password, passwordCheck, gender, birthYear, phone;
 const emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-const phoneRegExp = /^\d{3}-\d{3,4}-\d{4}$/; 
+const phoneRegExp = /^\d{10,11}$/; 
 let pwNum, pwEng, pwSpe;
 
 function autoAgree() {
@@ -123,7 +123,7 @@ function secondInfoValidationCheck() {
         return;
     }
     if (!phoneRegExp.test(phone)) {
-        alert('핸드폰 번호을 지켜주세요. (ex: 010-0000-0000)');
+        alert('핸드폰 번호 양식을 지켜주세요.');
         return;
     }
     if (!allAgreeCheck) {
@@ -145,7 +145,6 @@ function signUpReq(name, gender, email, password, birthYear, phone) {
             gender: gender,
             birthYear: birthYear,
             phone: phone,
-            social: false
         },
         success: function (res) {
             if (res.success){
