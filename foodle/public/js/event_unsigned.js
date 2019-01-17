@@ -514,6 +514,13 @@ $(function () {
   });
 
   socket.on('chat message button checkbox', (socket_id, msg, ...args) => {
+    if (args.length === 0) {
+      $('#m').prop('disabled', false);
+      $('#input-button').attr('disabled', false);
+    } else {
+      $('#m').prop('disabled', true);
+      $('#input-button').attr('disabled', true);
+    }
     $('#messages').append(bot_messaging(msg)).children(':last').hide()
       .fadeIn(150);
     const args_length = args.length;
@@ -522,13 +529,8 @@ $(function () {
       $('#messages').append(bot_messaging_button_checkbox(args[i][0], args[i][1]));
     }
     $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
-    if (args.length === 0) {
-      $('#m').prop('disabled', false);
-      $('#input-button').attr('disabled', false);
-    } else {
-      $('#m').prop('disabled', true);
-      $('#input-button').attr('disabled', true);
-    }
+    $('.messaging-button-checkbox:not(:hidden)').first().click();
+    $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
     $('#messages').scrollTop(1E10);
     // updateChatLog(socket_id);
     // $(".myText").val($("#messages")[0].outerHTML);
@@ -603,7 +605,6 @@ $(function () {
       $('.messaging-button-checkbox:not(:hidden)').first().click();
       $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
       $('#messages').scrollTop(1E10);
-      updateChatLog(socket_id);
   });
 
   socket.on('chat message loader', (time) => {
