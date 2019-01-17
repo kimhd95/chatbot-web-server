@@ -316,7 +316,7 @@ class Decide_menu {
         const mood2_list = ['혹시 원하는 식당 분위기가 있어?', '어떤 분위기의 식당을 골라줄까?', '특별히 원하는 식당 분위기가 있어?', '어떤 분위기의 약속 장소를 잡아줄까?', '혹시 원하는 식당 분위기가 있으면 골라줘!']
         const mood2_leng = mood2_list.length;
         const mood2_rand = Math.floor(mood2_leng * Math.random());
-        index.sendSocketMessage(socket.id, 'chat message button checkbox', mood2_list[mood2_rand], ['향토적인', '향토적인'], ['고급진', '고급진'], ['프랜차이즈', '프랜차이즈'], ['인스타', '#인스타감성'], ['이국적', '이국적/퓨전'], ['뷔페', '뷔페/무한리필'], ['mood2/', '선택완료']);
+        index.sendSocketMessage(socket.id, 'chat message button checkbox', mood2_list[mood2_rand], ['999', '상관없음'], ['향토적인', '향토적인'], ['고급진', '고급진'], ['프랜차이즈', '프랜차이즈'], ['인스타', '#인스타감성'], ['이국적', '이국적/퓨전'], ['뷔페', '뷔페/무한리필'], ['mood2/', '선택완료']);
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
         console.log(e);
