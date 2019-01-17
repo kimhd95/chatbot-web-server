@@ -25,4 +25,30 @@ Drink.find_subway_drink_type = function (kakaoid, subway, exit_quarter) {
   }));
 };
 
+Drink.get_drink_restaurant = function (kakaoid, subway, exit_quarter, mood2, taste, drink_round, drink_type) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'food.get_drink_restaurant';
+    const method = 'POST';
+    const url = '/api/v1/users/get_drink_restaurant';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      subway,
+      exit_quarter,
+      mood2,
+      taste,
+      drink_round,
+      drink_type,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
 module.exports = Drink;

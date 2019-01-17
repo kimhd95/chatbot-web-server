@@ -365,6 +365,69 @@ Profile.update_freq_subway = function (kakaoid, value) {
   }));
 };
 
+Profile.update_drink_before = function (kakaoid, value) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'profile.update_drink_before';
+    const method = 'POST';
+    const url = '/api/v1/users/update_user';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      drink_before: value,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
+Profile.update_drink_type = function (kakaoid, value) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'profile.update_drink_type';
+    const method = 'POST';
+    const url = '/api/v1/users/update_user';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      drink_type: value,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
+Profile.update_drink_round = function (kakaoid, value) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'profile.update_drink_round';
+    const method = 'POST';
+    const url = '/api/v1/users/update_user';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      drink_round: value,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
 
 Profile.create_decide_history = function (kakaoid, rest1, rest2, rest_winner, res_name, subway) {
   const self = this;
@@ -525,6 +588,26 @@ Profile.update_place_start = function (kakaoid) {
     const name = 'profile.update_place_start';
     const method = 'POST';
     const url = '/api/v1/users/update_place_start';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
+Profile.update_drink_start = function (kakaoid) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'profile.update_drink_start';
+    const method = 'POST';
+    const url = '/api/v1/users/update_drink_start';
     const json = {
       apikey: '9Y3-7bE-Ud3-7Ja',
       kakao_id: kakaoid,

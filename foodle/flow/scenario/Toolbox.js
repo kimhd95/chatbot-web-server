@@ -96,30 +96,31 @@ class Toolbox {
   decide_drink(value, socket, user_data) {
     (async function () {
       try {
-        const user_info = await info_update.profile.load_user(socket.id);
-        const db_subway = await user_info.subway;
-        const db_freq_subway = await user_info.freq_subway;
-        console.log(`decide menu 함수에서 db_subway : ${db_subway}, db_freq_subway : ${db_freq_subway}`);
-        if (db_subway === null) {
-          await info_update.food.update_user_start(socket.id);
+        if ((user_data.registered == -1) || (user_data.drink_before === false)){
+          await index.sendSocketMessage(socket.id, 'chat message button', '안녕 나는 놀랍게도 국내최초 술집추천 서비스를 제공하고있는 외식코기야🍜🍖');
+          await info_update.profile.update_state(socket.id, '6', 'init');
+          index.sendSocketMessage(socket.id, 'chat message button', '보통 강아지는 술을 못 먹지만 나는 특별하니까...에헴\n이.제.부.턴.!! 내가 동물지능(?)으로 때로는 고상하게 때로는 개가되게!(?) 맞는 술집을 찾아줄게 렛츠고😆', ['decide_drink', '렛츠고!']);
         }
-        const verify_limit = await info_update.profile.verify_limit(socket.id, user_data.limit_cnt, user_data.decide_updated_at);
-        const { result } = verify_limit;
-        if (result === 'success') {
-          await info_update.profile.update_state(socket.id, '6', 'decide_drink');
-          if (user_info.freq_subway === null) {
-            const chlist = ['어디에서?', '어디에서 마셔?', '술 마실 장소를 말해줘', '술 어디에서 마셔?',
-              '어디에서 만나?', '어디에서 마시게?', '어디서 술 마시는데?ㅎㅎ',
-              '술 어디에서 마시는데?(하하)'];
-            const leng = chlist.length;
+        else {
+          // const db_subway = await user_info.subway;
+          // if (db_subway === null) {
+          //   await info_update.food.update_user_start(socket.id);
+          // }
+          console.log(user_data.limit_cnt);
+          const verify_limit = await info_update.profile.verify_limit(socket.id, user_data.limit_cnt, user_data.decide_updated_at);
+          const { result } = verify_limit;
+          if (result === 'success') {
+            await info_update.profile.update_drink_start(socket.id);
+            const drink_chlist = ['안녕!! 술고플땐 언제나 코기를 찾아줘😏😆 오늘은 어디 근처의 술집을 정해줄까?', '안녕? 술이 몹시 땡기는 하루구나🍾 이번엔 어디에서 마실거야?', '역시 술집 추천하는 동물은 나밖에 없지? 이번엔 어디에서 마셔볼까🍾', '코기 와쪄😝🐶 오늘은 어디 술집을 털러 가볼까나😈',
+              '밖에서 빙글빙글 돌지 말고 나한테 결정을 맡겨줘!ㅎㅎ 오늘 술자리는 어디야?', '뿅🐕🐕 나왔다!! 오늘은 어느 역 근처 술집을 털어볼까?', '꼭 불금 불토만 있는게 아니지! 불월 불화(?) 불수 불목 불일 언제든 가능하다구ㅎㅎ ',
+              'Life is Alcohol!! 어느역 근처 술집을 골라줄까?'];
+            const leng = drink_chlist.length;
             const rand = Math.floor(leng * Math.random());
-            index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}<br>ex) 강남역,신촌역`);
+            await info_update.profile.update_state(socket.id, '6', 'decide_drink');
+            index.sendSocketMessage(socket.id, 'chat message button', drink_chlist[rand]);
           } else {
-            const revisit = user_info.freq_subway;
-            index.sendSocketMessage(socket.id, 'chat message button', `오늘도 ${revisit}에서 마시는거야?`, [`${revisit}`, '응 맞아!'], ['decide_drink', '다른 곳이야!']);
+            index.sendSocketMessage(socket.id, 'chat message button', '30분에 술집을 5번만 고를 수 있어!', ['get_started', '처음으로 돌아가기']);
           }
-        } else {
-          index.sendSocketMessage(socket.id, 'chat message button', '30분에 술집을 5번만 고를 수 있어!', ['get_started', '처음으로 돌아가기']);
         }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
