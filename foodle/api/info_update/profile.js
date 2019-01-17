@@ -665,6 +665,49 @@ Profile.verify_limit = function (kakaoid, limit_cnt, decide_updated_at) {
   }));
 };
 
+Profile.update_limit_cnt_drink = function (kakaoid, value) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'profile.update_limit_cnt_drink';
+    const method = 'POST';
+    const url = '/api/v1/users/update_limit_cnt_drink';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      limit_cnt_drink: value,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
+Profile.verify_limit_drink = function (kakaoid, limit_cnt_drink, decide_updated_at_drink) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'profile.verify_limit_drink';
+    const method = 'POST';
+    const url = '/api/v1/users/verify_limit_drink';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      decide_updated_at_drink,
+      limit_cnt_drink,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
 Profile.register = function (kakaoid) {
   const self = this;
   return new Promise(((resolve, reject) => {

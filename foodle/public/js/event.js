@@ -149,7 +149,7 @@ function user_messaging(message) {
 
 function bot_messaging_card(res_name, res_type, food_name, naver_url, map_url, image, image2, image3) {
   const carousel_id = `carousel${String(Math.floor(Math.random() * 10000) + 1)}`;
-  const message_info = `<div class="bot-message">
+  let message_info = `<div class="bot-message">
             <div class="choice_carousel">
               <div class="choice_card">
                 <div id="${carousel_id}" class="carousel slide" data-ride="carousel" data-wrap="false">
@@ -182,12 +182,47 @@ function bot_messaging_card(res_name, res_type, food_name, naver_url, map_url, i
             </div>
           </div>
       `;
+  if (res_type === null || res_type === undefined) {
+    message_info = `<div class="bot-message">
+              <div class="choice_carousel">
+                <div class="choice_card">
+                  <div id="${carousel_id}" class="carousel slide" data-ride="carousel" data-wrap="false">
+                    <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img class="rest-img" src="${image}" alt="First slide">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="rest-img" src="${image2}" alt="slide">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="rest-img" src="${image3}" alt="slide">
+                      </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#${carousel_id}" role="button" data-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                      <a class="carousel-control-next" href="#${carousel_id}" role="button" data-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </div>
+                <div class="choice_card_content">
+                  <h5 class="card-title">${res_name}</h5>
+                  <p class="card-text">${food_name}</p>
+                  <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
+                  <p class="card-text"><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a></p>
+                </div>
+              </div>
+            </div>
+        `;
+  }
   return (message_info);
 }
 
 function bot_messaging_card_inner(res_name, res_type, food_name, naver_url, map_url, image, image2, image3) {
   const carousel_id = `carousel${String(Math.floor(Math.random() * 10000) + 1)}`;
-  const message_info = `
+  let message_info = `
               <div class="choice_card">
                 <div id="${carousel_id}" class="carousel slide" data-ride="carousel" data-wrap="false">
                   <div class="carousel-inner">
@@ -218,11 +253,44 @@ function bot_messaging_card_inner(res_name, res_type, food_name, naver_url, map_
                 </div>
               </div>
       `;
+  if (res_type === null || res_type === undefined) {
+    message_info = `
+                <div class="choice_card">
+                  <div id="${carousel_id}" class="carousel slide" data-ride="carousel" data-wrap="false">
+                    <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img class="rest-img" src="${image}" alt="First slide">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="rest-img" src="${image2}" alt="slide">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="rest-img" src="${image3}" alt="slide">
+                      </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#${carousel_id}" role="button" data-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                      <a class="carousel-control-next" href="#${carousel_id}" role="button" data-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </div>
+                  <div class="choice_card_content">
+                    <h5 class="card-title">${res_name}</h5>
+                    <p class="card-text">${food_name}</p>
+                    <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
+                    <p class="card-text"><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a></p>
+                  </div>
+                </div>
+        `;
+  }
   return (message_info);
 }
 
 function bot_messaging_card_no_image(res_name, res_type, food_name, naver_url, map_url) {
-  const message_info = `<div class="bot-message">
+  let message_info = `<div class="bot-message">
             <button type="button" class="btn btn-light arrow-left"><</button>
             <button type="button" class="btn btn-light arrow-right">></button>
               <div class="choice_card">
@@ -235,12 +303,27 @@ function bot_messaging_card_no_image(res_name, res_type, food_name, naver_url, m
               </div>
           </div>
       `;
+  if (res_type === null || res_type === undefined) {
+    message_info = `<div class="bot-message">
+              <button type="button" class="btn btn-light arrow-left"><</button>
+              <button type="button" class="btn btn-light arrow-right">></button>
+                <div class="choice_card">
+                  <div class="choice_card_content">
+                    <h5 class="card-title">${res_name}</h5>
+                    <p class="card-text">${food_name}</p>
+                    <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
+                    <p class="card-text"><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a></p>
+                  </div>
+                </div>
+            </div>
+        `;
+  }
   return (message_info);
 }
 
 function bot_messaging_card_inner_no_image(res_name, res_type, food_name, naver_url, map_url) {
   // const carousel_id = `carousel${String(Math.floor(Math.random() * 10000) + 1)}`;
-  const message_info = `
+  let message_info = `
               <div class="choice_card">
                 <div class="choice_card_content">
                   <h5 class="card-title">${res_name}</h5>
@@ -250,6 +333,18 @@ function bot_messaging_card_inner_no_image(res_name, res_type, food_name, naver_
                 </div>
               </div>
       `;
+  if (res_type === null || res_type === undefined) {
+    message_info = `
+                <div class="choice_card">
+                  <div class="choice_card_content">
+                    <h5 class="card-title">${res_name}</h5>
+                    <p class="card-text">${food_name}</p>
+                    <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
+                    <p class="card-text"><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a></p>
+                  </div>
+                </div>
+        `;
+  }
   return (message_info);
 }
 
@@ -756,9 +851,9 @@ $(function () {
     updateChatLog(socket_id);
   });
 
-  socket.on('chat message card', (socket_id, button1, button2, button3, beer1, beer2) => {
-    $('#messages').append(bot_messaging_card(beer1[0], beer1[1], beer1[2], beer1[3], beer1[4], beer1[5], beer1[6], beer1[7]));
-    $('.choice_carousel').last().append(bot_messaging_card_inner(beer2[0], beer2[1], beer2[2], beer2[3], beer2[4], beer2[5], beer2[6], beer2[7]));
+  socket.on('chat message card', (socket_id, button1, button2, button3, rest1, rest2) => {
+    $('#messages').append(bot_messaging_card(rest1[0], rest1[1], rest1[2], rest1[3], rest1[4], rest1[5], rest1[6], rest1[7]));
+    $('.choice_carousel').last().append(bot_messaging_card_inner(rest2[0], rest2[1], rest2[2], rest2[3], rest2[4], rest2[5], rest2[6], rest2[7]));
     $('#messages').append(bot_messaging_button(button1[0], button1[1])).append(bot_messaging_button(button2[0], button2[1])).append(bot_messaging_button(button3[0], button3[1]));
     $('#m').prop('disabled', true);
     $('#input-button').attr('disabled', true);
@@ -768,9 +863,9 @@ $(function () {
     updateChatLog(socket_id);
   });
 
-  socket.on('chat message card no image', (socket_id, button1, button2, button3, beer1, beer2) => {
-    $('#messages').append(bot_messaging_card(beer1[0], beer1[1], beer1[2], beer1[3], beer1[4]));
-    $('.choice_carousel').last().append(bot_messaging_card_inner(beer2[0], beer2[1], beer2[2], beer2[3], beer2[4]));
+  socket.on('chat message card no image', (socket_id, button1, button2, button3, rest1, rest2) => {
+    $('#messages').append(bot_messaging_card_no_image(rest1[0], rest1[1], rest1[2], rest1[3], rest1[4]));
+    $('.choice_carousel').last().append(bot_messaging_card_inner_no_image(rest2[0], rest2[1], rest2[2], rest2[3], rest2[4]));
     $('#messages').append(bot_messaging_button(button1[0], button1[1])).append(bot_messaging_button(button2[0], button2[1])).append(bot_messaging_button(button3[0], button3[1]));
     // if(button1[0] === 'semi_final2/1' || button1[0] === 'final/1'){
     //   $(".choice_card").eq(-2).prepend("<img class='choice_card_winner' src='/images/white.png'></img>");

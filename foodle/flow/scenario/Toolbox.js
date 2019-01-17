@@ -97,9 +97,15 @@ class Toolbox {
     (async function () {
       try {
         if ((user_data.registered == -1) || (user_data.drink_before === false)){
-          await index.sendSocketMessage(socket.id, 'chat message button', '안녕 나는 놀랍게도 국내최초 술집추천 서비스를 제공하고있는 외식코기야🍜🍖');
-          await info_update.profile.update_state(socket.id, '6', 'init');
-          index.sendSocketMessage(socket.id, 'chat message button', '보통 강아지는 술을 못 먹지만 나는 특별하니까...에헴\n이.제.부.턴.!! 내가 동물지능(?)으로 때로는 고상하게 때로는 개가되게!(?) 맞는 술집을 찾아줄게 렛츠고😆', ['decide_drink', '렛츠고!']);
+          const verify_limit = await info_update.profile.verify_limit_drink(socket.id, user_data.limit_cnt_drink, user_data.decide_updated_at_drink);
+          const { result } = verify_limit;
+          if (result === 'success') {
+            await index.sendSocketMessage(socket.id, 'chat message button', '안녕 나는 놀랍게도 국내최초 술집추천 서비스를 제공하고있는 외식코기야🍜🍖');
+            await info_update.profile.update_state(socket.id, '6', 'init');
+            index.sendSocketMessage(socket.id, 'chat message button', '보통 강아지는 술을 못 먹지만 나는 특별하니까...에헴\n이.제.부.턴.!! 내가 동물지능(?)으로 때로는 고상하게 때로는 개가되게!(?) 맞는 술집을 찾아줄게 렛츠고😆', ['decide_drink', '렛츠고!']);
+          } else {
+            index.sendSocketMessage(socket.id, 'chat message button', '한 끼당 메뉴를 5번만 고를 수 있어!', ['get_started', '처음으로 돌아가기']);
+          }
         }
         else {
           // const db_subway = await user_info.subway;
@@ -107,7 +113,7 @@ class Toolbox {
           //   await info_update.food.update_user_start(socket.id);
           // }
           console.log(user_data.limit_cnt);
-          const verify_limit = await info_update.profile.verify_limit(socket.id, user_data.limit_cnt, user_data.decide_updated_at);
+          const verify_limit = await info_update.profile.verify_limit_drink(socket.id, user_data.limit_cnt_drink, user_data.decide_updated_at_drink);
           const { result } = verify_limit;
           if (result === 'success') {
             await info_update.profile.update_drink_start(socket.id);

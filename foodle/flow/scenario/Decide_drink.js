@@ -65,15 +65,8 @@ class Decide_drink {
   decide_drink(value, socket, user_data) {
     (async function () {
       try {
-        const verify_limit = await info_update.profile.verify_limit(socket.id, user_data.limit_cnt, user_data.decide_updated_at);
-        const { result } = verify_limit;
-        if (result === 'success') {
-          await info_update.profile.update_state(socket.id, '6', 'decide_drink');
-          await info_update.profile.update_drink_start(socket.id);
-          index.sendSocketMessage(socket.id, 'chat message button', `오늘은 어디 술집으로 가볼까? 약속장소에서 가까운 지하철역을 입력해줘🚋`);
-        } else {
-          index.sendSocketMessage(socket.id, 'chat message button', '30분에 술집을 5번만 고를 수 있어!', ['get_started', '처음으로 돌아가기']);
-        }
+        await info_update.profile.update_drink_start(socket.id);
+        index.sendSocketMessage(socket.id, 'chat message button', `오늘은 어디 술집으로 가볼까? 약속장소에서 가까운 지하철역을 입력해줘🚋`);
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
         console.log(e);
@@ -278,7 +271,7 @@ class Decide_drink {
             'question': '통금시간 있어?🕛🕒', 'button1_id': 'decide_final', 'button1_value': '통금 있어 ㅠㅠ', 'button2_id': 'decide_final', 'button2_value': '그런 거 없다',
           },
           {
-            'question': '같이 먹는사람 몇 명이야?(너포함)', 'button1_id': 'decide_final', 'button1_value': '2명/혼술', 'button2_id': 'decide_final', 'button2_value': '3~5명','button3_id': 'decide_final', 'button3_value': '6명 이상',
+            'question': '같이 먹는사람 몇 명이야?(너포함)', 'button1_id': 'decide_final', 'button1_value': '2명/혼술', 'button2_id': 'decide_final', 'button2_value': '3~5명', 'button3_id': 'decide_final', 'button3_value': '6명 이상',
           },
           {
             'question': '오늘 컨디션 어때?', 'button1_id': 'decide_final', 'button1_value': '컨디션 최고!', 'button2_id': 'decide_final', 'button2_value': '피곤해 피곤해..',
@@ -503,7 +496,7 @@ class Decide_drink {
             'question': '통금시간 있어?🕛🕒', 'button1_id': 'decide_final', 'button1_value': '통금 있어 ㅠㅠ', 'button2_id': 'decide_final', 'button2_value': '그런 거 없다',
           },
           {
-            'question': '같이 먹는사람 몇 명이야?(너포함)', 'button1_id': 'decide_final', 'button1_value': '2명/혼술', 'button2_id': 'decide_final', 'button2_value': '3~5명','button2_id': 'decide_final', 'button2_value': '6명 이상',
+            'question': '같이 먹는사람 몇 명이야?(너포함)', 'button1_id': 'decide_final', 'button1_value': '2명/혼술', 'button2_id': 'decide_final', 'button2_value': '3~5명','button3_id': 'decide_final', 'button3_value': '6명 이상',
           },
           {
             'question': '오늘 컨디션 어때?', 'button1_id': 'decide_final', 'button1_value': '컨디션 최고!', 'button2_id': 'decide_final', 'button2_value': '피곤해 피곤해..',
@@ -538,6 +531,7 @@ class Decide_drink {
         const drink_rest_result = await info_update.drink.get_drink_restaurant(socket.id, user_data.subway, user_data.exit_quarter, user_data.mood2, user_data.taste, user_data.drink_round, user_data.drink_type);
         const rest_info = drink_rest_result.message;
         if (rest_info.length === 2) {
+          await info_update.profile.update_limit_cnt_drink(socket.id, user_data.limit_cnt_drink + 1);
           await info_update.profile.update_rest2(user_data.kakao_id, rest_info[0].id, rest_info[1].id);
           const foods = await info_update.food.get_two_restaurant(socket.id, rest_info[0].id, rest_info[1].id);
           const first_url = `https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${foods[0].subway} ${foods[0].res_name}`;
@@ -606,7 +600,9 @@ class Decide_drink {
         await info_update.profile.create_decide_history(socket.id, user_data.rest1, user_data.rest2, final_value, food_value[0].res_name, food_value[0].subway);
         const naver_url = `https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${food_value[0].subway} ${food_value[0].res_name}`;
         const map_url = `https://map.naver.com/index.nhn?query=${food_value[0].subway} ${food_value[0].res_name}&tab=1`;
-
+        if (food_value[0].food_type === null) {
+          food_value[0].food_type = '';
+        }
         index.sendSocketMessage(socket.id, 'chat message button', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name}을 파는 ${food_value[0].food_type}집이야!`
           + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a>`, ['show_image', '사진 보기'],
         ['decide_final_again', '결승전 다시하기'], ['get_started', '처음으로 돌아가기']);
@@ -623,6 +619,9 @@ class Decide_drink {
         const food_value = await info_update.food.get_restaurant_info(socket.id, user_data.rest_final);
         const naver_url = `https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${food_value[0].subway} ${food_value[0].res_name}`;
         const map_url = `https://map.naver.com/index.nhn?query=${food_value[0].subway} ${food_value[0].res_name}&tab=1`;
+        if (food_value[0].food_type === null) {
+          food_value[0].food_type = '';
+        }
         index.sendSocketMessage(socket.id, 'chat message button', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name}을 파는 ${food_value[0].food_type}집이야!`
           + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a>`, ['show_image', '사진 보기'],
         ['decide_final_again', '결승전 다시하기'], ['get_started', '처음으로 돌아가기']);
