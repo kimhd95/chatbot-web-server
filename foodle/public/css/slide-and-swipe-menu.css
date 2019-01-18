@@ -2,13 +2,13 @@
  * Sliding swipe menu CSS
  */
 @font-face {
-  font-family: 'BM';
-  src: url('/fonts/BMHANNAPro.ttf') format('truetype');
+  font-family: 'yeogi';
+  src: url('/fonts/ygotjalnanfont.ttf') format('truetype');
 }
 
 a {
   /* color: #DC7633; */
-  font-family: 'BM';
+  font-family: 'yeogi';
   color: #873600;
   /* font-size: 4vw; */
   /* font-weight: bolder; */
@@ -118,6 +118,8 @@ nav .bg .profile-space{
   height: 25%;
   background-color: #fff;
   border-bottom: 1px solid #DC7633;
+  font-family: 'yeogi';
+  color: #873600;
   /* box-shadow: 1px 1px 20px 0px gray; */
 }
 
@@ -133,7 +135,6 @@ nav .bg .profile-space .name-space .name{
   /* display: flex; */
   width:70%;
   /* height:80%; */
-  color: #873600;
   /* background-color: #fff; */
   margin: 2vh 0 0 5vw;
   font-size: 3vh;
@@ -154,7 +155,6 @@ nav .bg .profile-space .email-space .email{
   /* justify-content: center; */
   width:70%;
   /* height:60%; */
-  color: #873600;
   margin: 0 0 0 5vw;
   font-size: 2vh;
   /* text-align: center; */
@@ -181,7 +181,7 @@ nav .bg .profile-space .change-space .accountchange{
   display: flex;
   /* align-items: cen; */
   justify-content: flex-end;
-  width:25%;
+  width:40%;
   /* text-align: right; */
   /* height:30%; */
   /* background-color: #; */
@@ -245,7 +245,7 @@ nav .bg .alarm-space .alarm{
 
 nav .bg .alarm-space .alarm .option{
   display: flex;
-  width: 30%;
+  width: 40%;
   height: 100%;
   flex-direction: row;
   justify-content: flex-start;
@@ -308,7 +308,7 @@ nav .bg .company-space{
 
 nav .bg .company-img{
   width: 95%;
-  height: 70%;
+  height: 4vh;
   margin: 0 0 1vh 0;
   /* background-color: #000; */
   background-image: url('/images/lobby_info.png');

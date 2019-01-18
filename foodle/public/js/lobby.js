@@ -2,7 +2,7 @@ $(document).ready(() => {
 
   $('.nav').slideAndSwipe();
 
-  let loginValue = sessionStorage.getItem('login');
+  // let loginValue = sessionStorage.getItem('login');
   // console.log("loginValue: "+loginValue);
   // if (loginValue === '0') {
   //   $('.social-signed-in')[0].style.display = 'none';
@@ -29,11 +29,10 @@ $(document).ready(() => {
           if (res.success) {
               console.log(res);
               console.log('verifyToken success');
-
+              $('#profile-name').addClass('.a');
               $('#profile-name').append(res.name + " 님");
-              // $('#profile-name').addClass('a');
+              $('#profile-email').addClass('.a');
               $('#profile-email').append(res.email);
-              // $('#profile-email').addClass('a');
             } else {
               console.log('verifyToken fail');
               console.log(res);
@@ -67,6 +66,6 @@ $(document).ready(() => {
           }
       }
     }
-    sendTokenReq(info);
+  //   sendTokenReq(info);
   // }
 });

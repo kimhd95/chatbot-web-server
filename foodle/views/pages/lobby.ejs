@@ -11,6 +11,7 @@
         <meta name="google-signin-client_id" content="1070723419509-ig3u8aapsfjn9ge421rervobr8409qtf.apps.googleusercontent.com">
 				<link rel="stylesheet" href="/css/swiper.css">
 				<link rel="stylesheet" href="/css/lobby.css">
+        <!-- <link rel="stylesheet" href="/css/avail_area.css"> -->
         <!-- CSS stylesheet for sliding-swipe-menu -->
         <link rel="stylesheet" href="/css/slide-and-swipe-menu.css">
         <!-- <link rel="stylesheet" href="/css/bootstrap-toggle.min.css"> -->
@@ -49,40 +50,48 @@
                 <div class="company-img"></div>
               </div>
             </div>
-
             <div class="transparent"></div>
           </nav>
-          <div class="menu-button"></div>
+
+
+
 		  			<div class="swiper-slide content">
 		          <div class="upper-screen">
+                <div class="bar"><div class="left-button"></div></div>
 		            <div class="swiper-container">
 		          		<div class="swiper-wrapper">
-		                <div class="swiper-slide"><div class="upper-img" style="background-image: url('/images/lobby_bg_up_fst.png')">
-											<div class="pagination-space">
+		                <div class="swiper-slide"><div class="color-bg" style="background-image: url('/images/color_bg_fst.png')">
+                      <div class="character-img" style="background-image: url('/images/character_img_fst.png')">
+                        <div class="text-img" style="background-image: url('/images/text_img_fst.png')"></div></div>
+											<!-- <div class="pagination-space">
 												<div class="pagination" style="background-image:url('/images/lobby_pagination_fst.png')"></div>
 											</div>
 											<div class="textimg-space">
 													<div class="textimg" style="background-image:url('/images/lobby_textimg_up_fst.png')"></div>
 											</div>
-											<div class="button-space"><div class="choose-menu" onclick="location.href='/chat';"></div></div>
+											<div class="button-space"><div class="choose-menu" onclick="location.href='/chat';"></div></div> -->
 										</div></div>
-										<div class="swiper-slide"><div class="upper-img" style="background-image: url('/images/lobby_bg_up_snd.png')">
-											<div class="pagination-space">
-												<div class="pagination" style="background-image:url('/images/lobby_pagination_snd.png')"></div>
+										<div class="swiper-slide"><div class="color-bg" style="background-image: url('/images/color_bg_snd.png')">
+                      <div class="character-img" style="background-image: url('/images/character_img_snd.png')">
+                      <div class="text-img" style="background-image: url('/images/text_img_snd.png')"></div></div>
+											<!-- <div class="pagination-space">
+												<div class="pagination" style="background-image:url('/images/lobby_up_pagination.png')"></div>
 											</div>
 											<div class="textimg-space">
 													<div class="textimg" style="background-image:url('/images/lobby_textimg_up_snd.png')"></div>
 											</div>
-											<div class="button-space"><div class="choose-menu" onclick="location.href='/chat';"></div></div>
+											<div class="button-space"><div class="choose-menu" onclick="location.href='/chat';"></div></div> -->
 										</div></div>
-										<div class="swiper-slide"><div class="upper-img" style="background-image: url('/images/lobby_bg_up_trd.png')">
-											<div class="pagination-space">
+										<div class="swiper-slide"><div class="color-bg" style="background-image: url('/images/color_bg_trd.png')">
+                      <div class="character-img" style="background-image: url('/images/character_img_trd.png')">
+                      <div class="text-img" style="background-image: url('/images/text_img_trd.png')"></div></div>
+											<!-- <div class="pagination-space">
 												<div class="pagination" style="background-image:url('/images/lobby_pagination_trd.png')"></div>
 											</div>
 											<div class="textimg-space">
 													<div class="textimg" style="background-image:url('/images/lobby_textimg_up_trd.png')"></div>
 											</div>
-											<div class="button-space"><div class="choose-menu" onclick="location.href='/chat';"></div></div>
+											<div class="button-space"><div class="choose-menu" onclick="location.href='/chat';"></div></div> -->
 										</div></div>
 		              </div>
 		            </div>
@@ -90,32 +99,48 @@
 
 							<div class="lower-screen">
 								<div class="available-space">
-									<div class="plus-sign"></div>
-									<div class="available-textimg"></div>
+                  <div id="avail" class="service">
+									   <div class="plus-sign"></div><div class="available-textimg"></div>
+                  </div>
 								</div>
 								<div class="feature-space">
 									<div class="feature">
-										<div class="middlepoint-img"></div>
-										<div class="emptyspace"></div>
-										<div class="middlepoint-text"></div>
+										<div class="feature-img" style="background-image: url('/images/lobby_rest_img.png');"></div>
+										<!-- <div class="emptyspace"></div> -->
+										<!-- <div class="middlepoint-text"></div> -->
+                    <div class="feature-text">식당 고르기</div>
 									</div>
-									<div class="border"></div>
-									<div class="feature">
-										<div class="comingsoon"></div>
+									<!-- <div class="border"></div> -->
+                  <div class="feature">
+										<div class="feature-img" style="background-image: url('/images/lobby_drink_img.png');"></div>
+										<!-- <div class="emptyspace"></div> -->
+										<!-- <div class="middlepoint-text"></div> -->
+                    <div class="feature-text">술집 고르기</div>
 									</div>
-									<div class="border"></div>
+									<!-- <div class="border"></div> -->
 									<div class="feature">
-										<div class="comingsoon"></div>
+										<div class="soon"></div>
 									</div>
 								</div>
-								<div class="guide-space">
-									<div class="guide"></div>
+								<div class="middlepoint-space">
+									<div class="middlepoint"></div>
 								</div>
-								<div class="company-space">
+								<!-- <div class="company-space">
 									<div class="company"></div>
-								</div>
+								</div> -->
 							</div>
 		  			</div>
+
+            <div class="avail-slide close">
+              <div class="avail-screen">
+                <div class="avail-bar">서비스 지역</div>
+                <div class="handglass"></div>
+                <div class="areatext"></div>
+                <div class="city">서울</div>
+                <div class="borderline"></div>
+                <div class="stationlist" id="list"></div>
+              </div>
+            </div>
 
         <!-- jQuery library (served from Google) -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
@@ -135,6 +160,18 @@
 
         <script>
 
+          $(document).ready(() =>{
+            var list=['강남역', '건대입구역', '광화문역', '뚝섬역', '망원역', '서울대입구역', '성수역', '사당역', '신사역', '여의도역', '역삼역', '을지로입구역', '이태원역', '종로3가역', '종각역', '합정역', '홍대입구역', '혜화역'];
+            var i;
+            for(i=0;i<list.length;i++){
+              $('#list').append(`<div class="stationname">${list[i]}</div>`);
+            }
+          });
+
+          $('.service, .avail-slide').click(function(){
+              $('.avail-slide').toggleClass('close');
+            });
+
           $("#toggle").change(function(){
             if($('#toggle').is(':checked')){
               console.log("checked");
@@ -142,6 +179,8 @@
               console.log("unchecked");
             }
           })
+
+
           //
           // if($('#toggle').is(':checked')){
           //   console.log('checked');
