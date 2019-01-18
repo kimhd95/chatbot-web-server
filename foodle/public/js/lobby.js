@@ -66,6 +66,6 @@ $(document).ready(() => {
           }
       }
     }
-  //   sendTokenReq(info);
+    sendTokenReq(info);
   // }
 });
