@@ -73,7 +73,7 @@ Api.prototype.apicall_geocoder = function (kakaoid, method, url, func) {
   const self = this;
   const info = {
     method,
-    headers: { 'Authorization': 'KakaoAK 0d31415b7fad8fda40b6b98f2fbec195' },
+    headers: { 'Authorization': 'KakaoAK daae456d4a8ab0187cb9ecc44402183d' },
     url,
   };
 
