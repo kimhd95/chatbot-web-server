@@ -27,6 +27,28 @@ html, body {
   padding: 0;
 }
 
+/* width */
+.stationlist::-webkit-scrollbar {
+  width: 2vw;
+}
+
+/* Track */
+.stationlist::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 1vw;
+}
+
+/* Handle */
+.stationlist::-webkit-scrollbar-thumb {
+  border-radius: 1vw;
+  background: #919191;
+}
+
+/* Handle on hover */
+.stationlist::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .avail-screen{
   display:flex;
   flex-direction: column;
@@ -106,7 +128,7 @@ html, body {
   height: 35vh;
   width: 80vw;
   /* background-color: #eee; */
-  overflow: scroll;
+  overflow-y: scroll;
   /* flex-wrap: nowrap; */
 }
 
@@ -123,7 +145,7 @@ html, body {
   width: 50vw;
   /* background-color: #eee; */
   margin: 1vh 0 1vh 0;
-  overflow: scroll;
+  /* overflow: scroll; */
 }
 
 
