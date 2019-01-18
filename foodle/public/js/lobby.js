@@ -2,19 +2,79 @@ $(document).ready(() => {
 
   $('.nav').slideAndSwipe();
 
-  // let loginValue = sessionStorage.getItem('login');
-  // console.log("loginValue: "+loginValue);
-  // if (loginValue === '0') {
-  //   $('.social-signed-in')[0].style.display = 'none';
-  //   $('.email-signed-in')[0].style.display = 'block';
-  //   $('.update-password')[0].style.display = 'block';
-  // } else {
-  //   // $('m').val(sessionStorage.getItem('email'));
-  //   $('.social-signed-in')[0].style.display = 'block';
-  //   $('.email-signed-in')[0].style.display = 'none';
-  //   $('.update-password')[0].style.display = 'none';
-  // }
-  // if (loginValue === '0') {
+  let loginValue = sessionStorage.getItem('login');
+
+  $('#logout-btn').click(function(){
+    console.log('logout clicked');
+    logout(loginValue);
+  })
+
+  $('#withdraw-btn').click(function(){
+    console.log('withdraw clicked');
+  })
+
+  function logout(loginValue) {
+    if (loginValue === '0' || loginValue === null) {
+      const info = {
+        url: "/api/v1/users/logout",
+        method: "POST",
+        data: {
+          'token': sessionStorage.getItem('social_token')
+        },
+        success: function (res) {
+            if (res.success) {
+                console.log('logout Request: success!');
+                localStorage.clear();
+                sessionStorage.clear();
+                alert('로그아웃 되었습니다.');
+                window.location.replace(window.location.origin);
+            } else {
+                console.log('logout Request: fail!');
+                console.log(res);
+                recheckTokenExist("로그아웃");
+            }
+        },
+        error: function (e) {
+            console.log('ajax call error: dashboard - LgOutReq');
+            if(!navigator.onLine){
+                console.log("internet disconnected");
+                window.location.reload();
+            } else{
+                if (e.status === 404 && e.responseText.includes("API call URL not found.")) {
+                    console.log("check your URL, method(GET/POST)");
+                    alert("로그아웃에 실패했습니다.");
+                } else if(e.status===403 && e.responseText.includes("No token")){
+                    console.log('No token given');
+                    window.location.replace(window.location.origin);
+                } else {
+                    console.log("status: " + e.status+ ", message: " + e.responseText);
+                    recheckTokenExist("로그아웃");
+                }
+            }
+        }
+      };
+      sendTokenReq(info);
+    } else if (loginValue === '1') {
+      console.log('naver logout');
+      alert('로그아웃 되었습니다.');
+      sessionStorage.clear();
+      localStorage.clear();
+      location.href = '/';
+    } else if (loginValue === '2') {
+      console.log('facebook logout');
+      sessionStorage.clear();
+      localStorage.clear();
+      location.href = '/';
+    } else if (loginValue === '3') {
+      console.log('google logout');
+      googleSignOut();
+      sessionStorage.clear();
+      localStorage.clear();
+      location.href = '/';
+    }
+
+  }
+
   const info = {
       url: '/api/v1/users/verify_token',
       method: 'POST',

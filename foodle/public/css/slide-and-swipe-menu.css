@@ -285,13 +285,14 @@ nav .bg .account-space{
 
 nav .bg .account-space .account{
   display: flex;
-  width: 70%;
+  width: 20vw;
   height: 20%;
   margin: 0 0 0 5vw;
   font-size: 2vh;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  cursor: pointer;
   /* background-color: #fff; */
   /* border-bottom: 1px solid #DC7633; */
   /* box-shadow: -1px 1px 20px 0px gray; */
