@@ -30,6 +30,38 @@ router.get('/lobby_unsigned', authService.getUnsignedLobbyPage);
 
 // router.get('/area', authService.getAreaPage);
 
+router.post('/sendEmail', function (req, res) {
+	let transporter = nodemailer.createTransport({
+		service:'gmail',
+		auth: {
+			type: 'OAuth2',
+			user: 'support@jellylab.io',
+			clientId: '732880438602-u5pbho778b6i4bsvig2ma7v13n7hk4nb.apps.googleusercontent.com', //환경변수로 설정해 놓는 것을 권장합니다.
+			clientSecret: '6-XLCJjd-AWJ-qYkkBOO-CUr', //환경변수로 설정해 놓는 것을 권장합니다.
+			refreshToken: '1/jU0ghdET2MC5LMmJ0FpyG1CJRQNWGcmJ20Jvwh0pW-c', //환경변수로 설정해 놓는 것을 권장합니다.
+			accessToken: 'ya29.GlsOBsVLRfET8HR609HWOO65krRrwAJUFXbyROg6mrIG91NBFWL6sN3wz0KP71zp1LkxMQXKNcUf8RoLV-PnFkRIni-vA75BWLfXz2REQQVzmTxy4d_1IdmUpIGi', //환경변수로 설정해 놓는 것을 권장합니다.
+			expires: 3600
+		}
+	});
+
+
+	let mailOptions = {
+		from: `${req.body.name} <${req.body.email}>`,
+		to: 'support@jellylab.io',
+		subject: `[젤리랩]${req.body.subject} 메일입니다.`,
+		html: `<b>연락받을 이메일: ${req.body.email}<b><br><br>${req.body.message}`
+	}
+
+	transporter.sendMail(mailOptions, function(err, info) {
+		if ( err ) {
+			console.error('Send Mail error : ', err);
+		}
+		else {
+			console.log('Message sent : ', info);
+			return res.json({ success: true });
+		}
+	});
+})
 
 router.post('/sendNewPassword', function (req, res) {
 	let transporter = nodemailer.createTransport({

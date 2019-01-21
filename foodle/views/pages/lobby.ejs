@@ -28,7 +28,7 @@
               <div class="ask-space">
                 <div class="ask"><a>공지사항</a></div>
                 <div class="ask"><a>FAQ</a></div>
-                <div class="ask"><a>1:1 문의</a></div>
+                <div class="ask"><a class="onetoone-btn">1:1 문의</a></div>
               </div>
               <div class="alarm-space">
                 <div class="alarm">
@@ -133,7 +133,7 @@
 
             <div class="avail-slide close">
               <div class="avail-screen">
-                <div class="avail-bar">서비스 지역</div>
+                <div id="service-bar" class="avail-bar">서비스 지역</div>
                 <div class="handglass"></div>
                 <div class="areatext"></div>
                 <div class="city">서울</div>
@@ -141,6 +141,26 @@
                 <div class="stationlist" id="list"></div>
               </div>
             </div>
+
+            <div class="onetoone close">
+              <div class="avail-screen">
+                <div id="onetoone-bar" class="avail-bar">1:1 문의</div>
+                <!-- <form class="question-form"> -->
+                  <input id="question-name" type="text" class="question-account" style="margin: 7vh 0 0 0;" disabled></input>
+                  <input id="question-email" type="text" class="question-account" disabled></input>
+                  <select id="question-subject" class="custom-select">
+                    <option class="init" disabled selected>주제를 선택해주세요</option>
+                    <option value="0">일반 문의</option>
+                    <option value="1">개선 및 제안</option>
+                  </select>
+
+
+                  <textarea id="question-content" type="text" class="question-content" placeholder="문의 사항을 적어주세요"></textarea>
+                <!-- </form> -->
+                <button class="question-send" type="button">보내기</button>
+              </div>
+            </div>
+
 
         <!-- jQuery library (served from Google) -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
@@ -168,8 +188,12 @@
             }
           });
 
-          $('.service, .avail-slide').click(function(){
+          $('.service, #service-bar').click(function(){
               $('.avail-slide').toggleClass('close');
+            });
+
+          $('.onetoone-btn, #onetoone-bar').click(function(){
+              $('.onetoone').toggleClass('close');
             });
 
           $("#toggle").change(function(){
@@ -179,6 +203,61 @@
               console.log("unchecked");
             }
           })
+
+          $('.question-send').click(() => {
+      			let email = $('#question-email').val(),
+      				name = $('#question-name').val(),
+      				subject = $('#question-subject').val(),
+      				text = $('#question-content').val();
+
+            console.log('subject: '+subject);
+
+            if(subject==='1'){
+              subject='개선 및 제안';
+            }
+            if(subject==='0'){
+              subject='일반 문의';
+            }
+
+      			if (subject === null) {
+      				alert('문의 유형을 선택해주세요.');
+      				return;
+      			}
+      			if (text === '') {
+      				alert('내용을 입력해주세요.');
+      				return;
+      			}
+      			$.ajax({
+      				url: '/sendEmail',
+      				async: true,
+      				type: 'POST',
+      				data: {
+      					name: name,
+      					email: email,
+      					subject: subject,
+      					message: text
+      				},
+      				dataType: 'text',
+      				success: function () {
+      					alert('작성하신 문의가 성공적으로 전송되었습니다.');
+                $('.onetoone').toggleClass('close');
+                // $('#question-subject')[0].value = 'undefined';
+                // $('#question-content')[0].value = '';
+                // $('.dropdown').find('input').attr('value', $(this).attr('id'));
+                // $('.dropdown').find('input').attr('value', $(this).attr('id'));
+                // $('.custom-select').text('주제를 선택해주세요');
+                // $('#question-subject').attr('value','-1');
+                $('.init').prop('disabled', false);
+                $('.init').prop('selected', false);
+                $('.init').prop('selected', true);
+                $('.init').prop('disabled', true);
+                $('#question-content').val('');
+      				},
+      				error: function () {
+      					alert('전송에 실패했습니다.');
+      				}
+      			});
+          });
 
 
           //

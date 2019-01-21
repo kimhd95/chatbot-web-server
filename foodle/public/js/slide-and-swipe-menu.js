@@ -169,11 +169,13 @@
                 e.preventDefault();
             });
 
-            $('.transparent').click(function(e) {
+            $('.transparent, .onetoone-btn').click(function(e) {
                 // console.log('faded area')
                 hideNavigation();
                 e.preventDefault();
             });
+
+
 
         };
 })(window.jQuery || window.$, document, window);
