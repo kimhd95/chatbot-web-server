@@ -2,6 +2,21 @@ $(document).ready(() => {
 
   $('.nav').slideAndSwipe();
 
+//   $('.dropdown .dropdown-menu li').click(function () {
+//       $(this).parents('.dropdown').find('span').text($(this).text());
+//       $(this).parents('.dropdown').find('input').attr('value', $(this).attr('id'));
+//       // console.log($('#question-subject').val());
+//   });
+// /*End Dropdown Menu*/
+//
+//
+// $('.dropdown-menu li').click(function () {
+//   var input = '<strong>' + $(this).parents('.dropdown').find('input').val() + '</strong>',
+//       msg = '<span class="msg">Hidden input value: ';
+//   $('.msg').html(msg + input + '</span>');
+// });
+
+
   let loginValue = sessionStorage.getItem('login');
 
   $('#logout-btn').click(function(){
@@ -89,10 +104,17 @@ $(document).ready(() => {
           if (res.success) {
               console.log(res);
               console.log('verifyToken success');
+
               $('#profile-name').addClass('.a');
               $('#profile-name').append(res.name + " 님");
               $('#profile-email').addClass('.a');
               $('#profile-email').append(res.email);
+
+              // $('#question-name').append(res.name);
+              $('#question-name').val(res.name);
+              $('#question-email').val(res.email);
+              // $('#question-content').attr("placeholder", "Type here to search");
+              // $('#question-email').append(res.email);
             } else {
               console.log('verifyToken fail');
               console.log(res);
