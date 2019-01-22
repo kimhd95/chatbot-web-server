@@ -37,6 +37,7 @@ module.exports = function(){
 	io.on('connection', function(socket){
 		// console.log(socket);
 		console.log(socket.id+' user connected');
+		// io.to(socket.id).emit('connection', socket.id);
 		io.to(socket.id).emit('chat register', socket.id);
 		// info_update.profile.register(socket.id, function(err){ // previous_register_user
 		// 	if(err){
@@ -119,6 +120,33 @@ module.exports = function(){
 			// console.log('message: ' + msg);
 		});
 
+		// socket.on('restaurant', function(msg){
+		// 	console.log(msg);
+		// 	console.log('socket.id: '+ socket.id);
+		// 	io.to(socket.id).emit('restaurant', msg);
+		// 	console.log('connected');
+		// 	// scenario_rule.scenario_rule(msg, socket);
+		// 	// let info = {
+		// 	//     method: 'POST',
+		// 	//     headers: {'content-type' : 'application/json'},
+		// 	//     url: 'http://jellynlp2-dev.ap-northeast-2.elasticbeanstalk.com/nlp/',
+		// 	//     json: {
+		// 	//         "content" : msg
+		// 	//     },
+		// 	// };
+		// 	// request(info, function (error, response, body) {
+		// 	//     let botMessage = '몰라';
+		// 	//     botMessage = body;
+		// 	//     io.to(socket.id).emit('chat message', botMessage);
+		// 	//     console.log('message: ' + botMessage);
+		// 	// });
+		//
+		// 	// io.emit('chat message', msg);
+		// 	// console.log('message: ' + msg);
+		// });
+
+
+
 		socket.on('chat message button', function(msg){
 			io.to(socket.id).emit('chat message_self', msg);
 			let info = {
@@ -162,6 +190,9 @@ module.exports = function(){
 		      reject(e);
 		    });
 			} else {
+				console.log("server index");
+				console.log("socket.id: "+socket_id);
+				console.log(`message_type : ${message_type}, message : ${message}`)
 				info_update.profile.create_bot_log(socket_id, message_type, String(message), JSON.stringify(args)).then((result) => {
 		      resolve(io.to(socket_id).emit(message_type, socket_id, message, ...args));
 		    }).catch((e) => {

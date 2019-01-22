@@ -1,23 +1,114 @@
+
 $(document).ready(() => {
 
-  $('.nav').slideAndSwipe();
-
-//   $('.dropdown .dropdown-menu li').click(function () {
-//       $(this).parents('.dropdown').find('span').text($(this).text());
-//       $(this).parents('.dropdown').find('input').attr('value', $(this).attr('id'));
-//       // console.log($('#question-subject').val());
-//   });
-// /*End Dropdown Menu*/
-//
-//
-// $('.dropdown-menu li').click(function () {
-//   var input = '<strong>' + $(this).parents('.dropdown').find('input').val() + '</strong>',
-//       msg = '<span class="msg">Hidden input value: ';
-//   $('.msg').html(msg + input + '</span>');
-// });
-
-
   let loginValue = sessionStorage.getItem('login');
+  let emailValue = sessionStorage.getItem('email');
+
+  // console.log(emailValue);
+      // socket.on('connection', function(socket){
+      //   console.log(socket);
+      // })
+
+      // $('#choose-rest').click(function(){
+      //   socket.emit('restaurant', 'hello');
+      // })
+
+      // socket.on('restaurant', function(msg){
+      //   console.log(msg);
+      // })
+
+
+  $('#decide_menu').click(function(){
+    console.log('restaurant choose');
+    location.href='/chat';
+
+    const restInfo = {
+        method: "POST",
+        url: '/api/v1/users/go_to_menu_state',
+        body: {
+            email: emailValue,
+        },
+        success: function (res) {
+            if (res.success){
+                console.log("restaurantReq: success!");
+            }else {
+                console.log("restaurantReq: fail!");
+                console.log(res);
+            }
+        },
+        error: function(e) {
+            // alert(JSON.stringify(e));
+            console.log('ajax call error: signup page - singUpReq');
+            if (e.status === 404 && e.responseText.includes("API call URL not found."))
+                console.log("check your URL, method(GET/POST)");
+            else if ((e.status === 400 && e.responseText.includes("not provided"))
+                || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
+                console.log("check your parameters");
+            } else if(e.status === 0){
+                if(navigator.onLine){
+                    console.log('status : 0');
+                }else {
+                    console.log('internet disconnected');
+                    window.location.reload();
+                }
+            } else {
+                console.log('status: ' + e.status + ', message: ' + e.responseText);
+            }
+            alert("정보 업데이트가 실패했습니다.");
+        }
+    };
+    sendReq(restInfo);
+
+  })
+
+
+  $('#choose-drink').click(function(){
+    console.log('drink choose');
+    location.href='/chat';
+
+    // const drinkInfo = {
+    //     method: "POST",
+    //     url: '/api/v1/users/go_to_drink_state',
+    //     body: {
+    //         email: emailValue,
+    //     },
+    //     success: function (res) {
+    //         if (res.success){
+    //             console.log("drinkReq: success!");
+    //             // getChatLog(user_email);
+    //
+    //         }else {
+    //             console.log("drinkReq: fail!");
+    //             console.log(res);
+    //         }
+    //     },
+    //     error: function(e) {
+    //         // alert(JSON.stringify(e));
+    //         console.log('ajax call error: signup page - singUpReq');
+    //         if (e.status === 404 && e.responseText.includes("API call URL not found."))
+    //             console.log("check your URL, method(GET/POST)");
+    //         else if ((e.status === 400 && e.responseText.includes("not provided"))
+    //             || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
+    //             console.log("check your parameters");
+    //         } else if(e.status === 0){
+    //             if(navigator.onLine){
+    //                 console.log('status : 0');
+    //             }else {
+    //                 console.log('internet disconnected');
+    //                 window.location.reload();
+    //             }
+    //         } else {
+    //             console.log('status: ' + e.status + ', message: ' + e.responseText);
+    //         }
+    //         alert("정보 업데이트가 실패했습니다.");
+    //     }
+    // };
+    // sendReq(drinkInfo);
+  })
+
+
+
+  $('.nav').slideAndSwipe();
 
   $('#logout-btn').click(function(){
     console.log('logout clicked');
@@ -149,5 +240,5 @@ $(document).ready(() => {
       }
     }
     sendTokenReq(info);
-  // }
+
 });

@@ -679,6 +679,10 @@ $(function () {
   //   return false;
   // });
 
+  socket.on('restaurant', function(msg){
+    console.log(msg);
+  })
+
   socket.on('chat register', function(socket_id){
     let user_email = sessionStorage.getItem('email');
     const info = {
@@ -726,6 +730,10 @@ $(function () {
     $('#messages').scrollTop(1E10);
   });
 
+  socket.on('restaurant', (msg) => {
+    $('#messages').append(bot_messaging(msg));
+  })
+
   socket.on('chat message_self', (msg) => {
     $('#messages').append(user_messaging(msg)).children(':last').hide()
       .fadeIn(150);
@@ -742,6 +750,8 @@ $(function () {
   });
 
   socket.on('chat message button', (socket_id, msg, ...args) => {
+    alert('test');
+    console.log('test');
     $('#messages').append(bot_messaging(msg)).children(':last').hide()
       .fadeIn(150);
     for (let i = 0; i < args.length; i += 1) {

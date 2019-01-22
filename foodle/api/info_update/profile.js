@@ -767,6 +767,23 @@ Profile.load_user = function (kakaoid) {
   }));
 };
 
+Profile.load_user2 = function (email) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'flow_update.load_user2';
+    const method = 'get';
+    const url = `/api/v1/users/get_user_info2/${email}`;
+    const json = null;
+
+    const func = function (error, res, body) {
+      error === null
+        ? resolve(JSON.parse(body).user_info)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
 Profile.chitchat = function (kakaoid, message) {
   const self = this;
   return new Promise(((resolve, reject) => {
