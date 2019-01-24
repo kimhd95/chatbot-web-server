@@ -131,6 +131,7 @@ class Decide_menu {
         }
         const subways = await info_update.food.get_all_subway(socket.id, '');
         const result = await info_update.food.verify_subway(socket.id, subway);
+        console.log(result);
         if (result === 'success') {
           const user_info = await info_update.profile.load_user(socket.id);
           const db_subway = await user_info.subway;

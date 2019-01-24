@@ -1,112 +1,85 @@
+function logout(loginValue) {
+  if (loginValue === '0' || loginValue === null) {
+    const info = {
+      url: "/api/v1/users/logout",
+      method: "POST",
+      data: {
+        'token': sessionStorage.getItem('social_token')
+      },
+      success: function (res) {
+          if (res.success) {
+              console.log('logout Request: success!');
+              localStorage.clear();
+              sessionStorage.clear();
+              alert('로그아웃 되었습니다.');
+              window.location.replace(window.location.origin);
+          } else {
+              console.log('logout Request: fail!');
+              console.log(res);
+              recheckTokenExist("로그아웃");
+          }
+      },
+      error: function (e) {
+          console.log('ajax call error: dashboard - LgOutReq');
+          if(!navigator.onLine){
+              console.log("internet disconnected");
+              window.location.reload();
+          } else{
+              if (e.status === 404 && e.responseText.includes("API call URL not found.")) {
+                  console.log("check your URL, method(GET/POST)");
+                  alert("로그아웃에 실패했습니다.");
+              } else if(e.status===403 && e.responseText.includes("No token")){
+                  console.log('No token given');
+                  window.location.replace(window.location.origin);
+              } else {
+                  console.log("status: " + e.status+ ", message: " + e.responseText);
+                  recheckTokenExist("로그아웃");
+              }
+          }
+      }
+    };
+    sendTokenReq(info);
+  } else if (loginValue === '1') {
+    console.log('naver logout');
+    alert('로그아웃 되었습니다.');
+    sessionStorage.clear();
+    localStorage.clear();
+    location.href = '/';
+  } else if (loginValue === '2') {
+    console.log('facebook logout');
+    sessionStorage.clear();
+    localStorage.clear();
+    location.href = '/';
+  } else if (loginValue === '3') {
+    console.log('google logout');
+    googleSignOut();
+    sessionStorage.clear();
+    localStorage.clear();
+    location.href = '/';
+  }
+
+}
 
 $(document).ready(() => {
 
   let loginValue = sessionStorage.getItem('login');
   let emailValue = sessionStorage.getItem('email');
 
-  // console.log(emailValue);
-      // socket.on('connection', function(socket){
-      //   console.log(socket);
-      // })
-
-      // $('#choose-rest').click(function(){
-      //   socket.emit('restaurant', 'hello');
-      // })
-
-      // socket.on('restaurant', function(msg){
-      //   console.log(msg);
-      // })
-
-
-  $('#decide_menu').click(function(){
+  $('#choose-rest').click(async function(){
+    sessionStorage.setItem('stage', 'decide_menu');
+    sessionStorage.setItem('name', '메뉴 고르기');
     console.log('restaurant choose');
     location.href='/chat';
-
-    const restInfo = {
-        method: "POST",
-        url: '/api/v1/users/go_to_menu_state',
-        body: {
-            email: emailValue,
-        },
-        success: function (res) {
-            if (res.success){
-                console.log("restaurantReq: success!");
-            }else {
-                console.log("restaurantReq: fail!");
-                console.log(res);
-            }
-        },
-        error: function(e) {
-            // alert(JSON.stringify(e));
-            console.log('ajax call error: signup page - singUpReq');
-            if (e.status === 404 && e.responseText.includes("API call URL not found."))
-                console.log("check your URL, method(GET/POST)");
-            else if ((e.status === 400 && e.responseText.includes("not provided"))
-                || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
-                console.log("check your parameters");
-            } else if(e.status === 0){
-                if(navigator.onLine){
-                    console.log('status : 0');
-                }else {
-                    console.log('internet disconnected');
-                    window.location.reload();
-                }
-            } else {
-                console.log('status: ' + e.status + ', message: ' + e.responseText);
-            }
-            alert("정보 업데이트가 실패했습니다.");
-        }
-    };
-    sendReq(restInfo);
-
+    // await revision(emailValue, menumsg, 'menu');
   })
 
-
-  $('#choose-drink').click(function(){
+  $('#choose-drink').click(async function(){
+    sessionStorage.setItem('stage','decide_drink');
+    sessionStorage.setItem('name', '술집 고르기');
     console.log('drink choose');
     location.href='/chat';
-
-    // const drinkInfo = {
-    //     method: "POST",
-    //     url: '/api/v1/users/go_to_drink_state',
-    //     body: {
-    //         email: emailValue,
-    //     },
-    //     success: function (res) {
-    //         if (res.success){
-    //             console.log("drinkReq: success!");
-    //             // getChatLog(user_email);
-    //
-    //         }else {
-    //             console.log("drinkReq: fail!");
-    //             console.log(res);
-    //         }
-    //     },
-    //     error: function(e) {
-    //         // alert(JSON.stringify(e));
-    //         console.log('ajax call error: signup page - singUpReq');
-    //         if (e.status === 404 && e.responseText.includes("API call URL not found."))
-    //             console.log("check your URL, method(GET/POST)");
-    //         else if ((e.status === 400 && e.responseText.includes("not provided"))
-    //             || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
-    //             console.log("check your parameters");
-    //         } else if(e.status === 0){
-    //             if(navigator.onLine){
-    //                 console.log('status : 0');
-    //             }else {
-    //                 console.log('internet disconnected');
-    //                 window.location.reload();
-    //             }
-    //         } else {
-    //             console.log('status: ' + e.status + ', message: ' + e.responseText);
-    //         }
-    //         alert("정보 업데이트가 실패했습니다.");
-    //     }
-    // };
-    // sendReq(drinkInfo);
+    // await revision(emailValue, drinkmsg, 'drink');
   })
-
-
 
   $('.nav').slideAndSwipe();
 
@@ -119,67 +92,41 @@ $(document).ready(() => {
     console.log('withdraw clicked');
   })
 
-  function logout(loginValue) {
-    if (loginValue === '0' || loginValue === null) {
-      const info = {
-        url: "/api/v1/users/logout",
-        method: "POST",
-        data: {
-          'token': sessionStorage.getItem('social_token')
-        },
-        success: function (res) {
-            if (res.success) {
-                console.log('logout Request: success!');
-                localStorage.clear();
-                sessionStorage.clear();
-                alert('로그아웃 되었습니다.');
-                window.location.replace(window.location.origin);
-            } else {
-                console.log('logout Request: fail!');
-                console.log(res);
-                recheckTokenExist("로그아웃");
-            }
-        },
-        error: function (e) {
-            console.log('ajax call error: dashboard - LgOutReq');
-            if(!navigator.onLine){
-                console.log("internet disconnected");
-                window.location.reload();
-            } else{
-                if (e.status === 404 && e.responseText.includes("API call URL not found.")) {
-                    console.log("check your URL, method(GET/POST)");
-                    alert("로그아웃에 실패했습니다.");
-                } else if(e.status===403 && e.responseText.includes("No token")){
-                    console.log('No token given');
-                    window.location.replace(window.location.origin);
-                } else {
-                    console.log("status: " + e.status+ ", message: " + e.responseText);
-                    recheckTokenExist("로그아웃");
-                }
-            }
-        }
-      };
-      sendTokenReq(info);
-    } else if (loginValue === '1') {
-      console.log('naver logout');
-      alert('로그아웃 되었습니다.');
-      sessionStorage.clear();
-      localStorage.clear();
-      location.href = '/';
-    } else if (loginValue === '2') {
-      console.log('facebook logout');
-      sessionStorage.clear();
-      localStorage.clear();
-      location.href = '/';
-    } else if (loginValue === '3') {
-      console.log('google logout');
-      googleSignOut();
-      sessionStorage.clear();
-      localStorage.clear();
-      location.href = '/';
-    }
-
-  }
+  const userinfo = {
+      method: "POST",
+      url: '/api/v1/users/update_state_email',
+      body: {
+          email: emailValue,
+      },
+      success: function (res) {
+          if (res.success){
+              console.log("updateStateReq: success!");
+          }else {
+              console.log("signUpReq: fail!");
+              console.log(res);
+          }
+      },
+      error: function(e) {
+          console.log('ajax call error: signup page - updateStateReq');
+          if (e.status === 404 && e.responseText.includes("API call URL not found."))
+              console.log("check your URL, method(GET/POST)");
+          else if ((e.status === 400 && e.responseText.includes("not provided"))
+              || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
+              console.log("check your parameters");
+          } else if(e.status === 0){
+              if(navigator.onLine){
+                  console.log('status : 0');
+              }else {
+                  console.log('internet disconnected');
+                  window.location.reload();
+              }
+          } else {
+              console.log('status: ' + e.status + ', message: ' + e.responseText);
+          }
+          alert("정보 업데이트가 실패했습니다.");
+      }
+  };
+  sendReq(userinfo);
 
   const info = {
       url: '/api/v1/users/verify_token',

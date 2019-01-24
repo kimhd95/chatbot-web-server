@@ -464,6 +464,59 @@ function logout(loginValue) {
 
 }
 
+function updatePartLog(email, stage) {
+    let targetcol;
+    if(stage==='decide_menu'){
+      targetcol='menu_chat_log';
+    } else if(stage==='decide_drink'){
+      targetcol='drink_chat_log';
+    }
+    let chat_log = $("#messages")[0].innerHTML;
+    const latestidx=chat_log.lastIndexOf('<hr>');
+    if(chat_log.lastIndexOf('<hr>')!==-1){
+      chat_log=chat_log.slice(latestidx)+`<hr>`;
+    } else if(chat_log.length>=10){
+      chat_log=chat_log+`<hr>`
+    }
+    const info = {
+        method: "POST",
+        url: '/api/v1/users/update_part_log',
+        body: {
+            email: email,
+            chat_log: chat_log,
+            col: targetcol,
+        },
+        success: function (res) {
+            if (res.success){
+                console.log("update partlog: success!");
+            }else {
+                console.log("updatepartlog: fail!");
+                console.log(res);
+            }
+        },
+        error: function(e) {
+            console.log('ajax call error: signup page - singUpReq');
+            if (e.status === 404 && e.responseText.includes("API call URL not found."))
+                console.log("check your URL, method(GET/POST)");
+            else if ((e.status === 400 && e.responseText.includes("not provided"))
+                || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
+                console.log("check your parameters");
+            } else if(e.status === 0){
+                if(navigator.onLine){
+                    console.log('status : 0');
+                }else {
+                    console.log('internet disconnected');
+                    window.location.reload();
+                }
+            } else {
+                console.log('status: ' + e.status + ', message: ' + e.responseText);
+            }
+            alert(e.responseText);
+        }
+    };
+    sendReq(info);
+}
+
 function updateChatLog(socket_id) {
     const chat_log = $("#messages")[0].innerHTML;
     const info = {
@@ -471,7 +524,7 @@ function updateChatLog(socket_id) {
         url: '/api/v1/users/update_user',
         body: {
             kakao_id: socket_id,
-            chat_log: chat_log,
+            chat_log: chat_log+`<hr>`,
         },
         success: function (res) {
             if (res.success){
@@ -504,17 +557,26 @@ function updateChatLog(socket_id) {
     sendReq(info);
 }
 
-function getChatLog(email) {
+function getChatLog(email, stage) {
+    let targetAPI, targetcol;
+    if(stage==='decide_menu'){
+      targetAPI='/api/v1/users/get_menu_log';
+      targetcol='menu_chat_log';
+    } else if(stage==='decide_drink'){
+      targetAPI='/api/v1/users/get_drink_log';
+      targetcol='drink_chat_log';
+    }
     const info = {
         method: "POST",
-        url: '/api/v1/users/get_chat_log',
+        url: targetAPI,
         body: {
             email: email,
+            col: targetcol,
         },
         success: function (res) {
             if (res.success){
-                console.log("get chatlog: success!");
-                const init_html = `<hr><br>
+                console.log("get partlog: success!");
+                const init_html = `<br>
                   <div class="bot-message">
                     <div class="message-info">
                         <img class="image" src="/images/poodle.png" alt="외식코기" style="width: 30px; height: 30px; border-radius: 50%;">
@@ -535,7 +597,9 @@ function getChatLog(email) {
                     </div>
                 </div>`;
                 let user_html = res.message;
+                // let user_html = res.message;
                 if (user_html !== null) {
+                  user_html = user_html.replace(/class="messaging-button"/gi,`style="display: none;"`).replace(/class="messaging-button-checkbox"/gi,`style="display: none;"`).replace(/class="messaging-button-checkbox messaging-button-checkbox-checked"/gi,`style="display: none;"`).replace(/class="messaging-button complete-button"/gi, `style="display: none;"`);
                   if (res.disconn_type === 'permanent') {
                     $('#messages').html(user_html+init_html);
                     $(".bot-message").css({ opacity: 1 });
@@ -556,7 +620,7 @@ function getChatLog(email) {
                   $('#messages').scrollTop(1E10);
                 }
             }else {
-                console.log("getchatlog: fail!");
+                console.log("getpartlog: fail!");
                 console.log(res);
             }
         },
@@ -594,7 +658,21 @@ $(function () {
   // });
 
   $('body').on('click', '.messaging-button', (e) => {
+    if($(e.target).attr('id')==='get_started'){
+      sessionStorage.removeItem('stage');
+    }
+    // console.log(e);
+    // console.log($(e.target).attr('id'));
     if ($(e.target).attr('id') === 'decide_menu' || $(e.target).attr('id') === 'decide_drink') {
+      sessionStorage.setItem('stage',$(e.target).attr('id'));
+      if($(e.target).attr('id')==='decide_menu'){
+        sessionStorage.setItem('name','메뉴 고르기');
+      } else if($(e.target).attr('id')==='decide_drink'){
+        sessionStorage.setItem('name','술집 고르기');
+      }
+
+      console.log($(e.target).attr('id'));
+      // console.log(sessionStorage.getItem('stage'));
       $('#m').autocomplete('enable');
     } else {
       $('#m').autocomplete('disable');
@@ -626,6 +704,8 @@ $(function () {
       }
     } else {
       socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id'));
+      // console.log($(e.target).attr('name'));
+      // console.log($(e.target).attr('id'));
       $('.checkbox:checked').attr('checked', false);
       $('.messaging-button').hide();
       $('.messaging-button-checkbox').hide();
@@ -679,12 +759,18 @@ $(function () {
   //   return false;
   // });
 
-  socket.on('restaurant', function(msg){
-    console.log(msg);
-  })
-
   socket.on('chat register', function(socket_id){
+    console.log("Present stage: "+sessionStorage.getItem('stage'));
     let user_email = sessionStorage.getItem('email');
+    // console.log(sessionStorage.getItem('stage'));
+    let stage = sessionStorage.getItem('stage');
+    // if(sessionStorage.getItem('stage')!==null){
+    //   console.log('before remove: '+sessionStorage.getItem('stage'));
+    //   sessionStorage.removeItem('stage');
+    //   console.log('after remove: '+ sessionStorage.getItem('stage'));
+    // }
+    let name =sessionStorage.getItem('name');
+     // console.log(name);
     const info = {
         method: "POST",
         url: '/api/v1/users/update_socket',
@@ -695,8 +781,16 @@ $(function () {
         success: function (res) {
             if (res.success){
                 console.log("signUpReq: success!");
-                getChatLog(user_email);
-                alert("소켓정보 업데이트 완료.");
+                if(sessionStorage.getItem('stage')!==null){
+                  getChatLog(user_email, sessionStorage.getItem('stage'));
+                  socket.emit('chat message button rule', name, stage);
+
+                  $('.checkbox:checked').attr('checked', false);
+                  $('.messaging-button').hide();
+                  $('.messaging-button-checkbox').hide();
+
+                  // sessionStorage.removeItem('stage');
+                }
             }else {
                 console.log("signUpReq: fail!");
                 console.log(res);
@@ -730,13 +824,12 @@ $(function () {
     $('#messages').scrollTop(1E10);
   });
 
-  socket.on('restaurant', (msg) => {
-    $('#messages').append(bot_messaging(msg));
-  })
-
   socket.on('chat message_self', (msg) => {
     $('#messages').append(user_messaging(msg)).children(':last').hide()
       .fadeIn(150);
+    if(msg.includes("처음으로 돌아가기") || msg.includes("처음으로") || msg.includes("돌아가기")){
+      $('#messages').append(`<hr>`);
+    }
     // $('#messages').append($('<li>').text(answer));
     // window.scrollTo(0, document.body.scrollHeight);
   });
@@ -750,13 +843,13 @@ $(function () {
   });
 
   socket.on('chat message button', (socket_id, msg, ...args) => {
-    alert('test');
-    console.log('test');
+    console.log("Present stage: "+sessionStorage.getItem('stage'));
     $('#messages').append(bot_messaging(msg)).children(':last').hide()
       .fadeIn(150);
     for (let i = 0; i < args.length; i += 1) {
       // basic_message.append(bot_messaging_button(args[i][0],args[i][1]));
-      $('#messages').append(bot_messaging_button(args[i][0], args[i][1]));
+        $('#messages').append(bot_messaging_button(args[i][0], args[i][1]));
+
     }
     if (args.length === 0) {
       $('#m').prop('disabled', false);
@@ -767,10 +860,17 @@ $(function () {
     }
     $('#messages').scrollTop(1E10);
     updateChatLog(socket_id);
+    if(msg.includes("오늘의 선택")){
+      updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
+    }
+    // if(sessionStorage.getItem('stage')!==null){
+    //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
+    // }
     // $(".myText").val($("#messages")[0].outerHTML);
   });
 
   socket.on('chat message button checkbox', (socket_id, msg, ...args) => {
+    console.log("Present stage: "+sessionStorage.getItem('stage'));
     if (args.length === 0) {
       $('#m').prop('disabled', false);
       $('#input-button').attr('disabled', false);
@@ -791,10 +891,14 @@ $(function () {
     $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
     $('#messages').scrollTop(1E10);
     updateChatLog(socket_id);
+    // if(sessionStorage.getItem('stage')!==null){
+    //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
+    // }
     // $(".myText").val($("#messages")[0].outerHTML);
   });
 
   socket.on('chat message button dynamic checkbox', (socket_id, msg, ...args) => {
+    console.log("Present stage: "+sessionStorage.getItem('stage'));
     $('#messages').append(bot_messaging(msg)).children(':last').hide()
       .fadeIn(150);
     $('#messages').append(bot_messaging_button_checkbox(args[0][0], args[0][1]));
@@ -814,6 +918,9 @@ $(function () {
     }
     $('#messages').scrollTop(1E10);
     updateChatLog(socket_id);
+    // if(sessionStorage.getItem('stage')!==null){
+    //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
+    // }
     // $(".myText").val($("#messages")[0].outerHTML);
   });
 
@@ -825,6 +932,7 @@ $(function () {
     });
 
   socket.on('chat message button checkbox map', (socket_id, msg, ...args) => {
+    console.log("Present stage: "+sessionStorage.getItem('stage'));
       if (args.length === 0) {
         $('#m').prop('disabled', false);
         $('#input-button').attr('disabled', false);
@@ -845,9 +953,13 @@ $(function () {
       $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
       $('#messages').scrollTop(1E10);
       updateChatLog(socket_id);
+      // if(sessionStorage.getItem('stage')!==null){
+      //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
+      // }
   });
 
   socket.on('chat message image', (socket_id, msg, button1, button2, ...args) => {
+    console.log("Present stage: "+sessionStorage.getItem('stage'));
     $('#messages').append(bot_messaging_image_carousel(args[0]));
     for (let i = 0; i < args[1] - 1; i += 1) {
       $('.carousel-inner').last().append(carousel_inner(args[2][i]));
@@ -862,6 +974,7 @@ $(function () {
   });
 
   socket.on('chat message card', (socket_id, button1, button2, button3, rest1, rest2) => {
+    console.log("Present stage: "+sessionStorage.getItem('stage'));
     $('#messages').append(bot_messaging_card(rest1[0], rest1[1], rest1[2], rest1[3], rest1[4], rest1[5], rest1[6], rest1[7]));
     $('.choice_carousel').last().append(bot_messaging_card_inner(rest2[0], rest2[1], rest2[2], rest2[3], rest2[4], rest2[5], rest2[6], rest2[7]));
     $('#messages').append(bot_messaging_button(button1[0], button1[1])).append(bot_messaging_button(button2[0], button2[1])).append(bot_messaging_button(button3[0], button3[1]));
@@ -871,9 +984,13 @@ $(function () {
       $('#messages').scrollTop(1E10);
     }, 100); // execute your function after 2 seconds.
     updateChatLog(socket_id);
+    // if(sessionStorage.getItem('stage')!==null){
+    //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
+    // }
   });
 
   socket.on('chat message card no image', (socket_id, button1, button2, button3, rest1, rest2) => {
+    console.log("Present stage: "+sessionStorage.getItem('stage'));
     $('#messages').append(bot_messaging_card_no_image(rest1[0], rest1[1], rest1[2], rest1[3], rest1[4]));
     $('.choice_carousel').last().append(bot_messaging_card_inner_no_image(rest2[0], rest2[1], rest2[2], rest2[3], rest2[4]));
     $('#messages').append(bot_messaging_button(button1[0], button1[1])).append(bot_messaging_button(button2[0], button2[1])).append(bot_messaging_button(button3[0], button3[1]));
@@ -885,6 +1002,9 @@ $(function () {
       $('#messages').scrollTop(1E10);
     }, 100); // execute your function after 2 seconds.
     updateChatLog(socket_id);
+    if(sessionStorage.getItem('stage')!==null){
+      updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
+    }
   });
 
   socket.on('chat message loader', (time) => {
@@ -1046,11 +1166,18 @@ $(document).ready(() => {
 
   $('#delete-log-btn').click(() => {
     if (confirm('채팅기록을 지우시겠습니까? 모든 기록이 지워집니다.')) {
+      let targetAPI="/api/v1/users/delete_chat_log";
+      if(sessionStorage.getItem('stage')==='decide_menu'){
+        targetAPI="/api/v1/users/delete_menu_log";
+      } else if(sessionStorage.getItem('stage')==='decide_drink'){
+        targetAPI="/api/v1/users/delete_drink_log";
+      }
+      sessionStorage.removeItem('stage');
       const info = {
-        url: '/api/v1/users/delete_chat_log',
+        url: targetAPI,
         method: 'POST',
         body: {
-          email: sessionStorage.getItem('email')
+          email: sessionStorage.getItem('email'),
         },
         success: function(res) {
           if (res.success) {

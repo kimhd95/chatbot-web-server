@@ -42,6 +42,7 @@ class Toolbox {
   get_started(value, socket, user_data) {
     (async function () {
       try {
+        await info_update.profile.update_state(socket.id, '100', 'init');
         const chlist2 = ['그래 뭘 도와줄까?', '난 갈수록 다재다능해지고 있어ㅎㅎ', '세상의 모든 음식을 먹어보는게 내 목표야', '할 줄 아는 건 별로 없지만 골라봐',
           '아 배고프다', '기능 나와라(쭈우욱)', '우리나라는 정말 미식의 나라인듯! 맛있는게 너무 많아',
           '많고 많은 외식메뉴 중에 뭘 고를지 모를땐 나를 찾아줘', '앞으로 더 많은 기능을 추가할 예정이니 기다려줘~', '일단은 서울에 있는 맛집을 섭렵한 뒤에 전국으로 진출할 예정이야!(다음엔 해외로..?)', '배고파! 너도 배고프니까 날 불렀겠지?'];
@@ -64,10 +65,8 @@ class Toolbox {
   decide_menu(value, socket, user_data) {
     (async function () {
       try {
-        console.log("socket.id before " + socket.id);
         const user_info = await info_update.profile.load_user(socket.id);
-        console.log(user_info);
-        if (user_info.registered === -1){
+        if (user_info.registered == -1){
           await index.sendSocketMessage(socket.id, 'chat message button', '안녕안녕 반가워! 나는 앞으로 너의 행복한 외식라이프를 책임질 외식코기야🍜🍖');
           index.sendSocketMessage(socket.id, 'chat message button', '70% 이상의 사람들이 메뉴를 고를 때 결정장애를 겪는대...🚋 이.제.부.턴.!! 내가 동물지능(?)으로 그날그날 너의 기분과 상황에 맞는 메뉴를 결정해줄게 렛츠고😆', ['decide_menu', '렛츠고!']);
           await info_update.profile.update_state(socket.id, '1', 'decide_menu');
@@ -81,11 +80,8 @@ class Toolbox {
           const verify_limit = await info_update.profile.verify_limit(socket.id, user_data.limit_cnt, user_data.decide_updated_at);
           const { result } = verify_limit;
           if (result === 'success') {
-            console.log('loggggg');
-            socket.id = user_info.kakao_id;
-            console.log(socket.id);
             await index.sendSocketMessage(socket.id, 'chat message button', '안녕안녕 반가워! 나는 앞으로 너의 행복한 외식라이프를 책임질 외식코기야🍜🍖');
-            await index.sendSocketMessage(socket.id, 'chat message button', '70% 이상의 사람들이 메뉴를 고를 때 결정장애를 겪는대...🚋 이.제.부.턴.!! 내가 동물지능(?)으로 그날그날 너의 기분과 상황에 맞는 메뉴를 결정해줄게 렛츠고😆', ['decide_menu', '렛츠고!']);
+            index.sendSocketMessage(socket.id, 'chat message button', '70% 이상의 사람들이 메뉴를 고를 때 결정장애를 겪는대...🚋 이.제.부.턴.!! 내가 동물지능(?)으로 그날그날 너의 기분과 상황에 맞는 메뉴를 결정해줄게 렛츠고😆', ['decide_menu', '렛츠고!']);
             await info_update.profile.update_state(socket.id, '1', 'decide_menu');
           } else {
             index.sendSocketMessage(socket.id, 'chat message button', '한 끼당 메뉴를 5번만 고를 수 있어!', ['get_started', '처음으로 돌아가기']);
