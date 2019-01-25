@@ -474,9 +474,9 @@ function updatePartLog(email, stage) {
     let chat_log = $("#messages")[0].innerHTML;
     const latestidx=chat_log.lastIndexOf('<hr>');
     if(chat_log.lastIndexOf('<hr>')!==-1){
-      chat_log=chat_log.slice(latestidx)+`<hr>`;
-    } else if(chat_log.length>=10){
-      chat_log=chat_log+`<hr>`
+      chat_log=chat_log.slice(latestidx+4)+`<hr>`;
+    } else{
+      chat_log=chat_log+`<hr>`;
     }
     const info = {
         method: "POST",
