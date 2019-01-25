@@ -451,7 +451,7 @@ nav.nav {
   width:100vw;
   height:10vh;
   /* background-image: url('/images/lobby_guide.png'); */
-  background-image: url('/images/lobby_middlepoint_bg.png');
+  background-image: url('/images/lobby_choose_middlepoint.png');
 
   background-repeat: no-repeat;
   background-size: cover;
@@ -515,9 +515,9 @@ nav.nav {
   background-repeat: no-repeat;
   background-size: contain;
   /* flex:1; */
-  height:70%;
+  height:100%;
   width:100%;
-  margin: 0 0 1vh 0;
+  /* margin: 0 0 1vh 0; */
 }
 
 /* .feature-space .feature .-text{
@@ -535,7 +535,6 @@ nav.nav {
   /* align-items: flex-start; */
   /* justify-content: center; */
   /* align-self: flex-start; */
-  background-image: url('/images/lobby_soon.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;

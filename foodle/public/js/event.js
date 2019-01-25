@@ -470,6 +470,8 @@ function updatePartLog(email, stage) {
       targetcol='menu_chat_log';
     } else if(stage==='decide_drink'){
       targetcol='drink_chat_log';
+    } else if(stage==='decide_place'){
+      targetcol='middle_chat_log';
     }
     let chat_log = $("#messages")[0].innerHTML;
     const latestidx=chat_log.lastIndexOf('<hr>');
@@ -558,17 +560,20 @@ function updateChatLog(socket_id) {
 }
 
 function getChatLog(email, stage) {
-    let targetAPI, targetcol;
+    let targetcol;
     if(stage==='decide_menu'){
-      targetAPI='/api/v1/users/get_menu_log';
+      // targetAPI='/api/v1/users/get_menu_log';
       targetcol='menu_chat_log';
     } else if(stage==='decide_drink'){
-      targetAPI='/api/v1/users/get_drink_log';
+      // targetAPI='/api/v1/users/get_drink_log';
       targetcol='drink_chat_log';
+    } else if(stage==='decide_place'){
+      // targetAPI='/api/v1/users/get_middle_log';
+      targetcol='middle_chat_log';
     }
     const info = {
         method: "POST",
-        url: targetAPI,
+        url: '/api/v1/users/get_part_log',
         body: {
             email: email,
             col: targetcol,
@@ -620,7 +625,7 @@ function getChatLog(email, stage) {
                   $('#messages').scrollTop(1E10);
                 }
             }else {
-                console.log("getpartlog: fail!");
+                console.log("getchatlog: fail!");
                 console.log(res);
             }
         },
@@ -657,12 +662,22 @@ $(function () {
   //   // $("input").prop('disabled', false);
   // });
 
+  $(".back-btn").click(function(){
+    location.href='/lobby';
+    sessionStorage.removeItem('stage');
+    sessionStorage.removeItem('name');
+  })
+
   $('body').on('click', '.messaging-button', (e) => {
     if($(e.target).attr('id')==='get_started'){
       sessionStorage.removeItem('stage');
     }
     // console.log(e);
     // console.log($(e.target).attr('id'));
+    if($(e.target).attr('id') === 'decide_place'){
+      sessionStorage.setItem('stage', 'decide_place');
+      sessionStorage.setItem('name', '중간지점 찾기(서울)')
+    }
     if ($(e.target).attr('id') === 'decide_menu' || $(e.target).attr('id') === 'decide_drink') {
       sessionStorage.setItem('stage',$(e.target).attr('id'));
       if($(e.target).attr('id')==='decide_menu'){
@@ -1023,6 +1038,7 @@ $(function () {
 
 
 $(document).ready(() => {
+
   let loginValue = sessionStorage.getItem('login');
   if (loginValue === '0') {
     $('.social-signed-in')[0].style.display = 'none';
@@ -1166,18 +1182,26 @@ $(document).ready(() => {
 
   $('#delete-log-btn').click(() => {
     if (confirm('채팅기록을 지우시겠습니까? 모든 기록이 지워집니다.')) {
-      let targetAPI="/api/v1/users/delete_chat_log";
-      if(sessionStorage.getItem('stage')==='decide_menu'){
-        targetAPI="/api/v1/users/delete_menu_log";
-      } else if(sessionStorage.getItem('stage')==='decide_drink'){
-        targetAPI="/api/v1/users/delete_drink_log";
+      const currentStage=sessionStorage.getItem('stage');
+      let targetcol;
+      if(currentStage==='decide_menu'){
+        // targetAPI="/api/v1/users/delete_menu_log";
+        targetcol='menu_chat_log';
+      } else if(currentStage==='decide_drink'){
+        // targetAPI="/api/v1/users/delete_drink_log";
+        targetcol='drink_chat_log';
+      } else if(currentStage==='decide_place'){
+        // targetAPI="/api/v1/users/delete_middle_log";
+        targetcol='middle_chat_log';
       }
+      console.log(targetcol);
       sessionStorage.removeItem('stage');
       const info = {
-        url: targetAPI,
+        url: "/api/v1/users/delete_part_log",
         method: 'POST',
         body: {
           email: sessionStorage.getItem('email'),
+          col: targetcol,
         },
         success: function(res) {
           if (res.success) {
@@ -1186,7 +1210,7 @@ $(document).ready(() => {
           }
         },
         error: function (e) {
-          console.log(e.responseJSON);
+          console.log(e);
         }
       }
       sendReq(info);

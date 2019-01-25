@@ -62,23 +62,41 @@ function logout(loginValue) {
 
 $(document).ready(() => {
 
+  // const name='chat_log';
+  // const test={
+  //   chat_log: 'hey',
+  // }
+  // console.log(test[name]);
+
   let loginValue = sessionStorage.getItem('login');
   let emailValue = sessionStorage.getItem('email');
 
-  $('#choose-rest').click(async function(){
+  $('#choose-rest').click(function(){
     sessionStorage.setItem('stage', 'decide_menu');
     sessionStorage.setItem('name', '메뉴 고르기');
     console.log('restaurant choose');
     location.href='/chat';
-    // await revision(emailValue, menumsg, 'menu');
   })
 
-  $('#choose-drink').click(async function(){
+  $('#choose-drink').click(function(){
     sessionStorage.setItem('stage','decide_drink');
     sessionStorage.setItem('name', '술집 고르기');
     console.log('drink choose');
     location.href='/chat';
-    // await revision(emailValue, drinkmsg, 'drink');
+  })
+
+  $('#choose-middle').click(function(){
+    sessionStorage.setItem('stage','decide_place');
+    sessionStorage.setItem('name', '중간지점 찾기(서울)');
+    console.log('middle choose');
+    location.href='/chat';
+  })
+
+  $('#choose-cafe').click(function(){
+    sessionStorage.setItem('stage','decide_cafe');
+    sessionStorage.setItem('name', '카페 고르기');
+    console.log('cafe choose');
+    location.href='/chat';
   })
 
   $('.nav').slideAndSwipe();
