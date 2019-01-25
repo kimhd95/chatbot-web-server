@@ -26,7 +26,6 @@ router.get('/data-terms', authService.getTermsPage);
 router.get('/chat', authService.getChatRoomPage);
 router.get('/chat_unsigned', authService.getUnsignedChatRoomPage);
 router.get('/lobby', authService.getLobbyPage);
-router.get('/lobby_unsigned', authService.getUnsignedLobbyPage);
 
 // router.get('/area', authService.getAreaPage);
 

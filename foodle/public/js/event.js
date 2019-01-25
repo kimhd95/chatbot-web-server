@@ -559,7 +559,7 @@ function updateChatLog(socket_id) {
     sendReq(info);
 }
 
-function getChatLog(email, stage) {
+function getPartLog(email, stage) {
     let targetcol;
     if(stage==='decide_menu'){
       // targetAPI='/api/v1/users/get_menu_log';
@@ -625,7 +625,7 @@ function getChatLog(email, stage) {
                   $('#messages').scrollTop(1E10);
                 }
             }else {
-                console.log("getchatlog: fail!");
+                console.log("getpartlog: fail!");
                 console.log(res);
             }
         },
@@ -651,6 +651,8 @@ function getChatLog(email, stage) {
     };
     sendReq(info);
 }
+
+let loginValue = sessionStorage.getItem('login');
 
 $(function () {
 
@@ -796,8 +798,10 @@ $(function () {
         success: function (res) {
             if (res.success){
                 console.log("signUpReq: success!");
-                if(sessionStorage.getItem('stage')!==null){
-                  getChatLog(user_email, sessionStorage.getItem('stage'));
+                if(stage!==null){
+                  if(loginValue!=='-1'){
+                    getPartLog(user_email, sessionStorage.getItem('stage'));
+                  }
                   socket.emit('chat message button rule', name, stage);
 
                   $('.checkbox:checked').attr('checked', false);
@@ -874,9 +878,12 @@ $(function () {
       $('#input-button').attr('disabled', true);
     }
     $('#messages').scrollTop(1E10);
+
     updateChatLog(socket_id);
-    if(msg.includes("오늘의 선택")){
-      updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
+    if(loginValue!=='-1'){
+      if(msg.includes("오늘의 선택")){
+        updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
+      }
     }
     // if(sessionStorage.getItem('stage')!==null){
     //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
@@ -1017,9 +1024,9 @@ $(function () {
       $('#messages').scrollTop(1E10);
     }, 100); // execute your function after 2 seconds.
     updateChatLog(socket_id);
-    if(sessionStorage.getItem('stage')!==null){
-      updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
-    }
+    // if(sessionStorage.getItem('stage')!==null){
+    //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
+    // }
   });
 
   socket.on('chat message loader', (time) => {
@@ -1039,7 +1046,7 @@ $(function () {
 
 $(document).ready(() => {
 
-  let loginValue = sessionStorage.getItem('login');
+  // let loginValue = sessionStorage.getItem('login');
   if (loginValue === '0') {
     $('.social-signed-in')[0].style.display = 'none';
     $('.email-signed-in')[0].style.display = 'block';

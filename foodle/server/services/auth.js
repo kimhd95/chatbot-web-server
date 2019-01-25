@@ -60,12 +60,12 @@ function getLobbyPage (req, res) {
 	})
 }
 
-function getUnsignedLobbyPage (req, res) {
-	console.log('비회원 로비로 이동');
-	res.render('pages/lobby_unsigned.ejs', {
-		url: config.api_url
-	})
-}
+// function getUnsignedLobbyPage (req, res) {
+// 	console.log('비회원 로비로 이동');
+// 	res.render('pages/lobby_unsigned.ejs', {
+// 		url: config.api_url
+// 	})
+// }
 
 module.exports = {
 	getMainPage: getMainPage,
@@ -77,5 +77,5 @@ module.exports = {
 	getChatRoomPage: getChatRoomPage,
 	getUnsignedChatRoomPage: getUnsignedChatRoomPage,
 	getLobbyPage: getLobbyPage,
-	getUnsignedLobbyPage: getUnsignedLobbyPage
+	// getUnsignedLobbyPage: getUnsignedLobbyPage
 }

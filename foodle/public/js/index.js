@@ -1,4 +1,5 @@
 let email;
+let name;
 let password; // 영문, 숫자, 특문 중 2개 선택 / 대소문자 안가림 / 8자리 이상.
 let emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 let pwNum;
@@ -83,6 +84,53 @@ function loginValidationCheck() {
     login();
 }
 // 이메일 로그인
+function loginOnetime () {
+    const info = {
+        url: "/api/v1/users/login_onetime",
+        method: "POST",
+        body: {
+            email: email,
+        },
+        success: function (res) {
+            console.log('onetimelogin Req success');
+            sessionStorage.setItem('login', -1);
+            sessionStorage.setItem('email', email);
+            // sessionStorage.setItem('login', '0');
+            // sessionStorage.setItem('email', email);
+            alert('환영합니다.');
+            window.location.replace(res.redirect);
+        },
+        error: function (e) {
+            // spinner.stop();
+            console.log('ajax call error: login page - loginReq');
+            if (e.status === 403 &&
+                (e.responseText.includes("No doctor account found with given email address.") ||
+                    e.responseText.includes("Password wrong"))) {
+                alert("아이디/비밀번호를 확인해주세요.");
+            } else if (e.status === 404 && e.responseText.includes("API call URL not found.")) {
+                console.log("check your URL, method(GET/POST)");
+                alert("로그인에 실패했습니다.");
+            } else if (e.status === 400 && e.responseText.includes("not given")) {
+                console.log("check your parameters");
+                alert("로그인에 실패했습니다.");
+            } else if(e.status === 0){
+                if(navigator.onLine){
+                    console.log('status : 0');
+                }else {
+                    console.log('internet disconnected');
+                    window.location.reload();
+                }
+            }  else {
+                console.log(e.responseText);
+                console.log(e);
+                alert("로그인에 실패했습니다.");
+            }
+        }
+    };
+    sendTokenReq(info);
+}
+
+
 function login () {
     const info = {
         url: "/api/v1/users/login",
@@ -289,5 +337,55 @@ $(document).ready(() => {
     // 임시 비번 발급 클릭
     $('#reissue-pw').click(() => {
         reIssueValidationCheck();
+    })
+
+    $('#unsigned').click(()=>{
+      console.log('unsigned access detected');
+      email=String(Date.now())+'@jellylab.io';
+      name='비회원';
+      password=String(Date.now());
+      const info = {
+          method: "POST",
+          url: '/api/v1/users/register_onetime_user',
+          body: {
+            email: email,
+            name: name,
+            password: password,
+          },
+          success: function (res) {
+              if (res.success){
+                  console.log("signUpReq: success!");
+                  loginOnetime();
+                  // location.href = '/lobby';
+                  // getChatLog(user_email);
+                  // alert("비로그인 접속 완료!");
+              }else {
+                  console.log("signUpReq: fail!");
+                  console.log(res);
+              }
+          },
+          error: function(e) {
+              // alert(JSON.stringify(e));
+              console.log('ajax call error: signup page - singUpReq');
+              if (e.status === 404 && e.responseText.includes("API call URL not found."))
+                  console.log("check your URL, method(GET/POST)");
+              else if ((e.status === 400 && e.responseText.includes("not provided"))
+                  || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
+                  console.log("check your parameters");
+              } else if(e.status === 0){
+                  if(navigator.onLine){
+                      console.log('status : 0');
+                  }else {
+                      console.log('internet disconnected');
+                      window.location.reload();
+                  }
+              } else {
+                  console.log('status: ' + e.status + ', message: ' + e.responseText);
+              }
+              alert("정보 업데이트가 실패했습니다.");
+          }
+      };
+      sendReq(info);
+      // sendTokenReq(info);
     })
 })
