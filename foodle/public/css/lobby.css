@@ -451,7 +451,7 @@ nav.nav {
   width:100vw;
   height:10vh;
   /* background-image: url('/images/lobby_guide.png'); */
-  background-image: url('/images/lobby_middlepoint_bg.png');
+  background-image: url('/images/lobby_choose_middlepoint.png');
 
   background-repeat: no-repeat;
   background-size: cover;
@@ -515,9 +515,9 @@ nav.nav {
   background-repeat: no-repeat;
   background-size: contain;
   /* flex:1; */
-  height:70%;
+  height:100%;
   width:100%;
-  margin: 0 0 1vh 0;
+  /* margin: 0 0 1vh 0; */
 }
 
 /* .feature-space .feature .-text{
@@ -535,7 +535,6 @@ nav.nav {
   /* align-items: flex-start; */
   /* justify-content: center; */
   /* align-self: flex-start; */
-  background-image: url('/images/lobby_soon.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -612,14 +611,17 @@ a .onetoone-btn{
   /* padding: 3%; */
 }
 .text-img{
+  position: absolute;
+  top: 13vh;
+  right: 5vw;
   background-repeat:no-repeat;
   background-position: right;
   background-size: contain;
   /* justify-content: center; */
   /* align-items: center; */
   width: 65vw;
-  height: 8vh;
-  margin: 4vh 5vw 0 0;
+  height: 10vh;
+  margin: 0 0 0 0;
   /* padding: 5vh 3vw 0 0; */
 
   /* z-index: 2; */
@@ -742,6 +744,8 @@ a .onetoone-btn{
   /* text-align: center; */
   width: 100%;
   height: 100%;
+  justify-content: flex-end;
+  align-items: center;
   /* left: 0px; */
   /* top: 0px; */
   /* order: 2; */
@@ -751,12 +755,12 @@ a .onetoone-btn{
   /* background-origin:  */
 }
 .character-img{
-  position: relative;
+  position: absolute;
   display:flex;
   align-items: flex-start;
   justify-content: flex-end;
-  width:100%;
-  height:100%;
+  width:100vw;
+  height: 55vh;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: bottom;

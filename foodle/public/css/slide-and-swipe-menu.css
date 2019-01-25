@@ -299,8 +299,10 @@ nav .bg .account-space .account{
 }
 
 nav .bg .company-space{
+  position: absolute;
+  bottom: 0;
   display: flex;
-  /* width: 100%; */
+  width: 100%;
   height: 10%;
   background-color: #fff;
   align-items: flex-end;

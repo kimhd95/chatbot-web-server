@@ -142,6 +142,8 @@ module.exports = function(){
 		socket.on('chat message button rule', function(msg, val){
 			io.to(socket.id).emit('chat message_self', msg);
 			// io.to(socket.id).emit('chat message button', buttonRule(val, user_id));
+			// console.log('val: '+val);
+			// console.log('socket: '+socket);
 			scenario_rule.scenario_rule(val, socket);
 			// io.emit('chat message', msg);
 			// console.log('message: ' + msg);

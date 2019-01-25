@@ -224,6 +224,7 @@ Food.verify_subway = function (kakaoid, value) {
     };
 
     const func = function (error, response, body) {
+      console.log(body);
       error === null
         ? resolve(body.result)
         : reject(error);
