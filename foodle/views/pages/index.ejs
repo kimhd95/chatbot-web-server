@@ -27,12 +27,7 @@
             <button class="login-btn" id="login-btn">로그인</button>
             <div class="help">
                 <span id="find-info" data-toggle="modal" data-target="#find-pw">ID/비밀번호 찾기</span>
-                <div class="signup">
-                        <a href="/signup">
-                            <!-- <img class="signup-deco" src="/images/signup-deco.png" alt="signup"> -->
-                            <span class="signup-btn">회원가입하기</span>
-                        </a>
-                </div>
+                <span type="button" class="onetime" data-toggle="modal" data-target="#exampleModal">로그인없이 이용하기</span>
             </div>
             <div class="social-login">
                 <div class="naver-login" id="naverIdLogin"></div>
@@ -60,6 +55,13 @@
                     </div>
                 </div>
             </div>
+
+              <div class="signup">
+                    <a href="/signup">
+                        <img class="signup-deco" src="/images/signup-deco.png" alt="signup">
+                        <span class="signup-btn">20초만에 회원가입하기</span>
+                    </a>
+              </div>
             <!-- <img src="/images/poodle.png" alt="" style="width: 90%;">
 
             <div id="naverIdLogin" style="margin-bottom:10px;"></div>
@@ -74,9 +76,6 @@
             </p> -->
 
             <!-- Button trigger modal -->
-            <button type="button" class="onetime" data-toggle="modal" data-target="#exampleModal">
-              로그인없이 이용하기
-            </button>
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
