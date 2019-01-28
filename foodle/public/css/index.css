@@ -17,10 +17,10 @@
   color: #fff;
   background-color: #007bff;
   border-color: #007bff;
-  margin: 3vh 0 0 0;
-  border-radius: 1.5vw;
-  width:45vw;
-  height:6vh;
+  /* margin: 3vh 0 0 0; */
+  /* border-radius: 1.5vw; */
+  /* width:45vw; */
+  /* height:6vh; */
 }
 .email, .password {
     padding-left: 0;
@@ -61,17 +61,19 @@
     height: 70px;
 }
 .signup {
-    width: 40vw;
-    /* margin-top: 15%; */
+  width: 100%;
+  margin-top: 10%;
+    /* width: 40vw; */
 }
 .signup-deco {
-    width: 50%;
+    /* position: relative; */
+    /* width: 50vw; */
 }
 .signup-btn {
-    /* position: absolute; */
-    /* right: 25%; */
-    /* left: 25%; */
-    /* margin-top: 2%; */
+    position: absolute;
+    right: 25%;
+    left: 25%;
+    margin-top: 2%;
     color: #61451b;
 }
 /* 비밀번호 찾기 */
