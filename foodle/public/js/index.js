@@ -273,7 +273,7 @@ $(document).ready(() => {
         sendTokenReq(info);
     } else {
         alert('이미 로그인되어 있습니다.');
-        location.href='/chat';
+        location.href='/lobby';
     }
 
     window.addEventListener('load', () => {
