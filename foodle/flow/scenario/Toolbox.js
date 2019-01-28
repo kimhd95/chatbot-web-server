@@ -10,12 +10,14 @@ const info_update = new Info();
 
 class Toolbox {
   constructor(value, socket, user_data) {
+    console.log("toolbox에 들어옴");
     const key = value;
 
     this.strategies = {
       'get_started': this.get_started,
       'decide_menu': this.decide_menu,
       'decide_drink': this.decide_drink,
+      'decide_cafe': this.decide_cafe,
       'decide_place': this.decide_place,
       'decide_history': this.decide_history,
       'user_feedback': this.user_feedback,
@@ -127,6 +129,47 @@ class Toolbox {
             index.sendSocketMessage(socket.id, 'chat message button', drink_chlist[rand]);
           } else {
             index.sendSocketMessage(socket.id, 'chat message button', '30분에 술집을 5번만 고를 수 있어!', ['get_started', '처음으로 돌아가기']);
+          }
+        }
+      } catch (e) {
+        index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
+        console.log(e);
+      }
+    }());
+  }
+
+  decide_cafe(value, socket, user_data) {
+    (async function () {
+      try {
+        console.log(user_data);
+        if ((user_data.registered == -1) || (user_data.cafe_before === false)){
+          const verify_limit = await info_update.profile.verify_limit_drink(socket.id, user_data.limit_cnt_drink, user_data.decide_updated_at_drink);
+          const { result } = verify_limit;
+          if (result === 'success') {
+            await index.sendSocketMessage(socket.id, 'chat message button', '안녕 나는 당 떨어지면 으르렁 으르렁대는 외식코기야' );
+            await info_update.profile.update_state(socket.id, '7', 'init');
+            index.sendSocketMessage(socket.id, 'chat message button', '커피, 빙수, 마카롱 ,케이크... 걱정마 내가 동물지능으로 너의 취향저격 카페를 골라줄게 렛츠고', ['decide_cafe', '렛츠고!']);
+          } else {
+            index.sendSocketMessage(socket.id, 'chat message button', '한 끼당 카페를 5번만 고를 수 있어!', ['get_started', '처음으로 돌아가기']);
+          }
+        }
+        else {
+          // const db_subway = await user_info.subway;
+          // if (db_subway === null) {
+          //   await info_update.food.update_user_start(socket.id);
+          // }
+          console.log(user_data.limit_cnt);
+          const verify_limit = await info_update.profile.verify_limit_drink(socket.id, user_data.limit_cnt_drink, user_data.decide_updated_at_drink);
+          const { result } = verify_limit;
+          if (result === 'success') {
+            await info_update.profile.update_drink_start(socket.id);
+            const cafe_chlist = ['안녕!! 커피나 달달구리가 땡길땐 언제나 코기를 찾아줘 오늘은 어느 역 근처의 카페를 정해볼까?'];
+            const leng = cafe_chlist.length;
+            const rand = Math.floor(leng * Math.random());
+            await info_update.profile.update_state(socket.id, '7', 'decide_cafe');
+            index.sendSocketMessage(socket.id, 'chat message button', cafe_chlist[rand]);
+          } else {
+            index.sendSocketMessage(socket.id, 'chat message button', '30분에 카페을 5번만 고를 수 있어!', ['get_started', '처음으로 돌아가기']);
           }
         }
       } catch (e) {
