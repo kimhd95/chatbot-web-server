@@ -235,7 +235,7 @@ $(document).ready(() => {
               console.log(res);
               console.log('verifyToken success');
               $('#question-name').val(res.name);
-              if(sessionStorage.getItem('login')===0){
+              if(sessionStorage.getItem('login')==='0'){
                 $('#profile-name').addClass('.a');
                 $('#profile-name').append(res.name + " 님");
                 $('#profile-email').addClass('.a');
