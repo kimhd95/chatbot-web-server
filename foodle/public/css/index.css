@@ -14,9 +14,9 @@
     margin-bottom: 80px;
 }
 .onetime{
-  color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  /* color: #fff; */
+  /* background-color: #007bff; */
+  /* border-color: #007bff; */
   /* margin: 3vh 0 0 0; */
   /* border-radius: 1.5vw; */
   /* width:45vw; */
@@ -67,13 +67,14 @@
 }
 .signup-deco {
     /* position: relative; */
-    /* width: 50vw; */
+    width: 50vw;
 }
 .signup-btn {
     position: absolute;
     right: 25%;
     left: 25%;
-    margin-top: 2%;
+    margin-top: 3%;
+    font-size: 5vw;
     color: #61451b;
 }
 /* 비밀번호 찾기 */

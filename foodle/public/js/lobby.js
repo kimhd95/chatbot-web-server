@@ -138,6 +138,21 @@ $(document).ready(() => {
     onetimeLogout('signup');
   })
 
+  $('#content-1, #story-bar').click(function(){
+    // $('.story').toggleClass('close');
+    // if(!$('#story-container').hasClass('close')){
+    //   console.log('open');
+    //   var i;
+    //   for(i=1;i<23;i++){
+    //     $('#story-view').append(`<div class="picture" style="background-image: url('/contents/food_content_${i}.jpg');"></div>`);
+    //   }
+    //
+    // } else{
+    //   console.log('close');
+    // }
+    location.href='/contents';
+  });
+
   // const name='chat_log';
   // const test={
   //   chat_log: 'hey',

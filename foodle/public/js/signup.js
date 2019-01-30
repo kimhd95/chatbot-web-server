@@ -1,7 +1,7 @@
 let platform;
 let name, email, password, passwordCheck, gender, birthYear, phone;
 const emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-const phoneRegExp = /^\d{10,11}$/; 
+const phoneRegExp = /^\d{10,11}$/;
 let pwNum, pwEng, pwSpe;
 
 function autoAgree() {
@@ -28,7 +28,7 @@ function passwordValidationCheck () {
     pwNum = $('#password').val().search(/[0-9]/g);
     pwEng = $('#password').val().search(/[a-z]/ig);
     pwSpe = $('#password').val().search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-    
+
     if ($('#password').val() !== '' && $('#password').val().length >= 8 && !((pwNum < 0 && pwEng < 0) || (pwEng < 0 && pwSpe < 0) || (pwSpe < 0 && pwNum < 0))) {
         $('.password-complete')[0].childNodes[1].style.display = 'block';
     } else {
@@ -153,7 +153,7 @@ function signUpReq(name, gender, email, password, birthYear, phone) {
                 alert("회원가입이 성공적으로 완료되었습니다.");
                 sessionStorage.setItem('login', 0);
                 sessionStorage.setItem('email', email);
-                location.href = '/chat';
+                location.href = '/';
             }else {
                 spinner.stop();
                 console.log("signUpReq: fail!");
@@ -236,7 +236,7 @@ $(document).ready(() => {
         sendTokenReq(info);
     } else {
         alert('이미 로그인되어 있습니다.');
-        location.href="/chat";
+        location.href="/lobby";
     }
     // 출생년도 초기화
     for(let i = 2005; i >= 1950; i--) {
