@@ -39,6 +39,19 @@ span {
   /* display: inherit; */
 }
 
+.back-button{
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4vh;
+  height: 4vh;
+  background-image: url('/images/exit.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin:1vh 5vw 1vh 0;
+}
+
 .view-container{
   height: 94vh;
   width: 100vw;
