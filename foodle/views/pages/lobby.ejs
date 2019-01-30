@@ -135,13 +135,14 @@
 							</div>
 		  			</div>
 
-            <div class="story close">
-              <div class="avail-screen">
-                <div id="story-bar" class="avail-bar">와우</div>
+            <div id="story-container" class="story close">
+              <div id="story-screen" class="avail-screen" style="background-color: #000; overflow: scroll;">
+                <div id="story-bar" class="story-bar"></div>
+                <div id="story-view" class="view-container"></div>
                 </div>
             </div>
 
-            <div class="contents close">
+            <!-- <div class="contents close">
               <div class="avail-screen">
                 <div id="contents-bar" class="avail-bar">외식코기 컨텐츠</div>
                 <div id="contents-list" class="contentlist">
@@ -153,13 +154,8 @@
                     </div>
                   </div>
                 </div>
-                <!-- <div class="handglass"></div>
-                <div class="areatext"></div>
-                <div class="city">서울</div>
-                <div class="borderline"></div>
-                <div class="stationlist" id="list"></div> -->
               </div>
-            </div>
+            </div> -->
 
             <div class="avail-slide close">
               <div class="avail-screen">
@@ -218,10 +214,6 @@
             }
           });
 
-          $('#content-1, #story-bar').click(function(){
-            $('.story').toggleClass('close');
-          });
-
           $('.service-btn, #service-bar').click(function(){
               $('.avail-slide').toggleClass('close');
             });
@@ -230,9 +222,9 @@
               $('.onetoone').toggleClass('close');
             });
 
-          $('.contents-btn, #contents-bar').click(function(){
-              $('.contents').toggleClass('close');
-            });
+          $('#contents-btn').click(function(){
+            location.href='/contents';
+          });
 
           $("#toggle").change(function(){
             if($('#toggle').is(':checked')){
@@ -318,6 +310,8 @@
         <!-- <script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script> -->
         <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script> -->
         <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script> -->
+
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script> -->
 
         <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
         <script src="/socket.io/socket.io.js"></script>
