@@ -135,12 +135,12 @@
 							</div>
 		  			</div>
 
-            <div id="story-container" class="story close">
+            <!-- <div id="story-container" class="story close">
               <div id="story-screen" class="avail-screen" style="background-color: #000; overflow: scroll;">
                 <div id="story-bar" class="story-bar"></div>
                 <div id="story-view" class="view-container"></div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- <div class="contents close">
               <div class="avail-screen">
@@ -159,6 +159,7 @@
 
             <div class="avail-slide close">
               <div class="avail-screen">
+                <div id="back-to-lobby-service" class="back-button"></div>
                 <div id="service-bar" class="avail-bar">서비스 지역</div>
                 <div class="handglass"></div>
                 <div class="areatext"></div>
@@ -170,6 +171,7 @@
 
             <div class="onetoone close">
               <div class="avail-screen">
+                <div id="back-to-lobby-question" class="back-button"></div>
                 <div id="onetoone-bar" class="avail-bar">1:1 문의</div>
                 <!-- <form class="question-form"> -->
                   <input id="question-name" type="text" class="question-account" style="margin: 7vh 0 0 0;" disabled></input>
@@ -214,11 +216,11 @@
             }
           });
 
-          $('.service-btn, #service-bar').click(function(){
+          $('.service-btn, #back-to-lobby-service').click(function(){
               $('.avail-slide').toggleClass('close');
             });
 
-          $('.onetoone-btn, #onetoone-bar').click(function(){
+          $('.onetoone-btn, #back-to-lobby-question').click(function(){
               $('.onetoone').toggleClass('close');
             });
 
