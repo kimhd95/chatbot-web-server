@@ -14,6 +14,9 @@ const scenario_flow = require('./scenario');
 exports.scenario_rule = function (val, socket, msg) {
   (async function () {
     try {
+      console.log(val);
+      // console.log(socket);
+      console.log(msg);
       console.log(`scenario_rule에서 val : ${val}`)
       const user_data = await info_update.profile.load_user(socket.id);
       // console.log(user_data);
@@ -30,7 +33,10 @@ exports.scenario_rule = function (val, socket, msg) {
         switch (user_data.scenario) {
           case '1': {
             (function () {
+              console.log('val in scenario rule: '+val);
+              // console.log(user_data);
               return new scenario_flow.Decide_menu(val, socket, user_data);
+
             }());
             break;
           }
