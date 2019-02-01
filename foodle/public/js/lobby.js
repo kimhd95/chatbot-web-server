@@ -15,6 +15,8 @@ function onetimeLogout(param) {
                 window.location.replace(window.location.origin);
               } else if(param==='signup'){
                 window.location.replace('/signup');
+              } else{
+                window.location.replace('/');
               }
 
           } else {
@@ -112,12 +114,72 @@ $(document).ready(() => {
   let loginValue = sessionStorage.getItem('login');
   let emailValue = sessionStorage.getItem('email');
 
-  console.log(loginValue);
-  console.log(emailValue);
+  if(loginValue===null && emailValue.split('@')[1]==='jellylab.io'){
+    onetimeLogout();
+  }
 
-  // if(loginValue===null){
-  //   logout(loginValue);
-  // }
+  const info = {
+      url: '/api/v1/users/verify_token',
+      method: 'POST',
+      data: null,
+      async: true,
+      crossDomain: true,
+      redirect: 'follow',
+      xhrFields: {
+          withCredentials: true
+      },
+      success: function (res) {
+          if (res.success) {
+              console.log(res);
+              console.log('verifyToken success');
+              $('#question-name').val(res.name);
+              if(sessionStorage.getItem('login')==='0'){
+                $('#profile-name').addClass('.a');
+                $('#profile-name').append(res.name + " 님");
+                $('#profile-email').addClass('.a');
+                $('#profile-email').append(res.email);
+
+                // $('#question-name').append(res.name);
+                $('#question-email').val(res.email);
+              }
+
+
+              // $('#question-content').attr("placeholder", "Type here to search");
+              // $('#question-email').append(res.email);
+            } else {
+              console.log('verifyToken fail');
+              console.log(res);
+          }
+      },
+      error: function (e) {
+          console.log('ajax call error: login page - verifyToken');
+          if (e.status === 404 && e.responseText.includes("API call URL not found.")) {
+              console.log("check your URL, method(GET/POST)");
+          }else if(e.status === 403){
+              if (e.responseText.includes("No token provided.")) {
+                  console.log("No token, no problem.");
+                  alert('로그인해주세요.');
+                  location.href = '/login';
+              }
+              else if (e.responseText.includes("jwt malformed"))
+                  console.log("Malformed token");
+              else if (e.responseText.includes("invalid signature"))
+                  console.log("Modified token");
+              else console.log(e);
+          } else if(e.status === 0){
+              if(navigator.onLine){
+                  console.log('status : 0');
+              }else {
+                  console.log('internet disconnected');
+                  window.location.reload();
+              }
+          } else{
+              console.log('status: ' + e.status + ', message: ' + e.responseText);
+              console.log(e);
+          }
+      }
+    }
+    sendTokenReq(info);
 
   if(loginValue==='-1'){
     $('#profile').remove();
@@ -138,26 +200,9 @@ $(document).ready(() => {
     onetimeLogout('signup');
   })
 
-  $('#content-1, #story-bar').click(function(){
-    // $('.story').toggleClass('close');
-    // if(!$('#story-container').hasClass('close')){
-    //   console.log('open');
-    //   var i;
-    //   for(i=1;i<23;i++){
-    //     $('#story-view').append(`<div class="picture" style="background-image: url('/contents/food_content_${i}.jpg');"></div>`);
-    //   }
-    //
-    // } else{
-    //   console.log('close');
-    // }
-    location.href='/contents';
-  });
-
-  // const name='chat_log';
-  // const test={
-  //   chat_log: 'hey',
-  // }
-  // console.log(test[name]);
+  // $('#content-1, #story-bar').click(function(){
+  //   location.href='/contents';
+  // });
 
 
 
@@ -238,68 +283,5 @@ $(document).ready(() => {
       }
   };
   sendReq(userinfo);
-
-  const info = {
-      url: '/api/v1/users/verify_token',
-      method: 'POST',
-      data: null,
-      async: true,
-      crossDomain: true,
-      redirect: 'follow',
-      xhrFields: {
-          withCredentials: true
-      },
-      success: function (res) {
-          if (res.success) {
-              console.log(res);
-              console.log('verifyToken success');
-              $('#question-name').val(res.name);
-              if(sessionStorage.getItem('login')==='0'){
-                $('#profile-name').addClass('.a');
-                $('#profile-name').append(res.name + " 님");
-                $('#profile-email').addClass('.a');
-                $('#profile-email').append(res.email);
-
-                // $('#question-name').append(res.name);
-                $('#question-email').val(res.email);
-              }
-
-
-              // $('#question-content').attr("placeholder", "Type here to search");
-              // $('#question-email').append(res.email);
-            } else {
-              console.log('verifyToken fail');
-              console.log(res);
-          }
-      },
-      error: function (e) {
-          console.log('ajax call error: login page - verifyToken');
-          if (e.status === 404 && e.responseText.includes("API call URL not found.")) {
-              console.log("check your URL, method(GET/POST)");
-          }else if(e.status === 403){
-              if (e.responseText.includes("No token provided.")) {
-                  console.log("No token, no problem.");
-                  alert('로그인해주세요.');
-                  location.href = '/login';
-              }
-              else if (e.responseText.includes("jwt malformed"))
-                  console.log("Malformed token");
-              else if (e.responseText.includes("invalid signature"))
-                  console.log("Modified token");
-              else console.log(e);
-          } else if(e.status === 0){
-              if(navigator.onLine){
-                  console.log('status : 0');
-              }else {
-                  console.log('internet disconnected');
-                  window.location.reload();
-              }
-          } else{
-              console.log('status: ' + e.status + ', message: ' + e.responseText);
-              console.log(e);
-          }
-      }
-    }
-    sendTokenReq(info);
 
 });
