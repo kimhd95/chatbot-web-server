@@ -99,6 +99,7 @@ module.exports = function(){
 
 		socket.on('chat message', function(msg){
 			io.to(socket.id).emit('chat message_self', msg);
+			console.log('message: '+msg+', socket: '+socket);
 			scenario_rule.scenario_rule(msg, socket);
 			// let info = {
 			//     method: 'POST',

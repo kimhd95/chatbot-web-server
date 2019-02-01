@@ -11,6 +11,8 @@ const info_update = new Info();
 
 class Decide_menu {
   constructor(value, socket, user_data) {
+    console.log('value: '+value);
+    console.log('user_data의 state: '+user_data.state);
     let key;
     key = value;
     if (key === 'decide_menu') {
@@ -270,6 +272,7 @@ class Decide_menu {
       try {
         if (value.includes('exit')) {
           const user_quarter = value.split('/')[1];
+          // console.log(user_quarter);
           await info_update.profile.update_exit_quarter(socket.id, user_quarter);
         }
         const mood_list = ['메뉴 컨셉은 끼니해결? 아니면 약속 자리?',
@@ -406,7 +409,7 @@ class Decide_menu {
             {
               'question': '한식 vs 이국적음식?', 'button1_id': 'food_type/한식', 'button1_value': '한식', 'button2_id': 'food_type/이국적', 'button2_value': '이국적음식',
             },
-            // TODO
+            // TODO //
             {
               "question":"오늘 기분은 어때?","button1_id":"food_type/좋아","button1_value":"좋아","button2_id":"food_type/구려","button2_value":"구려","button3_id":"food_type/그냥그래","button3_value":"그냥 그래"
             },
@@ -433,7 +436,7 @@ class Decide_menu {
         const type_data = food_type.qnas;
         const type_leng = type_data.length;
         const type_rand = Math.floor(type_leng * Math.random());
-        index.sendSocketMessage(socket.id, 'chat message button', type_data[type_rand].question, [type_data[type_rand].button1_id, type_data[type_rand].button1_value], [type_data[type_rand].button2_id, type_data[type_rand].button2_value], ['food_type/all', '상관없음']);
+        index.sendSocketMessage(socket.id, 'chat message button', type_data[type_rand].question, [String(type_rand)+type_data[type_rand].button1_id, type_data[type_rand].button1_value], [String(type_rand)+type_data[type_rand].button2_id, type_data[type_rand].button2_value], ['food_type/all', '상관없음']);
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
         console.log(e);
@@ -444,7 +447,22 @@ class Decide_menu {
   before_decide(value, socket, user_data) {
     (async function () {
       try {
-        const user_food_type = value.split('/')[1];
+        console.log('내가 찍은 역명: '+user_data.subway);
+        console.log('내가 찍은 출구: '+user_data.exit_quarter);
+        console.log('내가 찍은 분위기: '+user_data.with_mood);
+        console.log('내가 찍은 분위기2: '+user_data.mood2);
+        console.log('내가 찍은 맛: '+user_data.taste);
+        console.log('받은 값:'+value);
+        let user_food_type=value.split('/')[1];
+
+        // 어떤 질문이든지 관계없이 상관없음을 눌렀으면 그냥 pass,
+        // 아니라면 질문에 따라 user_food_type 값을 바꿔줘야 함.
+        if(user_food_type!=='all'){
+          // 질문 id 맨 앞에 question index를 붙여서 전달했음, 앞에 3개 질문이 아닌 경우는 선택에 영향을 주면 안 되므로 all로 처리함.
+          if(Number(value.charAt(0))>=3){
+            user_food_type='all';
+          }
+        }
         await info_update.profile.update_food_type(socket.id, user_food_type);
         const foods = await info_update.food.get_restaurant(socket.id, user_data.subway, user_data.exit_quarter, user_data.with_mood, user_data.mood2, user_data.taste, user_food_type, 'x');
         const foods_info = foods.message;
