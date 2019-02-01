@@ -142,7 +142,7 @@ class Decide_drink {
                 break;
             }
             case '선릉역': {
-              await index.sendSocketMessage(socket.id, 'chat message button checkbox map', chlist[rand], `${subway}`, 'images/선릉역.png', ['999', '상관없어'], ['4', '1,2번'], ['3', '3,4번'], ['2', '5,6,7번'], ['1', '8.9.10번'], ['exit/', '선택완료']);
+              await index.sendSocketMessage(socket.id, 'chat message button checkbox map', chlist[rand], `${subway}`, 'images/선릉역.png', ['999', '상관없어'], ['4', '1,2번'], ['3', '3,4번'], ['2', '5,6,7번'], ['1', '8,9,10번'], ['exit/', '선택완료']);
               break;
             }
             // case '선정릉역': {
@@ -190,8 +190,9 @@ class Decide_drink {
             //   break;
             // }
             default:
-              index.sendSocketMessage(socket.id, 'chat message button', `지금 외식코기를 이용 가능한 곳은 서울[${subways}]이야. 다른 곳 식당도 열심히 가서 먹어보고 곧 알려줄게!`, ['decide_drink', '다시 장소 입력하기'], ['get_started', '처음으로 돌아가기']);
-              break;
+              //index.sendSocketMessage(socket.id, 'chat message button', `지금 외식코기를 이용 가능한 곳은 서울[${subways}]이야. 다른 곳 식당도 열심히 가서 먹어보고 곧 알려줄게!`, ['decide_drink', '다시 장소 입력하기'], ['get_started', '처음으로 돌아가기']);
+              index.sendSocketMessage(socket.id, 'chat message button', `지금 외식코기를 이용 가능한 곳은 서울[강남역, 삼성역, 선릉역, 역삼역, 잠실역]이야. 다른 곳 식당도 열심히 가서 먹어보고 곧 알려줄게!`, ['decide_drink', '다시 장소 입력하기'], ['get_started', '처음으로 돌아가기']);
+                break;
           }
         } else {
           // await info_update.profile.update_state(socket.id, '1', 'decide_menu');
