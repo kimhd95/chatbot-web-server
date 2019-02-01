@@ -866,6 +866,9 @@ $(function () {
     $('#messages').append(bot_messaging(msg)).children(':last').hide()
       .fadeIn(150);
     for (let i = 0; i < args.length; i += 1) {
+        // if(args[i].length===1){
+        //
+        // }
       // basic_message.append(bot_messaging_button(args[i][0],args[i][1]));
         $('#messages').append(bot_messaging_button(args[i][0], args[i][1]));
 
@@ -955,6 +958,7 @@ $(function () {
 
   socket.on('chat message button checkbox map', (socket_id, msg, ...args) => {
     console.log("Present stage: "+sessionStorage.getItem('stage'));
+    console.log(args);
       if (args.length === 0) {
         $('#m').prop('disabled', false);
         $('#input-button').attr('disabled', false);
@@ -1190,7 +1194,8 @@ $(document).ready(() => {
   $('#delete-log-btn').click(() => {
     if (confirm('채팅기록을 지우시겠습니까? 모든 기록이 지워집니다.')) {
       const currentStage=sessionStorage.getItem('stage');
-      let targetcol;
+      console.log(currentStage);
+      let targetcol='chat_log';
       if(currentStage==='decide_menu'){
         // targetAPI="/api/v1/users/delete_menu_log";
         targetcol='menu_chat_log';
