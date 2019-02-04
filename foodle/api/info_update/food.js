@@ -44,6 +44,13 @@ Food.update_user_start = function (kakaoid) {
 };
 
 Food.get_restaurant = function (kakaoid, subway, exit_quarter, with_mood, mood2, taste, food_type, food_ingre) {
+  console.log('subway: '+subway);
+  console.log('exit_quarter: '+exit_quarter);
+  console.log('mood: '+with_mood);
+  console.log('mood2: '+mood2);
+  console.log('taste: '+taste);
+  console.log('food_type: '+food_type);
+  console.log('food_ingre: '+food_ingre);
   const self = this;
   return new Promise(((resolve, reject) => {
     const name = 'food.get_restaurant';
@@ -52,13 +59,13 @@ Food.get_restaurant = function (kakaoid, subway, exit_quarter, with_mood, mood2,
     const json = {
       apikey: '9Y3-7bE-Ud3-7Ja',
       kakao_id: kakaoid,
-      subway,
-      exit_quarter,
+      subway: subway,
+      exit_quarter: exit_quarter,
       mood: with_mood,
-      mood2,
-      taste,
-      food_type,
-      food_ingre,
+      mood2: mood2,
+      taste: taste,
+      food_type: food_type,
+      food_ingre: food_ingre,
     };
 
     const func = function (error, response, body) {

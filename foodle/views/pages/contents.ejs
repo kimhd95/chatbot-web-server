@@ -24,12 +24,14 @@
           <div id="back-to-lobby" class="back-button"></div>
           <div id="contents-bar" class="avail-bar">외식코기 컨텐츠</div>
           <div id="contents-list" class="contentlist">
+            <!--  -->
             <div id="content-1" class="food-content">
               <div class="thumbnail" style="background-image: url('/images/food_content_1.jpg');"></div>
               <div class="content-text">
                 <div class="content-name">3대 돈까스 맛집</div>
                 <div class="content-date">19.01.27</div>
               </div>
+              <!--  -->
             </div>
           </div>
         </div>
@@ -44,16 +46,8 @@
       </div>
 
       <div class="lowerbar">
-        <div class="swiper-scrollbar"></div>
+        <!-- <div class="swiper-scrollbar"></div> -->
       </div>
-
-
-
-
-
-
-
-
 
 
         <!-- jQuery library (served from Google) -->
@@ -71,6 +65,14 @@
 
 
         <script>
+
+        let loginV=sessionStorage.getItem('login');
+        // console.log(loginV);
+        // let emailV=sessionStorage.getItem('email');
+        if(loginV!=='-1' && loginV!=='0'){
+          location.href='/';
+          alert('잘못된 접근입니다.');
+        }
 
         var swiper = new Swiper('.swiper-container');
 

@@ -538,8 +538,18 @@ class Decide_drink {
         const chlist = [`기 다 료 방`,`두구두구두구...`,`열씨미찾는중🐕🐕`,`기다려봐~~ 오예 술먹는다술먹는다~~`,`기달려방ㅎㅎ 지금 알아보는 중이야`];
         const leng = chlist.length;
         const rand = Math.floor(leng * Math.random());
+
+        console.log("subway: "+user_data.subway);
+        console.log("exit_quarter: "+user_data.exit_quarter);
+        console.log("mood2: "+user_data.mood2);
+        console.log("taste: "+user_data.taste);
+        console.log("drink_round: "+user_data.drink_round);
+        console.log("drink_type: "+user_data.drink_type);
+
         const drink_rest_result = await info_update.drink.get_drink_restaurant(socket.id, user_data.subway, user_data.exit_quarter, user_data.mood2, user_data.taste, user_data.drink_round, user_data.drink_type);
         const rest_info = drink_rest_result.message;
+        console.log(rest_info);
+        console.log(drink_rest_result.try);
         if (rest_info.length === 2) {
           await info_update.profile.update_limit_cnt_drink(socket.id, user_data.limit_cnt_drink + 1);
           await info_update.profile.update_rest2(user_data.kakao_id, rest_info[0].id, rest_info[1].id);
