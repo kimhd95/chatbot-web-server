@@ -694,7 +694,7 @@ $(function () {
     } else {
       $('#m').autocomplete('disable');
     }
-    if ($(e.target).attr('id') === ('mood2/') || $(e.target).attr('id') === ('exit/') || $(e.target).attr('id') === ('drink_type/')) {
+    if ($(e.target).attr('id') === ('mood2/') || $(e.target).attr('id') === ('exit/') || $(e.target).attr('id') === ('drink_type/') || $(e.target).attr('id') === ('price/')) {
       const checked_array = [];
       const checked_name_array = [];
       $('.checkbox:checked').each(function () {
@@ -713,6 +713,9 @@ $(function () {
             break;
           case 'drink_type/':
             socket.emit('chat message button rule', $(e.target).attr('name'), 'no_drink_type');
+            break;
+          case 'price/':
+            socket.emit('chat message button rule', $(e.target).attr('name'), 'no_price');
             break;
         }
       } else {
@@ -747,7 +750,9 @@ $(function () {
       $('.messaging-button-checkbox').hide();
       if($(e.target).attr('id') === '999'){
         socket.emit('chat message button rule', $(e.target).attr('name'), 'exit/'+$(e.target).attr('id'));
-      } else{
+      } else if ($(e.target).attr('id') === '998'){
+          socket.emit('chat message button rule', $(e.target).attr('name'), 'mood2/'+$(e.target).attr('id'));
+      }  else{
         socket.emit('chat message button rule', $(e.target).attr('name'), 'drink_type/'+$(e.target).attr('id'));
       }
     } else {
