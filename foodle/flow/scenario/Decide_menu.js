@@ -455,6 +455,14 @@ class Decide_menu {
         console.log('받은 값:'+value);
         let user_food_type=value.split('/')[1];
 
+        if(Number(value.charAt(0))===7){
+          if(user_food_type==='오이 싫어'){
+            info_update.profile.update_hate_food(socket.id, '오이');
+          } else{
+            user_food_type='all';
+          }
+        }
+        
         // 어떤 질문이든지 관계없이 상관없음을 눌렀으면 그냥 pass,
         // 아니라면 질문에 따라 user_food_type 값을 바꿔줘야 함.
         if(user_food_type!=='all'){

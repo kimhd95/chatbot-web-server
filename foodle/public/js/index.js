@@ -130,6 +130,47 @@ function loginOnetime () {
     sendTokenReq(info);
 }
 
+function logout() {
+    const info = {
+      url: "/api/v1/users/logout",
+      method: "POST",
+      data: {
+        'token': sessionStorage.getItem('social_token')
+      },
+      success: function (res) {
+          if (res.success) {
+              // console.log('logout Request: success!');
+              localStorage.clear();
+              sessionStorage.clear();
+              window.location.replace('/');
+          } else {
+              console.log('logout Request: fail!');
+              console.log(res);
+              recheckTokenExist("로그아웃");
+          }
+      },
+      error: function (e) {
+          console.log('ajax call error: dashboard - LgOutReq');
+          if(!navigator.onLine){
+              console.log("internet disconnected");
+              window.location.reload();
+          } else{
+              if (e.status === 404 && e.responseText.includes("API call URL not found.")) {
+                  console.log("check your URL, method(GET/POST)");
+                  alert("로그아웃에 실패했습니다.");
+              } else if(e.status===403 && e.responseText.includes("No token")){
+                  console.log('No token given');
+                  window.location.replace(window.location.origin);
+              } else {
+                  console.log("status: " + e.status+ ", message: " + e.responseText);
+                  recheckTokenExist("로그아웃");
+              }
+          }
+      }
+    };
+    sendTokenReq(info);
+}
+
 
 function login () {
     const info = {
@@ -207,6 +248,17 @@ function reIssueValidationCheck() {
 
 $(document).ready(() => {
     // 네이버 로그인 설정
+
+    let loginValue = sessionStorage.getItem('login');
+    let emailValue = sessionStorage.getItem('email');
+    // console.log('loginV: '+loginValue+', emailV: '+emailValue);
+
+    if(loginValue==='-1' || (loginValue===null && emailValue!==null && emailValue.split('@')[1]!=='jellylab.io')){
+      logout();
+    }
+
+    // console.log('loginV: '+loginValue+', emailV: '+emailValue);
+
     let naverLogin = new naver.LoginWithNaverId(
 		{
 			clientId: "DnnpK9bi2MdliAiFZZUQ",
@@ -221,7 +273,7 @@ $(document).ready(() => {
     naverLogin.init();
     $('#naverIdLogin_loginButton img')[0].src = '/images/naver.png';
 
-    let loginValue = sessionStorage.getItem('login');
+
     // console.log("loginValue: "+loginValue)
     if (loginValue === '0' || loginValue === null) {
         const info = {

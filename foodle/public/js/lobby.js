@@ -118,7 +118,7 @@ $(document).ready(() => {
     sessionStorage.setItem('login', '0');
   }
 
-  console.log('loginV: '+loginValue);
+  console.log('loginV: '+sessionStorage.getItem('login'));
   console.log('emailV: '+emailValue);
 
   if(loginValue===null && emailValue.split('@')[1]==='jellylab.io'){
