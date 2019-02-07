@@ -740,7 +740,7 @@ $(function () {
     } else {
       $('#m').autocomplete('disable');
     }
-    if ($(e.target).attr('id') === '999' || $(e.target).attr('id') === '상관없음') {
+    if ($(e.target).attr('id') === '999' || $(e.target).attr('id') === '998' || $(e.target).attr('id') === '상관없음') {
 
       $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').prop('checked', false);
       $('.messaging-button-checkbox:not(:hidden)').removeClass('messaging-button-checkbox-checked');
@@ -751,8 +751,8 @@ $(function () {
       if($(e.target).attr('id') === '999'){
         socket.emit('chat message button rule', $(e.target).attr('name'), 'exit/'+$(e.target).attr('id'));
       } else if ($(e.target).attr('id') === '998'){
-          socket.emit('chat message button rule', $(e.target).attr('name'), 'mood2/'+$(e.target).attr('id'));
-      }  else{
+        socket.emit('chat message button rule', $(e.target).attr('name'), 'mood2/'+$(e.target).attr('id'));
+      } else{
         socket.emit('chat message button rule', $(e.target).attr('name'), 'drink_type/'+$(e.target).attr('id'));
       }
     } else {
