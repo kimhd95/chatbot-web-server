@@ -929,8 +929,8 @@ $(function () {
       $('#messages').append(bot_messaging_button_checkbox(args[i][0], args[i][1]));
     }
     $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
-    $('.messaging-button-checkbox:not(:hidden)').first().click();
-    $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
+    // $('.messaging-button-checkbox:not(:hidden)').first().click();
+    // $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
     $('#messages').scrollTop(1E10);
     updateChatLog(socket_id);
     // if(sessionStorage.getItem('stage')!==null){
