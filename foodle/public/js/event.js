@@ -653,6 +653,7 @@ function getPartLog(email, stage) {
 }
 
 let loginValue = sessionStorage.getItem('login');
+let clickNum=0;
 
 $(function () {
 
@@ -671,6 +672,8 @@ $(function () {
   })
 
   $('body').on('click', '.messaging-button', (e) => {
+    clickNum=0;
+    console.log(clickNum);
     if($(e.target).attr('id')==='get_started'){
       sessionStorage.removeItem('stage');
     }
@@ -732,6 +735,7 @@ $(function () {
       $('.messaging-button').hide();
       $('.messaging-button-checkbox').hide();
     }
+
   });
 
   $('body').on('click', '.messaging-button-checkbox', (e) => {
@@ -741,7 +745,8 @@ $(function () {
       $('#m').autocomplete('disable');
     }
     if ($(e.target).attr('id') === '999' || $(e.target).attr('id') === '998' || $(e.target).attr('id') === '상관없음') {
-
+      clickNum=0;
+      console.log(clickNum);
       $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').prop('checked', false);
       $('.messaging-button-checkbox:not(:hidden)').removeClass('messaging-button-checkbox-checked');
       $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').removeClass('messaging-button-checkbox-checked');
@@ -756,15 +761,41 @@ $(function () {
         socket.emit('chat message button rule', $(e.target).attr('name'), 'drink_type/'+$(e.target).attr('id'));
       }
     } else {
-      $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', false);
-      $('.messaging-button-checkbox:not(:hidden)').first().removeClass('messaging-button-checkbox-checked');
-      $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').removeClass('messaging-button-checkbox-checked');
-      $(e.target).children('input[type=checkbox]').click();
+      // $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', false);
+      // $('.messaging-button-checkbox:not(:hidden)').first().removeClass('messaging-button-checkbox-checked');
+      // $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').removeClass('messaging-button-checkbox-checked');
+
+      // $(e.target).children('input[type=checkbox]').click();
+    }
+
+    // console.log($(e.target).children('input[type=checkbox]').attr('checked'));
+
+    if($(e.target).children('input[type=checkbox]').prop('checked')){
+
+      $(e.target).children('input[type=checkbox]').prop('checked', false);
+      // console.log($(e.target).children('input[type=checkbox]').attr('checked'));
+      $(e.target).toggleClass('messaging-button-checkbox-checked');
+      // $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked');
+      clickNum--;
+      console.log(clickNum);
+    } else{
+
+      $(e.target).children('input[type=checkbox]').prop('checked', true);
+      // console.log($(e.target).children('input[type=checkbox]').attr('checked'));
+      $(e.target).toggleClass('messaging-button-checkbox-checked');
+      // $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked');
+      clickNum++;
+      console.log(clickNum);
+    }
+
+    if(clickNum>0){
+      $('.complete-button').prop('disabled', false);
+    } else{
+      $('.complete-button').prop('disabled', true);
     }
 
 
-    $(e.target).toggleClass('messaging-button-checkbox-checked');
-    $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked');
+
   });
 
   $('body').on("submit", "form", function(){
@@ -891,8 +922,8 @@ $(function () {
 
     }
     if (args.length === 0) {
-      $('#m').prop('disabled', false);
-      $('#input-button').attr('disabled', false);
+        $('#m').prop('disabled', false);
+        $('#input-button').attr('disabled', false);
     } else {
       $('#m').prop('disabled', true);
       $('#input-button').attr('disabled', true);
@@ -905,6 +936,36 @@ $(function () {
         updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
       }
     }
+    // if(sessionStorage.getItem('stage')!==null){
+    //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
+    // }
+    // $(".myText").val($("#messages")[0].outerHTML);
+  });
+
+  socket.on('chat message button checkbox price', (socket_id, msg, ...args) => {
+    console.log("Present stage: "+sessionStorage.getItem('stage'));
+    if (args.length === 0) {
+      $('#m').prop('disabled', false);
+      $('#input-button').attr('disabled', false);
+    } else {
+      $('#m').prop('disabled', true);
+      $('#input-button').attr('disabled', true);
+    }
+    $('#messages').append(bot_messaging(msg)).children(':last').hide()
+      .fadeIn(150);
+    const args_length = args.length;
+    for (let i = 0; i < args_length - 1; i += 1) {
+      // basic_message.append(bot_messaging_button(args[i][0],args[i][1]));
+      // console.log(`${args[i][0]}, ${args[i][1]}`);
+      $('#messages').append(bot_messaging_button_checkbox(args[i][0], args[i][1]));
+    }
+    $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
+    $('.complete-button').prop('disabled', true);
+
+    // $('.messaging-button-checkbox:not(:hidden)').first().click();
+    // $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
+    $('#messages').scrollTop(1E10);
+    updateChatLog(socket_id);
     // if(sessionStorage.getItem('stage')!==null){
     //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
     // }
@@ -929,6 +990,7 @@ $(function () {
       $('#messages').append(bot_messaging_button_checkbox(args[i][0], args[i][1]));
     }
     $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
+    $('.complete-button').prop('disabled', true);
     // $('.messaging-button-checkbox:not(:hidden)').first().click();
     // $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
     $('#messages').scrollTop(1E10);
@@ -993,6 +1055,7 @@ $(function () {
       }
       // $('#messages').append(bot_messaging_button_finish_checkbox(args[2][0], args[2][1]));
       $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
+      $('.complete-button').prop('disabled', true);
       // $('.messaging-button-checkbox:not(:hidden)').first().click();
       // $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
       $('#messages').scrollTop(1E10);

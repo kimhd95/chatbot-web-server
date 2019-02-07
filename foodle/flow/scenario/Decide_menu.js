@@ -130,13 +130,14 @@ class Decide_menu {
   price(value, socket, user_data) {
       (async function () {
           try {
-              //await info_update.profile.update_price(socket.id, 'price'); TODO: update_price api 만들기
+              //await info_update.profile.update_price(socket.id, 'price'); TODO: update_price api 만들기(완료)
               const price_list = ['식사 예산은 어느 정도 생각해?', '오늘 너의 텅장💸이 허락하는 한도는?? ', '식사 가격은 얼마 정도였으면 좋겠어?',
                   '이번 식사. 얼마면 돼?!💰', '오늘 식사의 가격 상한선은~~?','얼마까지 긁을 수 있어? 💳'];
               const price_leng = price_list.length;
               const price_rand = Math.floor(price_leng * Math.random());
-              index.sendSocketMessage(socket.id, 'chat message button', price_list[price_rand],
-                  ['price/0', '~1만원 미만'], ['price/1', '1만원 대'], ['price/2', '2만원 대'], ['price/3', '3만원 대'], ['price/4', '4만원 이상']); //todo:상관없음 뺀 체크박스 버튼으로 구현
+              index.sendSocketMessage(socket.id, 'chat message button checkbox price', price_list[price_rand],
+                  ['0', '~1만원 미만'], ['1', '1만원 대'], ['2', '2만원 대'], ['3', '3만원 대'], ['4', '4만원 이상'], ['price/', '선택완료']);
+                  //todo:상관없음 뺀 체크박스 버튼으로 구현(완료)
           } catch (e) {
               index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
               console.log(e);
@@ -174,27 +175,26 @@ class Decide_menu {
   decide_subway(value, socket, user_data) {
       (async function () {
           try {
-              // if (value.includes('price')) {
-              //     const user_price = value.split('/')[1];
-              //     await info_update.profile.update_price(socket.id, user_price);
-              // } //TODO: price 반영
+              const user_price = value.split('/')[1];
+              await info_update.profile.update_price(socket.id, user_price);
+              //TODO: price 반영(완료)
 
-              // if (user_info.freq_subway !== null) {
-              //     const revisit = user_info.freq_subway;
-              //     const freq_list = [`이번에도 ${revisit}에서 메뉴를 정하면 될까?`, `이번에도 ${revisit} 고고?`, `이번에도 ${revisit}에서 밥 먹을거야?`,
-              //         `이번에도 ${revisit}에서 먹는거 맞지?`, `오늘도 ${revisit}?`, `오늘도 ${revisit}에서 골라볼까?`,
-              //         `이번에도 ${revisit}에서 정하는거 맞아맞아?`, `오늘도 ${revisit}에서 메뉴 정해볼까?`, `이번에도 ${revisit}에서 먹을 곳 찾는거야?`];
-              //     const freq_leng = freq_list.length;
-              //     const freq_rand = Math.floor(freq_leng * Math.random());
-              //     index.sendSocketMessage(socket.id, 'chat message button', freq_list[freq_rand], [`${revisit}`, '응 맞아!'], ['decide_subway', '다른 곳이야!']);
-              // } else { //todo: freq_subway 구현
+              if (user_data.freq_subway !== null) {
+                  const revisit = user_data.freq_subway;
+                  const freq_list = [`이번에도 ${revisit}에서 메뉴를 정하면 될까?`, `이번에도 ${revisit} 고고?`, `이번에도 ${revisit}에서 밥 먹을거야?`,
+                      `이번에도 ${revisit}에서 먹는거 맞지?`, `오늘도 ${revisit}?`, `오늘도 ${revisit}에서 골라볼까?`,
+                      `이번에도 ${revisit}에서 정하는거 맞아맞아?`, `오늘도 ${revisit}에서 메뉴 정해볼까?`, `이번에도 ${revisit}에서 먹을 곳 찾는거야?`];
+                  const freq_leng = freq_list.length;
+                  const freq_rand = Math.floor(freq_leng * Math.random());
+                  index.sendSocketMessage(socket.id, 'chat message button', freq_list[freq_rand], [`${revisit}`, '응 맞아!'], ['decide_subway', '다른 곳이야!']);
+              } else { //todo: freq_subway 구현(완료)
                   const chlist = ['어느 역 근처의 메뉴를 정해줄까?', '밥 어디에서 먹을거야?🍚', '밥 어디에서 먹어?', '어느 역 근처 메뉴를 정해줄까?',
                       '위치가 어디야? 원하는 곳에서 가까운 지하철역을 입력해줘🚋', '밥 어디에서 먹어? 챱챱', '이번에는 어느 역 근처의 메뉴를 정해볼까?',
                       '오늘 메뉴는 어디에서 정할까?', '오늘 메뉴는 어느 역에서 정해볼까?'];
                   const leng = chlist.length;
                   const rand = Math.floor(leng * Math.random());
                   index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}<br>ex) 강남역,신촌역`);
-              //}
+              }
 
           } catch (e) {
               index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
@@ -390,8 +390,9 @@ class Decide_menu {
     (async function () {
       try {
         const user_mood2 = value.split('/')[1];
-        if (value.includes('캐주얼')) {
-          await info_update.profile.update_with_mood(socket.id, user_mood2);
+        console.log('with_mood: '+user_mood2);
+        if (value.includes('random')) {
+          await info_update.profile.update_with_mood(socket.id, '캐주얼');
         } else {
           await info_update.profile.update_mood2(socket.id, user_mood2);
         }
@@ -545,12 +546,12 @@ class Decide_menu {
   before_decide(value, socket, user_data) {
     (async function () {
       try {
-        console.log('내가 찍은 역명: '+user_data.subway);
-        console.log('내가 찍은 출구: '+user_data.exit_quarter);
-        console.log('내가 찍은 분위기: '+user_data.with_mood);
-        console.log('내가 찍은 분위기2: '+user_data.mood2);
-        console.log('내가 찍은 맛: '+user_data.taste);
-        console.log('받은 값:'+value);
+        // console.log('내가 찍은 역명: '+user_data.subway);
+        // console.log('내가 찍은 출구: '+user_data.exit_quarter);
+        // console.log('내가 찍은 분위기: '+user_data.with_mood);
+        // console.log('내가 찍은 분위기2: '+user_data.mood2);
+        // console.log('내가 찍은 맛: '+user_data.taste);
+        // console.log('받은 값:'+value);
         let user_food_type=value.split('/')[1];
 
         // 어떤 질문이든지 관계없이 상관없음을 눌렀으면 그냥 pass,
@@ -562,7 +563,7 @@ class Decide_menu {
           }
         }
         await info_update.profile.update_food_type(socket.id, user_food_type);
-        const foods = await info_update.food.get_restaurant(socket.id, user_data.subway, user_data.exit_quarter, user_data.with_mood, user_data.mood2, user_data.taste, user_food_type, 'x');
+        const foods = await info_update.food.get_restaurant(socket.id, user_data.price_level, user_data.subway, user_data.exit_quarter, user_data.with_mood, user_data.mood2, user_data.taste, user_food_type, 'x');
         const foods_info = foods.message;
         if (foods_info.length === 2) {
           await info_update.profile.update_rest2(user_data.kakao_id, foods_info[0].id, foods_info[1].id);
@@ -606,7 +607,7 @@ class Decide_menu {
           await index.sendSocketMessage(socket.id, 'chat message loader', 500);
           await index.sendSocketMessage(socket.id, 'chat message button', '2개 음식점중 더 가고싶은 곳을 골라줘!');
           await index.sendSocketMessage(socket.id, 'chat message card', ['final/1', foods[0].res_name], ['final/2', foods[1].res_name], ['final/3', '챗봇이 골라주기'], [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
-        }//TODO: 전화번호 예약 연결, 내비연결, 오픈-클로즈,휴무,라스트오더, 위시리스트
+        }//TODO: 전화번호 예약 연결(완료), 내비연결, 오픈-클로즈,휴무,라스트오더, 위시리스트
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
         console.log(e);
@@ -642,11 +643,11 @@ class Decide_menu {
 
         if (moment().format('HH') >= 10 && moment().format('HH') <= 15 && food_value[0].lunch_option === 1) {
           index.sendSocketMessage(socket.id, 'chat message button', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name}을 파는 ${food_value[0].food_type}집이야!<br>(런치메뉴 있음)`
-            + `<hr class="link-line"><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a>`, ['show_image', '사진 보기'],
+            + `<hr class="link-line"><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a><br><a class="card-link" target="_blank" href="tel:${food_value[0].phone}"><i class="fa fa-phone"></i> 전화 걸기</a>`, ['show_image', '사진 보기'],
           ['decide_final', '결승전 다시하기'], ['get_started', '처음으로 돌아가기']);
         } else {
           index.sendSocketMessage(socket.id, 'chat message button', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name}을 파는 ${food_value[0].food_type}집이야!`
-            + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a>`, ['show_image', '사진 보기'],
+            + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a><br><a target="_blank" class="card-link" href="tel:${food_value[0].phone}"><i class="fa fa-phone"></i> 전화 걸기</a>`, ['show_image', '사진 보기'],
           ['decide_final', '결승전 다시하기'], ['get_started', '처음으로 돌아가기']);
         }
       } catch (e) {
@@ -663,7 +664,7 @@ class Decide_menu {
         const naver_url = `https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${food_value[0].subway} ${food_value[0].res_name}`;
         const map_url = `https://map.naver.com/index.nhn?query=${food_value[0].subway} ${food_value[0].res_name}&tab=1`;
         index.sendSocketMessage(socket.id, 'chat message button', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name}을 파는 ${food_value[0].food_type}집이야!`
-          + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a>`, ['show_image', '사진 보기'],
+          + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a><br><a class="card-link" target="_blank" href="tel:${food_value[0].phone}"><i class="fa fa-phone"></i> 전화 걸기</a>`, ['show_image', '사진 보기'],
         ['decide_final', '결승전 다시하기'], ['get_started', '처음으로 돌아가기']);
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
