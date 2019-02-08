@@ -251,24 +251,31 @@ class Decide_menu {
 
   near_station(value, socket, user_data) {
       (async function () {
-          try {
-              const map = new Map();
-              for (const i in data) {
-                if (Object.prototype.hasOwnProperty.call(data, i)) {
-                  map.set(distance(parseFloat(user_data.lat), parseFloat(user_data.lng), data[i].lat, data[i].lng, data[i].name)[0], distance(parseFloat(user_data.lat), parseFloat(user_data.lng), data[i].lat, data[i].lng, data[i].name)[1]);
-                }
-              }
-              // console.log(map);
-              const sortedMap = sortMap(map); // key-value형식으로 map이 정의되어있다 (ex. 0.1234 - 성수역) 오름차순으로 map을 정렬하는 module
-              // console.log(`거리순으로 정렬된 map : ${sortedMap}`); // 거리순으로 출력
-              console.log(sortedMap);
+        const lat= value.slice(value.indexOf('_')+1, value.lastIndexOf('/'));
+        const lng= value.slice(value.lastIndexOf('/')+1);
 
-              index.sendSocketMessage(socket.id, 'chat message button', `현재 위치에서 가장 가까운 역은 ${sortedMap.values().next().value}이야`,
-                  [`near_station/choose/${sortedMap.values().next().value}`, '여기로 가자!'], ['near_station/search', '직접 고를래']); // TODO:['location/2', '현재 위치']);
-          } catch (e) {
-              index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
-              console.log(e);
-          }
+        console.log(`lat: ${lat}, lng: ${lng}`);
+        try {
+            await info_update.profile.update_lat(socket.id, lat);
+            await info_update.profile.update_lng(socket.id, lng);
+            const map = new Map();
+            for (const i in data) {
+              if (Object.prototype.hasOwnProperty.call(data, i)) {
+                map.set(distance(parseFloat(lat), parseFloat(lng), data[i].lat, data[i].lng, data[i].name)[0], distance(parseFloat(lat), parseFloat(lng), data[i].lat, data[i].lng, data[i].name)[1]);
+              }
+            }
+            // console.log(map);
+            const sortedMap = sortMap(map); // key-value형식으로 map이 정의되어있다 (ex. 0.1234 - 성수역) 오름차순으로 map을 정렬하는 module
+            // console.log(`거리순으로 정렬된 map : ${sortedMap}`); // 거리순으로 출력
+            console.log(sortedMap);
+
+            index.sendSocketMessage(socket.id, 'chat message button', `현재 위치에서 가장 가까운 역은 ${sortedMap.values().next().value}이야`,
+                [`near_station/choose/${sortedMap.values().next().value}`, '여기로 가자!'], ['near_station/search', '직접 고를래']); // TODO:['location/2', '현재 위치']);
+
+        } catch (e) {
+            index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
+            console.log(e);
+        }
       }());
   }
 
@@ -303,10 +310,15 @@ class Decide_menu {
   exitnum(value, socket, user_data) {
     (async function () {
       try {
-        console.log(`exitnum의 value, subway = ${value}`);
-        let subway = value;
-        if (value.slice(-1) !== '역') {
-          subway = `${value}역`;
+        let subway;
+        if(value.includes('near_station')){
+          subway = value.slice(value.lastIndexOf('/')+1);
+        } else{
+          console.log(`exitnum의 value, subway = ${value}`);
+          subway = value;
+          if (value.slice(-1) !== '역') {
+            subway = `${value}역`;
+          }
         }
         const subways = await info_update.food.get_all_subway(socket.id, '');
         const result = await info_update.food.verify_subway(socket.id, subway);

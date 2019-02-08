@@ -667,51 +667,17 @@ function getLocation(socket_id) {
       let current_lat=position.coords.latitude;
       let current_lng=position.coords.longitude;
 
-      const info = {
-          method: "POST",
-          url: '/api/v1/users/update_user',
-          body: {
-              kakao_id: socket_id,
-              lat: current_lat,
-              lng: current_lng,
-          },
-          success: function (res) {
-              if (res.success){
-                  console.log("update lat lng: success!");
-              }else {
-                  console.log("update lat lng: fail!");
-                  console.log(res);
-              }
-          },
-          error: function(e) {
-              console.log('ajax call error: signup page - singUpReq');
-              if (e.status === 404 && e.responseText.includes("API call URL not found."))
-                  console.log("check your URL, method(GET/POST)");
-              else if ((e.status === 400 && e.responseText.includes("not provided"))
-                  || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
-                  console.log("check your parameters");
-              } else if(e.status === 0){
-                  if(navigator.onLine){
-                      console.log('status : 0');
-                  }else {
-                      console.log('internet disconnected');
-                      window.location.reload();
-                  }
-              } else {
-                  console.log('status: ' + e.status + ', message: ' + e.responseText);
-              }
-              alert(e.responseText);
-          }
-      };
-      sendReq(info);
+      arr['lat']=current_lat;
+      arr['lng']=current_lng;
 
     }, error, geo_options);
 
-
-
+    return arr;
   } else {
     alert('geolocation not supported');
   }
+
+
 }
 
 let loginValue = sessionStorage.getItem('login');
@@ -786,9 +752,15 @@ $(function () {
       }
     } else if ($(e.target).attr('id')==='location/current'){
       // console.log(navigator.geolocation);
-      getLocation(socket.id);
+      let arr = getLocation(socket.id);
+      setTimeout(async function(){
+        console.log(arr);
+        await socket.emit('chat message button rule', $(e.target).attr('name'), `${$(e.target).attr('id')}_${arr.lat}/${arr.lng}`);
+      }, 2000)
+
       // console.log(getLocation(socket.id));
-      socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id'));
+
+
       // console.log($(e.target).attr('name'));
       // console.log($(e.target).attr('id'));
       $('.checkbox:checked').attr('checked', false);
