@@ -9,6 +9,68 @@ const index = require('../../server/index');
 
 const info_update = new Info();
 
+const sortMap = require('sort-map');
+const dictionary = {
+  'station': [
+    { 'name': '강남역', 'lat': '37.4968282', 'lng': '126.9980708' },
+    { 'name': '건대입구역', 'lat': '37.540389', 'lng': '127.069236' },
+    { 'name': '광화문역', 'lat': '37.5705263', 'lng': '126.9765729' },
+    { 'name': '뚝섬역', 'lat': '37.54724', 'lng': '127.0451267' },
+    { 'name': '망원역', 'lat': '37.5559772', 'lng': '126.9012821' },
+    { 'name': '사당역', 'lat': '37.476559', 'lng': '126.981633' },
+    { 'name': '서울대입구역', 'lat': '37.48121', 'lng': '126.952712' },
+    { 'name': '선릉역', 'lat': '37.504479', 'lng': '127.0467577' },
+    { 'name': '선정릉역', 'lat': '37.5102747', 'lng': '127.0416334' },
+    { 'name': '신촌역', 'lat': '37.559768', 'lng': '126.942308' },
+    { 'name': '성수역', 'lat': '37.544569', 'lng': '127.055974' },
+    { 'name': '신사역', 'lat': '37.5252636', 'lng': '127.0025238' },
+    { 'name': '여의도역', 'lat': '37.5215695', 'lng': '126.9243115' },
+    { 'name': '을지로입구역', 'lat': '37.566056', 'lng': '126.982662' },
+    { 'name': '이태원역', 'lat': '37.534533', 'lng': '126.994579' },
+    { 'name': '이대역', 'lat': '37.534533', 'lng': '126.994579' },
+
+
+
+    { 'name': '홍대입구역', 'lat': '37.557527', 'lng': '126.9244669' },
+    { 'name': '합정역', 'lat': '37.5495753', 'lng': '126.9139908' },
+
+
+
+    { 'name': '왕십리역', 'lat': '37.5611284', 'lng': '127.035505' },
+
+
+
+    { 'name': '명동역', 'lat': '37.5609892', 'lng': '126.9861868' },
+    { 'name': '잠실역', 'lat': '37.5132612', 'lng': '127.1001336' },
+
+
+
+    { 'name': '고속터미널역', 'lat': '37.5049142', 'lng': '127.0027318' },
+    { 'name': '회기역', 'lat': '37.58975600000001', 'lng': '127.057977' },
+    { 'name': '안암역', 'lat': '37.5858384', 'lng': '127.0213534' },
+    { 'name': '혜화역', 'lat': '37.58208', 'lng': '127.001892' },
+
+    { 'name': '종각역', 'lat': '37.570169', 'lng': '126.983099' },
+    { 'name': '종로3가역', 'lat': '37.5715', 'lng': '126.9912475' },
+
+    { 'name': '을지로3가역', 'lat': '37.566286', 'lng': '126.9917735' },
+    { 'name': '안국역', 'lat': '37.576556', 'lng': '126.985472' },
+
+  ],
+};
+const data = dictionary.station;
+
+function distance(lat1, lon1, lat2, lon2, value) { // Haversine 공식 : 구(지구) 에서 두 점(좌표) 사이 최단거리를 구하는 공식
+  const p = 0.017453292519943295; // Math.PI / 180
+  const c = Math.cos;
+  const a = 0.5 - c((lat2 - lat1) * p) / 2
+          + c(lat1 * p) * c(lat2 * p)
+          * (1 - c((lon2 - lon1) * p)) / 2;
+  const result = 12742 * Math.asin(Math.sqrt(a));
+  // map.set(result, value);
+  return [result, value];// 2 * R; R = 6371 km
+}
+
 class Decide_menu {
   constructor(value, socket, user_data) {
     console.log('value: '+value);
@@ -21,6 +83,8 @@ class Decide_menu {
     //   key = 'decide_subway';
     // } else if (user_data.state === 'decide_menu') {
     //   key = 'price';
+    } else if(key.includes('elsewhere')){
+      key = 'decide_subway';
     } else if (user_data.state === 'decide_subway') {
       key = 'exitnum';
     } else if (user_data.state === 'search') {
@@ -28,6 +92,14 @@ class Decide_menu {
     } else if (key.includes('decide_menu/')) {
       key = 'price';
     } else if (key.includes('price/')) {
+      key = 'location';
+    } else if (key.includes('location/current')){
+      key = 'near_station';
+    } else if (key.includes('location/')){
+      key = 'decide_subway';
+    } else if (key.includes('near_station/choose')){
+      key = 'exitnum';
+    } else if (key.includes('near_station/search')){
       key = 'decide_subway';
     } else if (key.includes('exit/')) {
       key = 'decision_score';
@@ -69,6 +141,7 @@ class Decide_menu {
       'fake_qna': this.fake_qna,
       'search': this.search,
       'location': this.location,
+      'near_station': this.near_station,
     };
     this.execute(key, value, socket, user_data);
   }
@@ -159,12 +232,39 @@ class Decide_menu {
   location(value, socket, user_data) {
       (async function () {
           try {
+              const user_price = value.split('/')[1];
+              await info_update.profile.update_price(socket.id, user_price);
+              //TODO: price 반영(완료)
+
               const location_list = ['약속장소는 이미 정해져 있어?', '어디서 만나기로 했는지는 정했어? ', '약속 장소는 정했구~~?',
                   '어디서 만날지는 정해져 있는거야?', '약속 장소는 정해져 있는거야?'];
               const location_leng = location_list.length;
               const location_rand = Math.floor(location_leng * Math.random());
               index.sendSocketMessage(socket.id, 'chat message button', location_list[location_rand],
-                  ['location/0', '응 정헀어'], ['location/1', 'ㄴㄴ 코기가 정해줘!']); // TODO:['location/2', '현재 위치']);
+                  ['location/0', '응 정헀어'], ['location/1', 'ㄴㄴ 코기가 정해줘!'], ['location/current', '지금 제일 가까운 곳']); // TODO:['location/2', '현재 위치']);
+          } catch (e) {
+              index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
+              console.log(e);
+          }
+      }());
+  }
+
+  near_station(value, socket, user_data) {
+      (async function () {
+          try {
+              const map = new Map();
+              for (const i in data) {
+                if (Object.prototype.hasOwnProperty.call(data, i)) {
+                  map.set(distance(parseFloat(user_data.lat), parseFloat(user_data.lng), data[i].lat, data[i].lng, data[i].name)[0], distance(parseFloat(user_data.lat), parseFloat(user_data.lng), data[i].lat, data[i].lng, data[i].name)[1]);
+                }
+              }
+              // console.log(map);
+              const sortedMap = sortMap(map); // key-value형식으로 map이 정의되어있다 (ex. 0.1234 - 성수역) 오름차순으로 map을 정렬하는 module
+              // console.log(`거리순으로 정렬된 map : ${sortedMap}`); // 거리순으로 출력
+              console.log(sortedMap);
+
+              index.sendSocketMessage(socket.id, 'chat message button', `현재 위치에서 가장 가까운 역은 ${sortedMap.values().next().value}이야`,
+                  [`near_station/choose/${sortedMap.values().next().value}`, '여기로 가자!'], ['near_station/search', '직접 고를래']); // TODO:['location/2', '현재 위치']);
           } catch (e) {
               index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
               console.log(e);
@@ -175,18 +275,16 @@ class Decide_menu {
   decide_subway(value, socket, user_data) {
       (async function () {
           try {
-              const user_price = value.split('/')[1];
-              await info_update.profile.update_price(socket.id, user_price);
-              //TODO: price 반영(완료)
-
-              if (user_data.freq_subway !== null) {
+              // console.log(`value: ${value}`);
+              console.log('user_data: '+user_data.freq_subway);
+              if (!value.includes('elsewhere') && user_data.freq_subway !== null) {
                   const revisit = user_data.freq_subway;
                   const freq_list = [`이번에도 ${revisit}에서 메뉴를 정하면 될까?`, `이번에도 ${revisit} 고고?`, `이번에도 ${revisit}에서 밥 먹을거야?`,
                       `이번에도 ${revisit}에서 먹는거 맞지?`, `오늘도 ${revisit}?`, `오늘도 ${revisit}에서 골라볼까?`,
                       `이번에도 ${revisit}에서 정하는거 맞아맞아?`, `오늘도 ${revisit}에서 메뉴 정해볼까?`, `이번에도 ${revisit}에서 먹을 곳 찾는거야?`];
                   const freq_leng = freq_list.length;
                   const freq_rand = Math.floor(freq_leng * Math.random());
-                  index.sendSocketMessage(socket.id, 'chat message button', freq_list[freq_rand], [`${revisit}`, '응 맞아!'], ['decide_subway', '다른 곳이야!']);
+                  index.sendSocketMessage(socket.id, 'chat message button', freq_list[freq_rand], [`${revisit}`, '응 맞아!'], ['decide_subway/elsewhere', '다른 곳이야!']);
               } else { //todo: freq_subway 구현(완료)
                   const chlist = ['어느 역 근처의 메뉴를 정해줄까?', '밥 어디에서 먹을거야?🍚', '밥 어디에서 먹어?', '어느 역 근처 메뉴를 정해줄까?',
                       '위치가 어디야? 원하는 곳에서 가까운 지하철역을 입력해줘🚋', '밥 어디에서 먹어? 챱챱', '이번에는 어느 역 근처의 메뉴를 정해볼까?',

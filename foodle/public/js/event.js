@@ -652,6 +652,68 @@ function getPartLog(email, stage) {
     sendReq(info);
 }
 
+function getLocation(socket_id) {
+  let arr = new Object();
+  if (navigator.geolocation) {
+    let geo_options={
+      enableHighAccuracy: false,
+      maximumAge: Infinity,
+      timeout: 30000,
+    }
+    function error(err){
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+    navigator.geolocation.watchPosition(function(position){
+      let current_lat=position.coords.latitude;
+      let current_lng=position.coords.longitude;
+
+      const info = {
+          method: "POST",
+          url: '/api/v1/users/update_user',
+          body: {
+              kakao_id: socket_id,
+              lat: current_lat,
+              lng: current_lng,
+          },
+          success: function (res) {
+              if (res.success){
+                  console.log("update lat lng: success!");
+              }else {
+                  console.log("update lat lng: fail!");
+                  console.log(res);
+              }
+          },
+          error: function(e) {
+              console.log('ajax call error: signup page - singUpReq');
+              if (e.status === 404 && e.responseText.includes("API call URL not found."))
+                  console.log("check your URL, method(GET/POST)");
+              else if ((e.status === 400 && e.responseText.includes("not provided"))
+                  || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
+                  console.log("check your parameters");
+              } else if(e.status === 0){
+                  if(navigator.onLine){
+                      console.log('status : 0');
+                  }else {
+                      console.log('internet disconnected');
+                      window.location.reload();
+                  }
+              } else {
+                  console.log('status: ' + e.status + ', message: ' + e.responseText);
+              }
+              alert(e.responseText);
+          }
+      };
+      sendReq(info);
+
+    }, error, geo_options);
+
+
+
+  } else {
+    alert('geolocation not supported');
+  }
+}
+
 let loginValue = sessionStorage.getItem('login');
 let clickNum=0;
 
@@ -673,12 +735,9 @@ $(function () {
 
   $('body').on('click', '.messaging-button', (e) => {
     clickNum=0;
-    console.log(clickNum);
     if($(e.target).attr('id')==='get_started'){
       sessionStorage.removeItem('stage');
     }
-    // console.log(e);
-    // console.log($(e.target).attr('id'));
     if($(e.target).attr('id') === 'decide_place'){
       sessionStorage.setItem('stage', 'decide_place');
       sessionStorage.setItem('name', '중간지점 찾기(서울)')
@@ -691,8 +750,6 @@ $(function () {
         sessionStorage.setItem('name','술집 고르기');
       }
 
-      console.log($(e.target).attr('id'));
-      // console.log(sessionStorage.getItem('stage'));
       $('#m').autocomplete('enable');
     } else {
       $('#m').autocomplete('disable');
@@ -704,8 +761,8 @@ $(function () {
         checked_array.push(this.id);
         checked_name_array.push(this.name);
       });
-      console.log(checked_array);
-      console.log(checked_name_array);
+      // console.log(checked_array);
+      // console.log(checked_name_array);
       if (checked_array.length === 0) {
         switch ($(e.target).attr('id')) {
           case 'mood2/':
@@ -727,7 +784,18 @@ $(function () {
         $('.messaging-button-checkbox').hide();
         $('.messaging-button-checkbox').children('input[type=checkbox]').prop('checked', false);
       }
-    } else {
+    } else if ($(e.target).attr('id')==='location/current'){
+      // console.log(navigator.geolocation);
+      getLocation(socket.id);
+      // console.log(getLocation(socket.id));
+      socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id'));
+      // console.log($(e.target).attr('name'));
+      // console.log($(e.target).attr('id'));
+      $('.checkbox:checked').attr('checked', false);
+      $('.messaging-button').hide();
+      $('.messaging-button-checkbox').hide();
+    }
+    else {
       socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id'));
       // console.log($(e.target).attr('name'));
       // console.log($(e.target).attr('id'));
@@ -777,7 +845,7 @@ $(function () {
       $(e.target).toggleClass('messaging-button-checkbox-checked');
       // $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked');
       clickNum--;
-      console.log(clickNum);
+      // console.log(clickNum);
     } else{
 
       $(e.target).children('input[type=checkbox]').prop('checked', true);
@@ -785,7 +853,7 @@ $(function () {
       $(e.target).toggleClass('messaging-button-checkbox-checked');
       // $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked');
       clickNum++;
-      console.log(clickNum);
+      // console.log(clickNum);
     }
 
     if(clickNum>0){
@@ -894,7 +962,7 @@ $(function () {
   socket.on('chat message_self', (msg) => {
     $('#messages').append(user_messaging(msg)).children(':last').hide()
       .fadeIn(150);
-    if(msg.includes("처음으로 돌아가기") || msg.includes("처음으로") || msg.includes("돌아가기")){
+    if(msg.includes("처음으로") || msg.includes("돌아가기") || msg.includes("안할래")){
       $('#messages').append(`<hr>`);
     }
     // $('#messages').append($('<li>').text(answer));

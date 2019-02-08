@@ -114,14 +114,14 @@ $(document).ready(() => {
   let loginValue = sessionStorage.getItem('login');
   let emailValue = sessionStorage.getItem('email');
 
-  if(loginValue===null && emailValue.split('@')[1]!=='jellylab.io'){
+  if(loginValue===null && emailValue!==null && emailValue.split('@')[1]!=='jellylab.io'){
     sessionStorage.setItem('login', '0');
   }
 
   console.log('loginV: '+loginValue);
   console.log('emailV: '+emailValue);
 
-  if(loginValue===null && emailValue.split('@')[1]==='jellylab.io'){
+  if(loginValue===null && emailValue!==null && emailValue.split('@')[1]==='jellylab.io'){
     onetimeLogout();
   }
 
