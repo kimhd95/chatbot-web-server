@@ -4,16 +4,17 @@ const Api = require('../api_prototype');
 // TODO : apikey 값이 하드코딩 되어있는데 config 파일에서 불러오도록 리팩토링 필요
 const Profile = new Api();
 
-Profile.update_price = function (kakaoid, value) {
+Profile.update_price_level = function (kakaoid, lunch, dinner) {
   const self = this;
   return new Promise(((resolve, reject) => {
-    const name = 'profile.update_price';
+    const name = 'profile.update_price_level';
     const method = 'POST';
     const url = '/api/v1/users/update_user';
     const json = {
       apikey: '9Y3-7bE-Ud3-7Ja',
       kakao_id: kakaoid,
-      price_level: value,
+      price_lunch: lunch,
+      price_dinner: dinner
     };
 
     const func = function (error, response, body) {

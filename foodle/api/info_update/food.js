@@ -43,10 +43,11 @@ Food.update_user_start = function (kakaoid) {
   }));
 };
 
-Food.get_restaurant = function (kakaoid, price_level, subway, exit_quarter, with_mood, mood2, taste, food_type, food_ingre) {
+Food.get_restaurant = function (kakaoid, subway, exit_quarter, price_lunch, price_dinner, with_mood, mood2, taste, food_type, food_ingre) {
   console.log('subway: '+subway);
-  console.log('price_level: '+price_level);
   console.log('exit_quarter: '+exit_quarter);
+  console.log('price_lunch: '+price_lunch);
+  console.log('price_dinner: '+price_dinner);
   console.log('mood: '+with_mood);
   console.log('mood2: '+mood2);
   console.log('taste: '+taste);
@@ -62,10 +63,11 @@ Food.get_restaurant = function (kakaoid, price_level, subway, exit_quarter, with
       kakao_id: kakaoid,
       subway: subway,
       exit_quarter: exit_quarter,
+      price_lunch: price_lunch,
+      price_dinner: price_dinner,
       mood: with_mood,
       mood2: mood2,
       taste: taste,
-      price_level: price_level,
       food_type: food_type,
       food_ingre: food_ingre,
     };
