@@ -25,6 +25,27 @@ Profile.update_subway = function (kakaoid, value) {
   }));
 };
 
+Profile.update_subway_cafe = function (kakaoid, value) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'profile.update_subway_cafe';
+    const method = 'POST';
+    const url = '/api/v1/users/update_user';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      subway_cafe: value,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
 Profile.update_exit_quarter = function (kakaoid, value) {
   const self = this;
   return new Promise(((resolve, reject) => {
@@ -77,6 +98,69 @@ Profile.update_mood2 = function (kakaoid, value) {
       apikey: '9Y3-7bE-Ud3-7Ja',
       kakao_id: kakaoid,
       mood2: value,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
+Profile.update_mood1 = function (kakaoid, value) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'profile.update_mood1';
+    const method = 'POST';
+    const url = '/api/v1/users/update_user';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      mood1: value,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
+Profile.update_mainmenu_type = function (kakaoid, value) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'profile.update_mainmenu_type';
+    const method = 'POST';
+    const url = '/api/v1/users/update_user';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      mainmenu_type: value,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
+Profile.update_food_name = function (kakaoid, value) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'profile.update_food_name';
+    const method = 'POST';
+    const url = '/api/v1/users/update_user';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      food_name: value,
     };
 
     const func = function (error, response, body) {
@@ -152,6 +236,28 @@ Profile.update_rest2 = function (kakaoid, rest1, rest2) {
   }));
 };
 
+Profile.update_cafe2 = function (kakaoid, cafe1, cafe2) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'food.update_cafe2';
+    const method = 'POST';
+    const url = '/api/v1/users/update_cafe2';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      cafe1,
+      cafe2,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
 Profile.update_place_info = function (kakaoid, lat, lng, cnt) {
   const self = this;
   return new Promise(((resolve, reject) => {
@@ -207,6 +313,27 @@ Profile.update_rest_final = function (kakaoid, value) {
       apikey: '9Y3-7bE-Ud3-7Ja',
       kakao_id: kakaoid,
       rest_final: value,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
+Profile.update_cafe_final = function (kakaoid, value) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'profile.update_cafe_final';
+    const method = 'POST';
+    const url = '/api/v1/users/update_user';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      cafe_final: value,
     };
 
     const func = function (error, response, body) {
@@ -365,6 +492,27 @@ Profile.update_freq_subway = function (kakaoid, value) {
   }));
 };
 
+Profile.update_freq_subway_cafe = function (kakaoid, value) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'profile.update_freq_subway_cafe';
+    const method = 'POST';
+    const url = '/api/v1/users/update_user';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      freq_subway_cafe: value,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
 Profile.update_drink_before = function (kakaoid, value) {
   const self = this;
   return new Promise(((resolve, reject) => {
@@ -375,6 +523,27 @@ Profile.update_drink_before = function (kakaoid, value) {
       apikey: '9Y3-7bE-Ud3-7Ja',
       kakao_id: kakaoid,
       drink_before: value,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
+Profile.update_cafe_before = function (kakaoid, value) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'profile.update_cafe_before';
+    const method = 'POST';
+    const url = '/api/v1/users/update_user';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      cafe_before: value,
     };
 
     const func = function (error, response, body) {
@@ -622,6 +791,26 @@ Profile.update_drink_start = function (kakaoid) {
   }));
 };
 
+Profile.update_cafe_start = function (kakaoid) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'profile.update_cafe_start';
+    const method = 'POST';
+    const url = '/api/v1/users/update_cafe_start';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
 Profile.update_limit_cnt = function (kakaoid, value) {
   const self = this;
   return new Promise(((resolve, reject) => {
@@ -686,6 +875,27 @@ Profile.update_limit_cnt_drink = function (kakaoid, value) {
   }));
 };
 
+Profile.update_limit_cnt_cafe = function (kakaoid, value) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'profile.update_limit_cnt_cafe';
+    const method = 'POST';
+    const url = '/api/v1/users/update_limit_cnt_cafe';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      limit_cnt_cafe: value,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
 Profile.verify_limit_drink = function (kakaoid, limit_cnt_drink, decide_updated_at_drink) {
   const self = this;
   return new Promise(((resolve, reject) => {
@@ -697,6 +907,28 @@ Profile.verify_limit_drink = function (kakaoid, limit_cnt_drink, decide_updated_
       kakao_id: kakaoid,
       decide_updated_at_drink,
       limit_cnt_drink,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
+Profile.verify_limit_cafe = function (kakaoid, limit_cnt_cafe, decide_updated_at_cafe) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'profile.verify_limit_cafe';
+    const method = 'POST';
+    const url = '/api/v1/users/verify_limit_cafe';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      decide_updated_at_cafe,
+      limit_cnt_cafe,
     };
 
     const func = function (error, response, body) {

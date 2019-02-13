@@ -570,6 +570,8 @@ function getPartLog(email, stage) {
     } else if(stage==='decide_place'){
       // targetAPI='/api/v1/users/get_middle_log';
       targetcol='middle_chat_log';
+    } else if(stage==='decide_cafe'){
+      targetcol='cafe_chat_log';
     }
     const info = {
         method: "POST",

@@ -115,10 +115,6 @@ $(document).ready(() => {
   console.log(loginValue);
   console.log(emailValue);
 
-  if(loginValue===null){
-    logout(loginValue);
-  }
-
   if(loginValue==='-1'){
     $('#profile').remove();
     $('#alarm-setting').remove();

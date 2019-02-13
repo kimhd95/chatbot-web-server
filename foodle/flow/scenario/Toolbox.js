@@ -121,7 +121,7 @@ class Toolbox {
           if (result === 'success') {
             await info_update.profile.update_drink_start(socket.id);
             const drink_chlist = ['안녕!! 술고플땐 언제나 코기를 찾아줘😏😆 오늘은 어디 근처의 술집을 정해줄까?', '안녕? 술이 몹시 땡기는 하루구나🍾 이번엔 어디에서 마실거야?', '역시 술집 추천하는 동물은 나밖에 없지? 이번엔 어디에서 마셔볼까🍾', '코기 와쪄😝🐶 오늘은 어디 술집을 털러 가볼까나😈',
-              '밖에서 빙글빙글 돌지 말고 나한테 결정을 맡겨줘!ㅎㅎ 오늘 술자리는 어디야?', '뿅🐕🐕 나왔다!! 오늘은 어느 역 근처 술집을 털어볼까?', '꼭 불금 불토만 있는게 아니지! 불월 불화(?) 불수 불목 불일 언제든 가능하다구ㅎㅎ ',
+              '밖에서 빙글빙글 돌지 말고 나한테 결정을 맡겨줘!ㅎㅎ 오늘 술자리는 어디야?', '뿅🐕🐕 나왔다!! 오늘은 어느 역 근처 술집을 털어볼까?', '꼭 불금 불토만 있는게 아니지! 불월 불화(?) 불수 불목 불일 언제든 가능하다구ㅎㅎ 어디서 마실래?',
               'Life is Alcohol!! 어느역 근처 술집을 골라줄까?'];
             const leng = drink_chlist.length;
             const rand = Math.floor(leng * Math.random());
@@ -141,35 +141,49 @@ class Toolbox {
   decide_cafe(value, socket, user_data) {
     (async function () {
       try {
-        console.log(user_data);
         if ((user_data.registered == -1) || (user_data.cafe_before === false)){
-          const verify_limit = await info_update.profile.verify_limit_drink(socket.id, user_data.limit_cnt_drink, user_data.decide_updated_at_drink);
+          const verify_limit = await info_update.profile.verify_limit_cafe(socket.id, user_data.limit_cnt_cafe, user_data.decide_updated_at_cafe);
           const { result } = verify_limit;
           if (result === 'success') {
-            await index.sendSocketMessage(socket.id, 'chat message button', '안녕 나는 당 떨어지면 으르렁 으르렁대는 외식코기야' );
+            await index.sendSocketMessage(socket.id, 'chat message button', '안녕 나는 당 떨어지면 으르렁 으르렁대는 외식코기야😈🍭' );
             await info_update.profile.update_state(socket.id, '7', 'init');
-            index.sendSocketMessage(socket.id, 'chat message button', '커피, 빙수, 마카롱 ,케이크... 걱정마 내가 동물지능으로 너의 취향저격 카페를 골라줄게 렛츠고', ['decide_cafe', '렛츠고!']);
+            index.sendSocketMessage(socket.id, 'chat message button', '커피, 빙수, 마카롱, 케이크☕🍨🍰\n대한민국은 카페천국! 더욱 심해지는 결정장애!!!\n걱정마 내가 동물지능(?)으로 너의 취향저격 카페를 골라줄게 렛츠고😆', ['decide_cafe', '렛츠고!']);
           } else {
             index.sendSocketMessage(socket.id, 'chat message button', '한 끼당 카페를 5번만 고를 수 있어!', ['get_started', '처음으로 돌아가기']);
           }
         }
         else {
-          // const db_subway = await user_info.subway;
-          // if (db_subway === null) {
-          //   await info_update.food.update_user_start(socket.id);
-          // }
-          console.log(user_data.limit_cnt);
-          const verify_limit = await info_update.profile.verify_limit_drink(socket.id, user_data.limit_cnt_drink, user_data.decide_updated_at_drink);
-          const { result } = verify_limit;
-          if (result === 'success') {
-            await info_update.profile.update_drink_start(socket.id);
-            const cafe_chlist = ['안녕!! 커피나 달달구리가 땡길땐 언제나 코기를 찾아줘 오늘은 어느 역 근처의 카페를 정해볼까?'];
-            const leng = cafe_chlist.length;
-            const rand = Math.floor(leng * Math.random());
-            await info_update.profile.update_state(socket.id, '7', 'decide_cafe');
-            index.sendSocketMessage(socket.id, 'chat message button', cafe_chlist[rand]);
-          } else {
-            index.sendSocketMessage(socket.id, 'chat message button', '30분에 카페을 5번만 고를 수 있어!', ['get_started', '처음으로 돌아가기']);
+          if(user_data.freq_subway_cafe !== null) {
+            const verify_limit = await info_update.profile.verify_limit_cafe(socket.id, user_data.limit_cnt_cafe, user_data.decide_updated_at_cafe);
+            const { result } = verify_limit;
+            if (result === 'success') {
+              await info_update.profile.update_cafe_start(socket.id);
+              const revisit = user_data.freq_subway_cafe;
+              const cafe_chlist = [`안녕 코기 와쪄~!🐕 이번에도 ${revisit}에서 카페 갈꺼야?`, `이번에도 ${revisit} 카페 정해줄까?`, `ㅎㅇㅎㅇ 이번에도 ${revisit} 고고?`, `커피~~디저트~~~! 이번에도 ${revisit} 카페 갈꺼야?`,
+              `당 떨어진다...👻 이번에도 ${revisit} 카페 맞지?`, `어서와!! 카페 정하러 가자👽 오늘도 ${revisit}?`, `요즘 우리나라 디저트는 거의 이탈리아나 프랑스 급인거 같아... 없는 게 없어!! 오늘도 ${revisit}에서 카페 골라볼까?`, `커피 땡겨!!! 오늘도 ${revisit} 카페 맞아맞아?`,
+              `밥먹고 나와서 또 어디갈까 방황하는 영혼들... 내가 구제해주지👻 오늘도 ${revisit}에서 카페 정해볼까?`, `결정장애는 부끄러운 게 아니고 충분히 치유 가능해!!! 내가 있다면😘 이번에도 ${revisit}에서 카페 찾는거야?`];
+              const leng = cafe_chlist.length;
+              const rand = Math.floor(leng * Math.random());
+              await info_update.profile.update_state(socket.id, '7', 'decide_cafe');
+              index.sendSocketMessage(socket.id, 'chat message button', cafe_chlist[rand], [`${revisit}`, '응 맞아!'], ['decide_cafe', '다른곳이야!']);
+            } else {
+              index.sendSocketMessage(socket.id, 'chat message button', '30분에 카페을 5번만 고를 수 있어!', ['get_started', '처음으로 돌아가기']);
+            }
+          }
+          else {
+            const verify_limit = await info_update.profile.verify_limit_cafe(socket.id, user_data.limit_cnt_cafe, user_data.decide_updated_at_cafe);
+            const { result } = verify_limit;
+            if (result === 'success') {
+              await info_update.profile.update_cafe_start(socket.id);
+              const cafe_chlist = ['안녕!! 커피나 달달구리가 땡길땐 언제나 코기를 찾아줘😏😆 오늘은 어느 역 근처의 카페를 정해볼까?', '안녕? 커피 없이 버티기 힘든 하루구나😪 이번엔 어디에 있는 카페를 정해줄까?', '역시 카페 추천하는 동물은 나밖에 없지? 이번엔 어디에 있는 카페를 가볼까나🐕🐕',
+               '코기 와쪄😝🐶 오늘은 어디에 있는 카페를 가볼까😈', '밖에서 빙글빙글 돌지 말고 나한테 결정을 맡겨줘!ㅎㅎ 어느 역 근처 카페가 좋아?', '뿅🐕🐕 나왔다!! 오늘은 어느 역 근처 카페를 가볼까?', '밥배와 커피배와 케이크배는 따로 있는듯... 오늘은 어느 역 근처 카페를 골라줄까?', '당은 우리의 몸과 마음을 모두 살찌우지. 좋다는 뜻이야.ㅎㅎ 오늘은 어느 역 근처 카페를 골라줄까?'];
+              const leng = cafe_chlist.length;
+              const rand = Math.floor(leng * Math.random());
+              await info_update.profile.update_state(socket.id, '7', 'decide_cafe');
+              index.sendSocketMessage(socket.id, 'chat message button', cafe_chlist[rand]);
+            } else {
+              index.sendSocketMessage(socket.id, 'chat message button', '30분에 카페을 5번만 고를 수 있어!', ['get_started', '처음으로 돌아가기']);
+            }
           }
         }
       } catch (e) {
