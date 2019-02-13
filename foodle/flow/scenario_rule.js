@@ -27,7 +27,7 @@ exports.scenario_rule = function (val, socket, msg) {
         const leng2 = chlist2.length;
         const rand2 = Math.floor(leng2 * Math.random());
         await info_update.profile.update_state(socket.id, '100', 'init');
-        index.sendSocketMessage(socket.id, 'chat message button', chlist2[rand2], ['decide_menu', '메뉴 고르기'], ['decide_drink', '술집 고르기'], ['decide_place', '중간지점 찾기(서울)'], ['decide_history', '기록보기'], ['user_feedback', '개발팀에게 피드백하기'], ['chitchat', '외식코기랑 대화하기']);
+        index.sendSocketMessage(socket.id, 'chat message button', chlist2[rand2], ['decide_menu', '식당 고르기'], ['decide_drink', '술집 고르기'], ['decide_cafe', '카페 고르기'], ['decide_place', '중간지점 찾기(서울)'], ['decide_history', '기록보기'], ['user_feedback', '개발팀에게 피드백하기'], ['chitchat', '외식코기랑 대화하기']);
       } else {
         await info_update.profile.create_user_log(socket.id, user_data.scenario, user_data.state, msg);
         switch (user_data.scenario) {
@@ -67,6 +67,12 @@ exports.scenario_rule = function (val, socket, msg) {
           case '6': {
             (function () {
               return new scenario_flow.Decide_drink(val, socket, user_data);
+            }());
+            break;
+          }
+          case '7': {
+            (function () {
+              return new scenario_flow.Decide_cafe(val, socket, user_data);
             }());
             break;
           }

@@ -4,7 +4,8 @@
 let list  = [
     'profile',
     'food',
-    'drink'
+    'drink',
+    'cafe'
 ];
 
 let List = function() {
