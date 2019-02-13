@@ -82,12 +82,16 @@ class Decide_menu {
       key = 'location';
     } else if (key.includes('location/current')){
       key = 'near_station';
-    } else if (key.includes('location/')){
+    } else if (key.includes('location/0')){
       key = 'decide_subway';
+    } else if (key.includes('location/1')){
+      key = 'decide_subway_corgi';
     } else if (key.includes('near_station/choose')){
       key = 'exitnum';
     } else if (key.includes('near_station/search')){
       key = 'decide_subway';
+    } else if (key.includes('decide_subway_corgi/')) {
+      key = 'decision_score';
     } else if (key.includes('exit/')) {
       key = 'decision_score';
     } else if (key.includes('final/')) {
@@ -111,6 +115,7 @@ class Decide_menu {
       'price': this.price,
       'no_price': this.no_price,
       'decide_subway': this.decide_subway,
+      'decide_subway_corgi': this.decide_subway_corgi,
       'exitnum': this.exitnum,
       'mood': this.mood,
       'mood2': this.mood2,
@@ -190,14 +195,18 @@ class Decide_menu {
   price(value, socket, user_data) {
       (async function () {
           try {
-              //await info_update.profile.update_price(socket.id, 'price'); TODO: update_price api 만들기(완료)
+              if (value.includes('lunch')) {
+                  await info_update.profile.update_price_level(socket.id,'', 'x');
+              } else if (value.includes('dinner')) {
+                  await info_update.profile.update_price_level(socket.id,'x', '');
+              }
+
               const price_list = ['식사 예산은 어느 정도 생각해?', '오늘 너의 텅장💸이 허락하는 한도는?? ', '식사 가격은 얼마 정도였으면 좋겠어?',
                   '이번 식사. 얼마면 돼?!💰', '오늘 식사의 가격 상한선은~~?','얼마까지 긁을 수 있어? 💳'];
               const price_leng = price_list.length;
               const price_rand = Math.floor(price_leng * Math.random());
               index.sendSocketMessage(socket.id, 'chat message button checkbox price', price_list[price_rand],
                   ['0', '~1만원 미만'], ['1', '1만원 대'], ['2', '2만원 대'], ['3', '3만원 대'], ['4', '4만원 이상'], ['price/', '선택완료']);
-                  //todo:상관없음 뺀 체크박스 버튼으로 구현(완료)
           } catch (e) {
               index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
               console.log(e);
@@ -219,22 +228,49 @@ class Decide_menu {
   location(value, socket, user_data) {
       (async function () {
           try {
-              const user_price = value.split('/')[1];
-              await info_update.profile.update_price(socket.id, user_price);
-              //TODO: price 반영(완료)
+              const user_price = value.split('/')[1];;
+              console.log('user_price:'+user_price);
+              console.log('점심:'+user_data.price_lunch);
+              console.log('저녁:'+user_data.price_dinner);
+              if (user_data.price_dinner === 'x') { //점심식사
+                  await info_update.profile.update_price_level(socket.id, user_price, 'x');
+                  console.log('점심골랐을때 점심:'+user_data.price_lunch);
+                  console.log('점심골랐을때 저녁:'+user_data.price_dinner);
+              } else if (user_data.price_lunch === 'x') { //저녁식사
+                  await info_update.profile.update_price_level(socket.id,'x', user_price);
+                  console.log('저녁골랐을때 점심:'+user_data.price_lunch);
+                  console.log('저녁골랐을때 저녁:'+user_data.price_dinner);
+              }
+
 
               const location_list = ['약속장소는 이미 정해져 있어?', '어디서 만나기로 했는지는 정했어? ', '약속 장소는 정했구~~?',
                   '어디서 만날지는 정해져 있는거야?', '약속 장소는 정해져 있는거야?'];
               const location_leng = location_list.length;
               const location_rand = Math.floor(location_leng * Math.random());
               index.sendSocketMessage(socket.id, 'chat message button', location_list[location_rand],
-                  ['location/0', '응 정헀어'], ['location/1', 'ㄴㄴ 코기가 정해줘!'], ['location/current', '지금 제일 가까운 곳']); // TODO:['location/2', '현재 위치']);
+                  ['location/0', '응 정했어'], ['location/1', 'ㄴㄴ 코기가 정해줘!'], ['location/current', '지금 제일 가까운 곳']); // TODO:['location/2', '현재 위치']);
           } catch (e) {
               index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
               console.log(e);
           }
       }());
   }
+
+  decide_subway_corgi(value, socket, user_data) {
+    (async function () {
+        try {
+            const subway_corgi_list = ['그럼 강남역에서 만나는 걸로ㅋㅋㅋ']; //todo: 다른역 추가
+            const subway_corgi_leng = subway_corgi_list.length;
+            const subway_corgi_rand = Math.floor(subway_corgi_leng * Math.random());
+            index.sendSocketMessage(socket.id, 'chat message button', subway_corgi_list[subway_corgi_rand],
+                ['decide_subway_corgi/강남역', '고고'], ['location/0', '직접 입력할래']);
+        } catch (e) {
+            index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
+            console.log(e);
+        }
+    }());
+  }
+
 
   near_station(value, socket, user_data) {
       (async function () {
@@ -269,6 +305,9 @@ class Decide_menu {
   decide_subway(value, socket, user_data) {
       (async function () {
           try {
+              if(value.includes('near_station')){
+
+              }
               // console.log(`value: ${value}`);
               console.log('user_data: '+user_data.freq_subway);
               if (!value.includes('elsewhere') && user_data.freq_subway !== null) {
@@ -375,7 +414,11 @@ class Decide_menu {
   decision_score(value, socket, user_data) {
       (async function () {
           try {
-              if (value.includes('exit')) {
+              if (value.includes('decision_subway_corgi')) {
+                  const subway = value.split('/')[1];
+                  await info_update.profile.update_subway(socket.id, subway);
+                  await info_update.profile.update_exit_quarter(socket.id, '999');
+              } else if (value.includes('exit')) {
                   const user_quarter = value.split('/')[1];
                   // console.log(user_quarter);
                   await info_update.profile.update_exit_quarter(socket.id, user_quarter);
@@ -489,7 +532,7 @@ class Decide_menu {
         const user_mood2 = value.split('/')[1];
         console.log('with_mood: '+user_mood2);
         if (value.includes('random')) {
-          await info_update.profile.update_with_mood(socket.id, '캐주얼');
+          // await info_update.profile.update_with_mood(socket.id, '캐주얼');
         } else {
           await info_update.profile.update_mood2(socket.id, user_mood2);
         }
@@ -660,7 +703,7 @@ class Decide_menu {
           }
         }
         await info_update.profile.update_food_type(socket.id, user_food_type);
-        const foods = await info_update.food.get_restaurant(socket.id, user_data.price_level, user_data.subway, user_data.exit_quarter, user_data.with_mood, user_data.mood2, user_data.taste, user_food_type, 'x');
+        const foods = await info_update.food.get_restaurant(socket.id,  user_data.subway, user_data.exit_quarter, user_data.price_lunch, user_data.price_dinner, user_data.with_mood, user_data.mood2, user_data.taste, user_food_type, 'x');
         const foods_info = foods.message;
         if (foods_info.length === 2) {
           await info_update.profile.update_rest2(user_data.kakao_id, foods_info[0].id, foods_info[1].id);
