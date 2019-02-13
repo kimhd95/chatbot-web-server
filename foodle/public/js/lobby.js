@@ -218,7 +218,7 @@ $(document).ready(() => {
 
   $('#choose-rest').click(function(){
     sessionStorage.setItem('stage', 'decide_menu');
-    sessionStorage.setItem('name', '메뉴 고르기');
+    sessionStorage.setItem('name', '식당 고르기');
     console.log('restaurant choose');
     location.href='/chat';
   })
