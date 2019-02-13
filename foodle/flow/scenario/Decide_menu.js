@@ -78,6 +78,10 @@ class Decide_menu {
       key = 'before_decide';
     } else if (key.includes('decide_menu/')) {
       key = 'price';
+    } else if (key.includes('hobulho_hate_start')) {
+      key = 'hobulho_hate';
+    } else if (key.includes('hobulho_hate/')) {
+      key = 'hobulho_hate_feedback';
     } else if (key.includes('price/')) {
       key = 'location';
     } else if (key.includes('location/current')){
@@ -96,10 +100,10 @@ class Decide_menu {
       key = 'decision_score';
     } else if (key.includes('final/')) {
       key = 'final';
-    } else if (key.includes('decision/random')) {
+    } else if (key.includes('decision/taste')) {
       key = 'taste';
-    } else if (key.includes('decision/filter')) {
-        key = 'mood2';
+    } else if (key.includes('decision/random')) {
+        key = 'random_decide';
     } else if (key.includes('decision/search')) {
         key = 'search';
     } else if (key.includes('mood2/')) {
@@ -134,6 +138,9 @@ class Decide_menu {
       'search': this.search,
       'location': this.location,
       'near_station': this.near_station,
+      'hobulho_hate': this.hobulho_hate,
+      'hobulho_hate_feedback': this.hobulho_hate_feedback,
+      'random_decide': this.random_decide,
     };
     this.execute(key, value, socket, user_data);
   }
@@ -168,7 +175,7 @@ class Decide_menu {
                 '어서와!! 메뉴 정하러 가자👽', '2시간이나 굶었더니 당 떨어진다...👻'];
             const leng = chlist.length;
             const rand = Math.floor(leng * Math.random());
-            index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`, ['decide_menu/lunch', '점심 고르기'], ['decide_menu/dinner', '저녁 고르기']); //TODO: 각 상황에 따라 price 반영
+            index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`, ['decide_menu/lunch', '점심 고르기'], ['decide_menu/dinner', '저녁 고르기']); //TODO: 식당/메뉴명으로 검색하기
           //index.sendSocketMessage(socket.id, 'chat message button', '오늘은 어느 곳의 메뉴를 정해볼까? 원하는 곳에서 가까운 지하철역을 입력해줘🚋');
         } else {
           if (result === 'success') {
@@ -179,7 +186,7 @@ class Decide_menu {
               '어서와!! 메뉴 정하러 가자👽', '2시간이나 굶었더니 당 떨어진다...👻'];
             const leng = chlist.length;
             const rand = Math.floor(leng * Math.random());
-            index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`, ['decide_menu/lunch', '점심 고르기'], ['decide_menu/dinner', '저녁 고르기']);
+            index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`, ['decide_menu/lunch', '점심 고르기'], ['decide_menu/dinner', '저녁 고르기'],['hobulho_hate_start', '못 먹는 음식 체크']); //TODO: 식당/메뉴명으로 검색하기
           } else {
             index.sendSocketMessage(socket.id, 'chat message button', '아... 너무 많이 말했더니 🐶피곤.... 30분만 자고 다시 올게😪🌙', ['get_started', '처음으로 돌아가기']);
           }
@@ -191,8 +198,55 @@ class Decide_menu {
     }());
   }
 
+  hobulho_hate(value, socket, user_data) { //todo: api 구현
+    (async function () {
+        try {
+            const hobulho_hate_list = ['못 먹거나 싫어하는 음식을 모두 체크해줘!', '못 먹거나 싫어하는 음식을 체크해주면 최대한 반영해줄게!',
+                '이 중에서 못 먹는 음식이 있으면 최대한 반영해줄게! 언제든 바꿀 수 있으니 편하게 체크해봐ㅎㅎ'];
+            const hobulho_hate_leng = hobulho_hate_list.length;
+            const hobulho_hate_rand = Math.floor(hobulho_hate_leng * Math.random());
+            index.sendSocketMessage(socket.id, 'chat message button checkbox', hobulho_hate_list[hobulho_hate_rand],
+                ['900', '없음'], ['회', '회'], ['모든 해산물', '모든 해산물'], ['곱창', '곱창'],['닭발', '닭발'], ['양꼬치', '양꼬치'], ['쌀국수', '베트남쌀국수'], ['오이', '오이'], ['매운음식', '매운음식'], ['hobulho_hate/', '선택완료']);
+       //홍어,선지,콩국수,건포도,육회,굴,가지,닭발
+        } catch (e) {
+            index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
+            console.log(e);
+        }
+    }());
+  }
 
-  price(value, socket, user_data) {
+  hobulho_hate_feedback(value, socket, user_data) {
+    (async function () {
+        try {
+            const hobulho_hate_feedback_list = ['오케이 이제부터 참고 하겠어', '오키! 많이 거를수록 선택의 폭은 좁아지겠지만... 호불호는 다 있는거니까😄 이제 메뉴 골라볼까',
+                'ㅋㅋㅋ이해해!! 나는 저거 다 먹을 수 있지만... 앞으로 참고하고 추천할게!'];
+            const hobulho_hate_feedback_leng = hobulho_hate_feedback_list.length;
+            const hobulho_hate_feedback_rand = Math.floor(hobulho_hate_feedback_leng * Math.random());
+            index.sendSocketMessage(socket.id, 'chat message button', `${hobulho_hate_feedback_list[hobulho_hate_feedback_rand]}`, ['decide_menu/lunch', '점심 고르기'], ['decide_menu/dinner', '저녁 고르기']);
+        } catch (e) {
+            index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
+            console.log(e);
+        }
+    }());
+  }
+
+
+  search(value, socket, user_data) { //TODO: 검색기능 구현(res_name, food_type, food_name)
+    (async function () {
+        try {
+            const chlist = ['원하는 음식 종류를 말해줘!!', '뭐 먹고 싶은지 말해봐🍚'];
+            const leng = chlist.length;
+            const rand = Math.floor(leng * Math.random());
+            index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`);
+            //}
+
+        } catch (e) {
+            index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
+        }
+    }());
+  }
+
+    price(value, socket, user_data) {
       (async function () {
           try {
               if (value.includes('lunch')) {
@@ -200,9 +254,8 @@ class Decide_menu {
               } else if (value.includes('dinner')) {
                   await info_update.profile.update_price_level(socket.id,'x', '');
               }
-
-              const price_list = ['식사 예산은 어느 정도 생각해?', '오늘 너의 텅장💸이 허락하는 한도는?? ', '식사 가격은 얼마 정도였으면 좋겠어?',
-                  '이번 식사. 얼마면 돼?!💰', '오늘 식사의 가격 상한선은~~?','얼마까지 긁을 수 있어? 💳'];
+              const price_list = ['식사 예산은 1인당 어느 정도 생각해?', '오늘 너의 텅장💸이 허락하는 한도는??(1인 기준)', '식사 가격은 1인당 얼마 정도였으면 좋겠어?',
+                  '이번 식사. 얼마면 돼?!💰(1인 기준)', '오늘 식사의 가격대는 어느 정도로 생각해~~?(1인 기준)','1인당 얼마까지 긁을 수 있어? 💳'];
               const price_leng = price_list.length;
               const price_rand = Math.floor(price_leng * Math.random());
               index.sendSocketMessage(socket.id, 'chat message button checkbox price', price_list[price_rand],
@@ -230,16 +283,10 @@ class Decide_menu {
           try {
               const user_price = value.split('/')[1];;
               console.log('user_price:'+user_price);
-              console.log('점심:'+user_data.price_lunch);
-              console.log('저녁:'+user_data.price_dinner);
               if (user_data.price_dinner === 'x') { //점심식사
                   await info_update.profile.update_price_level(socket.id, user_price, 'x');
-                  console.log('점심골랐을때 점심:'+user_data.price_lunch);
-                  console.log('점심골랐을때 저녁:'+user_data.price_dinner);
               } else if (user_data.price_lunch === 'x') { //저녁식사
                   await info_update.profile.update_price_level(socket.id,'x', user_price);
-                  console.log('저녁골랐을때 점심:'+user_data.price_lunch);
-                  console.log('저녁골랐을때 저녁:'+user_data.price_dinner);
               }
 
 
@@ -425,27 +472,31 @@ class Decide_menu {
               }
               const qna_list = [
                   {
-                      'question': '오늘의 메뉴결정장애 지수는 몇 점이야??', 'button1_id': 'decision/random', 'button1_value': '100점: 난 아무생각이 없다', 'button2_id': 'mood2', 'button2_value': '50점: 뭔가 떠오를듯 말듯...', 'button3_id': 'decision/search', 'button3_value': '0점: 식당/메뉴명으로 검색하기',
+                      'question': '딱 정해줄까? 아님 길게 물어봐줄까?', 'button1_id': 'decision/random', 'button1_value': '그냥 너가 정해', 'button2_id': 'decision/taste', 'button2_value': '자세히 물어봐줘',
                   },
                   {
-                      'question': '오늘의 메뉴결정장애 점수는 몇 점?', 'button1_id': 'decision/random', 'button1_value': '100점: 아무거나><', 'button2_id': 'mood2', 'button2_value': '50점: 딱 찝지는 못해도 호불호는 존재', 'button3_id': 'decision/search', 'button3_value': '0점: 식당/메뉴명으로 검색하기',
+                      'question': '내가 그냥 정해줄까? 아니면 자세히 물어봐줄까?', 'button1_id': 'decision/random', 'button1_value': '가라는 곳으로 가겠습니다', 'button2_id': 'decision/taste', 'button2_value': '길게 물어봐',
                   },
                   {
-                      'question': '오늘의 결정장애 지수를 점수로 표현한다면?', 'button1_id': 'decision/random', 'button1_value': '100점: 아무거나 먹을랭~', 'button2_id': 'mood2', 'button2_value': '50점: 분명히 땡기는게 있는데 말로 표현불가', 'button3_id': 'decision/search', 'button3_value': '0점: 식당/메뉴명으로 검색하기',
+                      'question': '오늘의 메뉴결정장애 지수는 몇 점이야??', 'button1_id': 'decision/random', 'button1_value': '100점: 난 아무생각이 없다', 'button2_id': 'mood2', 'button2_value': '50점: 뭔가 떠오를듯 말듯...',
                   },
                   {
-                      'question': '오늘의 결정장애 지수는?', 'button1_id': 'decision/random', 'button1_value': '100점: 나한테 아무런 결정을 바라지 말아줘', 'button2_id': 'mood2', 'button2_value': '50점: 옵션 주면 고를수 있을듯?!', 'button3_id': 'decision/search', 'button3_value': '0점: 식당/메뉴명으로 검색하기',
+                      'question': '오늘의 메뉴결정장애 점수는 몇 점?', 'button1_id': 'decision/random', 'button1_value': '100점: 아무거나><', 'button2_id': 'decision/taste', 'button2_value': '50점: 딱 찝지는 못해도 호불호는 존재',
                   },
+                  // {
+                  //     'question': '오늘의 결정장애 지수를 점수로 표현한다면?', 'button1_id': 'decision/random', 'button1_value': '100점: 아무거나 먹을랭~', 'button2_id': 'mood2', 'button2_value': '50점: 분명히 땡기는게 있는데 말로 표현불가',
+                  // {
+                  //     'question': '오늘의 결정장애 지수는?', 'button1_id': 'decision/random', 'button1_value': '100점: 나한테 아무런 결정을 바라지 말아줘', 'button2_id': 'mood2', 'button2_value': '50점: 옵션 주면 고를수 있을듯?!',
+                  // },
                   {
-                      'question': '어떤 방식으로 메뉴를 정해보까나', 'button1_id': 'decision/random', 'button1_value': '코기의 랜덤질문', 'button2_id': 'mood2', 'button2_value': '맛/음식종류/분위기 필터링', 'button3_id': 'decision/search', 'button3_value': '식당/메뉴명으로 검색',
+                      'question': '어떤 방식으로 메뉴를 정해보까나', 'button1_id': 'decision/random', 'button1_value': '코기의 랜덤픽', 'button2_id': 'mood2', 'button2_value': '맛/음식종류/분위기 필터링',
                   },
-                  {
-                      'question': '혹시 조금이라도 땡긴다거나 하는 음식종류가 있어??', 'button1_id': 'decision/random', 'button1_value': '당연히 없지~헤헷', 'button2_id': 'mood2', 'button2_value': '뭔가 살짝 땡기기는 해', 'button3_id': 'decision/search', 'button3_value': '식당/메뉴명으로 검색하기',
-                  },
+                  // {
+                  //     'question': '혹시 조금이라도 땡긴다거나 하는 음식종류가 있어??', 'button1_id': 'decision/random', 'button1_value': '당연히 없지~헤헷', 'button2_id': 'mood2', 'button2_value': '뭔가 살짝 땡기기는 해',
               ];
               const qna_list_leng = qna_list.length;
               const qna_list_rand = Math.floor(qna_list_leng * Math.random());
-                index.sendSocketMessage(socket.id, 'chat message button', qna_list[qna_list_rand].question, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value], [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value]);
+                index.sendSocketMessage(socket.id, 'chat message button', qna_list[qna_list_rand].question, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value]);
           } catch (e) {
               index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
               console.log(e);
@@ -611,9 +662,6 @@ class Decide_menu {
               "question":"오늘 많이 추워?","button1_id":"food_type/개추워","button1_value":"개추워","button2_id":"food_type/쌀쌀해","button2_value":"쌀쌀햬","button3_id":"food_type/안추워","button3_value":"안추워"
             },
             {
-              "question":"혹시 오싫모야?(오이 싫어해?)","button1_id":"food_type/오이 싫어","button1_value":"오이 싫어","button2_id":"food_type/오이 잘먹어","button2_value":"오이 잘먹어"
-            },
-            {
               "question":"식사 시간이 어떻게 돼?","button1_id":"food_type/1시간 미만","button1_value":"1시간 미만","button2_id":"food_type/1시간 이상","button2_value":"1시간 이상"
             },
             {
@@ -632,21 +680,6 @@ class Decide_menu {
     }());
   }
 
-
-  search(value, socket, user_data) { //TODO: 검색기능 구현(res_name, food_type, food_name)
-      (async function () {
-          try {
-              const chlist = ['원하는 음식 종류를 말해줘!!', '뭐 먹고 싶은지 말해봐🍚'];
-              const leng = chlist.length;
-              const rand = Math.floor(leng * Math.random());
-              index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`);
-              //}
-
-          } catch (e) {
-              index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
-          }
-      }());
-  }
 
 
   fake_qna(value, socket, user_data) {
@@ -681,6 +714,40 @@ class Decide_menu {
               console.log(e);
           }
       }());
+  }
+
+  random_decide(value, socket, user_data) {
+    (async function () {
+        try {
+            await info_update.profile.update_mood2(socket.id, '999');
+            await info_update.profile.update_with_mood(socket.id, '캐주얼');
+            await info_update.profile.update_taste(socket.id, 'all');
+            let user_food_type='all';
+            // let user_food_type=value.split('/')[1];
+            // if(user_food_type!=='all'){
+            //     // 질문 id 맨 앞에 question index를 붙여서 전달했음, 앞에 3개 질문이 아닌 경우는 선택에 영향을 주면 안 되므로 all로 처리함.
+            //     if(Number(value.charAt(0))>=3){
+            //         user_food_type='all';
+            //     }
+            // }
+            await info_update.profile.update_food_type(socket.id, user_food_type);
+            const foods = await info_update.food.get_restaurant(socket.id,  user_data.subway, user_data.exit_quarter, user_data.price_lunch, user_data.price_dinner, user_data.with_mood, user_data.mood2, user_data.taste, user_food_type, 'x');
+            const foods_info = foods.message;
+            if (foods_info.length === 2) {
+                await info_update.profile.update_rest2(user_data.kakao_id, foods_info[0].id, foods_info[1].id);
+                if (foods.try === 1) {
+                    index.sendSocketMessage(socket.id, 'chat message button', '2곳을 골라줄테니까 한 번 골라봐!', ['decide_final', '고고'], ['get_started', '안할래']);
+                } else if (foods.try === 2) {
+                    index.sendSocketMessage(socket.id, 'chat message button', `${user_data.subway} 전체에서 2곳을 골라줄테니까 한 번 골라봐!`, ['decide_final', '고고'], ['get_started', '안할래']);
+                }
+            } else {
+                index.sendSocketMessage(socket.id, 'chat message button', '조건에 맞는 식당이 아직 없어... 다시 골라줘!', ['get_started', '돌아가기']);
+            }
+        } catch (e) {
+            index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
+            console.log(e);
+        }
+    }());
   }
 
   before_decide(value, socket, user_data) {

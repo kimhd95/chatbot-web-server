@@ -722,7 +722,7 @@ $(function () {
     } else {
       $('#m').autocomplete('disable');
     }
-    if ($(e.target).attr('id') === ('mood2/') || $(e.target).attr('id') === ('exit/') || $(e.target).attr('id') === ('drink_type/') || $(e.target).attr('id') === ('price/')) {
+    if ($(e.target).attr('id') === ('mood2/') || $(e.target).attr('id') === ('exit/') || $(e.target).attr('id') === ('drink_type/') || $(e.target).attr('id') === ('price/') ||  $(e.target).attr('id') === ('hobulho_hate/')) {
       const checked_array = [];
       const checked_name_array = [];
       $('.checkbox:checked').each(function () {
@@ -744,6 +744,9 @@ $(function () {
             break;
           case 'price/':
             socket.emit('chat message button rule', $(e.target).attr('name'), 'no_price');
+            break;
+          case 'hobulho_hate/':
+            socket.emit('chat message button rule', $(e.target).attr('name'), 'no_hobulho_hate');
             break;
         }
       } else {
@@ -786,7 +789,7 @@ $(function () {
     } else {
       $('#m').autocomplete('disable');
     }
-    if ($(e.target).attr('id') === '999' || $(e.target).attr('id') === '998' || $(e.target).attr('id') === '상관없음') {
+    if ($(e.target).attr('id') === '999' || $(e.target).attr('id') === '998' || $(e.target).attr('id') === '900' || $(e.target).attr('id') === '상관없음' || $(e.target).attr('id') === '없음') {
       clickNum=0;
       console.log(clickNum);
       $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').prop('checked', false);
@@ -799,6 +802,8 @@ $(function () {
         socket.emit('chat message button rule', $(e.target).attr('name'), 'exit/'+$(e.target).attr('id'));
       } else if ($(e.target).attr('id') === '998'){
         socket.emit('chat message button rule', $(e.target).attr('name'), 'mood2/'+$(e.target).attr('id'));
+      } else if ($(e.target).attr('id') === '900'){
+          socket.emit('chat message button rule', $(e.target).attr('name'), 'hobulho_hate/'+$(e.target).attr('id'));
       } else{
         socket.emit('chat message button rule', $(e.target).attr('name'), 'drink_type/'+$(e.target).attr('id'));
       }
