@@ -133,6 +133,54 @@ function secondInfoValidationCheck() {
     signUpReq(name, gender, email, password, birthYear, phone);
 }
 
+//추가
+function login (email, password) {
+    spinner = new Spinner(opts).spin(target);
+    const info = {
+        url: "/api/v1/users/login",
+        method: "POST",
+        body: {
+            email: email,
+            password: password
+        },
+        success: function (res) {
+            spinner.stop();
+            console.log('loginReq success');
+            sessionStorage.setItem('login', '0');
+            sessionStorage.setItem('email', email);
+            window.location.replace(res.redirect);
+
+        },
+        error: function (e) {
+            spinner.stop();
+            console.log('ajax call error: login page - loginReq');
+            if (e.status === 403 &&
+                (e.responseText.includes("No doctor account found with given email address.") ||
+                    e.responseText.includes("Password wrong"))) {
+                alert("아이디/비밀번호를 확인해주세요.");
+            } else if (e.status === 404 && e.responseText.includes("API call URL not found.")) {
+                console.log("check your URL, method(GET/POST)");
+                alert("로그인에 실패했습니다.");
+            } else if (e.status === 400 && e.responseText.includes("not given")) {
+                console.log("check your parameters");
+                alert("로그인에 실패했습니다.");
+            } else if(e.status === 0){
+                if(navigator.onLine){
+                    console.log('status : 0');
+                }else {
+                    console.log('internet disconnected');
+                    window.location.reload();
+                }
+            }  else {
+                console.log(e.responseText);
+                console.log(e);
+                alert("로그인에 실패했습니다.");
+            }
+        }
+    };
+    sendTokenReq(info);
+}
+
 function signUpReq(name, gender, email, password, birthYear, phone) {
     spinner = new Spinner(opts).spin(target);
     const info = {
@@ -151,10 +199,12 @@ function signUpReq(name, gender, email, password, birthYear, phone) {
                 spinner.stop();
                 console.log("signUpReq: success!");
                 alert("회원가입이 성공적으로 완료되었습니다.");
-                sessionStorage.setItem('login', 0);
-                sessionStorage.setItem('email', email);
-                location.href = '/';
-            }else {
+                // sessionStorage.setItem('signup', '1')
+                // sessionStorage.setItem('login', '0');
+                login(email, password);
+      //          sessionStorage.setItem('email', email);
+        //        location.href = '/lobby';
+            } else {
                 spinner.stop();
                 console.log("signUpReq: fail!");
                 console.log(res);
@@ -234,7 +284,8 @@ $(document).ready(() => {
             }
         }
         sendTokenReq(info);
-    } else {
+    }
+    else {
         alert('이미 로그인되어 있습니다.');
         location.href="/lobby";
     }
