@@ -287,49 +287,49 @@ class Decide_cafe {
 
         const qna_list = [
           {
-            'question': '마실 거? 먹을거?', 'button1_id': 'scenario4_2/커피, 티', 'button1_value': '마실 거', 'button2_id': 'scenario4_2/디저트, 브런치', 'button2_value': '먹을 거', 'button3_id': 'scenario4_2/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '마실 거? 먹을거?', 'button1_id': 'scenario4_2/커피, 티', 'button1_value': '마실 거', 'button2_id': 'scenario4_2/디저트', 'button2_value': '먹을 거', 'button3_id': 'scenario4_2/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '마실 거 찾아줄까? 먹을 거 찾아줄까?', 'button1_id': 'scenario4_2/커피, 티', 'button1_value': '마실 거', 'button2_id': 'scenario4_2/디저트, 브런치', 'button2_value': '먹을 거', 'button3_id': 'scenario4_2/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '마실 거 찾아줄까? 먹을 거 찾아줄까?', 'button1_id': 'scenario4_2/커피, 티', 'button1_value': '마실 거', 'button2_id': 'scenario4_2/디저트', 'button2_value': '먹을 거', 'button3_id': 'scenario4_2/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '후식은 마실 거? 아니면 먹을 거?', 'button1_id': 'scenario4_2/커피, 티', 'button1_value': '마실 거', 'button2_id': 'scenario4_2/디저트, 브런치', 'button2_value': '먹을 거', 'button3_id': 'scenario4_2/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '후식은 마실 거? 아니면 먹을 거?', 'button1_id': 'scenario4_2/커피, 티', 'button1_value': '마실 거', 'button2_id': 'scenario4_2/디저트', 'button2_value': '먹을 거', 'button3_id': 'scenario4_2/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '단거 어때?', 'button1_id': 'fake/4_1/디저트', 'button1_value': '단거 좋아', 'button2_id': 'fake/4_1/커피, 티', 'button2_value': '단거 싫어', 'button3_id': 'fake/4_1/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '단거 어때?', 'button1_id': 'fake/4_1/디저트', 'button1_value': '단거 좋아', 'button2_id': 'fake/4_1/커피, 티', 'button2_value': '단거 싫어', 'button3_id': 'fake/4_1/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '달달한 거 좋아해?', 'button1_id': 'fake/4_1/디저트', 'button1_value': '단거 좋아', 'button2_id': 'fake/4_1/커피, 티', 'button2_value': '단거 싫어', 'button3_id': 'fake/4_1/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '달달한 거 좋아해?', 'button1_id': 'fake/4_1/디저트', 'button1_value': '단거 좋아', 'button2_id': 'fake/4_1/커피, 티', 'button2_value': '단거 싫어', 'button3_id': 'fake/4_1/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '지금 단거 땡겨?', 'button1_id': 'fake/4_1/디저트', 'button1_value': '단거 좋아', 'button2_id': 'fake/4_1/커피, 티', 'button2_value': '단거 싫어', 'button3_id': 'fake/4_1/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '지금 단거 땡겨?', 'button1_id': 'fake/4_1/디저트', 'button1_value': '단거 좋아', 'button2_id': 'fake/4_1/커피, 티', 'button2_value': '단거 싫어', 'button3_id': 'fake/4_1/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '단거 좋아해?', 'button1_id': 'fake/4_1/디저트', 'button1_value': '단거 좋아', 'button2_id': 'fake/4_1/커피, 티', 'button2_value': '단거 싫어', 'button3_id': 'fake/4_1/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '단거 좋아해?', 'button1_id': 'fake/4_1/디저트', 'button1_value': '단거 좋아', 'button2_id': 'fake/4_1/커피, 티', 'button2_value': '단거 싫어', 'button3_id': 'fake/4_1/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '커피 마실거야?', 'button1_id': 'scenario4_2/커피', 'button1_value': '무조건 커피', 'button2_id': 'scenario4_2/티, 디저트, 브런치', 'button2_value': '커피 말고 다른거', 'button3_id': 'scenario4_2/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '커피 마실거야?', 'button1_id': 'scenario4_2/커피', 'button1_value': '무조건 커피', 'button2_id': 'scenario4_2/티, 디저트', 'button2_value': '커피 말고 다른거', 'button3_id': 'scenario4_2/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '커피 아니어도 괜찮아?', 'button1_id': 'scenario4_2/커피', 'button1_value': '무조건 커피', 'button2_id': 'scenario4_2/티, 디저트, 브런치', 'button2_value': '커피 말고 다른거', 'button3_id': 'scenario4_2/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '커피 아니어도 괜찮아?', 'button1_id': 'scenario4_2/커피', 'button1_value': '무조건 커피', 'button2_id': 'scenario4_2/티, 디저트', 'button2_value': '커피 말고 다른거', 'button3_id': 'scenario4_2/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '카페 가면 커피 시키려구?', 'button1_id': 'scenario4_2/커피', 'button1_value': '무조건 커피', 'button2_id': 'scenario4_2/티, 디저트, 브런치', 'button2_value': '커피 말고 다른거', 'button3_id': 'scenario4_2/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '카페 가면 커피 시키려구?', 'button1_id': 'scenario4_2/커피', 'button1_value': '무조건 커피', 'button2_id': 'scenario4_2/티, 디저트', 'button2_value': '커피 말고 다른거', 'button3_id': 'scenario4_2/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '혹시 지금 카페인이 필요한거야?ㅎㅎ', 'button1_id': 'scenario4_2/커피, 티', 'button1_value': '카페인 내놔', 'button2_id': 'scenario4_2/디저트, 브런치', 'button2_value': '카페인 ㄴㄴ', 'button3_id': 'scenario4_2/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '혹시 지금 카페인이 필요한거야?ㅎㅎ', 'button1_id': 'scenario4_2/커피, 티', 'button1_value': '카페인 내놔', 'button2_id': 'scenario4_2/디저트', 'button2_value': '카페인 ㄴㄴ', 'button3_id': 'scenario4_2/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '커피나 카페인 음료를 찾고 있어?', 'button1_id': 'scenario4_2/커피, 티', 'button1_value': '카페인 내놔', 'button2_id': 'scenario4_2/디저트, 브런치', 'button2_value': '카페인 ㄴㄴ', 'button3_id': 'scenario4_2/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '커피나 카페인 음료를 찾고 있어?', 'button1_id': 'scenario4_2/커피, 티', 'button1_value': '카페인 내놔', 'button2_id': 'scenario4_2/디저트', 'button2_value': '카페인 ㄴㄴ', 'button3_id': 'scenario4_2/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '혹시 지금 배가 덜 찼어?', 'button1_id': 'fake/4_1/디저트, 브런치', 'button1_value': '배고파...', 'button2_id': 'fake/4_1/디저트', 'button2_value': '좀 출출해', 'button3_id': 'fake/4_1/커피, 티', 'button3_value': '배불러!!', 'button4_id': 'fake/4_1/커피, 티, 디저트, 브런치', 'button4_value': '상관없어',
+            'question': '혹시 지금 배가 덜 찼어?', 'button1_id': 'fake/4_1/디저트', 'button1_value': '배고파...', 'button2_id': 'fake/4_1/디저트', 'button2_value': '좀 출출해', 'button3_id': 'fake/4_1/커피, 티', 'button3_value': '배불러!!', 'button4_id': 'fake/4_1/커피, 티, 디저트', 'button4_value': '상관없어',
           },
           {
-            'question': '혹시 지금 배고파?', 'button1_id': 'fake/4_1/디저트, 브런치', 'button1_value': '배고파...', 'button2_id': 'fake/4_1/디저트', 'button2_value': '좀 출출해', 'button3_id': 'fake/4_1/커피, 티', 'button3_value': '배불러!!', 'button4_id': 'fake/4_1/커피, 티, 디저트, 브런치', 'button4_value': '상관없어',
+            'question': '혹시 지금 배고파?', 'button1_id': 'fake/4_1/디저트', 'button1_value': '배고파...', 'button2_id': 'fake/4_1/디저트', 'button2_value': '좀 출출해', 'button3_id': 'fake/4_1/커피, 티', 'button3_value': '배불러!!', 'button4_id': 'fake/4_1/커피, 티, 디저트', 'button4_value': '상관없어',
           },
           {
-            'question': '혹시 지금 출출해?', 'button1_id': 'fake/4_1/디저트, 브런치', 'button1_value': '배고파...', 'button2_id': 'fake/4_1/디저트', 'button2_value': '좀 출출해', 'button3_id': 'fake/4_1/커피, 티', 'button3_value': '배불러!!', 'button4_id': 'fake/4_1/커피, 티, 디저트, 브런치', 'button4_value': '상관없어',
+            'question': '혹시 지금 출출해?', 'button1_id': 'fake/4_1/디저트', 'button1_value': '배고파...', 'button2_id': 'fake/4_1/디저트', 'button2_value': '좀 출출해', 'button3_id': 'fake/4_1/커피, 티', 'button3_value': '배불러!!', 'button4_id': 'fake/4_1/커피, 티, 디저트', 'button4_value': '상관없어',
           },
         ];
         const qna_list_leng = qna_list.length;
@@ -599,55 +599,55 @@ class Decide_cafe {
 
         const qna_list = [
           {
-            'question': '마실 거? 먹을거?', 'button1_id': 'scenario5_3/5_1/커피, 티, 초콜릿, 생과일음료', 'button1_value': '마실 거', 'button2_id': 'scenario5_3/5_1/디저트, 브런치, 초콜릿, 와플, 빙수, 머핀', 'button2_value': '먹을 거', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '마실 거? 먹을거?', 'button1_id': 'scenario5_3/5_1/커피, 티, 초콜릿, 생과일음료', 'button1_value': '마실 거', 'button2_id': 'scenario5_3/5_1/디저트, 초콜릿, 와플, 빙수, 머핀', 'button2_value': '먹을 거', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '마실 거 찾아줄까? 먹을 거 찾아줄까?', 'button1_id': 'scenario5_3/5_1/커피, 티, 초콜릿, 생과일음료', 'button1_value': '마실 거', 'button2_id': 'scenario5_3/5_1/디저트, 브런치, 초콜릿, 와플, 빙수, 머핀', 'button2_value': '먹을 거', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '마실 거 찾아줄까? 먹을 거 찾아줄까?', 'button1_id': 'scenario5_3/5_1/커피, 티, 초콜릿, 생과일음료', 'button1_value': '마실 거', 'button2_id': 'scenario5_3/5_1/디저트, 초콜릿, 와플, 빙수, 머핀', 'button2_value': '먹을 거', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '후식은 마실 거? 아니면 먹을 거?', 'button1_id': 'scenario5_3/5_1/커피, 티, 초콜릿, 생과일음료', 'button1_value': '마실 거', 'button2_id': 'scenario5_3/5_1/디저트, 브런치, 초콜릿, 와플, 빙수, 머핀', 'button2_value': '먹을 거', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '후식은 마실 거? 아니면 먹을 거?', 'button1_id': 'scenario5_3/5_1/커피, 티, 초콜릿, 생과일음료', 'button1_value': '마실 거', 'button2_id': 'scenario5_3/5_1/디저트, 초콜릿, 와플, 빙수, 머핀', 'button2_value': '먹을 거', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '단거 어때?', 'button1_id': 'scenario5_3/5_1/디저트, 초콜릿, 와플', 'button1_value': '단거 좋아', 'button2_id': 'scenario5_3/5_1/커피, 티', 'button2_value': '단거 싫어', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '단거 어때?', 'button1_id': 'scenario5_3/5_1/디저트, 초콜릿, 와플', 'button1_value': '단거 좋아', 'button2_id': 'scenario5_3/5_1/커피, 티', 'button2_value': '단거 싫어', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '달달한 거 좋아해?', 'button1_id': 'scenario5_3/5_1/디저트, 초콜릿, 와플', 'button1_value': '단거 좋아', 'button2_id': 'scenario5_3/5_1/커피, 티', 'button2_value': '단거 싫어', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '달달한 거 좋아해?', 'button1_id': 'scenario5_3/5_1/디저트, 초콜릿, 와플', 'button1_value': '단거 좋아', 'button2_id': 'scenario5_3/5_1/커피, 티', 'button2_value': '단거 싫어', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '지금 단거 땡겨?', 'button1_id': 'scenario5_3/5_1/디저트, 초콜릿, 와플', 'button1_value': '단거 좋아', 'button2_id': 'scenario5_3/5_1/커피, 티', 'button2_value': '단거 싫어', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '지금 단거 땡겨?', 'button1_id': 'scenario5_3/5_1/디저트, 초콜릿, 와플', 'button1_value': '단거 좋아', 'button2_id': 'scenario5_3/5_1/커피, 티', 'button2_value': '단거 싫어', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '단거 좋아해?', 'button1_id': 'scenario5_3/5_1/디저트, 초콜릿, 와플', 'button1_value': '단거 좋아', 'button2_id': 'scenario5_3/5_1/커피, 티', 'button2_value': '단거 싫어', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '단거 좋아해?', 'button1_id': 'scenario5_3/5_1/디저트, 초콜릿, 와플', 'button1_value': '단거 좋아', 'button2_id': 'scenario5_3/5_1/커피, 티', 'button2_value': '단거 싫어', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '커피 마실거야?', 'button1_id': 'scenario5_2/5_1/커피', 'button1_value': '무조건 커피', 'button2_id': 'scenario5_3/5_1/티, 디저트, 브런치, 초콜릿, 스무디, 주스', 'button2_value': '커피 말고 다른거', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '커피 마실거야?', 'button1_id': 'scenario5_2/5_1/커피', 'button1_value': '무조건 커피', 'button2_id': 'scenario5_3/5_1/티, 디저트, 초콜릿, 스무디, 주스', 'button2_value': '커피 말고 다른거', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '커피 아니어도 괜찮아?', 'button1_id': 'scenario5_2/5_1/커피', 'button1_value': '무조건 커피', 'button2_id': 'scenario5_3/5_1/티, 디저트, 브런치, 초콜릿, 스무디, 주스', 'button2_value': '커피 말고 다른거', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '커피 아니어도 괜찮아?', 'button1_id': 'scenario5_2/5_1/커피', 'button1_value': '무조건 커피', 'button2_id': 'scenario5_3/5_1/티, 디저트, 초콜릿, 스무디, 주스', 'button2_value': '커피 말고 다른거', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '카페 가면 커피 시키려구?', 'button1_id': 'scenario5_2/5_1/커피', 'button1_value': '무조건 커피', 'button2_id': 'scenario5_3/5_1/티, 디저트, 브런치, 초콜릿, 스무디, 주스', 'button2_value': '커피 말고 다른거', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '카페 가면 커피 시키려구?', 'button1_id': 'scenario5_2/5_1/커피', 'button1_value': '무조건 커피', 'button2_id': 'scenario5_3/5_1/티, 디저트, 초콜릿, 스무디, 주스', 'button2_value': '커피 말고 다른거', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '혹시 지금 카페인이 필요한거야?ㅎㅎ', 'button1_id': 'scenario5_2/5_1/커피, 티', 'button1_value': '카페인 내놔', 'button2_id': 'scenario5_3/5_1/디저트, 브런치', 'button2_value': '카페인 ㄴㄴ', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '혹시 지금 카페인이 필요한거야?ㅎㅎ', 'button1_id': 'scenario5_2/5_1/커피, 티', 'button1_value': '카페인 내놔', 'button2_id': 'scenario5_3/5_1/디저트', 'button2_value': '카페인 ㄴㄴ', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '커피나 카페인 음료를 찾고 있어?', 'button1_id': 'scenario5_2/5_1/커피, 티', 'button1_value': '카페인 내놔', 'button2_id': 'scenario5_3/5_1/디저트, 브런치', 'button2_value': '카페인 ㄴㄴ', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트, 브런치', 'button3_value': '상관없어',
+            'question': '커피나 카페인 음료를 찾고 있어?', 'button1_id': 'scenario5_2/5_1/커피, 티', 'button1_value': '카페인 내놔', 'button2_id': 'scenario5_3/5_1/디저트', 'button2_value': '카페인 ㄴㄴ', 'button3_id': 'scenario5_3/5_1/커피, 티, 디저트', 'button3_value': '상관없어',
           },
           {
-            'question': '혹시 지금 배가 덜 찼어?', 'button1_id': 'scenario5_3/5_1/디저트, 브런치, 와플', 'button1_value': '배고파...', 'button2_id': 'scenario5_3/5_1/디저트, 와플', 'button2_value': '좀 출출해', 'button3_id': 'scenario5_3/5_1/커피, 티', 'button3_value': '배불러!!', 'button4_id': 'scenario5_3/5_1/커피, 티, 디저트, 브런치', 'button4_value': '상관없어',
+            'question': '혹시 지금 배가 덜 찼어?', 'button1_id': 'scenario5_3/5_1/디저트, 와플', 'button1_value': '배고파...', 'button2_id': 'scenario5_3/5_1/디저트, 와플', 'button2_value': '좀 출출해', 'button3_id': 'scenario5_3/5_1/커피, 티', 'button3_value': '배불러!!', 'button4_id': 'scenario5_3/5_1/커피, 티, 디저트', 'button4_value': '상관없어',
           },
           {
-            'question': '혹시 지금 배고파?', 'button1_id': 'scenario5_3/5_1/디저트, 브런치, 와플', 'button1_value': '배고파...', 'button2_id': 'scenario5_3/5_1/디저트, 와플', 'button2_value': '좀 출출해', 'button3_id': 'scenario5_3/5_1/커피, 티', 'button3_value': '배불러!!', 'button4_id': 'scenario5_3/5_1/커피, 티, 디저트, 브런치', 'button4_value': '상관없어',
+            'question': '혹시 지금 배고파?', 'button1_id': 'scenario5_3/5_1/디저트, 와플', 'button1_value': '배고파...', 'button2_id': 'scenario5_3/5_1/디저트, 와플', 'button2_value': '좀 출출해', 'button3_id': 'scenario5_3/5_1/커피, 티', 'button3_value': '배불러!!', 'button4_id': 'scenario5_3/5_1/커피, 티, 디저트', 'button4_value': '상관없어',
           },
           {
-            'question': '혹시 지금 출출해?', 'button1_id': 'scenario5_3/5_1/디저트, 브런치, 와플', 'button1_value': '배고파...', 'button2_id': 'scenario5_3/5_1/디저트, 와플', 'button2_value': '좀 출출해', 'button3_id': 'scenario5_3/5_1/커피, 티', 'button3_value': '배불러!!', 'button4_id': 'scenario5_3/5_1/커피, 티, 디저트, 브런치', 'button4_value': '상관없어',
+            'question': '혹시 지금 출출해?', 'button1_id': 'scenario5_3/5_1/디저트, 와플', 'button1_value': '배고파...', 'button2_id': 'scenario5_3/5_1/디저트, 와플', 'button2_value': '좀 출출해', 'button3_id': 'scenario5_3/5_1/커피, 티', 'button3_value': '배불러!!', 'button4_id': 'scenario5_3/5_1/커피, 티, 디저트', 'button4_value': '상관없어',
           },
           {
-            'question': '차가운 디저트 어때?', 'button1_id': 'scenario10_5/5_1/빙수, 아이스크림', 'button1_value': '찬거 좋아', 'button2_id': 'scenario10_5/5_1/커피, 티, 초콜릿, 디저트, 브런치, 와플, 머핀', 'button2_value': '찬거 싫어', 'button3_id': 'scenario10_5/5_1/커피, 티, 초콜릿, 디저트, 브런치, 와플, 머핀, 빙수, 아이스크림', 'button3_value': '상관없어',
+            'question': '차가운 디저트 어때?', 'button1_id': 'scenario10_5/5_1/빙수, 아이스크림', 'button1_value': '찬거 좋아', 'button2_id': 'scenario10_5/5_1/커피, 티, 초콜릿, 디저트, 와플, 머핀', 'button2_value': '찬거 싫어', 'button3_id': 'scenario10_5/5_1/커피, 티, 초콜릿, 디저트, 와플, 머핀, 빙수, 아이스크림', 'button3_value': '상관없어',
           },
           {
-            'question': '차가운거 괜찮아?', 'button1_id': 'scenario10_5/5_1/빙수, 아이스크림', 'button1_value': '찬거 좋아', 'button2_id': 'scenario10_5/5_1/커피, 티, 초콜릿, 디저트, 브런치, 와플, 머핀', 'button2_value': '찬거 싫어', 'button3_id': 'scenario10_5/5_1/커피, 티, 초콜릿, 디저트, 브런치, 와플, 머핀, 빙수, 아이스크림', 'button3_value': '상관없어',
+            'question': '차가운거 괜찮아?', 'button1_id': 'scenario10_5/5_1/빙수, 아이스크림', 'button1_value': '찬거 좋아', 'button2_id': 'scenario10_5/5_1/커피, 티, 초콜릿, 디저트, 와플, 머핀', 'button2_value': '찬거 싫어', 'button3_id': 'scenario10_5/5_1/커피, 티, 초콜릿, 디저트, 와플, 머핀, 빙수, 아이스크림', 'button3_value': '상관없어',
           },
         ];
         const qna_list_leng = qna_list.length;

@@ -586,7 +586,7 @@ function getPartLog(email, stage) {
                 const init_html = `<br>
                   <div class="bot-message">
                     <div class="message-info">
-                        <img class="image" src="/images/poodle.png" alt="외식코기" style="width: 30px; height: 30px; border-radius: 50%;">
+                        <img class="image" src="/images/logo.png" alt="외식코기" style="width: 30px; height: 30px; border-radius: 50%;">
                         <span class="name">외식코기</span>
                         <span class="time"></span>
                     </div>
@@ -597,12 +597,14 @@ function getPartLog(email, stage) {
                     <div class="message-button">
                         <button type="button" class="messaging-button" id="decide_menu" name="메뉴 고르기">메뉴 고르기</button>
                         <button type="button" class="messaging-button" id="decide_drink" name="술집 고르기">술집 고르기</button>
-                        <button type="button" class="messaging-button" id="decide_place" name="중간지점 찾기(서울)">중간지점 찾기(서울)</button>
-                        <button type="button" class="messaging-button" id="decide_history" name="기록 보기">기록 보기</button>
+                       <button type="button" class="messaging-button" id="decide_cafe" name="카페 고르기">카페 고르기</button>
                         <button type="button" class="messaging-button" id="user_feedback" name="개발팀에게 피드백하기">개발팀에게 피드백하기</button>
-                        <button type="button" class="messaging-button" id="chitchat" name="외식코기랑 대화하기">외식코기랑 대화하기</button>
+                        
                     </div>
                 </div>`;
+                //  <button type="button" class="messaging-button" id="decide_place" name="중간지점 찾기(서울)">중간지점 찾기(서울)</button>
+                //  <button type="button" class="messaging-button" id="decide_history" name="기록 보기">기록 보기</button>
+                //  <button type="button" class="messaging-button" id="chitchat" name="외식코기랑 대화하기">외식코기랑 대화하기</button>
                 let user_html = res.message;
                 // let user_html = res.message;
                 if (user_html !== null) {

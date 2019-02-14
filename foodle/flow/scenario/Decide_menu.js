@@ -580,13 +580,14 @@ class Decide_menu {
   taste(value, socket, user_data) {
     (async function () {
       try {
-        const user_mood2 = value.split('/')[1];
-        console.log('with_mood: '+user_mood2);
-        if (value.includes('random')) {
-          // await info_update.profile.update_with_mood(socket.id, '캐주얼');
-        } else {
-          await info_update.profile.update_mood2(socket.id, user_mood2);
-        }
+             await info_update.profile.update_mood2(socket.id, '998');
+        // const user_mood2 = value.split('/')[1];
+        // if (value.includes('taste')) {
+        //     const mood2 = value.split('/')[1];
+        //    await info_update.profile.update_mood2(socket.id, '998');
+        // } else {
+        //   await info_update.profile.update_mood2(socket.id, user_mood2);
+        // }
         const taste = {
           'qnas': [
             {
@@ -756,7 +757,7 @@ class Decide_menu {
         // console.log('내가 찍은 역명: '+user_data.subway);
         // console.log('내가 찍은 출구: '+user_data.exit_quarter);
         // console.log('내가 찍은 분위기: '+user_data.with_mood);
-        // console.log('내가 찍은 분위기2: '+user_data.mood2);
+         console.log('내가 찍은 분위기2: '+user_data.mood2);
         // console.log('내가 찍은 맛: '+user_data.taste);
         // console.log('받은 값:'+value);
         let user_food_type=value.split('/')[1];
