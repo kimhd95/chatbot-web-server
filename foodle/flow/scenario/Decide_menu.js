@@ -164,6 +164,7 @@ class Decide_menu {
   decide_menu(value, socket, user_data) {
     (async function () {
       try {
+        await info_update.profile.update_place_start(socket.id);
         const user_info = await info_update.profile.load_user(socket.id);
         const verify_limit = await info_update.profile.verify_limit(socket.id, user_data.limit_cnt, user_data.decide_updated_at);
         const { result } = verify_limit;
@@ -250,9 +251,9 @@ class Decide_menu {
       (async function () {
           try {
               if (value.includes('lunch')) {
-                  await info_update.profile.update_price_level(socket.id,'', 'x');
+                  await info_update.profile.update_price_level_dinner(socket.id, 'x');
               } else if (value.includes('dinner')) {
-                  await info_update.profile.update_price_level(socket.id,'x', '');
+                  await info_update.profile.update_price_level_lunch(socket.id,'x');
               }
               const price_list = ['식사 예산은 1인당 어느 정도 생각해?', '오늘 너의 텅장💸이 허락하는 한도는??(1인 기준)', '식사 가격은 1인당 얼마 정도였으면 좋겠어?',
                   '이번 식사. 얼마면 돼?!💰(1인 기준)', '오늘 식사의 가격대는 어느 정도로 생각해~~?(1인 기준)','1인당 얼마까지 긁을 수 있어? 💳'];
@@ -281,12 +282,14 @@ class Decide_menu {
   location(value, socket, user_data) {
       (async function () {
           try {
-              const user_price = value.split('/')[1];;
+              const user_price = await value.split('/')[1];;
               console.log('user_price:'+user_price);
               if (user_data.price_dinner === 'x') { //점심식사
-                  await info_update.profile.update_price_level(socket.id, user_price, 'x');
+                console.log("user_data_price_dinner === x");
+                await info_update.profile.update_price_level_lunch(socket.id, user_price);
               } else if (user_data.price_lunch === 'x') { //저녁식사
-                  await info_update.profile.update_price_level(socket.id,'x', user_price);
+                console.log("user_data_price_lunch === x");
+                await info_update.profile.update_price_level_dinner(socket.id, user_price);
               }
 
 
