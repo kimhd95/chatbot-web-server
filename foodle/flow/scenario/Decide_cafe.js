@@ -939,15 +939,6 @@ scenario10_5 (value, socket, user_data) {
           const flag8 = await info_update.cafe.verify_subway_detail_thema(socket.id, user_data.subway_cafe, "테마(보드게임)");
           const flag9 = await info_update.cafe.verify_subway_detail_thema(socket.id, user_data.subway_cafe, "테마(커플공예)");
           const themaExist = [];
-          console.log(flag1);
-          console.log(flag2);
-          console.log(flag3);
-          console.log(flag4);
-          console.log(flag5);
-          console.log(flag6);
-          console.log(flag7);
-          console.log(flag8);
-          console.log(flag9);
           if (flag1.result === 'success') {
             themaExist.push(1);
           }

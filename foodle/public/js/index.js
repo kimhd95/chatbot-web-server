@@ -222,6 +222,8 @@ $(document).ready(() => {
     $('#naverIdLogin_loginButton img')[0].src = '/images/naver.png';
 
     let loginValue = sessionStorage.getItem('login');
+    // let emailValue = sessionStorage.getItem('email');
+    // console.log(`LoginValue : ${loginValue}, emailValue : ${emailValue}`);
     // console.log("loginValue: "+loginValue)
     if (loginValue === '0' || loginValue === null) {
         const info = {
@@ -237,8 +239,11 @@ $(document).ready(() => {
                 if (res.success) {
                     console.log(res);
                     console.log('verifyToken success');
+                    //추가
+                    sessionStorage.setItem('login', '0');
+
                     sessionStorage.setItem('email', res.email);
-                    alert('이미 로그인되어 있습니다.');
+                    alert('이미 로그인되어 있습니다. loginValue : ' + loginValue);
                     window.location.replace(res.redirect);
                 } else {
                     console.log('verifyToken fail');
@@ -271,8 +276,11 @@ $(document).ready(() => {
             }
         }
         sendTokenReq(info);
-    } else {
-        alert('이미 로그인되어 있습니다.');
+    } else if (loginValue === '-1'){
+      console.log("비회원 로그인");
+    }
+    else {
+        alert('이미 로그인되어 있습니다. loginValue : ' + loginValue);
         location.href='/lobby';
     }
 

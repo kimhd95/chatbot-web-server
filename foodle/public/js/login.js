@@ -194,6 +194,8 @@ $(document).ready(() => {
                     console.log(res);
                     console.log('verifyToken success');
                     sessionStorage.setItem('email', res.email);
+                    // 로그인 value 추가
+                    sessionStorage.setItem('login', '0');
                     alert('이미 로그인되어 있습니다.');
                     window.location.replace(res.redirect);
                 } else {
