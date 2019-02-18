@@ -15,8 +15,6 @@ exports.scenario_rule = function (val, socket, msg) {
   (async function () {
     try {
       console.log(val);
-      // console.log(socket);
-      console.log(msg);
       console.log(`scenario_rule에서 val : ${val}`)
       const user_data = await info_update.profile.load_user(socket.id);
       // console.log(user_data);
