@@ -237,7 +237,6 @@ class Decide_menu {
     }());
   }
 
-
   search(value, socket, user_data) { //TODO: 검색기능 구현(res_name, food_type, food_name)
     (async function () {
         try {
@@ -298,7 +297,6 @@ class Decide_menu {
                 await info_update.profile.update_price_level_dinner(socket.id, user_price);
               }
 
-
               const location_list = ['약속장소는 이미 정해져 있어?', '어디서 만나기로 했는지는 정했어? ', '약속 장소는 정했구~~?',
                   '어디서 만날지는 정해져 있는거야?', '약속 장소는 정해져 있는거야?'];
               const location_leng = location_list.length;
@@ -315,11 +313,10 @@ class Decide_menu {
   decide_subway_corgi(value, socket, user_data) {
     (async function () {
         try {
-            const subway_corgi_list = ['그럼 강남역에서 만나는 걸로ㅋㅋㅋ']; //todo: 다른역 추가
-            const subway_corgi_leng = subway_corgi_list.length;
-            const subway_corgi_rand = Math.floor(subway_corgi_leng * Math.random());
-            index.sendSocketMessage(socket.id, 'chat message button', subway_corgi_list[subway_corgi_rand],
-                ['decide_subway_corgi/강남역', '고고'], ['location/0', '직접 입력할래']);
+            const subway_db = ['강남역', '선릉역', '이대역', '서울대입구역'];
+            const subway_db_leng = subway_db.length;
+            const subway_db_rand = Math.floor(subway_db_leng * Math.random());
+            index.sendSocketMessage(socket.id, 'chat message button', `그럼 ${subway_db[subway_db_rand]}에서 만나는 걸로ㅋㅋㅋ`, [`decide_subway_corgi/${subway_db[subway_db_rand]}`, '고고'], ['location/0', '직접 입력할래']);
         } catch (e) {
             index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
             console.log(e);
@@ -465,7 +462,7 @@ class Decide_menu {
   decision_score(value, socket, user_data) {
       (async function () {
           try {
-              if (value.includes('decision_subway_corgi')) {
+              if (value.includes('decide_subway_corgi')) {
                   const subway = value.split('/')[1];
                   await info_update.profile.update_subway(socket.id, subway);
                   await info_update.profile.update_exit_quarter(socket.id, '999');
