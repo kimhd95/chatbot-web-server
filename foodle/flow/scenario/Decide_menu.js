@@ -213,7 +213,7 @@ class Decide_menu {
             const hobulho_hate_leng = hobulho_hate_list.length;
             const hobulho_hate_rand = Math.floor(hobulho_hate_leng * Math.random());
             index.sendSocketMessage(socket.id, 'chat message button checkbox', hobulho_hate_list[hobulho_hate_rand],
-                ['900', '없음'], ['회', '회'], ['모든 해산물', '모든 해산물'], ['곱창', '곱창'],['닭발', '닭발'], ['양꼬치', '양꼬치'], ['쌀국수', '베트남쌀국수'], ['오이', '오이'], ['매운음식', '매운음식'], ['hobulho_hate/', '선택완료']);
+                ['900', '없음'], ['회', '회'], ['해산물', '모든 해산물'], ['곱창', '곱창'],['닭발', '닭발'], ['양꼬치', '양꼬치'], ['쌀국수', '베트남쌀국수'], ['오이', '오이'], ['매운', '매운음식'], ['hobulho_hate/', '선택완료']);
        //홍어,선지,콩국수,건포도,육회,굴,가지,닭발
         } catch (e) {
             index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
@@ -225,6 +225,9 @@ class Decide_menu {
   hobulho_hate_feedback(value, socket, user_data) {
     (async function () {
         try {
+            const user_input_value = value.split('/')[1];
+            await info_update.profile.update_hate_food(socket.id, user_input_value);
+            console.log('내가 싫어하는 음식: '+user_data.hate_food);
             const hobulho_hate_feedback_list = ['오케이 이제부터 참고 하겠어', '오키! 많이 거를수록 선택의 폭은 좁아지겠지만... 호불호는 다 있는거니까😄 이제 메뉴 골라볼까',
                 'ㅋㅋㅋ이해해!! 나는 저거 다 먹을 수 있지만... 앞으로 참고하고 추천할게!'];
             const hobulho_hate_feedback_leng = hobulho_hate_feedback_list.length;
@@ -725,7 +728,7 @@ class Decide_menu {
             await info_update.profile.update_mood2(socket.id, '998');
             await info_update.profile.update_with_mood(socket.id, '캐주얼');
             await info_update.profile.update_taste(socket.id, 'all');
-            // let user_food_type='all';
+
             // let user_food_type=value.split('/')[1];
             // if(user_food_type!=='all'){
             //     // 질문 id 맨 앞에 question index를 붙여서 전달했음, 앞에 3개 질문이 아닌 경우는 선택에 영향을 주면 안 되므로 all로 처리함.
@@ -734,7 +737,7 @@ class Decide_menu {
             //     }
             // }
             await info_update.profile.update_food_type(socket.id, 'all');
-            const foods = await info_update.food.get_restaurant(socket.id,  user_data.subway, user_data.exit_quarter, user_data.price_lunch, user_data.price_dinner, '캐주얼', '999', 'all', 'all', 'x');
+            const foods = await info_update.food.get_restaurant(socket.id,  user_data.subway, user_data.exit_quarter, user_data.price_lunch, user_data.price_dinner, '캐주얼', '999', 'all', 'x','all', 'x');
             const foods_info = foods.message;
             if (foods.success){
               if (foods_info.length === 2) {
@@ -760,14 +763,15 @@ class Decide_menu {
   before_decide(value, socket, user_data) {
     (async function () {
       try {
-          const user_input_value = value.split('/')[1];
-          const user_food_type = 'all';
+
+          // const user_food_type = 'all';
           if (value.includes('type')) {
+              const user_input_value = value.split('/')[1];
               await info_update.profile.update_food_type(socket.id, user_input_value);
               await info_update.profile.update_mood2(socket.id, '998');
               //await info_update.profile.update_with_mood(socket.id, '캐주얼');
           } else if (value.includes('mood2')) {
-              await info_update.profile.update_mood2(socket.id, user_input_value);
+              await info_update.profile.update_mood2(socket.id, value);
              // await info_update.profile.update_with_mood(socket.id, '캐주얼');
               await info_update.profile.update_taste(socket.id, 'all');
               await info_update.profile.update_food_type(socket.id, 'all');
@@ -776,20 +780,21 @@ class Decide_menu {
         // console.log('내가 찍은 출구: '+user_data.exit_quarter);
         // console.log('내가 찍은 분위기: '+user_data.with_mood);
          console.log('내가 찍은 분위기2: '+user_data.mood2);
+         console.log('내가 싫어하는 음식: '+user_data.hate_food);
         // console.log('내가 찍은 맛: '+user_data.taste);
         // console.log('받은 값:'+value);
         //let user_food_type=value.split('/')[1];
 
         // 어떤 질문이든지 관계없이 상관없음을 눌렀으면 그냥 pass,
         // 아니라면 질문에 따라 user_food_type 값을 바꿔줘야 함.
-        if(user_food_type!=='all'){
-          // 질문 id 맨 앞에 question index를 붙여서 전달했음, 앞에 3개 질문이 아닌 경우는 선택에 영향을 주면 안 되므로 all로 처리함.
-          if(Number(value.charAt(0))>=3){
-            user_food_type='all';
-          }
-        }
-        await info_update.profile.update_food_type(socket.id, user_food_type);
-        const foods = await info_update.food.get_restaurant(socket.id,  user_data.subway, user_data.exit_quarter, user_data.price_lunch, user_data.price_dinner, user_data.with_mood, user_data.mood2, user_data.taste, user_food_type, 'x');
+        // if(user_food_type!=='all'){
+        //   // 질문 id 맨 앞에 question index를 붙여서 전달했음, 앞에 3개 질문이 아닌 경우는 선택에 영향을 주면 안 되므로 all로 처리함.
+        //   if(Number(value.charAt(0))>=3){
+        //     user_food_type='all';
+        //   }
+        // }
+        //await info_update.profile.update_food_type(socket.id, user_food_type);
+        const foods = await info_update.food.get_restaurant(socket.id,  user_data.subway, user_data.exit_quarter, user_data.price_lunch, user_data.price_dinner, user_data.with_mood, user_data.mood2, user_data.taste, user_data.hate_food, user_data.food_type, 'x');
         const foods_info = foods.message;
         if (foods_info.length === 2) {
           await info_update.profile.update_rest2(user_data.kakao_id, foods_info[0].id, foods_info[1].id);
