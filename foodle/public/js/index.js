@@ -141,11 +141,9 @@ function login () {
         },
         success: function (res) {
             console.log('loginReq success');
-            console.log(res);
             sessionStorage.setItem('login', '0');
             sessionStorage.setItem('email', email);
             alert('성공적으로 로그인되었습니다.');
-            sessionStorage.setItem('token', res.token);
             window.location.replace(res.redirect);
         },
         error: function (e) {

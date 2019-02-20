@@ -65,30 +65,6 @@ function sendTokenReq(info) {
         error: info.error
     });
 }
-function sendTokenReq2(info, token) {
-    if(!info.error){
-        info.error = function(e){
-            console.log('ajax call error');
-            console.log(e);
-        }
-    }
-    $.ajax(URL + info.url, {
-      /*
-        beforeSend: function(xhr) {
-          xhr.setRequestHeader("cookie2", "token="+token);
-        },*/
-        method: info.method,
-        crossDomain: true,
-        xhrFields: {
-            withCredentials: true
-        },
-        data: {"token": token, "platform": navigator.platform},
-        success: info.success,
-        error: info.error
-    });
-    console.log("Platform : " + navigator.platform);
-    console.log("token : " + token);
-}
 
 function recheckTokenExist (reqName) {
     const info = {
