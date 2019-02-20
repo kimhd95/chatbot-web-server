@@ -186,7 +186,8 @@ $(document).ready(() => {
           }
       }
     }
-    sendTokenReq(info);
+    console.log("token in lobby : " + sessionStorage.getItem('token'));
+    sendTokenReq2(info, sessionStorage.getItem('token'));
 
   if(loginValue==='-1'){
     $('#profile').remove();
