@@ -243,7 +243,7 @@ $(document).ready(() => {
                     sessionStorage.setItem('login', '0');
 
                     sessionStorage.setItem('email', res.email);
-                    alert('이미 로그인되어 있습니다. loginValue : ' + loginValue);
+                    alert('이미 로그인되어 있습니다.');
                     window.location.replace(res.redirect);
                 } else {
                     console.log('verifyToken fail');
@@ -280,7 +280,7 @@ $(document).ready(() => {
       console.log("비회원 로그인");
     }
     else {
-        alert('이미 로그인되어 있습니다. loginValue : ' + loginValue);
+        alert('이미 로그인되어 있습니다.');
         location.href='/lobby';
     }
 
