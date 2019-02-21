@@ -599,7 +599,7 @@ function getPartLog(email, stage) {
                         <button type="button" class="messaging-button" id="decide_drink" name="술집 고르기">술집 고르기</button>
                        <button type="button" class="messaging-button" id="decide_cafe" name="카페 고르기">카페 고르기</button>
                         <button type="button" class="messaging-button" id="user_feedback" name="개발팀에게 피드백하기">개발팀에게 피드백하기</button>
-                        
+
                     </div>
                 </div>`;
                 //  <button type="button" class="messaging-button" id="decide_place" name="중간지점 찾기(서울)">중간지점 찾기(서울)</button>
@@ -763,7 +763,7 @@ $(function () {
       setTimeout(async function(){
         console.log(arr);
         await socket.emit('chat message button rule', $(e.target).attr('name'), `${$(e.target).attr('id')}_${arr.lat}/${arr.lng}`);
-      }, 2000)
+      }, 2000);
 
       // console.log(getLocation(socket.id));
 
