@@ -697,7 +697,7 @@ $(function () {
   //   // $("input").prop('disabled', false);
   // });
 
-  $(".back-btn").click(function(){
+  $('.back-btn').click(function(){
     location.href='/lobby';
     sessionStorage.removeItem('stage');
     sessionStorage.removeItem('name');
@@ -1182,12 +1182,12 @@ $(document).ready(() => {
 
   // let loginValue = sessionStorage.getItem('login');
   if (loginValue === '0') {
-    $('.social-signed-in')[0].style.display = 'none';
+    // $('.social-signed-in')[0].style.display = 'none';
     $('.email-signed-in')[0].style.display = 'block';
     $('.update-password')[0].style.display = 'block';
   } else {
     // $('m').val(sessionStorage.getItem('email'));
-    $('.social-signed-in')[0].style.display = 'block';
+    // $('.social-signed-in')[0].style.display = 'block';
     $('.email-signed-in')[0].style.display = 'none';
     $('.update-password')[0].style.display = 'block';
   }
