@@ -761,7 +761,7 @@ $(function () {
       // console.log(navigator.geolocation);
       let arr = getLocation(socket.id);
       var temp = setTimeout(function() {
-        socket.emit('chat message button rule', $(e.target).attr('name'), {$(e.target).attr('id')}+'_'+${arr.lat}+'/'+${arr.lng});
+        socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + '_'+ arr.lat + '/' + arr.lng);
         //socket.emit('chat message button rule', $(e.target).attr('name'), `${$(e.target).attr('id')}_${arr.lat}/${arr.lng}`);
       }, 2000);
 
