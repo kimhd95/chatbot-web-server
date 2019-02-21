@@ -760,9 +760,9 @@ $(function () {
     } else if ($(e.target).attr('id')==='location/current'){
       // console.log(navigator.geolocation);
       let arr = getLocation(socket.id);
-      var temp = setTimeout(async function() {
-        console.log(arr);
-        await socket.emit('chat message button rule', $(e.target).attr('name'), `${$(e.target).attr('id')}_${arr.lat}/${arr.lng}`);
+      var temp = setTimeout(function() {
+        socket.emit('chat message button rule', $(e.target).attr('name'), {$(e.target).attr('id')}+'_'+${arr.lat}+'/'+${arr.lng});
+        //socket.emit('chat message button rule', $(e.target).attr('name'), `${$(e.target).attr('id')}_${arr.lat}/${arr.lng}`);
       }, 2000);
 
       // console.log(getLocation(socket.id));
