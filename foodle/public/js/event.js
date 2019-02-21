@@ -763,7 +763,7 @@ $(function () {
       setTimeout(async function(){
         console.log(arr);
         await socket.emit('chat message button rule', $(e.target).attr('name'), `${$(e.target).attr('id')}_${arr.lat}/${arr.lng}`);
-      }, 2000);
+      }(), 2000);
 
       // console.log(getLocation(socket.id));
 
