@@ -599,7 +599,7 @@ function getPartLog(email, stage) {
                         <button type="button" class="messaging-button" id="decide_drink" name="술집 고르기">술집 고르기</button>
                        <button type="button" class="messaging-button" id="decide_cafe" name="카페 고르기">카페 고르기</button>
                         <button type="button" class="messaging-button" id="user_feedback" name="개발팀에게 피드백하기">개발팀에게 피드백하기</button>
-                        
+
                     </div>
                 </div>`;
                 //  <button type="button" class="messaging-button" id="decide_place" name="중간지점 찾기(서울)">중간지점 찾기(서울)</button>
@@ -697,7 +697,7 @@ $(function () {
   //   // $("input").prop('disabled', false);
   // });
 
-  $(".back-btn").click(function(){
+  $('.back-btn').click(function(){
     location.href='/lobby';
     sessionStorage.removeItem('stage');
     sessionStorage.removeItem('name');
@@ -1182,12 +1182,12 @@ $(document).ready(() => {
 
   // let loginValue = sessionStorage.getItem('login');
   if (loginValue === '0') {
-    $('.social-signed-in')[0].style.display = 'none';
+    // $('.social-signed-in')[0].style.display = 'none';
     $('.email-signed-in')[0].style.display = 'block';
     $('.update-password')[0].style.display = 'block';
   } else {
     // $('m').val(sessionStorage.getItem('email'));
-    $('.social-signed-in')[0].style.display = 'block';
+    // $('.social-signed-in')[0].style.display = 'block';
     $('.email-signed-in')[0].style.display = 'none';
     $('.update-password')[0].style.display = 'block';
   }
