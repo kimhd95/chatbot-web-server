@@ -251,9 +251,37 @@ $(document).ready(() => {
     logout(loginValue);
   })
 
-  $('#withdraw-btn').click(function(){
-    console.log('withdraw clicked');
-  })
+  $('#withdraw-btn').click(() => {
+    if (confirm('정말 탈퇴하시겠습니까? 탈퇴하시면 모든 데이터가 소멸됩니다.')) {
+      const info = {
+        url: '/api/v1/users/member_withdraw',
+        method: 'POST',
+        body: {
+          email: sessionStorage.getItem('email')
+        },
+        success: function(res) {
+          if (res.success) {
+            if (sessionStorage.getItem('login') === '3') {
+              googleSignOut();
+            }
+            sessionStorage.clear();
+            localStorage.clear();
+            alert('탈퇴했습니다.');
+            window.location.replace(res.redirect);
+          }
+        },
+        error: function (e) {
+          console.log(e.responseJSON);
+        }
+      }
+
+      sendReq(info);
+    }
+  });
+
+  // $('#withdraw-btn').click(function(){
+  //   console.log('withdraw clicked');
+  // })
 
   const userinfo = {
       method: "POST",
