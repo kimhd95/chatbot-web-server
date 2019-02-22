@@ -1114,6 +1114,8 @@ $(function () {
       // }
   });
 
+
+
   socket.on('chat message image', (socket_id, msg, button1, button2, ...args) => {
     console.log("Present stage: "+sessionStorage.getItem('stage'));
     $('#messages').append(bot_messaging_image_carousel(args[0]));
@@ -1144,6 +1146,51 @@ $(function () {
     //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
     // }
   });
+
+  /* 이미지, 메세지, 버튼 같이 사용 */
+  socket.on('chat message button image', (socket_id, msg, img, ...args) => {
+    console.log("Present stage: "+sessionStorage.getItem('stage'));
+      if (args.length === 0) {
+        $('#m').prop('disabled', false);
+        $('#input-button').attr('disabled', false);
+      } else {
+        $('#m').prop('disabled', true);
+        $('#input-button').attr('disabled', true);
+      }
+      $('#messages').append(bot_messaging(msg)).children(':last').hide()
+        .fadeIn(150);
+      const args_length = args.length;
+      $('#messages').append(bot_messaging_image(img));
+      for (let i = 0; i < args_length; i += 1) {
+        $('#messages').append(bot_messaging_button(args[i][0], args[i][1]));
+      }
+      $('#messages').scrollTop(1E10);
+      updateChatLog(socket_id);
+  });
+  /* 이미지, 메세지, 중복체크버튼을 같이 사용 */
+  socket.on('chat message button checkbox image', (socket_id, msg, img, ...args) => {  // msg:메세지, img: 이미지, args: 버튼들
+    console.log("Present stage: "+sessionStorage.getItem('stage'));
+      if (args.length === 0) {
+        $('#m').prop('disabled', false);
+        $('#input-button').attr('disabled', false);
+      } else {
+        $('#m').prop('disabled', true);
+        $('#input-button').attr('disabled', true);
+      }
+      $('#messages').append(bot_messaging(msg)).children(':last').hide()
+        .fadeIn(150);
+      const args_length = args.length;
+      $('#messages').append(bot_messaging_image(img));
+      for (let i = 0; i < args_length - 1; i += 1) {
+        $('#messages').append(bot_messaging_button_checkbox(args[i][0], args[i][1]));
+      }
+      $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
+      $('.complete-button').prop('disabled', true);
+      $('#messages').scrollTop(1E10);
+      updateChatLog(socket_id);
+  });
+
+
 
   socket.on('chat message card no image', (socket_id, button1, button2, button3, rest1, rest2) => {
     console.log("Present stage: "+sessionStorage.getItem('stage'));

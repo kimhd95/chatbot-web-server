@@ -421,6 +421,8 @@ class Decide_menu {
           switch (subway) {
             case '강남역': {
               await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/강남역.png', ['999', '상관없어'], ['4', '1,2,3,4번'], ['3', '5,6,7,8번'], ['2', '9,10번'], ['1', '11,12번'], ['exit/', '선택완료']);
+              //await index.sendSocketMessage(socket.id, 'chat message button image', '메세지 내용', 'emoji/angry.png', ['1', '버튼1'], ['2', '버튼2'], ['3', '버튼3'], ['4', '버튼4']);
+              //await index.sendSocketMessage(socket.id, 'chat message button checkbox image', '메세지 내용', 'emoji/angry.png', ['1', '옵션1'], ['2', '옵션2'], ['3', '옵션3'], ['exit/', '선택완료']);
               break;
             }
             case '선릉역': {
