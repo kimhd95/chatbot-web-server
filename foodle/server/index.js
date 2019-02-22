@@ -46,7 +46,7 @@ module.exports = function(){
 		// 		return;
 		// 	}
 		// });
-		socket.on('give file number', function(img_flag){
+		socket.on('give file number', function(img_flag, index){
 			const testFolder = './public/contents';
 			const allfile = [];
 			fs.readdirSync(testFolder).forEach(file => {
@@ -54,7 +54,7 @@ module.exports = function(){
 					allfile.push(file);
 				}
 			});
-			io.to(socket.id).emit('file number', allfile.length);
+			io.to(socket.id).emit('file number', allfile.length, index);
 		});
 
 		socket.on('disconnect', function(){
