@@ -8,6 +8,7 @@
 
 // Express 기본 모듈 불러오기
 const
+	fs = require('fs');
 	express = require('express'),
 	path = require('path'),
 	request = require('request'),
@@ -30,7 +31,6 @@ module.exports = function(){
 		start;
 
 
-
 	let httpserver = http.createServer(server);
 	let io = require('socket.io').listen(httpserver);
 
@@ -46,7 +46,16 @@ module.exports = function(){
 		// 		return;
 		// 	}
 		// });
-
+		socket.on('give file number', function(img_flag){
+			const testFolder = './public/contents';
+			const allfile = [];
+			fs.readdirSync(testFolder).forEach(file => {
+				if(file.includes(img_flag)) {
+					allfile.push(file);
+				}
+			});
+			io.to(socket.id).emit('file number', allfile.length);
+		});
 
 		socket.on('disconnect', function(){
 			console.log(socket.id + 'user disconnected');
@@ -226,7 +235,6 @@ module.exports = function(){
 
 	//===== 서버 시작 =====//
 	start = function() {
-
 		let
 			hostname = server.get('hostname'),
 			port = server.get('port');
