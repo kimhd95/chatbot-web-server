@@ -33,14 +33,22 @@
               </div>
             </div>
               -->
-            <div id="content-2" class="food-content">
+            <div id="content-1" class="food-content">
               <div class="thumbnail" style="background-image: url('/contents/contents  vegan _페이지_1.jpg');"></div>
               <div class="content-text">
                   <div class="content-name">비건 고기는 고기맛이 날까</div>
                   <div class="content-date">19.02.17</div>
               </div>
-              <!--  -->
             </div>
+
+            <div id="content-2" class="food-content">
+              <div class="thumbnail" style="background-image: url('/contents/pork cutlet_페이지_1.jpg');"></div>
+              <div class="content-text">
+                  <div class="content-name">3대 돈까스 도장깨기</div>
+                  <div class="content-date">19.02.22</div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -49,13 +57,13 @@
         <div id="contents-wrapper" class="swiper-wrapper"></div>
       </div>
 
-      <div class="upperbar">
-        <div id="back-button" class="back"></div>
-      </div>
+      <!-- <div class="upperbar"> -->
+        <!-- <div id="back-button" class="back"></div> -->
+      <!-- </div> -->
 
-      <div class="lowerbar">
+      <!-- <div class="lowerbar"> -->
         <!-- <div class="swiper-scrollbar"></div> -->
-      </div>
+      <!-- </div> -->
 
 
         <!-- jQuery library (served from Google) -->
@@ -72,8 +80,8 @@
         <!-- <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> -->
 
 
-        <script>
-
+        <!-- <script>
+        var socket = io();
         // let loginV=sessionStorage.getItem('login');
 
         var swiper = new Swiper('.swiper-container');
@@ -94,15 +102,46 @@
         //     }
         // })
 
+        function getContentLeng(img_flag) {
+          var num = 0;
 
-        $(".food-content").click(function(){
+        }
+
+        socket.on('file number', (msg) => {
+          console.log(msg);
+        });
+
+        $('#content-1').click(function(){
+          $('.swiper-container').toggleClass('close');
+          var i;
+          var img_flag = '/contents/contents  vegan _페이지_';
+          // const content_leng = getContentLeng(img_flag);
+          // console.log(content_leng);
+          socket.emit('file number');
+
+          for(i=1;i<29;i++){
+            var image_url = `/contents/contents  vegan _페이지_${i}.jpg`;
+            // if(`/contents/contents  vegan _페이지_${i}.jpg`.onerror){
+            //   console.log("에러 떳음");
+            //     break;
+            // } else {
+            //   console.log("노 에러");
+            // }
+            swiper.appendSlide(`<div id="slide_${i}" class="swiper-slide" style="background-image: url('/contents/contents  vegan _페이지_${i}.jpg');"></div>`)
+          }
+        })
+
+        $('#content-2').click(function(){
           $('.swiper-container').toggleClass('close');
           var i;
           for(i=1;i<50;i++){
-            if('/contents/contents  vegan _페이지_${i}.jpg'.onerror){
+            if(`/contents/pork cutlet_페이지_${i}.jpg`.onerror){
+              console.log("에러 떳음");
                 break;
+            } else {
+              console.log("노 에러");
             }
-            swiper.appendSlide(`<div id="slide_${i}" class="swiper-slide" style="background-image: url('/contents/contents  vegan _페이지_${i}.jpg');"></div>`)
+            swiper.appendSlide(`<div id="slide_${i}" class="swiper-slide" style="background-image: url('/contents/pork cutlet_페이지_${i}.jpg');"></div>`)
           }
         })
 
@@ -121,12 +160,15 @@
         })
 
 
-				</script>
+				</script> -->
 
 
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <!-- <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script> -->
         <script src="/js/base.js"></script>
+        <script src="/js/content.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <!-- <script src="/js/event.js"></script> -->
 
 
         <!-- <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script> -->
