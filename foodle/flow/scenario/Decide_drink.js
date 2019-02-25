@@ -227,7 +227,7 @@ class Decide_drink {
         if (user_quarter === '999') {
           user_quarter = '1,2,3,4';
         }
-        const chlist = [`땡기는 주종은 뭐야!! 말만해!!!`,`술 종류를 모두~~ 선택해줘🍻`,`오늘은 어떤 술이 땡겨?🍾`,`자 오늘의 주종을 선택해 봅시다!`,`어떤 술이 좋아?? 질문이 너무 어렵나..?💀`,`마시고 싶은 술 종류를 모두~~ 골라봐~~~👻`];
+        const chlist = [`땡기는 주종은 뭐야!! 말만해!!!(중복선택)`,`술 종류를 모두 다~~ 선택해줘🍻`,`오늘은 어떤 술이 땡겨?🍾(중복선택!!)`,`자 오늘의 주종을 선택해 봅시다!(중복선택)`,`어떤 술이 좋아?? 질문이 너무 어렵나..?💀(중복선택)`,`마시고 싶은 술 종류를 모두~~ 골라봐~~~👻(중복선택)`];
         const leng = chlist.length;
         const rand = Math.floor(leng * Math.random());
         let drink_type = await info_update.drink.find_subway_drink_type(socket.id, user_data.subway, user_quarter);
@@ -319,7 +319,7 @@ class Decide_drink {
           const chlist = [`"와인은 신이 인간에게 준 최고의 선물이다"라고 플라톤 선생이 말씀하셨대🍷`,`이름은 몰라도 비쌀수록 맛있다는 와인!! 사실은 2~3만원대인데 엄청 높은 평점의 와인도 꽤 많다고 해🍷`,`와인은 노화방지에 좋다고 하니까 죄책감 없이 쭈욱 마셔 ㅎㅎ(악마의속삭임)`];
           const leng = chlist.length;
           const rand = Math.floor(leng * Math.random());
-          await index.sendSocketMessage(socket.id, 'chat message button', chlist[rand]);
+          await index.sendSocketMessage(socket.id, 'chat message button image', chlist[rand], 'emoji/wine.png');
           if (qna_list_rand === 0 || qna_list_rand === 8) {
             index.sendSocketMessage(socket.id, 'chat message button', qna_list[qna_list_rand].question, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value], [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value]);
           } else {
@@ -352,10 +352,13 @@ class Decide_drink {
           ];
           const qna_list_leng = qna_list.length;
           const qna_list_rand = Math.floor(qna_list_leng * Math.random());
+            const imglist = ['emoji/ask.png','emoji/ask2.png','emoji/ask3.png','emoji/ask4.png'];
+            const leng2 = imglist.length;
+            const rand2 = Math.floor(leng2 * Math.random());
           if (qna_list_rand === 1) {
-            index.sendSocketMessage(socket.id, 'chat message button', qna_list[qna_list_rand].question, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value], [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value]);
+            index.sendSocketMessage(socket.id, 'chat message button image', qna_list[qna_list_rand].question, `${imglist[rand2]}`, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value], [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value]);
           } else {
-            index.sendSocketMessage(socket.id, 'chat message button', qna_list[qna_list_rand].question, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value]);
+            index.sendSocketMessage(socket.id, 'chat message button image', qna_list[qna_list_rand].question, `${imglist[rand2]}`, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value]);
           }
         } else {
           const qna_list = [
@@ -400,12 +403,12 @@ class Decide_drink {
           {
             'question': '치즈 들어간 안주 좋아해?', 'button1_id': 'taste/치즈', 'button1_value': '좋아', 'button2_id': 'taste/-치즈', 'button2_value': '별로',
           },
-          {
-            'question': '안주로 매운음식은 어때?', 'button1_id': 'taste/매운', 'button1_value': '좋아', 'button2_id': 'taste/-매운', 'button2_value': '별로',
-          },
-          {
-            'question': '매운음식 좋아해?', 'button1_id': 'taste/매운', 'button1_value': '좋아', 'button2_id': 'taste/-매운', 'button2_value': '별로',
-          },
+          // {
+          //   'question': '안주로 매운음식은 어때?', 'button1_id': 'taste/매운', 'button1_value': '좋아', 'button2_id': 'taste/-매운', 'button2_value': '별로',
+          // },
+          // {
+          //   'question': '매운음식 좋아해?', 'button1_id': 'taste/매운', 'button1_value': '좋아', 'button2_id': 'taste/-매운', 'button2_value': '별로',
+          // },
           {
             'question': '안주는 짭짤하거나 자극적인 맛 괜찮??', 'button1_id': 'taste/기름진', 'button1_value': '좋아', 'button2_id': 'taste/-기름진', 'button2_value': '별로',
           },
@@ -572,7 +575,7 @@ class Decide_drink {
               await index.sendSocketMessage(socket.id, 'chat message card', ['final/1', foods[0].res_name], ['final/2', foods[1].res_name], ['final/3', '챗봇이 골라주기'], [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
             }
           } else if (drink_rest_result.try === 2) {
-            await index.sendSocketMessage(socket.id, 'chat message button', `조건에 딱 맞는 식당이 ${user_data.subway} 선택한 출구에는 없네... 다른 출구에서 두 곳 보여줄게!`);
+            await index.sendSocketMessage(socket.id, 'chat message button', `조건에 딱 맞는 술집이 ${user_data.subway} 선택한 출구에는 없네... 다른 출구에서 두 곳 보여줄게!`);
             await index.sendSocketMessage(socket.id, 'chat message loader', 2000);
             await index.sendSocketMessage(socket.id, 'chat message button', chlist[rand]);
             await index.sendSocketMessage(socket.id, 'chat message loader', 2500);
@@ -583,7 +586,7 @@ class Decide_drink {
             }
           }
         } else {
-          index.sendSocketMessage(socket.id, 'chat message button', '조건에 맞는 식당이 아직 없어... 다시 골라줘!', ['get_started', '돌아가기']);
+          index.sendSocketMessage(socket.id, 'chat message button image', '조건에 맞는 술집이 아직 없어... 자자 침착하고... 다시 하자!ㅎㅎㅎ','emoji/angry2.PNG', ['get_started', '돌아가기']);
         }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
