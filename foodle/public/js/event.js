@@ -1465,6 +1465,7 @@ $(document).ready(() => {
   });
 
   $('.decide-update-password').click(() => {
+    location.href="tel:010-1234-1234";
     if ($('.cur-password').val() === '') {
       alert('현재 비밀번호를 입력하세요.');
       return;
