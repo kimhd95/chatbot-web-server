@@ -250,7 +250,7 @@ $(document).ready(() => {
                     console.log(res);
                     console.log('verifyToken success');
                     sessionStorage.setItem('email', res.email);
-                    alert('이미 로그인되어 있습니다.');
+                    //alert('이미 로그인되어 있습니다.');
                     window.location.replace(res.redirect);
                 } else {
                     console.log('verifyToken fail');
@@ -286,7 +286,7 @@ $(document).ready(() => {
         sendTokenReq(info);
     }
     else {
-        alert('이미 로그인되어 있습니다.');
+        //alert('이미 로그인되어 있습니다.');
         location.href="/lobby";
     }
     // 출생년도 초기화

@@ -1481,6 +1481,10 @@ $(document).ready(() => {
       alert('새 비밀번호가 일치하지 않습니다.');
       return;
     }
+    if ($('.cur-password').val() === $('.new-password').val()) {
+      alert('새 비밀번호가 기존 비밀번호와 일치합니다.');
+      return;
+    }
     const info = {
       url: '/api/v1/users/update_password',
       method: 'POST',
