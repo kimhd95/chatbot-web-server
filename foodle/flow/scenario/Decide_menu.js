@@ -644,7 +644,7 @@ class Decide_menu {
         const imglist = ['emoji/ask.png','emoji/ask2.png','emoji/ask3.png','emoji/ask4.png'];
         const leng2 = imglist.length;
         const rand2 = Math.floor(leng2 * Math.random());
-        index.sendSocketMessage(socket.id, 'chat message button image', taste_data[taste_rand].question,[taste_data[taste_rand].button1_id, taste_data[taste_rand].button1_value], [taste_data[taste_rand].button2_id, taste_data[taste_rand].button2_value], ['taste/all', '상관없음']);
+        index.sendSocketMessage(socket.id, 'chat message button image',`${imglist[rand2]}`, taste_data[taste_rand].question,[taste_data[taste_rand].button1_id, taste_data[taste_rand].button1_value], [taste_data[taste_rand].button2_id, taste_data[taste_rand].button2_value], ['taste/all', '상관없음']);
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
         console.log(e);
