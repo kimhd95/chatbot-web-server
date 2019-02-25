@@ -331,9 +331,9 @@ class Decide_cafe {
         const qna_list_leng = qna_list.length;
         const qna_list_rand = Math.floor(qna_list_leng * Math.random());
         if (qna_list_rand === 12 || qna_list_rand === 13 || qna_list_rand === 14) {
-          index.sendSocketMessage(socket.id, 'chat message button', qna_list[qna_list_rand].question, [qna_list[qna_list_rand].button4_id, qna_list[qna_list_rand].button4_value], [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value], [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value]);
+          index.sendSocketMessage(socket.id, 'chat message button image', qna_list[qna_list_rand].question,'emoji/workingcoffe.png', [qna_list[qna_list_rand].button4_id, qna_list[qna_list_rand].button4_value], [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value], [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value]);
         } else {
-          index.sendSocketMessage(socket.id, 'chat message button', qna_list[qna_list_rand].question, [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value], [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value]);
+          index.sendSocketMessage(socket.id, 'chat message button image', qna_list[qna_list_rand].question,'emoji/workingcoffe.png', [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value], [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value]);
         }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
@@ -1144,7 +1144,7 @@ scenario10_5 (value, socket, user_data) {
           component.push(`주문마감 : ${cafe_value[0].last_order}시간전<br>`);
         }
         if(cafe_value[0].holiday != null && cafe_value[0].holiday != '') {
-          component.push(`휴무일 : ${cafe_value[0].holiday}요일<br>`);
+          component.push(`휴무일 : ${cafe_value[0].holiday}<br>`);
         }
         if(cafe_value[0].etc != null && cafe_value[0].etc != '') {
           component.push(`기타사항 : ${cafe_value[0].etc}<br>`);
@@ -1205,7 +1205,7 @@ scenario10_5 (value, socket, user_data) {
           component.push(`주문마감 : ${cafe_value[0].last_order}시간전<br>`);
         }
         if(cafe_value[0].holiday != null && cafe_value[0].holiday != '') {
-          component.push(`휴무일 : ${cafe_value[0].holiday}요일<br>`);
+          component.push(`휴무일 : ${cafe_value[0].holiday}<br>`);
         }
         if(cafe_value[0].etc != null && cafe_value[0].etc != '') {
           component.push(`기타사항 : ${cafe_value[0].etc}<br>`);
