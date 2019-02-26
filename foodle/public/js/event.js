@@ -474,6 +474,8 @@ function updatePartLog(email, stage) {
       targetcol='middle_chat_log';
     }
     let chat_log = $("#messages")[0].innerHTML;
+    console.log("updatePartlog 함수 안");
+    console.log(chat_log);
     const latestidx=chat_log.lastIndexOf('<hr>');
     if(chat_log.lastIndexOf('<hr>')!==-1){
       chat_log=chat_log.slice(latestidx+4)+`<hr>`;
@@ -518,46 +520,47 @@ function updatePartLog(email, stage) {
     };
     sendReq(info);
 }
-
-function updateChatLog(socket_id) {
-    const chat_log = $("#messages")[0].innerHTML;
-    const info = {
-        method: "POST",
-        url: '/api/v1/users/update_user',
-        body: {
-            kakao_id: socket_id,
-            chat_log: chat_log+`<hr>`,
-        },
-        success: function (res) {
-            if (res.success){
-                console.log("update chatlog: success!");
-            }else {
-                console.log("updatechatlog: fail!");
-                console.log(res);
-            }
-        },
-        error: function(e) {
-            console.log('ajax call error: signup page - singUpReq');
-            if (e.status === 404 && e.responseText.includes("API call URL not found."))
-                console.log("check your URL, method(GET/POST)");
-            else if ((e.status === 400 && e.responseText.includes("not provided"))
-                || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
-                console.log("check your parameters");
-            } else if(e.status === 0){
-                if(navigator.onLine){
-                    console.log('status : 0');
-                }else {
-                    console.log('internet disconnected');
-                    window.location.reload();
-                }
-            } else {
-                console.log('status: ' + e.status + ', message: ' + e.responseText);
-            }
-            alert(e.responseText);
-        }
-    };
-    sendReq(info);
-}
+//
+// function updateChatLog(socket_id) {
+//     const new_text = $("#messages")[0].innerHTML;
+//
+//     const info = {
+//         method: "POST",
+//         url: '/api/v1/users/update_user',
+//         body: {
+//             kakao_id: socket_id,
+//             chat_log: + new_text+`<hr>`,
+//         },
+//         success: function (res) {
+//             if (res.success){
+//                 console.log("update chatlog: success!");
+//             }else {
+//                 console.log("updatechatlog: fail!");
+//                 console.log(res);
+//             }
+//         },
+//         error: function(e) {
+//             console.log('ajax call error: signup page - singUpReq');
+//             if (e.status === 404 && e.responseText.includes("API call URL not found."))
+//                 console.log("check your URL, method(GET/POST)");
+//             else if ((e.status === 400 && e.responseText.includes("not provided"))
+//                 || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
+//                 console.log("check your parameters");
+//             } else if(e.status === 0){
+//                 if(navigator.onLine){
+//                     console.log('status : 0');
+//                 }else {
+//                     console.log('internet disconnected');
+//                     window.location.reload();
+//                 }
+//             } else {
+//                 console.log('status: ' + e.status + ', message: ' + e.responseText);
+//             }
+//             alert(e.responseText);
+//         }
+//     };
+//     sendReq(info);
+// }
 
 function getPartLog(email, stage) {
     let targetcol;
@@ -895,6 +898,8 @@ $(function () {
         success: function (res) {
             if (res.success){
                 console.log("signUpReq: success!");
+                console.log(stage);
+                console.log(loginValue);
                 if(stage!==null){
                   if(loginValue!=='-1'){
                     getPartLog(user_email, sessionStorage.getItem('stage'));
@@ -979,7 +984,7 @@ $(function () {
     }
     $('#messages').scrollTop(1E10);
 
-    updateChatLog(socket_id);
+    // updateChatLog(socket_id);
     if(loginValue!=='-1'){
       if(msg.includes("오늘의 선택")){
         updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
@@ -1014,7 +1019,7 @@ $(function () {
     // $('.messaging-button-checkbox:not(:hidden)').first().click();
     // $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
     $('#messages').scrollTop(1E10);
-    updateChatLog(socket_id);
+    // updateChatLog(socket_id);
     // if(sessionStorage.getItem('stage')!==null){
     //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
     // }
@@ -1043,7 +1048,7 @@ $(function () {
     // $('.messaging-button-checkbox:not(:hidden)').first().click();
     // $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
     $('#messages').scrollTop(1E10);
-    updateChatLog(socket_id);
+    // updateChatLog(socket_id);
     // if(sessionStorage.getItem('stage')!==null){
     //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
     // }
@@ -1070,7 +1075,7 @@ $(function () {
       $('#input-button').attr('disabled', true);
     }
     $('#messages').scrollTop(1E10);
-    updateChatLog(socket_id);
+    // updateChatLog(socket_id);
     // if(sessionStorage.getItem('stage')!==null){
     //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
     // }
@@ -1108,7 +1113,7 @@ $(function () {
       // $('.messaging-button-checkbox:not(:hidden)').first().click();
       // $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
       $('#messages').scrollTop(1E10);
-      updateChatLog(socket_id);
+      // updateChatLog(socket_id);
       // if(sessionStorage.getItem('stage')!==null){
       //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
       // }
@@ -1128,7 +1133,7 @@ $(function () {
     setTimeout(() => {
       $('#messages').scrollTop(1E10);
     }, 100); // execute your function after 2 seconds.
-    updateChatLog(socket_id);
+    // updateChatLog(socket_id);
   });
 
   socket.on('chat message card', (socket_id, button1, button2, button3, rest1, rest2) => {
@@ -1141,7 +1146,7 @@ $(function () {
     setTimeout(() => {
       $('#messages').scrollTop(1E10);
     }, 100); // execute your function after 2 seconds.
-    updateChatLog(socket_id);
+    // updateChatLog(socket_id);
     // if(sessionStorage.getItem('stage')!==null){
     //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
     // }
@@ -1165,7 +1170,12 @@ $(function () {
         $('#messages').append(bot_messaging_button(args[i][0], args[i][1]));
       }
       $('#messages').scrollTop(1E10);
-      updateChatLog(socket_id);
+      // updateChatLog(socket_id);
+      if(loginValue!=='-1'){
+        if(msg.includes("오늘의 선택")){
+          updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
+        }
+      }
   });
   /* 이미지, 메세지, 중복체크버튼을 같이 사용 */
   socket.on('chat message button checkbox image', (socket_id, msg, img, ...args) => {  // msg:메세지, img: 이미지, args: 버튼들
@@ -1187,7 +1197,7 @@ $(function () {
       $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
       $('.complete-button').prop('disabled', true);
       $('#messages').scrollTop(1E10);
-      updateChatLog(socket_id);
+      // updateChatLog(socket_id);
   });
 
 
@@ -1204,7 +1214,7 @@ $(function () {
     setTimeout(() => {
       $('#messages').scrollTop(1E10);
     }, 100); // execute your function after 2 seconds.
-    updateChatLog(socket_id);
+    // updateChatLog(socket_id);
     // if(sessionStorage.getItem('stage')!==null){
     //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
     // }
