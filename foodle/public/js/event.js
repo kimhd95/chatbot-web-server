@@ -1157,10 +1157,11 @@ $(function () {
         $('#m').prop('disabled', true);
         $('#input-button').attr('disabled', true);
       }
+      $('#messages').append(bot_messaging_image(img));
       $('#messages').append(bot_messaging(msg)).children(':last').hide()
         .fadeIn(150);
       const args_length = args.length;
-      $('#messages').append(bot_messaging_image(img));
+
       for (let i = 0; i < args_length; i += 1) {
         $('#messages').append(bot_messaging_button(args[i][0], args[i][1]));
       }

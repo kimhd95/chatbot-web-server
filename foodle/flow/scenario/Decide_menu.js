@@ -73,20 +73,37 @@ class Decide_menu {
     //   key = 'price';
     } else if(key.includes('elsewhere')){
       key = 'decide_subway';
+    } else if (user_data.state === 'decide_subway_withexit') {
+        key = 'exitnum';
     } else if (user_data.state === 'decide_subway') {
-      key = 'exitnum';
-    } else if (user_data.state === 'search') {
+        key = 'decision_method';
+    } else if (key.includes('decide_subway/price_under10')) {
+        key = 'taste';
+    } else if (key.includes('decide_subway')) {
+        key = 'before_decide';
+    } else if (user_data.state === 'search_food') {
+      key = 'search_result';
+    } else if (key.includes('search_food')) {
+        key = 'search_food';
+    } else if (user_data.state === 'search_result') {
       key = 'before_decide';
+    //} else if (key.includes('decide_menu/lunch')) {
+      //key = 'decision_method_lunch';
     } else if (key.includes('decide_menu/')) {
-      key = 'price';
+      key = 'decide_subway';
+      //key = 'decision_method';
     } else if (key.includes('hobulho_hate_start')) {
       key = 'hobulho_hate';
     } else if (key.includes('hobulho_hate/')) {
       key = 'hobulho_hate_feedback';
+    } else if (key.includes('price_under10')) {
+      key = 'taste';
     } else if (key.includes('price/')) {
-      key = 'location';
+        key = 'before_decide';
     } else if (key.includes('location/current')){
       key = 'near_station';
+    } else if (key.includes('location/withexit')){
+        key = 'decide_subway';
     } else if (key.includes('location/0')){
       key = 'decide_subway';
     } else if (key.includes('location/1')){
@@ -96,9 +113,9 @@ class Decide_menu {
     } else if (key.includes('near_station/search')){
       key = 'decide_subway';
     } else if (key.includes('decide_subway_corgi/')) {
-      key = 'decision_score';
+      key = 'decision_method';
     } else if (key.includes('exit/')) {
-      key = 'decision_score';
+      key = 'price';
     } else if (key.includes('final/')) {
       key = 'final';
     } else if (key.includes('decision/taste')) {
@@ -106,13 +123,13 @@ class Decide_menu {
     } else if (key.includes('decision/random')) {
       key = 'random_decide';
     } else if (key.includes('decision/search')) {
-      key = 'search';
+      key = 'search_food';
     } else if (key.includes('mood2/')) {
-      key = 'before_decide';
+      key = 'price';
     } else if (key.includes('taste/')) {
-      key = 'food_type';
-    } else if (key.includes('food_type/')) {
       key = 'before_decide';
+    } else if (key.includes('food_type/')) {
+      key = 'price';
     } else if (key.includes('show_image/')) {
       key = 'show_image';
     } else if (key.includes('final_info_direct/')) {
@@ -124,6 +141,7 @@ class Decide_menu {
       'price': this.price,
       'no_price': this.no_price,
       'decide_subway': this.decide_subway,
+      'decide_subway_withexit': this.decide_subway_withexit,
       'decide_subway_corgi': this.decide_subway_corgi,
       'exitnum': this.exitnum,
       'mood': this.mood,
@@ -139,9 +157,11 @@ class Decide_menu {
       'taste': this.taste,
       'food_type': this.food_type,
       'drink': this.drink,
-      'decision_score': this.decision_score,
+      'decision_method': this.decision_method,
+      'decision_method_lunch': this.decision_method_lunch,
       'fake_qna': this.fake_qna,
-      'search': this.search,
+      'search_food': this.search_food,
+      'search_result': this.search_result,
       'location': this.location,
       'near_station': this.near_station,
       'hobulho_hate': this.hobulho_hate,
@@ -248,10 +268,119 @@ class Decide_menu {
     }());
   }
 
-  search(value, socket, user_data) { //TODO: 검색기능 구현(res_name, food_type, food_name)
+  decision_method_lunch(value, socket, user_data) {
     (async function () {
         try {
-            const chlist = ['원하는 음식 종류를 말해줘!!', '뭐 먹고 싶은지 말해봐🍚'];
+
+            const qna_list = [
+                { //지하철역 검색->현재위치 500m내
+                    'question': '어떤 방식으로 메뉴를 정해보까나', 'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색', 'button2_id': 'price_under10', 'button2_value': '1만원 미만','button3_id': 'mood2', 'button3_value': '식당 분위기 필터링','button4_id': 'search_food', 'button4_value': '음식 종류 검색',
+                },
+                {
+                    'question': '메뉴는 어떻게 골라줄까?', 'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색', 'button2_id': 'price_under10', 'button2_value': '1만원 미만','button3_id': 'mood2', 'button3_value': '식당 분위기 필터링','button4_id': 'search_food', 'button4_value': '음식 종류 검색',
+                },
+                // {
+                //     'question': '오늘 메뉴의 키워드는 뭐야?','button1_id': 'location/withexit', 'button1_value': '지하철역 검색', 'button2_id': 'price_under10', 'button2_value': '1만원 미만','button3_id': 'mood2', 'button3_value': '식당 분위기 필터링','button4_id': 'decision/taste', 'button4_value': '음식 종류 필터링',
+                // },
+                // {
+                //     'question': '혹시 조금이라도 땡긴다거나 하는 음식종류가 있어??', 'button1_id': 'decision/random', 'button1_value': '당연히 없지~헤헷', 'button2_id': 'mood2', 'button2_value': '뭔가 살짝 땡기기는 해',
+            ];
+            const qna_list_leng = qna_list.length;
+            const qna_list_rand = Math.floor(qna_list_leng * Math.random());
+            const imglist = ['emoji/checking.png','emoji/checking2.png','emoji/thinking.png','emoji/thinking2.png'];
+            const leng2 = imglist.length;
+            const rand2 = Math.floor(leng2 * Math.random());
+            index.sendSocketMessage(socket.id, 'chat message button image', qna_list[qna_list_rand].question, `${imglist[rand2]}`, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value],  [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value],  [qna_list[qna_list_rand].button4_id, qna_list[qna_list_rand].button4_value]);
+        } catch (e) {
+            index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
+            console.log(e);
+        }
+    }());
+  }
+
+  decision_method(value, socket, user_data) {
+    (async function () {
+        try {
+            let subway;
+            if(value.includes('near_station')){
+                subway = value.slice(value.lastIndexOf('/')+1);
+            } else{
+                console.log(`exitnum의 value, subway = ${value}`);
+                subway = value;
+                if (value.slice(-1) !== '역') {
+                    subway = `${value}역`;
+                }
+            }
+            const subways = await info_update.food.get_all_subway(socket.id, '');
+            const result = await info_update.food.verify_subway(socket.id, subway);
+            if (result === 'success') {
+                const user_info = await info_update.profile.load_user(socket.id);
+                const db_subway = await user_info.subway;
+                if (subway === db_subway) {
+                    console.log(`subway === db.subway if 문 안 subway = ${subway}, db_subway = ${db_subway}`);
+                    await info_update.profile.update_freq_subway(socket.id, subway);
+                } else {
+                    console.log("subway === db.subway else 문 안");
+                    await info_update.profile.update_freq_subway(socket.id, 'null');
+                }
+                await info_update.profile.update_subway(socket.id, subway);
+            }
+            // if (value.includes('decide_subway_corgi')) {
+            //     const subway = value.split('/')[1];
+            //     await info_update.profile.update_subway(socket.id, subway);
+            //     await info_update.profile.update_exit_quarter(socket.id, '999');
+            // } else if (value.includes('exit')) {
+            //     const user_quarter = value.split('/')[1];
+            //     // console.log(user_quarter);
+            //     await info_update.profile.update_exit_quarter(socket.id, user_quarter);
+            // }
+            const qna_list = [
+                { //지하철역 검색->현재위치 500m내
+                    'question': '어떤 방식으로 메뉴를 정해보까나', 'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색', 'button2_id': 'price_under10', 'button2_value': '1만원 미만','button3_id': 'mood2', 'button3_value': '식당 분위기 필터링','button4_id': 'search_food', 'button4_value': '음식 종류 검색',
+                },
+                {
+                    'question': '오늘 메뉴는 어떻게 골라줄까?', 'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색','button2_id': 'price_under10', 'button2_value': '1만원 미만','button3_id': 'mood2', 'button3_value': '식당 분위기 필터링','button4_id': 'search_food', 'button4_value': '음식 종류 검색',
+                },
+                // {
+                //     'question': '오늘 메뉴의 키워드는 뭐야?','button1_id': 'location/withexit', 'button1_value': '지하철역 검색', 'button2_id': 'mood2', 'button2_value': '식당 분위기','button3_id': 'decision/taste', 'button3_value': '음식 종류',
+                // },
+                // {
+                //     'question': '딱 정해줄까? 아님 길게 물어봐줄까?', 'button1_id': 'decision/random', 'button1_value': '그냥 너가 정해', 'button2_id': 'decision/taste', 'button2_value': '자세히 물어봐줘',
+                // },
+                // {
+                //     'question': '내가 그냥 정해줄까? 아니면 자세히 물어봐줄까?', 'button1_id': 'decision/random', 'button1_value': '가라는 곳으로 가겠습니다', 'button2_id': 'decision/taste', 'button2_value': '길게 물어봐',
+                // },
+                // {
+                //     'question': '어떤 방식으로 메뉴를 정해보까나', 'button1_id': 'decision/random', 'button1_value': '코기의 랜덤픽', 'button2_id': 'mood2', 'button2_value': '맛/음식종류/분위기 필터링',
+                // },
+                // {
+                //     'question': '오늘 메뉴는 어떻게 골라줄까?', 'button1_id': 'decision/random', 'button1_value': '코기의 랜덤픽', 'button2_id': 'mood2', 'button2_value': '맛/음식종류/분위기 필터링',
+                // },
+                // {
+                //     'question': '혹시 조금이라도 땡긴다거나 하는 음식종류가 있어??', 'button1_id': 'decision/random', 'button1_value': '당연히 없지~헤헷', 'button2_id': 'mood2', 'button2_value': '뭔가 살짝 땡기기는 해',
+            ];
+            const qna_list_leng = qna_list.length;
+            const qna_list_rand = Math.floor(qna_list_leng * Math.random());
+            const imglist = ['emoji/checking.png','emoji/checking2.png','emoji/thinking.png','emoji/thinking2.png'];
+            const leng2 = imglist.length;
+            const rand2 = Math.floor(leng2 * Math.random());
+            index.sendSocketMessage(socket.id, 'chat message button image', qna_list[qna_list_rand].question, `${imglist[rand2]}`, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value], [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value], [qna_list[qna_list_rand].button4_id, qna_list[qna_list_rand].button4_value]);
+        } catch (e) {
+            index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
+            console.log(e);
+        }
+    }());
+  }
+
+
+  search_food(value, socket, user_data) { //TODO: 검색기능 구현(res_name, food_type, food_name)
+    (async function () {
+        try {
+            await info_update.profile.update_food_type(socket.id, 'all');
+            await info_update.profile.update_taste(socket.id, 'all');
+            await info_update.profile.update_mood2(socket.id, '998');
+            await info_update.profile.update_exit_quarter(socket.id, '999');
+            const chlist = ['원하는 음식 종류를 말해줘!!<br>ex) 치킨', '뭐 먹고 싶은지 말해봐🍚<br>ex) 피자'];
             const leng = chlist.length;
             const rand = Math.floor(leng * Math.random());
             index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`);
@@ -263,20 +392,60 @@ class Decide_menu {
     }());
   }
 
+  search_result(value, socket, user_data) {
+    (async function () {
+        try {
+                let search_food;
+                    console.log(`search_food = ${value}`);
+                    search_food = value;
+                let subway;
+                    subway = user_data.subway;
+                    console.log('subway: '+subway);
+                    const result = await info_update.food.verify_search_food(socket.id, search_food, subway);
+                if (result === 'success') {
+                   await info_update.profile.update_food_name(socket.id, search_food);
+                    const chlist = [search_food+' 찾았다! 이걸로 추천해줄게 잠깐만~',search_food+' 있다있어~ 잠깐만 기다료바'];
+                    const leng = chlist.length;
+                    const rand = Math.floor(leng * Math.random());
+                    index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`,['location/0', '응 정했어'], ['location/seoul', '서울 어디든 좋아']);
+                }else {
+                    // await info_update.profile.update_state(socket.id, '1', 'decide_menu');
+                    index.sendSocketMessage(socket.id, 'chat message button', search_food+` 검색어로 찾을 수 있는 식당이 없네ㅠㅠ 다시 검색해볼래?`, ['search_food', '다시 검색하기'], ['get_started', '처음으로 돌아가기']);
+                }
+        } catch (e) {
+            index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
+        }
+    }());
+  }
+
     price(value, socket, user_data) {
       (async function () {
           try {
-              if (value.includes('lunch')) {
-                  await info_update.profile.update_price_level_dinner(socket.id, 'x');
-              } else if (value.includes('dinner')) {
-                  await info_update.profile.update_price_level_lunch(socket.id,'x');
-              }
+              if (value.includes('exit/')) {
+                  const user_quarter = value.split('/')[1];
+                  await info_update.profile.update_mood2(socket.id, '998');
+                  await info_update.profile.update_exit_quarter(socket.id, user_quarter);
+              } else if(value.includes('mood2')) {
+                 const user_input_value = value.split('/')[1];
+                  await info_update.profile.update_exit_quarter(socket.id, '999');
+                  await info_update.profile.update_mood2(socket.id, user_input_value);
+             }
+              await info_update.profile.update_food_type(socket.id, 'all');
+              await info_update.profile.update_taste(socket.id, 'all');
+
+              await info_update.profile.update_food_name(socket.id, 'x');
+
+              // if (value.includes('lunch')) {
+              //     await info_update.profile.update_price_level_dinner(socket.id, 'x');
+              // } else if (value.includes('dinner')) {
+              //     await info_update.profile.update_price_level_lunch(socket.id,'x');
+              // }
               const price_list = ['식사 예산은 1인당 어느 정도 생각해? (중복선택가능!)', '오늘 너의 텅장💸이 허락하는 한도는??(1인 기준, 중복선택)', '식사 가격은 1인당 얼마 정도였으면 좋겠어? (중복선택)',
                   '이번 식사. 얼마면 돼?!💰(1인 기준, 중복선택)', '오늘 식사의 가격대는 어느 정도로 생각해~~?(1인 기준, 중복선택)','1인당 얼마까지 긁을 수 있어? 💳 (중복선택가능!)'];
               const price_leng = price_list.length;
               const price_rand = Math.floor(price_leng * Math.random());
               index.sendSocketMessage(socket.id, 'chat message button checkbox price', price_list[price_rand],
-                  ['0', '~1만원 미만'], ['1', '1만원 대'], ['2', '2만원 대'], ['3', '3만원 대'], ['4', '4만원 이상'], ['price/', '선택완료']);
+                  ['0', '~1만원 미만'], ['1', '1만원 대'], ['2', '2만원 대'], ['3,4', '3만원 이상'], ['price/', '선택완료']);
           } catch (e) {
               index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
               console.log(e);
@@ -298,22 +467,19 @@ class Decide_menu {
   location(value, socket, user_data) {
       (async function () {
           try {
-              const user_price = await value.split('/')[1];;
-              console.log('user_price:'+user_price);
-              if (user_data.price_dinner === 'x') { //점심식사
-                console.log("user_data_price_dinner === x");
-                await info_update.profile.update_price_level_lunch(socket.id, user_price);
-              } else if (user_data.price_lunch === 'x') { //저녁식사
-                console.log("user_data_price_lunch === x");
-                await info_update.profile.update_price_level_dinner(socket.id, user_price);
-              }
-
+              // const user_mood2 = value.split('/')[1];
+              // if (value.includes('taste')) {
+              //     const mood2 = value.split('/')[1];
+              //    await info_update.profile.update_mood2(socket.id, '998');
+              // } else {
+              //   await info_update.profile.update_mood2(socket.id, user_mood2);
+              // }
               const location_list = ['약속장소는 이미 정해져 있어?', '어디서 만나기로 했는지는 정했어? ', '약속 장소는 정했구~~?',
                   '어디서 만날지는 정해져 있는거야?', '약속 장소는 정해져 있는거야?'];
               const location_leng = location_list.length;
               const location_rand = Math.floor(location_leng * Math.random());
               index.sendSocketMessage(socket.id, 'chat message button', location_list[location_rand],
-                  ['location/0', '응 정했어'], ['location/1', 'ㄴㄴ 코기가 정해줘!'], ['location/current', '지금 제일 가까운 곳']); // TODO:['location/2', '현재 위치']);
+                  ['location/0', '응 정했어'], ['location/1', 'ㄴㄴ 코기가 정해줘!'], ['location/seoul', '서울 어디든 좋아']); // TODO:['location/2', '현재 위치']);
           } catch (e) {
               index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
               console.log(e);
@@ -356,7 +522,7 @@ class Decide_menu {
             // console.log(`거리순으로 정렬된 map : ${sortedMap}`); // 거리순으로 출력
             console.log(sortedMap);
 
-            index.sendSocketMessage(socket.id, 'chat message button', `현재 위치에서 가장 가까운 역은 ${sortedMap.values().next().value}이야`,
+            index.sendSocketMessage(socket.id, 'chat message button', `현재 위치에서 가장 가까운 역이... ${sortedMap.values().next().value}맞아?`,
                 [`near_station/choose/${sortedMap.values().next().value}`, '여기로 가자!'], ['near_station/search', '직접 고를래']); // TODO:['location/2', '현재 위치']);
 
         } catch (e) {
@@ -366,13 +532,54 @@ class Decide_menu {
       }());
   }
 
+
+  decide_subway_withexit(value, socket, user_data) {
+    (async function () {
+        try {
+            // if(value.includes('location/withexit')){
+            // }
+            // console.log(`value: ${value}`);
+            console.log('user_data: '+user_data.freq_subway);
+            if (!value.includes('elsewhere') && user_data.freq_subway !== null) {
+                const revisit = user_data.freq_subway;
+                const freq_list = [`이번에도 ${revisit}에서 메뉴를 정하면 될까?`, `이번에도 ${revisit} 고고?`, `이번에도 ${revisit}에서 밥 먹을거야?`,
+                    `이번에도 ${revisit}에서 먹는거 맞지?`, `오늘도 ${revisit}?`, `오늘도 ${revisit}에서 골라볼까?`,
+                    `이번에도 ${revisit}에서 정하는거 맞아맞아?`, `오늘도 ${revisit}에서 메뉴 정해볼까?`, `이번에도 ${revisit}에서 먹을 곳 찾는거야?`];
+                const freq_leng = freq_list.length;
+                const freq_rand = Math.floor(freq_leng * Math.random());
+                index.sendSocketMessage(socket.id, 'chat message button', freq_list[freq_rand], [`${revisit}`, '응 맞아!'], ['decide_subway/elsewhere', '다른 곳이야!']);
+            } else { //todo: freq_subway 구현(완료)
+                const chlist = ['어느 역 근처의 메뉴를 정해줄까?', '밥 어디에서 먹을거야?🍚', '밥 어디에서 먹어?', '어느 역 근처 메뉴를 정해줄까?',
+                    '위치가 어디야? 원하는 곳에서 가까운 지하철역을 입력해줘🚋', '밥 어디에서 먹어? 챱챱', '이번에는 어느 역 근처의 메뉴를 정해볼까?',
+                    '어디 근처로 골라볼까?', '어떤 지하철역 근처로 정해볼까?'];
+                const leng = chlist.length;
+                const rand = Math.floor(leng * Math.random());
+                index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}<br>ex) 강남역,이대역`);
+            }
+
+        } catch (e) {
+            index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
+        }
+    }());
+  }
+
   decide_subway(value, socket, user_data) {
       (async function () {
           try {
-              if(value.includes('near_station')){
-
+              if (value.includes('lunch')) {
+                  await info_update.profile.update_price_level_dinner(socket.id, 'x');
+              } else if (value.includes('dinner')) {
+                  await info_update.profile.update_price_level_lunch(socket.id,'x');
               }
-              // console.log(`value: ${value}`);
+              if(user_data.hate_food == null){
+                  await info_update.profile.update_hate_food(socket.id, 'x');
+              }
+              if(value.includes('price_under10')){
+                  await info_update.profile.update_price_level_lunch(socket.id, '0');
+                  await info_update.profile.update_exit_quarter(socket.id, '999');
+                  await info_update.profile.update_mood2(socket.id, '998');
+                  await info_update.profile.update_taste(socket.id, 'all');
+              }
               console.log('user_data: '+user_data.freq_subway);
               if (!value.includes('elsewhere') && user_data.freq_subway !== null) {
                   const revisit = user_data.freq_subway;
@@ -382,10 +589,10 @@ class Decide_menu {
                   const freq_leng = freq_list.length;
                   const freq_rand = Math.floor(freq_leng * Math.random());
                   index.sendSocketMessage(socket.id, 'chat message button', freq_list[freq_rand], [`${revisit}`, '응 맞아!'], ['decide_subway/elsewhere', '다른 곳이야!']);
-              } else { //todo: freq_subway 구현(완료)
+              } else {
                   const chlist = ['어느 역 근처의 메뉴를 정해줄까?', '밥 어디에서 먹을거야?🍚', '밥 어디에서 먹어?', '어느 역 근처 메뉴를 정해줄까?',
                       '위치가 어디야? 원하는 곳에서 가까운 지하철역을 입력해줘🚋', '밥 어디에서 먹어? 챱챱', '이번에는 어느 역 근처의 메뉴를 정해볼까?',
-                      '오늘 메뉴는 어디에서 정할까?', '오늘 메뉴는 어느 역에서 정해볼까?'];
+                      '어디 근처로 골라볼까?', '어떤 지하철역 근처로 정해볼까?'];
                   const leng = chlist.length;
                   const rand = Math.floor(leng * Math.random());
                   index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}<br>ex) 강남역,이대역`);
@@ -400,57 +607,62 @@ class Decide_menu {
   exitnum(value, socket, user_data) {
     (async function () {
       try {
-        let subway;
-        if(value.includes('near_station')){
-          subway = value.slice(value.lastIndexOf('/')+1);
-        } else{
-          console.log(`exitnum의 value, subway = ${value}`);
-          subway = value;
-          if (value.slice(-1) !== '역') {
-            subway = `${value}역`;
-          }
-        }
-        const subways = await info_update.food.get_all_subway(socket.id, '');
-        const result = await info_update.food.verify_subway(socket.id, subway);
-        if (result === 'success') {
-          const user_info = await info_update.profile.load_user(socket.id);
-          const db_subway = await user_info.subway;
-          if (subway === db_subway) {
-            console.log(`subway === db.subway if 문 안 subway = ${subway}, db_subway = ${db_subway}`);
-            await info_update.profile.update_freq_subway(socket.id, subway);
-          } else {
-            console.log("subway === db.subway else 문 안");
-            await info_update.profile.update_freq_subway(socket.id, 'null');
-          }
-          await info_update.profile.update_subway(socket.id, subway);
+         let subway;
+         subway = user_data.subway;
+        // if(value.includes('near_station')){
+        //   subway = value.slice(value.lastIndexOf('/')+1);
+        // } else if(value ==='exitnum')
+        //   {
+        //       subway = user_data.subway
+        //   } else{
+        //   console.log(`exitnum의 value, subway = ${value}`);
+        //   subway = value;
+        //   if (value.slice(-1) !== '역') {
+        //     subway = `${value}역`;
+        //   }
+        // }
+        // const subways = await info_update.food.get_all_subway(socket.id, '');
+        // const result = await info_update.food.verify_subway(socket.id, subway);
+        // if (result === 'success') {
+        //   const user_info = await info_update.profile.load_user(socket.id);
+        //   const db_subway = await user_info.subway;
+        //   if (subway === db_subway) {
+        //     console.log(`subway === db.subway if 문 안 subway = ${subway}, db_subway = ${db_subway}`);
+        //     await info_update.profile.update_freq_subway(socket.id, subway);
+        //   } else {
+        //     console.log("subway === db.subway else 문 안");
+        //     await info_update.profile.update_freq_subway(socket.id, 'null');
+        //   }
+        //  await info_update.profile.update_subway(socket.id, subway);
           const exit_list = [`${subway} 몇 번 출구쪽이 좋아??`, `${subway}에서 더 편한 출구가 있다면 골라줘!(중복선택)`, `${subway} 몇 번 출구쪽이 편해?(중복선택)`, `${subway} 몇 번 출구쪽이 좋아? 모르면 "상관없음" 버튼을 눌러주면 돼!`]
           const exit_leng = exit_list.length;
           const exit_rand = Math.floor(exit_leng * Math.random());
           switch (subway) {
-            case '강남역': {
-              await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/강남역.png', ['999', '상관없어'], ['4', '1,2,3,4번'], ['3', '5,6,7,8번'], ['2', '9,10번'], ['1', '11,12번'], ['exit/', '선택완료']);
-              break;
-            }
-            // case '선릉역': {
-            //     await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/선릉역.png', ['999', '상관없어'], ['4', '1,2번'], ['3', '3,4번'], ['2', '5,6,7번'], ['1', '8,9,10번'], ['exit/', '선택완료']);
-            //     break;
-            // }
-            case '서울대입구역': {
-              await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/서울대입구역.png', ['999', '상관없어'], ['4', '1,2번'], ['3', '3,4번'], ['2', '5,6번'], ['1', '7,8번'], ['exit/', '선택완료']);
-              break;
-            }
-            case '이대역': {
-              await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/이대역.png', ['999', '상관없어'], ['4', '5번'], ['3', '6번'], ['2', '1, 2번'], ['1', '3,4번'], ['exit/', '선택완료']);
-              break;
-            }
-            default:
-              index.sendSocketMessage(socket.id, 'chat message button', `지금 밥집 고르기를 이용 가능한 곳은 서울[강남역, 서울대입구역, 이대역]이야. 다른 곳 식당도 열심히 가서 먹어보고 곧 알려줄게!`, ['decide_subway', '다시 장소 입력하기'], ['get_started', '처음으로 돌아가기']);
-              break;
+              case '강남역': {
+                  await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/강남역.png', ['999', '상관없어'], ['4', '1,2,3,4번'], ['3', '5,6,7,8번'], ['2', '9,10번'], ['1', '11,12번'], ['exit/', '선택완료']);
+                  break;
+              }
+              // case '선릉역': {
+              //     await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/선릉역.png', ['999', '상관없어'], ['4', '1,2번'], ['3', '3,4번'], ['2', '5,6,7번'], ['1', '8,9,10번'], ['exit/', '선택완료']);
+              //     break;
+              // }
+              case '서울대입구역': {
+                  await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/서울대입구역.png', ['999', '상관없어'], ['4', '1,2번'], ['3', '3,4번'], ['2', '5,6번'], ['1', '7,8번'], ['exit/', '선택완료']);
+                  break;
+              }
+              case '이대역': {
+                  await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/이대역.png', ['999', '상관없어'], ['4', '5번'], ['3', '6번'], ['2', '1, 2번'], ['1', '3,4번'], ['exit/', '선택완료']);
+                  break;
+              }
+              default:
+                  index.sendSocketMessage(socket.id, 'chat message button', `지금 밥집 고르기를 이용 가능한 곳은 서울[강남역, 서울대입구역, 이대역]이야. 다른 곳 식당도 열심히 가서 먹어보고 곧 알려줄게!`, ['decide_subway', '다시 장소 입력하기'], ['get_started', '처음으로 돌아가기']);
+                  break;
           }
-        } else {
+        //}
+       // else {
           // await info_update.profile.update_state(socket.id, '1', 'decide_menu');
-          index.sendSocketMessage(socket.id, 'chat message button', `지금 밥집 고르기를 이용 가능한 곳은 서울[강남역, 서울대입구역, 이대역]이야. 다른 곳 식당도 열심히 가서 먹어보고 곧 알려줄게!`, ['decide_subway', '다시 장소 입력하기'], ['get_started', '처음으로 돌아가기']);
-        }
+         // index.sendSocketMessage(socket.id, 'chat message button', `지금 밥집 고르기를 이용 가능한 곳은 서울[강남역, 서울대입구역, 이대역]이야. 다른 곳 식당도 열심히 가서 먹어보고 곧 알려줄게!`, ['decide_subway', '다시 장소 입력하기'], ['get_started', '처음으로 돌아가기']);
+       // }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
         console.log(e);
@@ -470,61 +682,12 @@ class Decide_menu {
   }
 
 
-  decision_score(value, socket, user_data) {
-      (async function () {
-          try {
-              if (value.includes('decide_subway_corgi')) {
-                  const subway = value.split('/')[1];
-                  await info_update.profile.update_subway(socket.id, subway);
-                  await info_update.profile.update_exit_quarter(socket.id, '999');
-              } else if (value.includes('exit')) {
-                  const user_quarter = value.split('/')[1];
-                  // console.log(user_quarter);
-                  await info_update.profile.update_exit_quarter(socket.id, user_quarter);
-              }
-              const qna_list = [
-                  {
-                      'question': '딱 정해줄까? 아님 길게 물어봐줄까?', 'button1_id': 'decision/random', 'button1_value': '그냥 너가 정해', 'button2_id': 'decision/taste', 'button2_value': '자세히 물어봐줘',
-                  },
-                  {
-                      'question': '내가 그냥 정해줄까? 아니면 자세히 물어봐줄까?', 'button1_id': 'decision/random', 'button1_value': '가라는 곳으로 가겠습니다', 'button2_id': 'decision/taste', 'button2_value': '길게 물어봐',
-                  },
-                  {
-                      'question': '오늘의 메뉴결정장애 지수는 몇 점이야??', 'button1_id': 'decision/random', 'button1_value': '100점: 난 아무생각이 없다', 'button2_id': 'mood2', 'button2_value': '50점: 뭔가 떠오를듯 말듯...',
-                  },
-                  {
-                      'question': '오늘의 메뉴결정장애 점수는 몇 점?', 'button1_id': 'decision/random', 'button1_value': '100점: 아무거나><', 'button2_id': 'decision/taste', 'button2_value': '50점: 딱 찝지는 못해도 호불호는 존재',
-                  },
-                  // {
-                  //     'question': '오늘의 결정장애 지수를 점수로 표현한다면?', 'button1_id': 'decision/random', 'button1_value': '100점: 아무거나 먹을랭~', 'button2_id': 'mood2', 'button2_value': '50점: 분명히 땡기는게 있는데 말로 표현불가',
-                  // {
-                  //     'question': '오늘의 결정장애 지수는?', 'button1_id': 'decision/random', 'button1_value': '100점: 나한테 아무런 결정을 바라지 말아줘', 'button2_id': 'mood2', 'button2_value': '50점: 옵션 주면 고를수 있을듯?!',
-                  // },
-                  {
-                      'question': '어떤 방식으로 메뉴를 정해보까나', 'button1_id': 'decision/random', 'button1_value': '코기의 랜덤픽', 'button2_id': 'mood2', 'button2_value': '맛/음식종류/분위기 필터링',
-                  },
-                  // {
-                  //     'question': '혹시 조금이라도 땡긴다거나 하는 음식종류가 있어??', 'button1_id': 'decision/random', 'button1_value': '당연히 없지~헤헷', 'button2_id': 'mood2', 'button2_value': '뭔가 살짝 땡기기는 해',
-              ];
-              const qna_list_leng = qna_list.length;
-              const qna_list_rand = Math.floor(qna_list_leng * Math.random());
-                index.sendSocketMessage(socket.id, 'chat message button', qna_list[qna_list_rand].question, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value]);
-          } catch (e) {
-              index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
-              console.log(e);
-          }
-      }());
-  }
 
 
   mood(value, socket, user_data) {
     (async function () {
       try {
-        if (value.includes('exit')) {
-          const user_quarter = value.split('/')[1];
-          // console.log(user_quarter);
-          await info_update.profile.update_exit_quarter(socket.id, user_quarter);
-        }
+
         const mood_list = ['메뉴 컨셉은 끼니해결? 아니면 약속 자리?',
           '일상적인 식사 메뉴를 골라줄까? 아니면 밥이나 술 약속 메뉴를 골라줄까?',
           '어떤 식사자리인데?',
@@ -566,12 +729,15 @@ class Decide_menu {
   mood2(value, socket, user_data) {
     (async function () {
       try {
-
+          await info_update.profile.update_food_type(socket.id, 'all');
+          await info_update.profile.update_taste(socket.id, 'all');;
+          await info_update.profile.update_exit_quarter(socket.id, '999');
+          await info_update.profile.update_food_name(socket.id, 'x');
         //await info_update.profile.update_with_mood(socket.id, '약속');
         const mood2_list = ['원하는 식당 분위기를 골라줘!(중복선택)', '특별히 원하는 식당 분위기가 있다면 골라줘!(중복선택)', '가고 싶은 식당의 키워드를 몇개 골라봐!! (못고르겠으면 상관없음ㄱㄱ)'];
         const mood2_leng = mood2_list.length;
         const mood2_rand = Math.floor(mood2_leng * Math.random());
-        const imglist = ['emoji/checking.png','emoji/checking2.png','emoji/ask3.png','emoji/ask4.png', 'emoji/listening.png'];
+        const imglist = ['emoji/checking.png','emoji/checking2.png'];
         const leng2 = imglist.length;
         const rand2 = Math.floor(leng2 * Math.random());
         index.sendSocketMessage(socket.id, 'chat message button checkbox image', mood2_list[mood2_rand],`${imglist[rand2]}`, ['998', '상관없음'], ['가벼운', '간단한'], ['인스타', '#인스타감성'], ['깔끔','깔끔한'], ['큰프', '프랜차이즈'], ['뷔페', '뷔페/무한리필'], ['mood2/', '선택완료']);
@@ -596,7 +762,30 @@ class Decide_menu {
   taste(value, socket, user_data) {
     (async function () {
       try {
-
+          const user_price = await value.split('/')[1];;
+          if(value.includes('price_under10')){
+              if (user_data.price_dinner === 'x') { //점심식사
+                  await info_update.profile.update_price_level_lunch(socket.id, '0');
+              } else if (user_data.price_lunch === 'x') { //저녁식사
+                  await info_update.profile.update_price_level_dinner(socket.id, '0');
+              }
+              await info_update.profile.update_exit_quarter(socket.id, '999');
+              await info_update.profile.update_mood2(socket.id, '998');
+          } else {
+              console.log('user_price:' + user_price);
+              if (user_data.price_dinner === 'x') { //점심식사
+                  console.log("user_data_price_dinner === x");
+                  await info_update.profile.update_price_level_lunch(socket.id, user_price);
+              } else if (user_data.price_lunch === 'x') { //저녁식사
+                  console.log("user_data_price_lunch === x");
+                  await info_update.profile.update_price_level_dinner(socket.id, user_price);
+              }
+              await info_update.profile.update_food_type(socket.id, 'all');
+              await info_update.profile.update_exit_quarter(socket.id, '999');
+              await info_update.profile.update_food_name(socket.id, 'x');
+          }
+          // await info_update.profile.update_mood2(socket.id, '998');
+          // await info_update.profile.update_exit_quarter(socket.id, '999');
         // const user_mood2 = value.split('/')[1];
         // if (value.includes('taste')) {
         //     const mood2 = value.split('/')[1];
@@ -607,35 +796,35 @@ class Decide_menu {
         const taste = {
           'qnas': [
             {
-              'question': '기름진 vs 담백한?', 'button1_id': 'taste/기름진', 'button1_value': '기름진', 'button2_id': 'taste/담백한', 'button2_value': '담백한',
+              'question': '기름진 음식 vs 담백한 음식?', 'button1_id': 'taste/기름진', 'button1_value': '기름진', 'button2_id': 'taste/담백한', 'button2_value': '담백한',
             },
-            {
-              'question': '치즈듬뿍 vs 치즈x?', 'button1_id': 'taste/치즈', 'button1_value': '치즈듬뿍', 'button2_id': 'taste/!-치즈', 'button2_value': '치즈x',
-            },
-            {
-              'question': '자극적인 vs 깔끔한?', 'button1_id': 'taste/자극적인', 'button1_value': '자극적인', 'button2_id': 'taste/!-자극적인', 'button2_value': '깔끔한',
-            },
+            // {
+            //   'question': '치즈듬뿍 vs 치즈x?', 'button1_id': 'taste/치즈', 'button1_value': '치즈듬뿍', 'button2_id': 'taste/!-치즈', 'button2_value': '치즈x',
+            // },
+            // {
+            //   'question': '자극적인 맛 vs 깔끔한 맛?', 'button1_id': 'taste/자극적인', 'button1_value': '자극적인', 'button2_id': 'taste/!-자극적인', 'button2_value': '깔끔한',
+            // },
             // {
             //   'question': '헤비한음식 vs 가벼운음식?', 'button1_id': 'taste/!-가벼운', 'button1_value': '헤비한', 'button2_id': 'taste/가벼운', 'button2_value': '가벼운',
             // },
-            {
-              'question': '오늘 매운거 어때?', 'button1_id': 'taste/매운', 'button1_value': '좋아', 'button2_id': 'taste/!-매운', 'button2_value': '싫어',
-            },
-            {
-              'question': '오늘 따뜻한 국물이 땡겨?', 'button1_id': 'taste/따뜻한', 'button1_value': 'ㅇㅇ', 'button2_id': 'taste/!-따뜻한', 'button2_value': 'ㄴㄴ',
-            },
+            // {
+            //   'question': '오늘 매운거 어때?', 'button1_id': 'taste/매운', 'button1_value': '좋아', 'button2_id': 'taste/!-매운', 'button2_value': '싫어',
+            // },
+            // {
+            //   'question': '오늘 따뜻한 국물이 땡겨?', 'button1_id': 'taste/따뜻한', 'button1_value': 'ㅇㅇ', 'button2_id': 'taste/!-따뜻한', 'button2_value': 'ㄴㄴ',
+            // },
             {
               'question': '밥 vs 면?', 'button1_id': 'taste/밥', 'button1_value': '밥', 'button2_id': 'taste/면', 'button2_value': '면',
             },
-            {
-              'question': '오늘 고기 들어간 음식은 어떄?', 'button1_id': 'taste/고기', 'button1_value': '좋아', 'button2_id': 'taste/!-고기', 'button2_value': '싫어',
-            },
+            // {
+            //   'question': '오늘 고기 들어간 음식은 어떄?', 'button1_id': 'taste/고기', 'button1_value': '좋아', 'button2_id': 'taste/!-고기', 'button2_value': '싫어',
+            // },
             {
               'question': '쌀 vs 밀가루?', 'button1_id': 'taste/밥', 'button1_value': '쌀', 'button2_id': 'taste/밀가루', 'button2_value': '밀가루',
             },
-            {
-              'question': '오늘 해산물 들어간 음식은 어때?', 'button1_id': 'taste/해산물', 'button1_value': '좋아', 'button2_id': 'taste/!-해산물', 'button2_value': '싫어',
-            },
+            // {
+            //   'question': '오늘 해산물 들어간 음식은 어때?', 'button1_id': 'taste/해산물', 'button1_value': '좋아', 'button2_id': 'taste/!-해산물', 'button2_value': '싫어',
+            // },
           ],
         };
         const taste_data = taste.qnas;
@@ -740,7 +929,6 @@ class Decide_menu {
     (async function () {
         try {
             await info_update.profile.update_mood2(socket.id, '998');
-            await info_update.profile.update_with_mood(socket.id, '캐주얼');
             await info_update.profile.update_taste(socket.id, 'all');
 
             // let user_food_type=value.split('/')[1];
@@ -751,7 +939,7 @@ class Decide_menu {
             //     }
             // }
             await info_update.profile.update_food_type(socket.id, 'all');
-            const foods = await info_update.food.get_restaurant(socket.id,  user_data.subway, user_data.exit_quarter, user_data.price_lunch, user_data.price_dinner, '캐주얼', '999', 'all', 'x','all', 'x');
+            const foods = await info_update.food.get_restaurant(socket.id,  user_data.subway, user_data.exit_quarter, user_data.price_lunch, user_data.price_dinner, '캐주얼', '999', 'all', user_data.hate_food,'all', 'x');
             const foods_info = foods.message;
             if (foods.success){
               if (foods_info.length === 2) {
@@ -777,24 +965,41 @@ class Decide_menu {
   before_decide(value, socket, user_data) {
     (async function () {
       try {
-
           // const user_food_type = 'all';
-          if (value.includes('type')) {
-              const user_input_value = value.split('/')[1];
-              await info_update.profile.update_food_type(socket.id, user_input_value);
-              await info_update.profile.update_mood2(socket.id, '998');
-              //await info_update.profile.update_with_mood(socket.id, '캐주얼');
-          } else if (value.includes('mood2')) {
-              await info_update.profile.update_mood2(socket.id, value);
-             // await info_update.profile.update_with_mood(socket.id, '캐주얼');
-              await info_update.profile.update_taste(socket.id, 'all');
-              await info_update.profile.update_food_type(socket.id, 'all');
+          //if (user_data.price_lunch==null || user_data.price_dinner==null) {
+          let price_lunch = user_data.price_lunch;
+          let price_dinner = user_data.price_dinner;
+          let taste = user_data.taste;
+              if (value.includes('price/')) {
+              const user_price = await value.split('/')[1];;
+              console.log('user_price:'+user_price);
+              if (user_data.price_dinner === 'x') { //점심식사
+                  console.log("user_data_price_dinner === x");
+                  price_lunch = user_price;
+                  price_dinner = 'x';
+                 await info_update.profile.update_price_level_lunch(socket.id, user_price);
+              } else if (user_data.price_lunch === 'x') { //저녁식사
+                  console.log("user_data_price_lunch === x");
+                  price_lunch = 'x';
+                  price_dinner = user_price;
+                  await info_update.profile.update_price_level_dinner(socket.id, user_price);
+              }
           }
+              //await info_update.profile.update_with_mood(socket.id, '캐주얼');
+           else if (value.includes('search_result/')) {
+
+          } else if (value.includes('taste/')) {
+                  const user_input_value = value.split('/')[1];
+                  taste = user_input_value;
+                  await info_update.profile.update_taste(socket.id, user_input_value);
+              }
           // console.log('내가 찍은 역명: '+user_data.subway);
         // console.log('내가 찍은 출구: '+user_data.exit_quarter);
         // console.log('내가 찍은 분위기: '+user_data.with_mood);
-         console.log('내가 찍은 분위기2: '+user_data.mood2);
-         console.log('내가 싫어하는 음식: '+user_data.hate_food);
+        //   await console.log('점심 가격: '+user_data.price_lunch);
+        //   await console.log('저녁 가격: '+user_data.price_dinner);
+         await console.log('내가 찍은 분위기2: '+user_data.mood2);
+         await console.log('내가 싫어하는 음식: '+user_data.hate_food);
         // console.log('내가 찍은 맛: '+user_data.taste);
         // console.log('받은 값:'+value);
         //let user_food_type=value.split('/')[1];
@@ -808,7 +1013,7 @@ class Decide_menu {
         //   }
         // }
         //await info_update.profile.update_food_type(socket.id, user_food_type);
-        const foods = await info_update.food.get_restaurant(socket.id,  user_data.subway, user_data.exit_quarter, user_data.price_lunch, user_data.price_dinner, user_data.with_mood, user_data.mood2, user_data.taste, user_data.hate_food, user_data.food_type, 'x');
+        const foods = await info_update.food.get_restaurant(socket.id,  user_data.subway, user_data.exit_quarter, price_lunch, price_dinner, user_data.with_mood, user_data.mood2, taste, user_data.hate_food, user_data.food_type, user_data.food_name);
         const foods_info = foods.message;
         if (foods_info.length === 2) {
           await info_update.profile.update_rest2(user_data.kakao_id, foods_info[0].id, foods_info[1].id);
@@ -843,7 +1048,7 @@ class Decide_menu {
 
           const image = await info_update.food.crawl_two_image(socket.id, `${foods[0].subway.slice(0, -1)} ${foods[0].res_name}`, `${foods[1].subway.slice(0, -1)} ${foods[1].res_name}`);
 
-          const chlist = [`기 다 료 방`,`두구두구두구...`,`열씨미찾는중🐕🐕`,`기다려봐~~`,`기달려방ㅎㅎ`, '아~~ 이번에는 맘에 들어씀 조케땅~~'];
+          const chlist = [`비슷한 식당 찾는중`,`까다로워 증말...`,`비슷한 식당 찾는중🐕🐕`,'아~~ 이번에는 맘에 들어씀 조케땅~~'];
           const leng = chlist.length;
           const rand = Math.floor(leng * Math.random());
           if (image.res1 === 'no image') {
@@ -858,7 +1063,7 @@ class Decide_menu {
             await index.sendSocketMessage(socket.id, 'chat message card', ['final/1/similar', foods[0].res_name], ['final/2/similar', foods[1].res_name], ['final/3/similar', '코기가 골라주기'], [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
           }//TODO: 전화번호 예약 연결(완료), 내비연결, 오픈-클로즈,휴무,라스트오더, 위시리스트
         } else {
-          index.sendSocketMessage(socket.id, 'chat message button image', '여긴 비슷한 식당이 없네 ㅠㅠ... 힝힝.', 'disappointed.PNG',['get_started', '처음으로 돌아가기']);
+          index.sendSocketMessage(socket.id, 'chat message button image', '여긴 비슷한 식당이 없네 ㅠㅠ... 힝힝.', 'emoji/disappointed.PNG',['get_started', '처음으로 돌아가기']);
         }
 
       } catch (e) {
@@ -920,7 +1125,7 @@ class Decide_menu {
           await info_update.profile.update_rest_final(socket.id, user_select_value[rand_select]);
 
           const food_val = await info_update.food.get_restaurant_info(socket.id, parseInt(user_select_value[rand_select]));
-          index.sendSocketMessage(socket.id, 'chat message button image', `코기의 선택 : ${food_val[0].res_name}`, 'choose.png');
+          index.sendSocketMessage(socket.id, 'chat message button', `코기의 선택 : ${food_val[0].res_name}`);
           final_value = user_select_value[rand_select];
         }
 

@@ -43,7 +43,7 @@ Food.update_user_start = function (kakaoid) {
   }));
 };
 
-Food.get_restaurant = function (kakaoid, subway, exit_quarter, price_lunch, price_dinner, with_mood, mood2, taste, hate_food,food_type, food_ingre) {
+Food.get_restaurant = function (kakaoid, subway, exit_quarter, price_lunch, price_dinner, with_mood, mood2, taste, hate_food,food_type, food_name) {
   console.log('subway: '+subway);
   console.log('exit_quarter: '+exit_quarter);
   console.log('price_lunch: '+price_lunch);
@@ -53,7 +53,7 @@ Food.get_restaurant = function (kakaoid, subway, exit_quarter, price_lunch, pric
   console.log('taste: '+taste);
   console.log('hate_food: '+hate_food);
   console.log('food_type: '+food_type);
-  console.log('food_ingre: '+food_ingre);
+  console.log('food_name: '+food_name);
   const self = this;
   return new Promise(((resolve, reject) => {
     const name = 'food.get_restaurant';
@@ -71,7 +71,7 @@ Food.get_restaurant = function (kakaoid, subway, exit_quarter, price_lunch, pric
       taste: taste,
       hate_food: hate_food,
       food_type: food_type,
-      food_ingre: food_ingre,
+      food_name: food_name,
     };
 
     const func = function (error, response, body) {
@@ -243,6 +243,28 @@ Food.get_subway_history = function (kakaoid, subway) {
     };
     self.apicall(kakaoid, name, method, url, json, func);
   }));
+};
+
+
+Food.verify_search_food = function (kakaoid, search_food, subway) {
+    const self = this;
+    return new Promise(((resolve, reject) => {
+        const name = 'food.verify_search_food';
+        const method = 'POST';
+        const url = '/api/v1/users/verify_search_food';
+        const json = {
+            apikey: '9Y3-7bE-Ud3-7Ja',
+            search_food: search_food,
+            subway: subway
+        };
+
+        const func = function (error, response, body) {
+            error === null
+                ? resolve(body.result)
+                : reject(error);
+        };
+        self.apicall(kakaoid, name, method, url, json, func);
+    }));
 };
 
 Food.verify_subway = function (kakaoid, value) {
