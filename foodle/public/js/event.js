@@ -1150,6 +1150,9 @@ $(function () {
     // if(sessionStorage.getItem('stage')!==null){
     //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
     // }
+    if(loginValue!=='-1'){
+      updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
+    }
   });
 
   /* 이미지, 메세지, 버튼 같이 사용 */
@@ -1218,6 +1221,9 @@ $(function () {
     // if(sessionStorage.getItem('stage')!==null){
     //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
     // }
+    if(loginValue!=='-1'){
+      updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
+    }
   });
 
   socket.on('chat message loader', (time) => {
