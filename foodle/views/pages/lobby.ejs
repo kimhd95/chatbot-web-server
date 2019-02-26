@@ -179,8 +179,8 @@
                   <input id="question-email" type="text" class="question-account" disabled></input>
                   <select id="question-subject" class="custom-select">
                     <option class="init" disabled selected>주제를 선택해주세요</option>
-                    <option value="0">일반 문의</option>
-                    <option value="1">개선 및 제안</option>
+                    <option value="일반 문의">일반 문의</option>
+                    <option value="개선 및 제안">개선 및 제안</option>
                   </select>
 
 
@@ -210,6 +210,7 @@
         <script>
 
           $(document).ready(() =>{
+            console.log(`present stage: ${sessionStorage.getItem('stage')}`);
             var list=['강남역', '건대입구역', '광화문역', '뚝섬역', '망원역', '서울대입구역', '성수역', '사당역', '신사역', '여의도역', '역삼역', '을지로입구역', '이태원역', '종로3가역', '종각역', '합정역', '홍대입구역', '혜화역'];
             var i;
             for(i=0;i<list.length;i++){
@@ -243,23 +244,17 @@
       				subject = $('#question-subject').val(),
       				text = $('#question-content').val();
 
-            console.log('subject: '+subject);
-
-            if(subject==='1'){
-              subject='개선 및 제안';
+            if (subject === null) {
+              alert('문의 유형을 선택해주세요.');
+              return;
             }
-            if(subject==='0'){
-              subject='일반 문의';
+            if (text === '') {
+              alert('내용을 입력해주세요.');
+              return;
             }
 
-      			if (subject === null) {
-      				alert('문의 유형을 선택해주세요.');
-      				return;
-      			}
-      			if (text === '') {
-      				alert('내용을 입력해주세요.');
-      				return;
-      			}
+            $('.question-send').attr('disabled', true);
+
       			$.ajax({
       				url: '/sendEmail',
       				async: true,
@@ -273,6 +268,7 @@
       				dataType: 'text',
       				success: function () {
       					alert('작성하신 문의가 성공적으로 전송되었습니다.');
+                $('.question-send').attr('disabled', false);
                 $('.onetoone').toggleClass('close');
                 // $('#question-subject')[0].value = 'undefined';
                 // $('#question-content')[0].value = '';
@@ -288,6 +284,7 @@
       				},
       				error: function () {
       					alert('전송에 실패했습니다.');
+                $('.question-send').attr('disabled', false);
       				}
       			});
           });
