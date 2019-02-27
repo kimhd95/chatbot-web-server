@@ -199,11 +199,7 @@ function signUpReq(name, gender, email, password, birthYear, phone) {
                 spinner.stop();
                 console.log("signUpReq: success!");
                 alert("회원가입이 성공적으로 완료되었습니다.");
-                // sessionStorage.setItem('signup', '1')
-                // sessionStorage.setItem('login', '0');
                 login(email, password);
-      //          sessionStorage.setItem('email', email);
-        //        location.href = '/lobby';
             } else {
                 spinner.stop();
                 console.log("signUpReq: fail!");

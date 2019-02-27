@@ -234,7 +234,6 @@ $(document).ready(() => {
         location.href='/chat';
     }
 
-
     $('#login-btn').click(() => {
         loginValidationCheck();
     })
