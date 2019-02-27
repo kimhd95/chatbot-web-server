@@ -140,7 +140,7 @@ $(document).ready(() => {
               console.log(res);
               console.log('verifyToken success');
               $('#question-name').val(res.name);
-              if(sessionStorage.getItem('login')==='0'){
+              if(sessionStorage.getItem('login')==='0' || sessionStorage.getItem('login')===null){
                 $('#profile-name').addClass('.a');
                 $('#profile-name').append(res.name + " 님");
                 $('#profile-email').addClass('.a');
@@ -166,7 +166,7 @@ $(document).ready(() => {
               if (e.responseText.includes("No token provided.")) {
                   console.log("No token, no problem.");
                   alert('로그인해주세요.');
-                  location.href = '/login';
+                  location.href = '/';
               }
               else if (e.responseText.includes("jwt malformed"))
                   console.log("Malformed token");
