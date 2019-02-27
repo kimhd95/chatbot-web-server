@@ -198,7 +198,8 @@ nav .bg .ask-space{
   /* margin: 3% 0 0 0; */
   justify-content: space-between;
   width:100%;
-  height: 20%;
+  /* height: 20%; */
+  height: 8%;
   background-color: #fff;
   border-bottom: 1px solid #DC7633;
   /* box-shadow: -1px 1px 20px 0px gray; */
@@ -209,6 +210,10 @@ nav .bg .ask-space .ask{
   width:70%;
   height: 30%;
   margin: 0 0 0 5vw;
+
+  /* 없었는데 추가 */
+  margin-top: 2%;
+
   justify-content: flex-start;
   align-items: center;
   font-size: 2vh;
