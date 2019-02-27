@@ -150,8 +150,12 @@ class Decide_place {
         }
         const sortedMap = sortMap(map); // key-value형식으로 map이 정의되어있다 (ex. 0.1234 - 성수역) 오름차순으로 map을 정렬하는 module
         console.log(`거리순으로 정렬된 map : ${sortedMap}`); // 거리순으로 출력
+<<<<<<< HEAD
         await info_update.profile.update_state(socket.id, '1', 'decide_menu');
         console.log("Array :::::::::  ", Array.from(sortedMap.values()));
+=======
+        await info_update.profile.update_state(socket.id, '1', 'decide_subway');
+>>>>>>> f1f07a6e35b841ba1dbe2fc561410449dafbec32
         index.sendSocketMessage(socket.id, 'chat message button', `중간 지점에 있는 주요 역은\n${Array.from(sortedMap.values())[0]}\n${Array.from(sortedMap.values())[1]}\n${Array.from(sortedMap.values())[2]}\n이야!`,
           [Array.from(sortedMap.values())[0], `${Array.from(sortedMap.values())[0]} 맛집 보러가기!`], [Array.from(sortedMap.values())[1], `${Array.from(sortedMap.values())[1]} 맛집 보러가기!`],
           [Array.from(sortedMap.values())[2], `${Array.from(sortedMap.values())[2]} 맛집 보러가기!`], ['get_started', '처음으로']);
