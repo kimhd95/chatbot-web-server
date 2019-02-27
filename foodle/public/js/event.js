@@ -843,7 +843,7 @@ $(function () {
     if(clickNum>0){
       $('.complete-button').prop('disabled', false);
     } else{
-      $('.complete-button').prop('disabled', true);
+      $('.complete-button').prop('disabled', false);
     }
 
 
@@ -997,7 +997,6 @@ $(function () {
   });
 
   socket.on('chat message button checkbox price', (socket_id, msg, ...args) => {
-    console.log("Present stage: "+sessionStorage.getItem('stage'));
     if (args.length === 0) {
       $('#m').prop('disabled', false);
       $('#input-button').attr('disabled', false);
@@ -1014,7 +1013,7 @@ $(function () {
       $('#messages').append(bot_messaging_button_checkbox(args[i][0], args[i][1]));
     }
     $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
-    $('.complete-button').prop('disabled', true);
+    $('.complete-button').prop('disabled', false);
 
     // $('.messaging-button-checkbox:not(:hidden)').first().click();
     // $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
