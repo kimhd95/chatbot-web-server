@@ -118,8 +118,8 @@ $(document).ready(() => {
     sessionStorage.setItem('login', '0');
   }
 
-  console.log('loginV: '+loginValue);
-  console.log('emailV: '+emailValue);
+  //console.log('loginV: '+loginValue);
+  //console.log('emailV: '+emailValue);
 
   if(loginValue===null && emailValue!==null && emailValue.split('@')[1]==='jellylab.io'){
     onetimeLogout();
@@ -132,6 +132,7 @@ $(document).ready(() => {
       async: true,
       crossDomain: true,
       redirect: 'follow',
+
       xhrFields: {
           withCredentials: true
       },
@@ -141,6 +142,8 @@ $(document).ready(() => {
               console.log('verifyToken success');
               $('#question-name').val(res.name);
               if(sessionStorage.getItem('login')==='0' || sessionStorage.getItem('login')===null){
+                sessionStorage.setItem('login', '0');
+                sessionStorage.setItem('email', res.email);
                 $('#profile-name').addClass('.a');
                 $('#profile-name').append(res.name + " 님");
                 $('#profile-email').addClass('.a');
