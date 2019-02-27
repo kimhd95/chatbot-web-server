@@ -324,6 +324,9 @@ class Decide_menu {
                     await info_update.profile.update_freq_subway(socket.id, 'null');
                 }
                 await info_update.profile.update_subway(socket.id, subway);
+                await info_update.profile.update_price_level_lunch(socket.id, '0,1,2,3,4');
+                await info_update.profile.update_price_level_dinner(socket.id, '0,1,2,3,4');
+
             }
             // if (value.includes('decide_subway_corgi')) {
             //     const subway = value.split('/')[1];
