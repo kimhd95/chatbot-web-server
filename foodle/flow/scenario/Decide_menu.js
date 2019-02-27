@@ -271,7 +271,6 @@ class Decide_menu {
   decision_method_lunch(value, socket, user_data) {
     (async function () {
         try {
-
             const qna_list = [
                 { //지하철역 검색->현재위치 500m내
                     'question': '어떤 방식으로 메뉴를 정해보까나', 'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색', 'button2_id': 'price_under10', 'button2_value': '1만원 미만','button3_id': 'mood2', 'button3_value': '식당 분위기 필터링','button4_id': 'search_food', 'button4_value': '음식 종류 검색',
@@ -327,6 +326,9 @@ class Decide_menu {
                 await info_update.profile.update_price_level_lunch(socket.id, '0,1,2,3,4');
                 await info_update.profile.update_price_level_dinner(socket.id, '0,1,2,3,4');
 
+            } else {
+              await index.sendSocketMessage(socket.id, 'chat message button', `${value}가 어딘지 모르겠어 ㅠㅠ 다른 곳으로 입력해줄래?`, ['method/elsewhere', '다시 입력하기']);
+              return;
             }
             // if (value.includes('decide_subway_corgi')) {
             //     const subway = value.split('/')[1];

@@ -96,9 +96,9 @@ class Decide_place {
       try {
         const body = await info_update.profile.geocoder(user_data.kakao_id, value); // 카카오 지도 API 이용, 키워드를 통해 위도,경도를 받아온다.
         const re = JSON.parse(body);
-        console.log(re.documents[0]);
+        if(!re.documents) return;
         if (re.documents[0] === undefined) {
-          index.sendSocketMessage(socket.id, 'chat message', `${value}가 어딘지 모르겠어 ㅠㅠ 다른 곳으로 입력해줄래?\n(근처 지하철역을 말해주면 찾기가 쉬워)`);
+          index.sendSocketMessage(socket.id, 'chat message button', `${value}가 어딘지 모르겠어 ㅠㅠ 다른 곳으로 입력해줄래?\n(근처 지하철역을 말해주면 찾기가 쉬워)`);
         } else {
           await info_update.profile.update_place_info(socket.id, (user_data.lat + parseFloat(re.documents[0].y)), (user_data.lng + parseFloat(re.documents[0].x)), (user_data.cnt + 1));
           if (parseInt(user_data.cnt) >= 1) {
