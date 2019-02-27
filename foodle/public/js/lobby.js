@@ -88,24 +88,25 @@ function logout(loginValue) {
       }
     };
     sendTokenReq(info);
-  } else if (loginValue === '1') {
-    console.log('naver logout');
-    alert('로그아웃 되었습니다.');
-    sessionStorage.clear();
-    localStorage.clear();
-    location.href = '/';
-  } else if (loginValue === '2') {
-    console.log('facebook logout');
-    sessionStorage.clear();
-    localStorage.clear();
-    location.href = '/';
-  } else if (loginValue === '3') {
-    console.log('google logout');
-    googleSignOut();
-    sessionStorage.clear();
-    localStorage.clear();
-    location.href = '/';
   }
+  // else if (loginValue === '1') {
+  //   console.log('naver logout');
+  //   alert('로그아웃 되었습니다.');
+  //   sessionStorage.clear();
+  //   localStorage.clear();
+  //   location.href = '/';
+  // } else if (loginValue === '2') {
+  //   console.log('facebook logout');
+  //   sessionStorage.clear();
+  //   localStorage.clear();
+  //   location.href = '/';
+  // } else if (loginValue === '3') {
+  //   console.log('google logout');
+  //   googleSignOut();
+  //   sessionStorage.clear();
+  //   localStorage.clear();
+  //   location.href = '/';
+  // }
 
 }
 
@@ -117,9 +118,6 @@ $(document).ready(() => {
   if(loginValue===null && emailValue!==null && emailValue.split('@')[1]!=='jellylab.io'){
     sessionStorage.setItem('login', '0');
   }
-
-  //console.log('loginV: '+loginValue);
-  //console.log('emailV: '+emailValue);
 
   if(loginValue===null && emailValue!==null && emailValue.split('@')[1]==='jellylab.io'){
     onetimeLogout();
@@ -148,14 +146,9 @@ $(document).ready(() => {
                 $('#profile-name').append(res.name + " 님");
                 $('#profile-email').addClass('.a');
                 $('#profile-email').append(res.email);
-
-                // $('#question-name').append(res.name);
                 $('#question-email').val(res.email);
               }
-
-
               // $('#question-content').attr("placeholder", "Type here to search");
-              // $('#question-email').append(res.email);
             } else {
               console.log('verifyToken fail');
               console.log(res);
@@ -210,11 +203,6 @@ $(document).ready(() => {
     onetimeLogout('signup');
   })
 
-  // $('#content-1, #story-bar').click(function(){
-  //   location.href='/contents';
-  // });
-
-
   $('#choose-rest').click(function(){
     sessionStorage.setItem('stage', 'decide_menu');
     sessionStorage.setItem('name', '식당 고르기');
@@ -249,34 +237,6 @@ $(document).ready(() => {
     console.log('logout clicked');
     logout(loginValue);
   })
-
-  // $('.decide-withdrawl').click(() => {
-  //   if (confirm('정말 탈퇴하시겠습니까? 탈퇴하시면 모든 데이터가 소멸됩니다.')) {
-  //     const info = {
-  //       url: '/api/v1/users/member_withdraw',
-  //       method: 'POST',
-  //       body: {
-  //         email: sessionStorage.getItem('email'),
-  //         password: $('.password').val()
-  //       },
-  //       success: function(res) {
-  //         if (res.success) {
-  //           sessionStorage.clear();
-  //           localStorage.clear();
-  //           alert('탈퇴했습니다.');
-  //           window.location.replace(res.redirect);
-  //         }
-  //       },
-  //       error: function (e) {
-  //         console.log(e.responseJSON);
-  //         if(e.responseJSON.message.indexOf('not match') !== -1) {
-  //           alert('비밀번호가 틀렸습니다.');
-  //         }
-  //       }
-  //     }
-  //     sendTokenReq(info);
-  //   }
-  // });
 
   $('#withdraw-btn').click(() => {
     var password = prompt("비밀번호를 입력하세요", "");
@@ -314,10 +274,6 @@ $(document).ready(() => {
       }
     }
   });
-
-  // $('#withdraw-btn').click(function(){
-  //   console.log('withdraw clicked');
-  // })
 
   const userinfo = {
       method: "POST",

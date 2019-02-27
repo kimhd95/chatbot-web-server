@@ -35,21 +35,16 @@ function getTime() {
   const hour = new Date().getHours();
   const min = new Date().getMinutes();
   if (hour < 12) {
-    if (min < 10)
-      date = `오전 ${hour}:0${min}`;
-    else
-      date = `오전 ${hour}:${min}`;
+    if (min < 10) date = `오전 ${hour}:0${min}`;
+    else date = `오전 ${hour}:${min}`;
   } else if (hour === 12) {
-    if (min < 10)
-      date = `오후 ${hour}:0${min}`;
-    else
-      date = `오후 ${hour}:${min}`;
+    if (min < 10) date = `오후 ${hour}:0${min}`;
+    else date = `오후 ${hour}:${min}`;
   } else if (min < 10) {
     date = `오후 ${hour % 12}:0${min}`;
   } else {
     date = `오후 ${hour % 12}:${min}`;
   }
-
   return date;
 }
 
@@ -322,7 +317,6 @@ function bot_messaging_card_no_image(res_name, res_type, food_name, naver_url, m
 }
 
 function bot_messaging_card_inner_no_image(res_name, res_type, food_name, naver_url, map_url) {
-  // const carousel_id = `carousel${String(Math.floor(Math.random() * 10000) + 1)}`;
   let message_info = `
               <div class="choice_card">
                 <div class="choice_card_content">
@@ -443,7 +437,7 @@ function logout(loginValue) {
       }
     };
     sendTokenReq(info);
-  } else if (loginValue === '1') {
+  } /*else if (loginValue === '1') {
     console.log('naver logout');
     alert('로그아웃 되었습니다.');
     sessionStorage.clear();
@@ -460,7 +454,7 @@ function logout(loginValue) {
     sessionStorage.clear();
     localStorage.clear();
     location.href = '/';
-  }
+  }*/
 
 }
 
@@ -473,9 +467,8 @@ function updatePartLog(email, stage) {
     } else if(stage==='decide_place'){
       targetcol='middle_chat_log';
     }
+
     let chat_log = $("#messages")[0].innerHTML;
-    console.log("updatePartlog 함수 안");
-    console.log(chat_log);
     const latestidx=chat_log.lastIndexOf('<hr>');
     if(chat_log.lastIndexOf('<hr>')!==-1){
       chat_log=chat_log.slice(latestidx+4)+`<hr>`;
@@ -520,58 +513,14 @@ function updatePartLog(email, stage) {
     };
     sendReq(info);
 }
-//
-// function updateChatLog(socket_id) {
-//     const new_text = $("#messages")[0].innerHTML;
-//
-//     const info = {
-//         method: "POST",
-//         url: '/api/v1/users/update_user',
-//         body: {
-//             kakao_id: socket_id,
-//             chat_log: + new_text+`<hr>`,
-//         },
-//         success: function (res) {
-//             if (res.success){
-//                 console.log("update chatlog: success!");
-//             }else {
-//                 console.log("updatechatlog: fail!");
-//                 console.log(res);
-//             }
-//         },
-//         error: function(e) {
-//             console.log('ajax call error: signup page - singUpReq');
-//             if (e.status === 404 && e.responseText.includes("API call URL not found."))
-//                 console.log("check your URL, method(GET/POST)");
-//             else if ((e.status === 400 && e.responseText.includes("not provided"))
-//                 || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
-//                 console.log("check your parameters");
-//             } else if(e.status === 0){
-//                 if(navigator.onLine){
-//                     console.log('status : 0');
-//                 }else {
-//                     console.log('internet disconnected');
-//                     window.location.reload();
-//                 }
-//             } else {
-//                 console.log('status: ' + e.status + ', message: ' + e.responseText);
-//             }
-//             alert(e.responseText);
-//         }
-//     };
-//     sendReq(info);
-// }
 
 function getPartLog(email, stage) {
     let targetcol;
     if(stage==='decide_menu'){
-      // targetAPI='/api/v1/users/get_menu_log';
       targetcol='menu_chat_log';
     } else if(stage==='decide_drink'){
-      // targetAPI='/api/v1/users/get_drink_log';
       targetcol='drink_chat_log';
     } else if(stage==='decide_place'){
-      // targetAPI='/api/v1/users/get_middle_log';
       targetcol='middle_chat_log';
     } else if(stage==='decide_cafe'){
       targetcol='cafe_chat_log';
@@ -609,7 +558,6 @@ function getPartLog(email, stage) {
                 //  <button type="button" class="messaging-button" id="decide_history" name="기록 보기">기록 보기</button>
                 //  <button type="button" class="messaging-button" id="chitchat" name="외식코기랑 대화하기">외식코기랑 대화하기</button>
                 let user_html = res.message;
-                // let user_html = res.message;
                 if (user_html !== null) {
                   user_html = user_html.replace(/class="messaging-button"/gi,`style="display: none;"`).replace(/class="messaging-button-checkbox"/gi,`style="display: none;"`).replace(/class="messaging-button-checkbox messaging-button-checkbox-checked"/gi,`style="display: none;"`).replace(/class="messaging-button complete-button"/gi, `style="display: none;"`);
                   if (res.disconn_type === 'permanent') {
@@ -683,22 +631,13 @@ function getLocation(socket_id) {
   } else {
     alert('geolocation not supported');
   }
-
-
 }
 
 let loginValue = sessionStorage.getItem('login');
 let clickNum=0;
 
 $(function () {
-
   var socket = io();
-
-  // $('.get-started-button').click(function(){
-  //   socket.emit('chat message button rule', '시작하기',$(this).attr('id'));
-  //   $(".get-started-button").hide();
-  //   // $("input").prop('disabled', false);
-  // });
 
   $('.back-btn').click(function(){
     location.href='/lobby';
@@ -734,8 +673,7 @@ $(function () {
         checked_array.push(this.id);
         checked_name_array.push(this.name);
       });
-      // console.log(checked_array);
-      // console.log(checked_name_array);
+
       if (checked_array.length === 0) {
         switch ($(e.target).attr('id')) {
           case 'mood2/':
@@ -761,26 +699,17 @@ $(function () {
         $('.messaging-button-checkbox').children('input[type=checkbox]').prop('checked', false);
       }
     } else if ($(e.target).attr('id')==='location/current'){
-      // console.log(navigator.geolocation);
       let arr = getLocation(socket.id);
       var temp = setTimeout(function() {
         socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + '_'+ arr.lat + '/' + arr.lng);
-        //socket.emit('chat message button rule', $(e.target).attr('name'), `${$(e.target).attr('id')}_${arr.lat}/${arr.lng}`);
       }, 2000);
 
-      // console.log(getLocation(socket.id));
-
-
-      // console.log($(e.target).attr('name'));
-      // console.log($(e.target).attr('id'));
       $('.checkbox:checked').attr('checked', false);
       $('.messaging-button').hide();
       $('.messaging-button-checkbox').hide();
     }
     else {
       socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id'));
-      // console.log($(e.target).attr('name'));
-      // console.log($(e.target).attr('id'));
       $('.checkbox:checked').attr('checked', false);
       $('.messaging-button').hide();
       $('.messaging-button-checkbox').hide();
@@ -820,16 +749,12 @@ $(function () {
       // $(e.target).children('input[type=checkbox]').click();
     }
 
-    // console.log($(e.target).children('input[type=checkbox]').attr('checked'));
-
     if($(e.target).children('input[type=checkbox]').prop('checked')){
 
       $(e.target).children('input[type=checkbox]').prop('checked', false);
-      // console.log($(e.target).children('input[type=checkbox]').attr('checked'));
       $(e.target).toggleClass('messaging-button-checkbox-checked');
       // $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked');
       clickNum--;
-      // console.log(clickNum);
     } else{
 
       $(e.target).children('input[type=checkbox]').prop('checked', true);
@@ -837,57 +762,27 @@ $(function () {
       $(e.target).toggleClass('messaging-button-checkbox-checked');
       // $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked');
       clickNum++;
-      // console.log(clickNum);
     }
-
-    if(clickNum>0){
-      $('.complete-button').prop('disabled', false);
-    } else{
-      $('.complete-button').prop('disabled', false);
-    }
-
-
-
+    $('.complete-button').prop('disabled', false);
   });
 
   $('body').on("submit", "form", function(){
     if($('#m').val() === "버튼보여줘"){
       socket.emit('chat message button', $('#m').val());
       $("input").prop('disabled', true);
-
-    }else{
-    socket.emit('chat message', $('#m').val());
+    } else {
+      socket.emit('chat message', $('#m').val());
     }
     $('#m').val('');
     return false;
   });
 
-
-  // $('form').submit(function(){
-  //   alert('됨');
-  //   if($('#m').val() === "버튼보여줘"){
-  //     socket.emit('chat message button', $('#m').val());
-  //     $("input").prop('disabled', true);
-  //
-  //   }else{
-  //   socket.emit('chat message', $('#m').val());
-  //   }
-  //   $('#m').val('');
-  //   return false;
-  // });
-
   socket.on('chat register', function(socket_id){
     console.log("Present stage: "+sessionStorage.getItem('stage'));
     let user_email = sessionStorage.getItem('email');
-    // console.log(sessionStorage.getItem('stage'));
     let stage = sessionStorage.getItem('stage');
-    // if(sessionStorage.getItem('stage')!==null){
-    //   console.log('before remove: '+sessionStorage.getItem('stage'));
-    //   sessionStorage.removeItem('stage');
-    //   console.log('after remove: '+ sessionStorage.getItem('stage'));
-    // }
     let name =sessionStorage.getItem('name');
-     // console.log(name);
+
     const info = {
         method: "POST",
         url: '/api/v1/users/update_socket',
@@ -909,8 +804,6 @@ $(function () {
                   $('.checkbox:checked').attr('checked', false);
                   $('.messaging-button').hide();
                   $('.messaging-button-checkbox').hide();
-
-                  // sessionStorage.removeItem('stage');
                 }
             }else {
                 console.log("signUpReq: fail!");
@@ -968,12 +861,7 @@ $(function () {
     $('#messages').append(bot_messaging(msg)).children(':last').hide()
       .fadeIn(150);
     for (let i = 0; i < args.length; i += 1) {
-        // if(args[i].length===1){
-        //
-        // }
-      // basic_message.append(bot_messaging_button(args[i][0],args[i][1]));
         $('#messages').append(bot_messaging_button(args[i][0], args[i][1]));
-
     }
     if (args.length === 0) {
         $('#m').prop('disabled', false);
@@ -984,16 +872,11 @@ $(function () {
     }
     $('#messages').scrollTop(1E10);
 
-    // updateChatLog(socket_id);
     if(loginValue!=='-1'){
       if(msg.includes("오늘의 선택")){
         updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
       }
     }
-    // if(sessionStorage.getItem('stage')!==null){
-    //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
-    // }
-    // $(".myText").val($("#messages")[0].outerHTML);
   });
 
   socket.on('chat message button checkbox price', (socket_id, msg, ...args) => {
@@ -1008,21 +891,11 @@ $(function () {
       .fadeIn(150);
     const args_length = args.length;
     for (let i = 0; i < args_length - 1; i += 1) {
-      // basic_message.append(bot_messaging_button(args[i][0],args[i][1]));
-      // console.log(`${args[i][0]}, ${args[i][1]}`);
       $('#messages').append(bot_messaging_button_checkbox(args[i][0], args[i][1]));
     }
     $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
     $('.complete-button').prop('disabled', false);
-
-    // $('.messaging-button-checkbox:not(:hidden)').first().click();
-    // $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
     $('#messages').scrollTop(1E10);
-    // updateChatLog(socket_id);
-    // if(sessionStorage.getItem('stage')!==null){
-    //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
-    // }
-    // $(".myText").val($("#messages")[0].outerHTML);
   });
 
   socket.on('chat message button checkbox', (socket_id, msg, ...args) => {
@@ -1038,20 +911,12 @@ $(function () {
       .fadeIn(150);
     const args_length = args.length;
     for (let i = 0; i < args_length - 1; i += 1) {
-      // basic_message.append(bot_messaging_button(args[i][0],args[i][1]));
       console.log(`${args[i][0]}, ${args[i][1]}`);
       $('#messages').append(bot_messaging_button_checkbox(args[i][0], args[i][1]));
     }
     $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
     $('.complete-button').prop('disabled', true);
-    // $('.messaging-button-checkbox:not(:hidden)').first().click();
-    // $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
     $('#messages').scrollTop(1E10);
-    // updateChatLog(socket_id);
-    // if(sessionStorage.getItem('stage')!==null){
-    //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
-    // }
-    // $(".myText").val($("#messages")[0].outerHTML);
   });
 
   socket.on('chat message button dynamic checkbox', (socket_id, msg, ...args) => {
@@ -1064,8 +929,6 @@ $(function () {
       $('#messages').append(bot_messaging_button_checkbox(args[1][i], args[1][i]));
     }
     $('#messages').append(bot_messaging_button_finish_checkbox(args[2][0], args[2][1]));
-    // $('.messaging-button-checkbox:not(:hidden)').first().click();
-    // $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
     if (args.length === 0) {
       $('#m').prop('disabled', false);
       $('#input-button').attr('disabled', false);
@@ -1074,11 +937,6 @@ $(function () {
       $('#input-button').attr('disabled', true);
     }
     $('#messages').scrollTop(1E10);
-    // updateChatLog(socket_id);
-    // if(sessionStorage.getItem('stage')!==null){
-    //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
-    // }
-    // $(".myText").val($("#messages")[0].outerHTML);
   });
 
   socket.on('chat message map', (msg, ...args) => {
@@ -1090,7 +948,6 @@ $(function () {
 
   socket.on('chat message button checkbox map', (socket_id, msg, ...args) => {
     console.log("Present stage: "+sessionStorage.getItem('stage'));
-    // console.log(args);
       if (args.length === 0) {
         $('#m').prop('disabled', false);
         $('#input-button').attr('disabled', false);
@@ -1103,22 +960,12 @@ $(function () {
       const args_length = args.length;
       $('#messages').append(bot_messaging_map(args[0], args[1]));
       for (let i = 2; i < args_length - 1; i += 1) {
-        // basic_message.append(bot_messaging_button(args[i][0],args[i][1]));
         $('#messages').append(bot_messaging_button_checkbox(args[i][0], args[i][1]));
       }
-      // $('#messages').append(bot_messaging_button_finish_checkbox(args[2][0], args[2][1]));
       $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
       $('.complete-button').prop('disabled', true);
-      // $('.messaging-button-checkbox:not(:hidden)').first().click();
-      // $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', true);
       $('#messages').scrollTop(1E10);
-      // updateChatLog(socket_id);
-      // if(sessionStorage.getItem('stage')!==null){
-      //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
-      // }
   });
-
-
 
   socket.on('chat message image', (socket_id, msg, button1, button2, ...args) => {
     console.log("Present stage: "+sessionStorage.getItem('stage'));
@@ -1131,8 +978,7 @@ $(function () {
     $('#m').prop('disabled', true);
     setTimeout(() => {
       $('#messages').scrollTop(1E10);
-    }, 100); // execute your function after 2 seconds.
-    // updateChatLog(socket_id);
+    }, 100);
   });
 
   socket.on('chat message card', (socket_id, button1, button2, button3, rest1, rest2) => {
@@ -1144,11 +990,7 @@ $(function () {
     $('#input-button').attr('disabled', true);
     setTimeout(() => {
       $('#messages').scrollTop(1E10);
-    }, 100); // execute your function after 2 seconds.
-    // updateChatLog(socket_id);
-    // if(sessionStorage.getItem('stage')!==null){
-    //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
-    // }
+    }, 100);
     if(loginValue!=='-1'){
       updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
     }
@@ -1173,7 +1015,6 @@ $(function () {
         $('#messages').append(bot_messaging_button(args[i][0], args[i][1]));
       }
       $('#messages').scrollTop(1E10);
-      // updateChatLog(socket_id);
       if(loginValue!=='-1'){
         if(msg.includes("오늘의 선택")){
           updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
@@ -1200,7 +1041,6 @@ $(function () {
       $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
       $('.complete-button').prop('disabled', true);
       $('#messages').scrollTop(1E10);
-      // updateChatLog(socket_id);
   });
 
 
@@ -1210,17 +1050,10 @@ $(function () {
     $('#messages').append(bot_messaging_card_no_image(rest1[0], rest1[1], rest1[2], rest1[3], rest1[4]));
     $('.choice_carousel').last().append(bot_messaging_card_inner_no_image(rest2[0], rest2[1], rest2[2], rest2[3], rest2[4]));
     $('#messages').append(bot_messaging_button(button1[0], button1[1])).append(bot_messaging_button(button2[0], button2[1])).append(bot_messaging_button(button3[0], button3[1]));
-    // if(button1[0] === 'semi_final2/1' || button1[0] === 'final/1'){
-    //   $(".choice_card").eq(-2).prepend("<img class='choice_card_winner' src='/images/white.png'></img>");
-    // }
     $('#m').prop('disabled', true);
     setTimeout(() => {
       $('#messages').scrollTop(1E10);
-    }, 100); // execute your function after 2 seconds.
-    // updateChatLog(socket_id);
-    // if(sessionStorage.getItem('stage')!==null){
-    //   updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
-    // }
+    }, 100);
     if(loginValue!=='-1'){
       updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
     }
@@ -1234,7 +1067,6 @@ $(function () {
       $('#m').prop('disabled', true);
       $('#input-button').attr('disabled', true);
       $('#messages').scrollTop(1E10);
-      // $(".myText").val($("#messages")[0].outerHTML);
   });
 
 });
@@ -1242,68 +1074,69 @@ $(function () {
 
 
 $(document).ready(() => {
-
-  // let loginValue = sessionStorage.getItem('login');
+  let loginValue = sessionStorage.getItem('login');
   if (loginValue === '0') {
-    // $('.social-signed-in')[0].style.display = 'none';
     $('.email-signed-in')[0].style.display = 'block';
     $('.update-password')[0].style.display = 'block';
   } else {
-    // $('m').val(sessionStorage.getItem('email'));
-    // $('.social-signed-in')[0].style.display = 'block';
+    $('#logout-btn')[0].style.display = 'none';
     $('.email-signed-in')[0].style.display = 'none';
-    $('.update-password')[0].style.display = 'block';
+    $('.update-password')[0].style.display = 'none';
   }
-  if (loginValue === '0') {
-    const info = {
-      url: '/api/v1/users/verify_token',
-      method: 'POST',
-      data: null,
-      async: true,
-      crossDomain: true,
-      redirect: 'follow',
-      xhrFields: {
-          withCredentials: true
-      },
-      success: function (res) {
-          if (res.success) {
-              console.log(res);
-              console.log('verifyToken success');
-            } else {
-              console.log('verifyToken fail');
-              console.log(res);
-          }
-      },
-      error: function (e) {
-          console.log('ajax call error: login page - verifyToken');
-          if (e.status === 404 && e.responseText.includes("API call URL not found.")) {
-              console.log("check your URL, method(GET/POST)");
-          }else if(e.status === 403){
-              if (e.responseText.includes("No token provided.")) {
-                  console.log("No token, no problem.");
-                  alert('로그인해주세요.');
-                  location.href = '/login';
-              }
-              else if (e.responseText.includes("jwt malformed"))
-                  console.log("Malformed token");
-              else if (e.responseText.includes("invalid signature"))
-                  console.log("Modified token");
-              else console.log(e);
-          } else if(e.status === 0){
-              if(navigator.onLine){
-                  console.log('status : 0');
-              }else {
-                  console.log('internet disconnected');
-                  window.location.reload();
-              }
-          } else{
-              console.log('status: ' + e.status + ', message: ' + e.responseText);
-              console.log(e);
-          }
-      }
+  // if (loginValue === '0') {
+  const info = {
+    url: '/api/v1/users/verify_token',
+    method: 'POST',
+    data: null,
+    async: true,
+    crossDomain: true,
+    redirect: 'follow',
+    xhrFields: {
+        withCredentials: true
+    },
+    success: function (res) {
+        if (res.success) {
+            console.log(res);
+            console.log('verifyToken success');
+            if(sessionStorage.getItem('login')==='0' || sessionStorage.getItem('login')===null){
+              sessionStorage.setItem('login', '0');
+              sessionStorage.setItem('email', res.email);
+            }
+          } else {
+            console.log('verifyToken fail');
+            console.log(res);
+        }
+    },
+    error: function (e) {
+        console.log('ajax call error: login page - verifyToken');
+        if (e.status === 404 && e.responseText.includes("API call URL not found.")) {
+            console.log("check your URL, method(GET/POST)");
+        }else if(e.status === 403){
+            if (e.responseText.includes("No token provided.")) {
+                console.log("No token, no problem.");
+                alert('로그인해주세요.');
+                location.href = '/';
+            }
+            else if (e.responseText.includes("jwt malformed"))
+                console.log("Malformed token");
+            else if (e.responseText.includes("invalid signature"))
+                console.log("Modified token");
+            else console.log(e);
+        } else if(e.status === 0){
+            if(navigator.onLine){
+                console.log('status : 0');
+            }else {
+                console.log('internet disconnected');
+                window.location.reload();
+            }
+        } else{
+            console.log('status: ' + e.status + ', message: ' + e.responseText);
+            console.log(e);
+        }
     }
-    sendTokenReq(info);
   }
+  sendTokenReq(info);
+  // }
 
   let nowTime;
   $('.card-body').on('click', '.arrow-right', function(){
@@ -1421,36 +1254,6 @@ $(document).ready(() => {
       sendReq(info);
     }
   });
-
-  // $('#withdraw-btn').click(() => {
-  //   if (confirm('정말 탈퇴하시겠습니까? 탈퇴하시면 모든 데이터가 소멸됩니다.')) {
-  //     console.log("email : ");
-  //     console.log(sessionStorage.getItem('email'));
-  //     const info = {
-  //       url: '/api/v1/users/member_withdraw',
-  //       method: 'POST',
-  //       body: {
-  //         email: sessionStorage.getItem('email')
-  //       },
-  //       success: function(res) {
-  //         if (res.success) {
-  //           // if (sessionStorage.getItem('login') === '3') {
-  //           //   googleSignOut();
-  //           // }
-  //           sessionStorage.clear();
-  //           localStorage.clear();
-  //           alert('탈퇴했습니다.');
-  //           window.location.replace(res.redirect);
-  //         }
-  //       },
-  //       error: function (e) {
-  //         console.log(e.responseJSON);
-  //       }
-  //     }
-  //
-  //     sendReq(info);
-  //   }
-  // });
 
   $('.decide-withdrawl').click(() => {
     if (confirm('정말 탈퇴하시겠습니까? 탈퇴하시면 모든 데이터가 소멸됩니다.')) {

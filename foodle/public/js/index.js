@@ -95,8 +95,6 @@ function loginOnetime () {
             console.log('onetimelogin Req success');
             sessionStorage.setItem('login', -1);
             sessionStorage.setItem('email', email);
-            // sessionStorage.setItem('login', '0');
-            // sessionStorage.setItem('email', email);
             alert('환영합니다.');
             window.location.replace(res.redirect);
         },
@@ -120,7 +118,7 @@ function loginOnetime () {
                     console.log('internet disconnected');
                     window.location.reload();
                 }
-            }  else {
+            } else {
                 console.log(e.responseText);
                 console.log(e);
                 alert("로그인에 실패했습니다.");
@@ -129,7 +127,6 @@ function loginOnetime () {
     };
     sendTokenReq(info);
 }
-
 
 function login () {
     const info = {
@@ -166,7 +163,6 @@ function login () {
                     window.location.reload();
                 }
             }  else {
-                console.log(e.responseText);
                 console.log(e);
                 alert("로그인에 실패했습니다.");
             }
@@ -241,9 +237,7 @@ $(document).ready(() => {
                     console.log('verifyToken success');
                     //추가
                     sessionStorage.setItem('login', '0');
-
                     sessionStorage.setItem('email', res.email);
-                    ////alert('이미 로그인되어 있습니다.');
                     window.location.replace(res.redirect);
                 } else {
                     console.log('verifyToken fail');
@@ -364,16 +358,12 @@ $(document).ready(() => {
               if (res.success){
                   console.log("signUpReq: success!");
                   loginOnetime();
-                  // location.href = '/lobby';
-                  // getChatLog(user_email);
-                  // alert("비로그인 접속 완료!");
               }else {
                   console.log("signUpReq: fail!");
                   console.log(res);
               }
           },
           error: function(e) {
-              // alert(JSON.stringify(e));
               console.log('ajax call error: signup page - singUpReq');
               if (e.status === 404 && e.responseText.includes("API call URL not found."))
                   console.log("check your URL, method(GET/POST)");
@@ -394,6 +384,5 @@ $(document).ready(() => {
           }
       };
       sendReq(info);
-      // sendTokenReq(info);
     })
 })

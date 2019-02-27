@@ -1,20 +1,11 @@
-
-
 const Info = require('../../api/info_update');
-
-
 const index = require('../../server/index');
-
-
 const info_update = new Info();
-
-
 const request = require('request');
 
 class Chitchat {
   constructor(value, socket, user_data) {
-    let key;
-    key = value;
+    let key = value;
 
     if (user_data.state === 'chitchat_answer') {
       key = 'chitchat_answer';
@@ -28,7 +19,6 @@ class Chitchat {
   }
 
   execute(key, value, socket, user_data) {
-    // this.update_state(socket.id, '5', key);
     this.strategies[key] == null ? index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']) : this.strategies[key](value, socket, user_data);
   }
 
