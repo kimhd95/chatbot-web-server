@@ -1233,7 +1233,8 @@ $(document).ready(() => {
         targetcol='middle_chat_log';
       }
       console.log(targetcol);
-      sessionStorage.removeItem('stage');
+      //sessionStorage.removeItem('stage');
+
       const info = {
         url: "/api/v1/users/delete_part_log",
         method: 'POST',
@@ -1244,7 +1245,9 @@ $(document).ready(() => {
         success: function(res) {
           if (res.success) {
             alert('채팅로그를 지웠습니다.');
+            // getPartLog(sessionStorage.getItem('email'), currentStage);
             window.location.replace('/chat');
+
           }
         },
         error: function (e) {
