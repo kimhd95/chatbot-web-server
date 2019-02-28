@@ -323,8 +323,10 @@ class Decide_menu {
                     await info_update.profile.update_freq_subway(socket.id, 'null');
                 }
                 await info_update.profile.update_subway(socket.id, subway);
-                await info_update.profile.update_price_level_lunch(socket.id, '0,1,2,3,4');
-                await info_update.profile.update_price_level_dinner(socket.id, '0,1,2,3,4');
+                if (user_data.price_lunch === null && user_data.price_dinner === null) {
+                  await info_update.profile.update_price_level_lunch(socket.id, '0,1,2,3,4');
+                  await info_update.profile.update_price_level_dinner(socket.id, '0,1,2,3,4');
+                }
 
             } else {
               await index.sendSocketMessage(socket.id, 'chat message button', `${value}가 어딘지 모르겠어 ㅠㅠ 다른 곳으로 입력해줄래?`, ['method/elsewhere', '다시 입력하기']);
