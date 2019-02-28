@@ -331,6 +331,18 @@ $(document).ready(() => {
     //     $('.abcRioButton').trigger('click');
     // });
 
+    $('input[type=text]').on('keydown', function(e) {
+        if (e.which == 13) {
+            loginValidationCheck();
+        }
+    });
+
+    $('input[type=password]').on('keydown', function(e) {
+        if (e.which == 13) {
+            loginValidationCheck();
+        }
+    });
+
     // 로그인 버튼 클릭
     $('#login-btn').click(() => {
         loginValidationCheck();
