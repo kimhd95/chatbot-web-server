@@ -26,7 +26,6 @@ function getToday() {
       day = '토요일';
       break;
   }
-
   return `${year}년  ${month}월  ${date}일  ${day}`;
 }
 
@@ -361,8 +360,11 @@ function bot_messaging_loader(loader_id) {
   } else if (hour === 12) {
     if (min < 10) date = `오후 ${hour}:0${min}`;
     else date = `오후 ${hour}:${min}`;
-  } else if (min < 10) date = `오후 ${hour % 12}:0${min}`;
-  else date = `오후 ${hour % 12}:${min}`;
+  } else if (min < 10) {
+    date = `오후 ${hour % 12}:0${min}`;
+  } else {
+    date = `오후 ${hour % 12}:${min}`;
+  }
   let message_info = `<div class="bot-message">
       <div id="${loader_id}" class="message-text">
         <img class="loader" src="/images/loader.gif" alt="loader"></img>
@@ -388,6 +390,7 @@ function onLoad () {
       gapi.auth2.init();
   });
 }
+
 // google logout
 function googleSignOut() {
   var auth2 = gapi.auth2.getAuthInstance();
@@ -455,25 +458,24 @@ function logout(loginValue) {
     localStorage.clear();
     location.href = '/';
   }*/
-
 }
 
 function updatePartLog(email, stage) {
     let targetcol;
-    if(stage==='decide_menu'){
-      targetcol='menu_chat_log';
-    } else if(stage==='decide_drink'){
-      targetcol='drink_chat_log';
-    } else if(stage==='decide_place'){
-      targetcol='middle_chat_log';
+    if (stage === 'decide_menu') {
+      targetcol = 'menu_chat_log';
+    } else if (stage === 'decide_drink') {
+      targetcol = 'drink_chat_log';
+    } else if (stage === 'decide_place') {
+      targetcol = 'middle_chat_log';
     }
 
     let chat_log = $("#messages")[0].innerHTML;
-    const latestidx=chat_log.lastIndexOf('<hr>');
-    if(chat_log.lastIndexOf('<hr>')!==-1){
-      chat_log=chat_log.slice(latestidx+4)+`<hr>`;
+    const latestidx = chat_log.lastIndexOf('<hr>');
+    if (chat_log.lastIndexOf('<hr>') !== -1) {
+      chat_log = chat_log.slice(latestidx+4) + `<hr>`;
     } else{
-      chat_log=chat_log+`<hr>`;
+      chat_log = chat_log + `<hr>`;
     }
     const info = {
         method: "POST",
@@ -498,10 +500,10 @@ function updatePartLog(email, stage) {
             else if ((e.status === 400 && e.responseText.includes("not provided"))
                 || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
                 console.log("check your parameters");
-            } else if(e.status === 0){
-                if(navigator.onLine){
+            } else if (e.status === 0) {
+                if (navigator.onLine) {
                     console.log('status : 0');
-                }else {
+                } else {
                     console.log('internet disconnected');
                     window.location.reload();
                 }
@@ -516,14 +518,14 @@ function updatePartLog(email, stage) {
 
 function getPartLog(email, stage) {
     let targetcol;
-    if(stage==='decide_menu'){
-      targetcol='menu_chat_log';
-    } else if(stage==='decide_drink'){
-      targetcol='drink_chat_log';
-    } else if(stage==='decide_place'){
-      targetcol='middle_chat_log';
-    } else if(stage==='decide_cafe'){
-      targetcol='cafe_chat_log';
+    if (stage === 'decide_menu') {
+      targetcol = 'menu_chat_log';
+    } else if (stage === 'decide_drink') {
+      targetcol = 'drink_chat_log';
+    } else if (stage === 'decide_place') {
+      targetcol = 'middle_chat_log';
+    } else if (stage === 'decide_cafe') {
+      targetcol = 'cafe_chat_log';
     }
     const info = {
         method: "POST",
@@ -533,7 +535,7 @@ function getPartLog(email, stage) {
             col: targetcol,
         },
         success: function (res) {
-            if (res.success){
+            if (res.success) {
                 console.log("get partlog: success!");
                 const init_html = `<br>
                   <div class="bot-message">
@@ -557,9 +559,14 @@ function getPartLog(email, stage) {
                 //  <button type="button" class="messaging-button" id="decide_place" name="중간지점 찾기(서울)">중간지점 찾기(서울)</button>
                 //  <button type="button" class="messaging-button" id="decide_history" name="기록 보기">기록 보기</button>
                 //  <button type="button" class="messaging-button" id="chitchat" name="외식코기랑 대화하기">외식코기랑 대화하기</button>
+
                 let user_html = res.message;
                 if (user_html !== null) {
-                  user_html = user_html.replace(/class="messaging-button"/gi,`style="display: none;"`).replace(/class="messaging-button-checkbox"/gi,`style="display: none;"`).replace(/class="messaging-button-checkbox messaging-button-checkbox-checked"/gi,`style="display: none;"`).replace(/class="messaging-button complete-button"/gi, `style="display: none;"`);
+                  user_html = user_html
+                  .replace(/class="messaging-button"/gi,`style="display: none;"`)
+                  .replace(/class="messaging-button-checkbox"/gi,`style="display: none;"`)
+                  .replace(/class="messaging-button-checkbox messaging-button-checkbox-checked"/gi,`style="display: none;"`)
+                  .replace(/class="messaging-button complete-button"/gi, `style="display: none;"`);
                   if (res.disconn_type === 'permanent') {
                     $('#messages').html(user_html+init_html);
                     $(".bot-message").css({ opacity: 1 });
@@ -579,7 +586,7 @@ function getPartLog(email, stage) {
                   }
                   $('#messages').scrollTop(1E10);
                 }
-            }else {
+            } else {
                 console.log("getpartlog: fail!");
                 console.log(res);
             }
@@ -591,10 +598,10 @@ function getPartLog(email, stage) {
             else if ((e.status === 400 && e.responseText.includes("not provided"))
                 || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
                 console.log("check your parameters");
-            } else if(e.status === 0){
-                if(navigator.onLine){
+            } else if (e.status === 0){
+                if (navigator.onLine){
                     console.log('status : 0');
-                }else {
+                } else {
                     console.log('internet disconnected');
                     window.location.reload();
                 }
@@ -610,7 +617,7 @@ function getPartLog(email, stage) {
 function getLocation(socket_id) {
   let arr = new Object();
   if (navigator.geolocation) {
-    let geo_options={
+    let geo_options = {
       enableHighAccuracy: false,
       maximumAge: Infinity,
       timeout: 30000,
@@ -618,13 +625,11 @@ function getLocation(socket_id) {
     function error(err){
       console.warn(`ERROR(${err.code}): ${err.message}`);
     }
-    navigator.geolocation.watchPosition(function(position){
+    navigator.geolocation.watchPosition(function(position) {
       let current_lat=position.coords.latitude;
       let current_lng=position.coords.longitude;
-
       arr['lat']=current_lat;
       arr['lng']=current_lng;
-
     }, error, geo_options);
 
     return arr;
@@ -714,7 +719,6 @@ $(function () {
       $('.messaging-button').hide();
       $('.messaging-button-checkbox').hide();
     }
-
   });
 
   $('body').on('click', '.messaging-button-checkbox', (e) => {
@@ -725,7 +729,6 @@ $(function () {
     }
     if ($(e.target).attr('id') === '999' || $(e.target).attr('id') === '998' || $(e.target).attr('id') === '900' || $(e.target).attr('id') === '상관없음' || $(e.target).attr('id') === '없음') {
       clickNum=0;
-      console.log(clickNum);
       $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').prop('checked', false);
       $('.messaging-button-checkbox:not(:hidden)').removeClass('messaging-button-checkbox-checked');
       $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').removeClass('messaging-button-checkbox-checked');
@@ -750,13 +753,11 @@ $(function () {
     }
 
     if($(e.target).children('input[type=checkbox]').prop('checked')){
-
       $(e.target).children('input[type=checkbox]').prop('checked', false);
       $(e.target).toggleClass('messaging-button-checkbox-checked');
       // $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked');
       clickNum--;
     } else{
-
       $(e.target).children('input[type=checkbox]').prop('checked', true);
       // console.log($(e.target).children('input[type=checkbox]').attr('checked'));
       $(e.target).toggleClass('messaging-button-checkbox-checked');
@@ -1021,6 +1022,7 @@ $(function () {
         }
       }
   });
+
   /* 이미지, 메세지, 중복체크버튼을 같이 사용 */
   socket.on('chat message button checkbox image', (socket_id, msg, img, ...args) => {  // msg:메세지, img: 이미지, args: 버튼들
     console.log("Present stage: "+sessionStorage.getItem('stage'));
@@ -1042,8 +1044,6 @@ $(function () {
       $('.complete-button').prop('disabled', true);
       $('#messages').scrollTop(1E10);
   });
-
-
 
   socket.on('chat message card no image', (socket_id, button1, button2, button3, rest1, rest2) => {
     console.log("Present stage: "+sessionStorage.getItem('stage'));
@@ -1068,7 +1068,6 @@ $(function () {
       $('#input-button').attr('disabled', true);
       $('#messages').scrollTop(1E10);
   });
-
 });
 
 
@@ -1098,7 +1097,7 @@ $(document).ready(() => {
         if (res.success) {
             console.log(res);
             console.log('verifyToken success');
-            if(sessionStorage.getItem('login')==='0' || sessionStorage.getItem('login')===null){
+            if(sessionStorage.getItem('login') === '0' || sessionStorage.getItem('login') === null){
               sessionStorage.setItem('login', '0');
               sessionStorage.setItem('email', res.email);
             }
@@ -1111,7 +1110,7 @@ $(document).ready(() => {
         console.log('ajax call error: login page - verifyToken');
         if (e.status === 404 && e.responseText.includes("API call URL not found.")) {
             console.log("check your URL, method(GET/POST)");
-        }else if(e.status === 403){
+        } else if (e.status === 403) {
             if (e.responseText.includes("No token provided.")) {
                 console.log("No token, no problem.");
                 alert('로그인해주세요.');
@@ -1122,14 +1121,14 @@ $(document).ready(() => {
             else if (e.responseText.includes("invalid signature"))
                 console.log("Modified token");
             else console.log(e);
-        } else if(e.status === 0){
-            if(navigator.onLine){
+        } else if (e.status === 0) {
+            if (navigator.onLine) {
                 console.log('status : 0');
-            }else {
+            } else {
                 console.log('internet disconnected');
                 window.location.reload();
             }
-        } else{
+        } else {
             console.log('status: ' + e.status + ', message: ' + e.responseText);
             console.log(e);
         }
@@ -1247,7 +1246,6 @@ $(document).ready(() => {
             alert('채팅로그를 지웠습니다.');
             // getPartLog(sessionStorage.getItem('email'), currentStage);
             window.location.replace('/chat');
-
           }
         },
         error: function (e) {
