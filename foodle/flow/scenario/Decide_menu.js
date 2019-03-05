@@ -688,13 +688,9 @@ class Decide_menu {
     }());
   }
 
-
-
-
   mood(value, socket, user_data) {
     (async function () {
       try {
-
         const mood_list = ['메뉴 컨셉은 끼니해결? 아니면 약속 자리?',
           '일상적인 식사 메뉴를 골라줄까? 아니면 밥이나 술 약속 메뉴를 골라줄까?',
           '어떤 식사자리인데?',
@@ -736,55 +732,46 @@ class Decide_menu {
   mood2(value, socket, user_data) {
     (async function () {
       try {
+        const mood2_list = ['원하는 식당 분위기를 골라줘!(중복선택)', '특별히 원하는 식당 분위기가 있다면 골라줘!(중복선택)', '가고 싶은 식당의 키워드를 몇개 골라봐!! (못고르겠으면 상관없음ㄱㄱ)'];
+        const mood2_leng = mood2_list.length;
+        const mood2_rand = Math.floor(mood2_leng * Math.random());
+        const imglist = ['emoji/checking.png','emoji/checking2.png'];
+        const leng2 = imglist.length;
+        const rand2 = Math.floor(leng2 * Math.random());
+
         await info_update.profile.update_food_type(socket.id, 'all');
         await info_update.profile.update_taste(socket.id, 'all');;
         await info_update.profile.update_exit_quarter(socket.id, '999');
         await info_update.profile.update_food_name(socket.id, 'x');
         //await info_update.profile.update_with_mood(socket.id, '약속');
-
         const result = await info_update.food.verify_mood2(socket.id, user_data.subway);
         console.log(result);
-        const mood2_list = ['원하는 식당 분위기를 골라줘!(중복선택)', '특별히 원하는 식당 분위기가 있다면 골라줘!(중복선택)', '가고 싶은 식당의 키워드를 몇개 골라봐!! (못고르겠으면 상관없음ㄱㄱ)'];
-        const mood2_leng = mood2_list.length;
-        const mood2_rand = Math.floor(mood2_leng * Math.random());
-        const imglist = ['emoji/checking.png','emoji/checking2.png'];
-        // var show_list = `['998', '상관없음'], `;
-        var show_list = [['998', '상관없음']];
+
+        var show_list = await [['998', '상관없음']];
         if (result.includes('가벼운')) {
-          show_list.push(['가벼운', '간단한']);
-          // show_list += `['가벼운', '간단한'], `;
+          await show_list.push(['가벼운', '간단한']);
         }
         if (result.includes('인스타')) {
-          show_list.push(['인스타', '#인스타감성']);
-          // show_list += `['인스타', '#인스타감성'], `;
+          await show_list.push(['인스타', '#인스타감성']);
         }
         if (result.includes('깔끔')) {
-          show_list.push(['깔끔','깔끔한']);
-          // show_list += `['깔끔','깔끔한'], `;
+          await show_list.push(['깔끔','깔끔한']);
         }
         if (result.includes('큰프')) {
-          show_list.push(['큰프', '프랜차이즈']);
-          // show_list += `['큰프', '프랜차이즈'], `;
+          await show_list.push(['큰프', '프랜차이즈']);
         }
         if (result.includes('뷔페')) {
-          show_list.push(['뷔페', '뷔페/무한리필']);
-          // show_list += `['뷔페', '뷔페/무한리필']`;
+          await show_list.push(['뷔페', '뷔페/무한리필']);
         }
-        show_list.push(['mood2/', '선택완료']);
-        // show_list += `['mood2/', '선택완료']`;
+        await show_list.push(['mood2/', '선택완료']);
         console.log(show_list);
-        console.log(typeof show_list);
-        // console.log(`${show_list}`.replace(/\[/g,''));
-
-        const leng2 = imglist.length;
-        const rand2 = Math.floor(leng2 * Math.random());
         if (result.length !== 0) {
-           index.sendSocketMessage(socket.id, 'chat message button checkbox image', mood2_list[mood2_rand], `${imglist[rand2]}`, show_list);
+           await index.sendSocketMessage(socket.id, 'chat message button checkbox image', mood2_list[mood2_rand], `${imglist[rand2]}`, show_list);
            // index.sendSocketMessage(socket.id, 'chat message button checkbox image', mood2_list[mood2_rand],`${imglist[rand2]}`, ['998', '상관없음'], ['가벼운', '간단한'], ['인스타', '#인스타감성'], ['깔끔','깔끔한'], ['큰프', '프랜차이즈'], ['뷔페', '뷔페/무한리필'], ['mood2/', '선택완료']);
         } else {
-          console.log("result length 0 else 문");
+          const item = new Decide_menu('mood2/998', socket, user_data);
+          // await index.sendSocketMessage(socket.id, 'chat message next', 'stage', 'mood2/998');
         }
-        // index.sendSocketMessage(socket.id, 'chat message button checkboFx image', mood2_list[mood2_rand],`${imglist[rand2]}`, ['998', '상관없음'], ['가벼운', '간단한'], ['인스타', '#인스타감성'], ['깔끔','깔끔한'], ['큰프', '프랜차이즈'], ['뷔페', '뷔페/무한리필'], ['mood2/', '선택완료']);
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
         console.log(e);
