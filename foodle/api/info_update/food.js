@@ -267,6 +267,26 @@ Food.verify_search_food = function (kakaoid, search_food, subway) {
     }));
 };
 
+Food.verify_mood2 = function (kakaoid, subway) {
+    const self = this;
+    return new Promise(((resolve, reject) => {
+        const name = 'food.verify_mood2';
+        const method = 'POST';
+        const url = '/api/v1/users/verify_mood2';
+        const json = {
+            apikey: '9Y3-7bE-Ud3-7Ja',
+            subway: subway,
+        };
+
+        const func = function (error, response, body) {
+            error === null
+                ? resolve(body.result)
+                : reject(error);
+        };
+        self.apicall(kakaoid, name, method, url, json, func);
+    }));
+};
+
 Food.verify_subway = function (kakaoid, value) {
   const self = this;
   return new Promise(((resolve, reject) => {

@@ -779,7 +779,6 @@ $(function () {
   });
 
   socket.on('chat register', function(socket_id){
-    console.log("Present stage: "+sessionStorage.getItem('stage'));
     let user_email = sessionStorage.getItem('email');
     let stage = sessionStorage.getItem('stage');
     let name =sessionStorage.getItem('name');
@@ -858,7 +857,6 @@ $(function () {
   });
 
   socket.on('chat message button', (socket_id, msg, ...args) => {
-    console.log("Present stage: "+sessionStorage.getItem('stage'));
     $('#messages').append(bot_messaging(msg)).children(':last').hide()
       .fadeIn(150);
     for (let i = 0; i < args.length; i += 1) {
@@ -900,7 +898,6 @@ $(function () {
   });
 
   socket.on('chat message button checkbox', (socket_id, msg, ...args) => {
-    console.log("Present stage: "+sessionStorage.getItem('stage'));
     if (args.length === 0) {
       $('#m').prop('disabled', false);
       $('#input-button').attr('disabled', false);
@@ -921,7 +918,6 @@ $(function () {
   });
 
   socket.on('chat message button dynamic checkbox', (socket_id, msg, ...args) => {
-    console.log("Present stage: "+sessionStorage.getItem('stage'));
     $('#messages').append(bot_messaging(msg)).children(':last').hide()
       .fadeIn(150);
     $('#messages').append(bot_messaging_button_checkbox(args[0][0], args[0][1]));
@@ -948,7 +944,6 @@ $(function () {
     });
 
   socket.on('chat message button checkbox map', (socket_id, msg, ...args) => {
-    console.log("Present stage: "+sessionStorage.getItem('stage'));
       if (args.length === 0) {
         $('#m').prop('disabled', false);
         $('#input-button').attr('disabled', false);
@@ -969,7 +964,6 @@ $(function () {
   });
 
   socket.on('chat message image', (socket_id, msg, button1, button2, ...args) => {
-    console.log("Present stage: "+sessionStorage.getItem('stage'));
     $('#messages').append(bot_messaging_image_carousel(args[0]));
     for (let i = 0; i < args[1] - 1; i += 1) {
       $('.carousel-inner').last().append(carousel_inner(args[2][i]));
@@ -983,7 +977,6 @@ $(function () {
   });
 
   socket.on('chat message card', (socket_id, button1, button2, button3, rest1, rest2) => {
-    console.log("Present stage: "+sessionStorage.getItem('stage'));
     $('#messages').append(bot_messaging_card(rest1[0], rest1[1], rest1[2], rest1[3], rest1[4], rest1[5], rest1[6], rest1[7]));
     $('.choice_carousel').last().append(bot_messaging_card_inner(rest2[0], rest2[1], rest2[2], rest2[3], rest2[4], rest2[5], rest2[6], rest2[7]));
     $('#messages').append(bot_messaging_button(button1[0], button1[1])).append(bot_messaging_button(button2[0], button2[1])).append(bot_messaging_button(button3[0], button3[1]));
@@ -999,7 +992,6 @@ $(function () {
 
   /* 이미지, 메세지, 버튼 같이 사용 */
   socket.on('chat message button image', (socket_id, msg, img, ...args) => {
-    console.log("Present stage: "+sessionStorage.getItem('stage'));
       if (args.length === 0) {
         $('#m').prop('disabled', false);
         $('#input-button').attr('disabled', false);
@@ -1025,7 +1017,6 @@ $(function () {
 
   /* 이미지, 메세지, 중복체크버튼을 같이 사용 */
   socket.on('chat message button checkbox image', (socket_id, msg, img, ...args) => {  // msg:메세지, img: 이미지, args: 버튼들
-    console.log("Present stage: "+sessionStorage.getItem('stage'));
       if (args.length === 0) {
         $('#m').prop('disabled', false);
         $('#input-button').attr('disabled', false);
@@ -1035,12 +1026,15 @@ $(function () {
       }
       $('#messages').append(bot_messaging(msg)).children(':last').hide()
         .fadeIn(150);
-      const args_length = args.length;
+      // console.log(args);
+      console.log(args[0]);
+      const args_length = args[0].length;
+      console.log(`args_length : ${args_length}`);
       $('#messages').append(bot_messaging_image(img));
       for (let i = 0; i < args_length - 1; i += 1) {
-        $('#messages').append(bot_messaging_button_checkbox(args[i][0], args[i][1]));
+        $('#messages').append(bot_messaging_button_checkbox(args[0][i][0], args[0][i][1]));
       }
-      $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
+      $('#messages').append(bot_messaging_button_finish_checkbox(args[0][args_length - 1][0], args[0][args_length - 1][1]));
       $('.complete-button').prop('disabled', true);
       $('#messages').scrollTop(1E10);
   });
