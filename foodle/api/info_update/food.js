@@ -402,4 +402,29 @@ Food.get_all_subway = function (kakaoid, term) {
   }));
 };
 
+Food.verify_result_exist = function (kakaoid, subway, price_lunch, price_dinner, hate_food, taste_list) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'food.verify_result_exist';
+    const method = 'POST';
+    const url = '/api/v1/users/verify_result_exist';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      subway: subway,
+      price_lunch: price_lunch,
+      price_dinner: price_dinner,
+      hate_food: hate_food,
+      taste_list: taste_list,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+}
+
 module.exports = Food;

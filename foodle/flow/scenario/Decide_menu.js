@@ -769,41 +769,37 @@ class Decide_menu {
   taste(value, socket, user_data) {
     (async function () {
       try {
-          const user_price = await value.split('/')[1];;
-          if(value.includes('price_under10')){
-              if (user_data.price_dinner === 'x') { //점심식사
-                  await info_update.profile.update_price_level_lunch(socket.id, '0');
-              } else if (user_data.price_lunch === 'x') { //저녁식사
-                  await info_update.profile.update_price_level_dinner(socket.id, '0');
-              }
-              await info_update.profile.update_exit_quarter(socket.id, '999');
-              await info_update.profile.update_mood2(socket.id, '998');
-          } else {
-              console.log('user_price:' + user_price);
-              if (user_data.price_dinner === 'x') { //점심식사
-                  console.log("user_data_price_dinner === x");
-                  await info_update.profile.update_price_level_lunch(socket.id, user_price);
-              } else if (user_data.price_lunch === 'x') { //저녁식사
-                  console.log("user_data_price_lunch === x");
-                  await info_update.profile.update_price_level_dinner(socket.id, user_price);
-              }
-              await info_update.profile.update_food_type(socket.id, 'all');
-              await info_update.profile.update_exit_quarter(socket.id, '999');
-              await info_update.profile.update_food_name(socket.id, 'x');
+        const user_price = await value.split('/')[1];;
+
+        if (value.includes('price_under10')) {
+          if (user_data.price_dinner === 'x') { //점심식사
+            await info_update.profile.update_price_level_lunch(socket.id, '0');
+            var price_lun = '0';
+            var price_din = 'x';
+          } else if (user_data.price_lunch === 'x') { //저녁식사
+            await info_update.profile.update_price_level_dinner(socket.id, '0');
+            var price_din = '0';
+            var price_lun = 'x';
           }
-          // await info_update.profile.update_mood2(socket.id, '998');
-          // await info_update.profile.update_exit_quarter(socket.id, '999');
-        // const user_mood2 = value.split('/')[1];
-        // if (value.includes('taste')) {
-        //     const mood2 = value.split('/')[1];
-        //    await info_update.profile.update_mood2(socket.id, '998');
-        // } else {
-        //   await info_update.profile.update_mood2(socket.id, user_mood2);
-        // }
+          await info_update.profile.update_exit_quarter(socket.id, '999');
+          await info_update.profile.update_mood2(socket.id, '998');
+        }
+
+        else {
+          if (user_data.price_dinner === 'x') { //점심식사
+            await info_update.profile.update_price_level_lunch(socket.id, user_price);
+          } else if (user_data.price_lunch === 'x') { //저녁식사
+            await info_update.profile.update_price_level_dinner(socket.id, user_price);
+          }
+          await info_update.profile.update_food_type(socket.id, 'all');
+          await info_update.profile.update_exit_quarter(socket.id, '999');
+          await info_update.profile.update_food_name(socket.id, 'x');
+        }
+
         const taste = {
           'qnas': [
             {
-              'question': '기름진 음식 vs 담백한 음식?', 'button1_id': 'taste/기름진', 'button1_value': '기름진', 'button2_id': 'taste/담백한', 'button2_value': '담백한',
+              'question': '기름진 음식 vs 담백한 음식?', 'button1_id': 'taste/기름진', 'option1': '기름진', 'button1_value': '기름진', 'button2_id': 'taste/담백한', 'button2_value': '담백한', 'option2': '담백한',
             },
             // {
             //   'question': '치즈듬뿍 vs 치즈x?', 'button1_id': 'taste/치즈', 'button1_value': '치즈듬뿍', 'button2_id': 'taste/!-치즈', 'button2_value': '치즈x',
@@ -821,26 +817,54 @@ class Decide_menu {
             //   'question': '오늘 따뜻한 국물이 땡겨?', 'button1_id': 'taste/따뜻한', 'button1_value': 'ㅇㅇ', 'button2_id': 'taste/!-따뜻한', 'button2_value': 'ㄴㄴ',
             // },
             {
-              'question': '밥 vs 면?', 'button1_id': 'taste/밥', 'button1_value': '밥', 'button2_id': 'taste/면', 'button2_value': '면',
+              'question': '밥 vs 면?', 'button1_id': 'taste/밥', 'button1_value': '밥', 'option1': '밥', 'button2_id': 'taste/면', 'button2_value': '면', 'option2': '면',
             },
             // {
             //   'question': '오늘 고기 들어간 음식은 어떄?', 'button1_id': 'taste/고기', 'button1_value': '좋아', 'button2_id': 'taste/!-고기', 'button2_value': '싫어',
             // },
             {
-              'question': '쌀 vs 밀가루?', 'button1_id': 'taste/밥', 'button1_value': '쌀', 'button2_id': 'taste/밀가루', 'button2_value': '밀가루',
+              'question': '쌀 vs 밀가루?', 'button1_id': 'taste/밥', 'button1_value': '쌀', 'option1': '밥', 'button2_id': 'taste/밀가루', 'button2_value': '밀가루', 'option2': '밀가루',
             },
             // {
             //   'question': '오늘 해산물 들어간 음식은 어때?', 'button1_id': 'taste/해산물', 'button1_value': '좋아', 'button2_id': 'taste/!-해산물', 'button2_value': '싫어',
             // },
           ],
         };
-        const taste_data = taste.qnas;
-        const taste_leng = taste_data.length;
-        const taste_rand = Math.floor(taste_leng * Math.random());
+        let taste_list = [];    // request 보낼 답변값 리스트
+        let valid_list = [];    // response에서 유효한 질문들 담을 리스트
+        for (let i = 0; i < taste.qnas.length; i++) {
+          taste_list.push([taste.qnas[i].option1, taste.qnas[i].option2]);
+        }
+
+        const result = await info_update.food.verify_result_exist(socket.id, user_data.subway, price_lun, price_din, user_data.hate_food, taste.qnas);
+        if (result.success) {
+          let validResult = result.valid; // {index : 0, valid : true} 형식
+          for (let i = 0; i < validResult.length; i++) {
+            if (validResult[i].valid)
+              valid_list.push(taste.qnas[validResult[i].index]);
+          }
+        } else {
+          index.sendSocketMessage(socket.id, 'chat message button image', '조건에 맞는 식당이 아직 없어... 미안... 다시... 한번... 해야할것... 같은데....', 'emoji/hungry4.png', ['get_started', '돌아가기']);
+        }
+        // await info_update.profile.update_mood2(socket.id, '998');
+        // await info_update.profile.update_exit_quarter(socket.id, '999');
+        // const user_mood2 = value.split('/')[1];
+        // if (value.includes('taste')) {
+        //     const mood2 = value.split('/')[1];
+        //    await info_update.profile.update_mood2(socket.id, '998');
+        // } else {
+        //   await info_update.profile.update_mood2(socket.id, user_mood2);
+        // }
+        console.log("valid_list: ", valid_list);
         const imglist = ['emoji/ask.png','emoji/ask2.png','emoji/ask3.png','emoji/ask4.png'];
-        const leng2 = imglist.length;
-        const rand2 = Math.floor(leng2 * Math.random());
-        index.sendSocketMessage(socket.id, 'chat message button image',taste_data[taste_rand].question,`${imglist[rand2]}`, [taste_data[taste_rand].button1_id, taste_data[taste_rand].button1_value], [taste_data[taste_rand].button2_id, taste_data[taste_rand].button2_value], ['taste/all', '상관없음']);
+        const rand_imgs = Math.floor(imglist.length * Math.random());
+        if (valid_list.length > 0) {
+          const rand_qnas = Math.floor(valid_list.length * Math.random());
+          index.sendSocketMessage(socket.id, 'chat message button image', valid_list[rand_qnas].question,`${imglist[rand_imgs]}`, [valid_list[rand_qnas].button1_id, valid_list[rand_qnas].button1_value], [valid_list[rand_qnas].button2_id, valid_list[rand_qnas].button2_value], ['taste/all', '상관없음']);
+        } else {
+          const rand_qnas = Math.floor(taste.qnas.length * Math.random());
+          index.sendSocketMessage(socket.id, 'chat message button image', taste.qnas[rand_qnas].question,`${imglist[rand_imgs]}`, [taste.qnas[rand_qnas].button1_id, taste.qnas[rand_qnas].button1_value], [taste.qnas[rand_qnas].button2_id, taste.qnas[rand_qnas].button2_value], ['taste/all', '상관없음']);
+        }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
         console.log(e);
