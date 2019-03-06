@@ -712,8 +712,16 @@ $(function () {
       $('.checkbox:checked').attr('checked', false);
       $('.messaging-button').hide();
       $('.messaging-button-checkbox').hide();
-    }
-    else {
+    } else if ($(e.target).attr('id')==='search_near') {
+      console.log("search_near clicked");
+      let arr = getLocation(socket.id);
+      var temp = setTimeout(function() {
+        socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + '_'+ arr.lat + '/' + arr.lng);
+      }, 2000);
+      $('.checkbox:checked').attr('checked', false);
+      $('.messaging-button').hide();
+      $('.messaging-button-checkbox').hide();
+    } else {
       socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id'));
       $('.checkbox:checked').attr('checked', false);
       $('.messaging-button').hide();
