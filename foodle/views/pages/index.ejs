@@ -118,12 +118,10 @@
 
     // Chrome 1 - 71
     var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
-
-      alert('크롬입니다.')
-    } else {
+    if(!isChrome) {
       alert('크롬에서만 현재 이용 가능합니다');
-      // window.location.replace('/error');
     }
+      // window.location.replace('/error');
         // 네이버 로그인 설정
       //   let naverLogin = new naver.LoginWithNaverId(
     	// 	{
