@@ -119,6 +119,7 @@
 
     // Chrome 1 - 71
     var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+    alert(isChrome)
     if(!isChrome) {
       alert('현재 크롬 브라우저에서만 이용 가능합니다');
     } else {
