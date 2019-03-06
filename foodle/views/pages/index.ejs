@@ -57,9 +57,10 @@
             </div>
 
               <div class="signup">
-                    <a href="/signup">
-                        <img class="signup-deco" src="/images/signup-deco.png" alt="signup">
-                        <span class="signup-btn">20초만에 회원가입하기</span>
+                    <!-- <a href="/signup"> -->
+                    <a href="#">
+                    <img class="signup-deco" src="/images/signup-deco.png" alt="signup">
+                    <span class="signup-btn" id="signup-btn">20초만에 회원가입하기</span>
                     </a>
               </div>
             <!-- <img src="/images/poodle.png" alt="" style="width: 90%;">
@@ -112,8 +113,8 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/base.js"></script>
     <script src="/js/index.js"></script>
-    <script type="text/javascript">
 
+    <script type="text/javascript">
     $(document).ready(function(){
 
     // Chrome 1 - 71
@@ -136,7 +137,6 @@
       // /* 설정정보를 초기화하고 연동을 준비 */
       //   naverLogin.init();
       //   $('#naverIdLogin_loginButton img')[0].src = '/images/naver.png';
-
         var loginValue = sessionStorage.getItem('login');
         // let emailValue = sessionStorage.getItem('email');
         // console.log(`LoginValue : ${loginValue}, emailValue : ${emailValue}`);
@@ -194,7 +194,6 @@
           console.log("비회원 로그인");
         }
         else {
-            ////alert('이미 로그인되어 있습니다.');
             location.href='/lobby';
         }
 
@@ -263,14 +262,20 @@
             }
         });
 
+        // 회원가입 버튼 클릭
+        $('.signup-btn').click(function(){
+          console.log('clicked');
+          window.location.replace('/signup');
+        })
+
         // 로그인 버튼 클릭
         $('#login-btn').click(function(){
-            loginValidationCheck();
+          loginValidationCheck();
         })
 
         // 임시 비번 발급 클릭
         $('#reissue-pw').click(function(){
-            reIssueValidationCheck();
+          reIssueValidationCheck();
         })
 
         $('#unsigned').click(function(){
