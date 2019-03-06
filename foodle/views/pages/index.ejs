@@ -116,10 +116,22 @@
 
     <script type="text/javascript">
     $(document).ready(function(){
-
+    var isIE = /*@cc_on!@*/false || !!document.documentMode;
+    var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
     // Chrome 1 - 71
-    if(navigator.userAgent.indexOf("Chrome") != -1 )
-   {
+    console.log(isIE);
+    console.log(isSafari);
+    // console.log(navigator.userAgent.indexOf("Safari"));
+    // console.log(navigator.userAgent.indexOf("MSIE"));
+    // console.log(!!document.documentMode);
+
+    // if(navigator.userAgent.indexOf("Safari") != -1 || ((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true ))) {
+    // }
+      // alert('현재 사파리, Explorer 브라우저에서는 이용이 불가합니다.');
+    if(isIE || isSafari) {
+      alert('현재 사파리, Explorer 브라우저에서는 이용이 불가합니다.');
+    }
+    else {
      // alert('Chrome');
      // window.location.replace('/error');
        // 네이버 로그인 설정
@@ -321,8 +333,6 @@
          };
          sendReq(info);
        })
-   } else {
-     alert('현재 크롬 브라우저에서만 이용 가능합니다');
    }
     // var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
     // alert(isChrome)
