@@ -23,6 +23,48 @@ Food.get_restaurant_info = function (kakaoid, id) {
   }));
 };
 
+Food.get_restaurant_subway = function (kakaoid, subway) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'food.get_restaurant_subway';
+    const method = 'POST';
+    const url = '/api/v1/users/get_restaurant_subway';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      subway: subway,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body.message)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
+Food.set_restaurant_latlng = function (kakaoid, sendList) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'food.set_restaurant_latlng';
+    const method = 'POST';
+    const url = '/api/v1/users/set_restaurant_latlng';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      message: sendList,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body.message)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
 Food.update_user_start = function (kakaoid) {
   const self = this;
   return new Promise(((resolve, reject) => {

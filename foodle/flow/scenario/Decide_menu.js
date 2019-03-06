@@ -193,6 +193,20 @@ class Decide_menu {
   decide_menu(value, socket, user_data) {
     (async function () {
       try {
+        // // db 갱신 관련 코드 나중에 또 이용
+        // const restaurantList = await info_update.food.get_restaurant_subway(socket.id, '강남역');
+        // console.log(restaurantList);
+        // let sendList = []
+        // for (let i = 0; i<restaurantList.length; i++) {
+        //   const body = await info_update.profile.geocoder(socket.id, `강남역 ${restaurantList[i].res_name}`); // 카카오 지도 API 이용, 키워드를 통해 위도,경도를 받아온다.
+        //   const re = JSON.parse(body);
+        //   if (re.documents.length == 0) {
+        //     console.log("re.documents == null");
+        //   } else {
+        //     sendList.push({'id' : restaurantList[i].id, 'lat' : re.documents[0].y, 'lng' : re.documents[0].x})
+        //   }
+        // }
+        // setTimeout(() =
         await info_update.profile.update_place_start(socket.id);
         const user_info = await info_update.profile.load_user(socket.id);
         const verify_limit = await info_update.profile.verify_limit(socket.id, user_data.limit_cnt, user_data.decide_updated_at);
