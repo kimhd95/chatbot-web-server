@@ -628,6 +628,8 @@ function getLocation(socket_id) {
     navigator.geolocation.watchPosition(function(position) {
       let current_lat=position.coords.latitude;
       let current_lng=position.coords.longitude;
+      console.log(current_lat);
+      console.log(current_lng);
       arr['lat']=current_lat;
       arr['lng']=current_lng;
     }, error, geo_options);
@@ -715,6 +717,7 @@ $(function () {
     } else if ($(e.target).attr('id')==='search_near') {
       console.log("search_near clicked");
       let arr = getLocation(socket.id);
+      console.log(arr);
       var temp = setTimeout(function() {
         socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + '_'+ arr.lat + '/' + arr.lng);
       }, 2000);
