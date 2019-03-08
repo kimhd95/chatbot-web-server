@@ -209,11 +209,13 @@ module.exports = function(){
 		// -------------- Forward HTTP to HTTPS ---------- //
 		console.log('process.env.NODE_ENV: ' + process.env.NODE_ENV)
 		if (config.env === 'dev' || config.env === 'local') {
+			console.log("config.env 는 dev 또는 local")
 			server.use(morgan('dev'));      // MW: log requests to console
 		} else {
 			server.enable('trust proxy');
 			server.use(function (req, res, next) {
 				if (req.secure) {
+					console.log("sequre");
 					next();
 				} else {
 					res.redirect('https://' + req.headers.host + req.url);
