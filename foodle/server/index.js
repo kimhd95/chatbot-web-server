@@ -22,8 +22,8 @@ const
 	cookieParser = require('cookie-parser'),
 	serveStatic = require('serve-static'),
 	morgan = require('morgan'),
-	http = require('http'),
-	https = require('https');
+	http = require('http');
+	// https = require('https');
 
 module.exports = function(){
 	let
@@ -31,11 +31,10 @@ module.exports = function(){
 		create,
 		start;
 
-
-	// let httpserver = http.createServer(server);
-	// let io = require('socket.io').listen(httpserver);
-	let httpsserver = https.createServer(server);
-	let io = require('socket.io').listen(httpsserver);
+	let httpserver = http.createServer(server);
+	let io = require('socket.io').listen(httpserver);
+	// let httpsserver = https.createServer(server);
+	// let io = require('socket.io').listen(httpsserver);
 
 	io.on('connection', function(socket){
 		// console.log(socket);
@@ -261,12 +260,12 @@ module.exports = function(){
 			console.log("Express 서버 객체가 종료됩니다.");
 		});
 
-		// httpserver.listen(process.env.PORT || port, function () {
-		// 	console.log('process.env.PORT || server.get(\'port\') || 3000: ' + (process.env.PORT || port) + '. Environment (server.get(env)): ' + server.get('env'));
-		// });
-		httpsserver.listen(process.env.PORT || port, function () {
+		httpserver.listen(process.env.PORT || port, function () {
 			console.log('process.env.PORT || server.get(\'port\') || 3000: ' + (process.env.PORT || port) + '. Environment (server.get(env)): ' + server.get('env'));
 		});
+		// httpsserver.listen(process.env.PORT || port, function () {
+			// console.log('process.env.PORT || server.get(\'port\') || 3000: ' + (process.env.PORT || port) + '. Environment (server.get(env)): ' + server.get('env'));
+		// });
 	};
 
 	return {
