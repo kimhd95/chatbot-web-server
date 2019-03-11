@@ -1,5 +1,6 @@
 // connect to the 운영서버
-const URL = 'http://devapifood.jellylab.io:6001';
+// const URL = 'http://devapifood.jellylab.io:6001';
+const URL = 'http://ec2-13-124-160-236.ap-northeast-2.compute.amazonaws.com:6001';
 
 // connect to the 테스트서버
 // const URL = 'http://devapifoodprod.jellylab.io:6001';

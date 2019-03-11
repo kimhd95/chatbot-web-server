@@ -1,6 +1,7 @@
 Api = function () {
   // this.config = require('../configs');
-  this.hostname = 'http://devbotfood.jellylab.io';
+  // this.hostname = 'http://devbotfood.jellylab.io';
+  this.hostname = 'http://ec2-13-124-160-236.ap-northeast-2.compute.amazonaws.com';
   this.request = require('request');
 };
 
