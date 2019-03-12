@@ -614,6 +614,36 @@ function getPartLog(email, stage) {
     sendReq(info);
 }
 
+function getLocation2(callback) {
+  return new Promise(function (resolve, reject) {
+    let arr = new Object();
+    if (navigator.geolocation) {
+      let geo_options = {
+        enableHighAccuracy: false,
+        maximumAge: Infinity,
+        timeout: 30000,
+      }
+      function error(err){
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+      }
+      navigator.geolocation.watchPosition(function(position) {
+        let current_lat=position.coords.latitude;
+        let current_lng=position.coords.longitude;
+        console.log(current_lat);
+        console.log(current_lng);
+        arr['lat']=current_lat;
+        arr['lng']=current_lng;
+      }, error, geo_options);
+
+      resolve(arr);
+    } else {
+      alert('geolocation not supported');
+      console.log('geolocation not supported');
+      resolve(arr);
+    }
+  });
+}
+
 function getLocation(socket_id) {
   let arr = new Object();
   if (navigator.geolocation) {
@@ -638,6 +668,7 @@ function getLocation(socket_id) {
   } else {
     alert('geolocation not supported');
     console.log('geolocation not supported');
+    return;
   }
 }
 
@@ -717,11 +748,16 @@ $(function () {
       $('.messaging-button-checkbox').hide();
     } else if ($(e.target).attr('id')==='search_near') {
       console.log("search_near clicked");
-      let arr = getLocation(socket.id);
-      console.log(arr);
-      var temp = setTimeout(function() {
-        socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + '_'+ arr.lat + '/' + arr.lng);
-      }, 2000);
+      getLocation2().then(function (arr){
+        console.log(arr);
+        if(arr.lat == undefined || arr.lng == undefined) {
+          socket.emit('chat message button rule', $(e.target).attr('name'), 'no_gps');
+        } else {
+          socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + '_'+ arr.lat + '/' + arr.lng);
+        }
+      });
+
+
       $('.checkbox:checked').attr('checked', false);
       $('.messaging-button').hide();
       $('.messaging-button-checkbox').hide();
