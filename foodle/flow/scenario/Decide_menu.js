@@ -319,13 +319,16 @@ class Decide_menu {
         try {
             let subway;
             if(value.includes('near_station')){
-                subway = value.slice(value.lastIndexOf('/')+1);
-            } else{
-                console.log(`exitnum의 value, subway = ${value}`);
-                subway = value;
-                if (value.slice(-1) !== '역') {
-                    subway = `${value}역`;
-                }
+              subway = value.slice(value.lastIndexOf('/')+1);
+            } else if (value.includes('middle')) {
+              subway = value.slice(value.lastIndexOf('/')+1);
+              console.log(`middle에서 subway: ${subway}`);
+            } else {
+              console.log(`exitnum의 value, subway = ${value}`);
+              subway = value;
+              if (value.slice(-1) !== '역') {
+                  subway = `${value}역`;
+              }
             }
             const subways = await info_update.food.get_all_subway(socket.id, '');
             const result = await info_update.food.verify_subway(socket.id, subway);
@@ -346,18 +349,14 @@ class Decide_menu {
                 }
 
             } else {
-              await index.sendSocketMessage(socket.id, 'chat message button', `${value}가 어딘지 모르겠어 ㅠㅠ 다른 곳으로 입력해줄래?`, ['method/elsewhere', '다시 입력하기']);
-              return;
+              if(value.includes('middle')) {
+                await index.sendSocketMessage(socket.id, 'chat message button', `${value.slice(value.lastIndexOf('/')+1)}가 어딘지 모르겠어 ㅠㅠ 다른 곳으로 입력해줄래?`, ['method/elsewhere', '다시 입력하기']);
+                return;
+              } else {
+                await index.sendSocketMessage(socket.id, 'chat message button', `${value}가 어딘지 모르겠어 ㅠㅠ 다른 곳으로 입력해줄래?`, ['method/elsewhere', '다시 입력하기']);
+                return;
+              }
             }
-            // if (value.includes('decide_subway_corgi')) {
-            //     const subway = value.split('/')[1];
-            //     await info_update.profile.update_subway(socket.id, subway);
-            //     await info_update.profile.update_exit_quarter(socket.id, '999');
-            // } else if (value.includes('exit')) {
-            //     const user_quarter = value.split('/')[1];
-            //     // console.log(user_quarter);
-            //     await info_update.profile.update_exit_quarter(socket.id, user_quarter);
-            // }
             const qna_list = [
                 { //지하철역 검색->현재위치 500m내
                     'question': '어떤 방식으로 메뉴를 정해보까나', 'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색', 'button2_id': 'price_under10', 'button2_value': '1만원 미만','button3_id': 'mood2', 'button3_value': '식당 분위기 필터링','button4_id': 'search_food', 'button4_value': '음식 종류 검색', 'button5_id': 'search_near', 'button5_value': '내 주변 300m 내 식당 검색',
@@ -388,7 +387,11 @@ class Decide_menu {
             const imglist = ['emoji/checking.png','emoji/checking2.png','emoji/thinking.png','emoji/thinking2.png'];
             const leng2 = imglist.length;
             const rand2 = Math.floor(leng2 * Math.random());
-            index.sendSocketMessage(socket.id, 'chat message button image', qna_list[qna_list_rand].question, `${imglist[rand2]}`, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value], [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value], [qna_list[qna_list_rand].button4_id, qna_list[qna_list_rand].button4_value], [qna_list[qna_list_rand].button5_id, qna_list[qna_list_rand].button5_value]);
+            if (value.includes('middle')) {
+              index.sendSocketMessage(socket.id, 'chat message button image', qna_list[qna_list_rand].question, `${imglist[rand2]}`, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value], [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value], [qna_list[qna_list_rand].button4_id, qna_list[qna_list_rand].button4_value]);
+            } else {
+              index.sendSocketMessage(socket.id, 'chat message button image', qna_list[qna_list_rand].question, `${imglist[rand2]}`, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value], [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value], [qna_list[qna_list_rand].button4_id, qna_list[qna_list_rand].button4_value], [qna_list[qna_list_rand].button5_id, qna_list[qna_list_rand].button5_value]);
+            }
         } catch (e) {
             index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
             console.log(e);

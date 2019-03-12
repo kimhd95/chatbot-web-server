@@ -637,6 +637,7 @@ function getLocation(socket_id) {
     return arr;
   } else {
     alert('geolocation not supported');
+    console.log('geolocation not supported');
   }
 }
 
