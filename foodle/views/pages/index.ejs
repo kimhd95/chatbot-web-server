@@ -117,10 +117,10 @@
     <script type="text/javascript">
 
     $(document).ready(function(){
-    if (location.protocol != 'https:')
-    {
-      location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-    }
+    // if (location.protocol != 'https:')
+    // {
+    //   location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+    // }
     // location.href = 'https://fooddev.jellylab.io';
     var isIE = /*@cc_on!@*/false || !!document.documentMode;
     var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification) || !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
