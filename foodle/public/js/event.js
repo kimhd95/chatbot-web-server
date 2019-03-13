@@ -750,6 +750,7 @@ $(function () {
       console.log("search_near clicked");
       getLocation2().then(function (arr){
         console.log(arr);
+        console.log(typeof arr);
         console.log(arr['lat']);
         console.log(arr['lng']);
 
