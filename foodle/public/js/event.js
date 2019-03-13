@@ -1208,7 +1208,7 @@ $(document).ready(() => {
           // cache[ term ] = data;
           // response( data );
         // });
-        $.getJSON( "https://devbotfood.jellylab.io:6001/api/v1/users/get_subway_list_history?email="+user_email, request, function( data, status, xhr ) {
+        $.getJSON( "https://devapifood.jellylab.io:6001/api/v1/users/get_subway_list_history?email="+user_email, request, function( data, status, xhr ) {
           cache[ term ] = data;
           response( data );
         });
@@ -1217,7 +1217,7 @@ $(document).ready(() => {
         //   cache[ term ] = data;
         //   response( data );
         // });
-        $.getJSON( "https://devbotfood.jellylab.io:6001/api/v1/users/get_all_subway", request, function( data, status, xhr ) {
+        $.getJSON( "https://devapifood.jellylab.io:6001/api/v1/users/get_all_subway", request, function( data, status, xhr ) {
           cache[ term ] = data;
           response( data );
         });
