@@ -621,7 +621,7 @@ function getLocation2(callback) {
       let geo_options = {
         enableHighAccuracy: false,
         maximumAge: Infinity,
-        timeout: 30000,
+        timeout: 3000,
       }
       function error(err){
         console.warn(`ERROR(${err.code}): ${err.message}`);
