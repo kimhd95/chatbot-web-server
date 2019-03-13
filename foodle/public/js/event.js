@@ -757,7 +757,7 @@ $(function () {
         if(arr.lat == undefined || arr.lng == undefined) {
           socket.emit('chat message button rule', $(e.target).attr('name'), 'no_gps');
         } else {
-          socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + '_'+ arr['lat'] + '/' + arr['lng']);
+          socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + '_'+ arr.keys('lat') + '/' + arr.keys('lng'));
         }
       });
 
