@@ -632,8 +632,8 @@ function getLocation2(callback) {
         let current_lng=position.coords.longitude;
         console.log(current_lat);
         console.log(current_lng);
-        // arr['lat']=current_lat;
-        // arr['lng']=current_lng;
+        arr['lat']=current_lat;
+        arr['lng']=current_lng;
         resolve(arr);
       }, error, geo_options);
 
