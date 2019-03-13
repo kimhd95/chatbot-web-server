@@ -625,17 +625,18 @@ function getLocation2(callback) {
       }
       function error(err){
         console.warn(`ERROR(${err.code}): ${err.message}`);
+        resolve(arr);
       }
       navigator.geolocation.watchPosition(function(position) {
         let current_lat=position.coords.latitude;
         let current_lng=position.coords.longitude;
         console.log(current_lat);
         console.log(current_lng);
-        arr['lat']=current_lat;
-        arr['lng']=current_lng;
+        // arr['lat']=current_lat;
+        // arr['lng']=current_lng;
+        resolve(arr);
       }, error, geo_options);
 
-      resolve(arr);
     } else {
       alert('geolocation not supported');
       console.log('geolocation not supported');
@@ -750,10 +751,6 @@ $(function () {
       console.log("search_near clicked");
       getLocation2().then(function (arr){
         console.log(arr);
-        console.log(typeof arr);
-        console.log(arr.lat);
-        console.log(arr.lng);
-
         if(arr.lat == undefined || arr.lng == undefined) {
           socket.emit('chat message button rule', $(e.target).attr('name'), 'no_gps');
         } else {
