@@ -750,13 +750,13 @@ $(function () {
       console.log("search_near clicked");
       getLocation2().then(function (arr){
         console.log(arr);
-        console.log(arr.lat);
-        console.log(arr.lng);
+        console.log(arr['lat']);
+        console.log(arr['lng']);
 
         if(arr.lat == undefined || arr.lng == undefined) {
           socket.emit('chat message button rule', $(e.target).attr('name'), 'no_gps');
         } else {
-          socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + '_'+ arr[0].lat + '/' + arr[0].lng);
+          socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + '_'+ arr['lat'] + '/' + arr['lng']);
         }
       });
 
