@@ -806,7 +806,7 @@ $(function () {
       $(e.target).toggleClass('messaging-button-checkbox-checked');
       // $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked');
       console.log($(e.target).attr('id'));
-      if ($(e.target).attr('id') != '999')
+      if ($(e.target).attr('id') != '999' && $(e.target).attr('id') != '998')
         clickNum--;
     } else{
       $(e.target).children('input[type=checkbox]').prop('checked', true);

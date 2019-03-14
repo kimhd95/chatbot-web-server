@@ -814,6 +814,22 @@ Profile.geocoder = function (kakaoid, message) {
   }));
 };
 
+/*
+Profile.search_local = function (kakaoid, res_name) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const method = 'GET';
+    const url = 'https://openapi.naver.com/v1/search/local';
+    const json = {
+      res_name: res_name,
+    };
+    const func = function (error, response, body) {
+      error === null ? resolve(body) : reject(error);
+    };
+    self.apicall_
+  }));
+};*/
+
 Profile.update_place_start = function (kakaoid) {
   const self = this;
   return new Promise(((resolve, reject) => {
