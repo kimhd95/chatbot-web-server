@@ -117,27 +117,15 @@
     <script type="text/javascript">
 
     $(document).ready(function(){
-    // if (location.protocol != 'https:')
-    // {
-    //   location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-    // }
-    // location.href = 'https://fooddev.jellylab.io';
-    var isIE = /*@cc_on!@*/false || !!document.documentMode;
-    var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification) || !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
-    // Chrome 1 - 71
-    console.log(isIE);
-    console.log(isSafari);
-    // console.log(navigator.userAgent.indexOf("Safari"));
-    // console.log(navigator.userAgent.indexOf("MSIE"));
-    // console.log(!!document.documentMode);
+    // var isIE = /*@cc_on!@*/false || !!document.documentMode;
+    // var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification) || !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
+    // console.log(isIE);
+    // console.log(isSafari);
 
-    // if(navigator.userAgent.indexOf("Safari") != -1 || ((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true ))) {
-    // }
+    // if(isIE || isSafari) {
       // alert('현재 사파리, Explorer 브라우저에서는 이용이 불가합니다.');
-    if(isIE || isSafari) {
-      alert('현재 사파리, Explorer 브라우저에서는 이용이 불가합니다.');
-    }
-    else {
+    // }
+    // else {
      // alert('Chrome');
      // window.location.replace('/error');
        // 네이버 로그인 설정
@@ -339,7 +327,7 @@
          };
          sendReq(info);
        })
-   }
+   // }
     // var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
     // alert(isChrome)
     // if(!isChrome) {
