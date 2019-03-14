@@ -40,7 +40,20 @@
 .help span {
     color: #bbbbbb;
     width: 40vw;
+    font-size: 15px;
     /* font-weight: ; */
+}
+.help .help-btn1 {
+  color: #bbbbbb;
+  width: 40vw;
+  font-size: 15px;
+  padding: 10px 0;
+}
+.help .help-btn2 {
+  color: #bbbbbb;
+  width: 40vw;
+  font-size: 15px;
+  padding: 10px 0;
 }
 .social-login {
     display: flex;
