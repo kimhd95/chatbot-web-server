@@ -1,9 +1,9 @@
 Api = function () {
   // this.config = require('../configs');
   //운영 api 서버
-  // this.hostname = 'https://devapifood.jellylab.io';
+  this.hostname = 'https://devapifood.jellylab.io';
   //개발 api 서버
-  this.hostname = 'https://foodprod.jellylab.io';
+  // this.hostname = 'https://foodprod.jellylab.io';
   // this.hostname = 'http://ec2-13-124-160-236.ap-northeast-2.compute.amazonaws.com';
   this.request = require('request');
 };

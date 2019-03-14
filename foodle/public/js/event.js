@@ -813,7 +813,8 @@ $(function () {
       // $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked');
       clickNum++;
     }
-    $('.complete-button').prop('disabled', false);
+    (clickNum > 0) ? $('.complete-button').prop('disabled', false)
+                   : $('.complete-button').prop('disabled', true);
   });
 
   $('body').on("submit", "form", function(){
@@ -942,11 +943,12 @@ $(function () {
       $('#messages').append(bot_messaging_button_checkbox(args[i][0], args[i][1]));
     }
     $('#messages').append(bot_messaging_button_finish_checkbox(args[args_length - 1][0], args[args_length - 1][1]));
-    $('.complete-button').prop('disabled', false);
+    $('.complete-button').prop('disabled', true);
     $('#messages').scrollTop(1E10);
   });
 
   socket.on('chat message button checkbox', (socket_id, msg, ...args) => {
+    console.log(args[0], args[1], args[2], args[3], args[4]);
     if (args.length === 0) {
       $('#m').prop('disabled', false);
       $('#input-button').attr('disabled', false);
@@ -1209,7 +1211,7 @@ $(document).ready(() => {
           // cache[ term ] = data;
           // response( data );
         // });
-        $.getJSON( "https://foodprod.jellylab.io:6001/api/v1/users/get_subway_list_history?email="+user_email, request, function( data, status, xhr ) {
+        $.getJSON( "https://devapifood.jellylab.io:6001/api/v1/users/get_subway_list_history?email="+user_email, request, function( data, status, xhr ) {
           cache[ term ] = data;
           response( data );
         });
@@ -1218,7 +1220,7 @@ $(document).ready(() => {
         //   cache[ term ] = data;
         //   response( data );
         // });
-        $.getJSON( "https://foodprod.jellylab.io:6001/api/v1/users/get_all_subway", request, function( data, status, xhr ) {
+        $.getJSON( "https://devapifood.jellylab.io:6001/api/v1/users/get_all_subway", request, function( data, status, xhr ) {
           cache[ term ] = data;
           response( data );
         });
