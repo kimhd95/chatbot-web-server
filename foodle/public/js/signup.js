@@ -230,7 +230,8 @@ function signUpReq(name, gender, email, password, birthYear, phone) {
     sendReq(info);
 }
 
-$(document).ready(() => {
+$(document).ready(function(){
+// $(document).ready(() => {
     if (sessionStorage.getItem('login') === '0' || sessionStorage.getItem('login') === null) {
         const info = {
             url: '/api/v1/users/verify_token',
@@ -290,11 +291,11 @@ $(document).ready(() => {
         $('#year-list .modal-body').append(`<div class="birth-year" onclick="selectAge(${i})" data-dismiss="modal">${i}</div>`)
     }
     // 다음 버튼 터치
-    $('.next-button').click(() => {
+    $('.next-button').click(function() {
         firstInfoValidationCheck();
     });
     // 뒤로 버튼 터치
-    $('.back-btn').click(() => {
+    $('.back-btn').click(function() {
         if ($('.input-container')[0].style.display === 'none') {
             $('.input-container')[0].style.display = 'block';
             $('.second-input-container')[0].style.display = 'none';
@@ -305,19 +306,19 @@ $(document).ready(() => {
         }
     })
     // 가입 완료 터치
-    $('.signup-button').click(() => {
+    $('.signup-button').click(function() {
         secondInfoValidationCheck();
     })
     // 패스워드 칠 때 마다 실행
-    $('#password').keyup(() => {
+    $('#password').keyup(function() {
         passwordValidationCheck();
     });
 
-    $('#password-check').keyup(() => {
+    $('#password-check').keyup(function() {
         passwordEqualCheck();
     })
 
-    $('#male').click(() => {
+    $('#male').click(function() {
         if ($('#male')[0].checked) {
             $('#female')[0].checked = false;
             gender = 'M';
@@ -325,7 +326,7 @@ $(document).ready(() => {
             gender = '';
         }
     })
-    $('#female').click(() => {
+    $('#female').click(function() {
         if ($('#female')[0].checked) {
             $('#male')[0].checked = false;
             gender = 'F';
@@ -334,7 +335,7 @@ $(document).ready(() => {
         }
     })
 
-    $('#all-agree').click(() => {
+    $('#all-agree').click(function() {
         if ($('#access-terms')[0].checked && $('#privacy-policy')[0].checked) {
             $('#access-terms')[0].checked = false;
             $('#privacy-policy')[0].checked = false;
@@ -343,10 +344,10 @@ $(document).ready(() => {
             $('#privacy-policy')[0].checked = true;
         }
     })
-    $('#access-terms').click(() => {
+    $('#access-terms').click(function() {
         autoAgree();
     })
-    $('#privacy-policy').click(() => {
+    $('#privacy-policy').click(function() {
         autoAgree();
     })
 });
