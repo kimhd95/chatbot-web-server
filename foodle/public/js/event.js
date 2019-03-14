@@ -805,7 +805,9 @@ $(function () {
       $(e.target).children('input[type=checkbox]').prop('checked', false);
       $(e.target).toggleClass('messaging-button-checkbox-checked');
       // $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked');
-      clickNum--;
+      console.log($(e.target).attr('id'));
+      if ($(e.target).attr('id') != '999')
+        clickNum--;
     } else{
       $(e.target).children('input[type=checkbox]').prop('checked', true);
       // console.log($(e.target).children('input[type=checkbox]').attr('checked'));
@@ -813,6 +815,7 @@ $(function () {
       // $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked');
       clickNum++;
     }
+    console.log(clickNum);
     (clickNum > 0) ? $('.complete-button').prop('disabled', false)
                    : $('.complete-button').prop('disabled', true);
   });
