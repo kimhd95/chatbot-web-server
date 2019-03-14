@@ -1,8 +1,8 @@
-let platform;
-let name, email, password, passwordCheck, gender, birthYear, phone;
+var platform;
+var name, email, password, passwordCheck, gender, birthYear, phone;
 const emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 const phoneRegExp = /^\d{10,11}$/;
-let pwNum, pwEng, pwSpe;
+var pwNum, pwEng, pwSpe;
 
 function autoAgree() {
     if ($('#access-terms')[0].checked && $('#privacy-policy')[0].checked) {
@@ -13,7 +13,7 @@ function autoAgree() {
 }
 
 function selectEmailPlatform(i) {
-    let email = $('.email input').val();
+    var email = $('.email input').val();
     platform = $('#platform-list button')[i].innerHTML;
 
     if (platform === '직접 입력') {
@@ -54,8 +54,8 @@ function passwordEqualCheck () {
 }
 
 function firstInfoValidationCheck() {
-    let firstName = $('#first-name').val();
-    let lastName = $('#last-name').val();
+    var firstName = $('#first-name').val();
+    var lastName = $('#last-name').val();
     name = `${firstName}${lastName}`;
     email = `${$('#email').val()}@${$('#platform').val()}`;
     password = $('#password').val();
@@ -287,7 +287,7 @@ $(document).ready(function(){
         location.href="/lobby";
     }
     // 출생년도 초기화
-    for(let i = 2005; i >= 1950; i--) {
+    for(var i = 2005; i >= 1950; i--) {
         $('#year-list .modal-body').append(`<div class="birth-year" onclick="selectAge(${i})" data-dismiss="modal">${i}</div>`)
     }
     // 다음 버튼 터치
@@ -296,14 +296,14 @@ $(document).ready(function(){
     });
     // 뒤로 버튼 터치
     $('.back-btn').click(function() {
-        if ($('.input-container')[0].style.display === 'none') {
-            $('.input-container')[0].style.display = 'block';
-            $('.second-input-container')[0].style.display = 'none';
-            $('.next-button')[0].style.display = 'block';
-            $('.signup-button')[0].style.display = 'none';
-        } else {
+        // if ($('.input-container')[0].style.display === 'none') {
+        //     $('.input-container')[0].style.display = 'block';
+        //     $('.second-input-container')[0].style.display = 'none';
+        //     $('.next-button')[0].style.display = 'block';
+        //     $('.signup-button')[0].style.display = 'none';
+        // } else {
             location.href = '/';
-        }
+        // }
     })
     // 가입 완료 터치
     $('.signup-button').click(function() {
