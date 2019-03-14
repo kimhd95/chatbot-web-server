@@ -40,6 +40,7 @@
 .help span {
     color: #bbbbbb;
     width: 40vw;
+    font-size: 15px;
     /* font-weight: ; */
 }
 .help .help-btn1 {
