@@ -60,9 +60,12 @@
                 <div class="bar"><div class="left-button"></div></div>
 		            <div class="swiper-container">
 		          		<div class="swiper-wrapper">
-		                <div class="swiper-slide"><div class="color-bg" style="background-image: url('/images/color_bg_fst.png')">
+
+	                <div class="swiper-slide">
+                    <div class="color-bg" style="background-image: url('/images/color_bg_fst.png')">
                       <div class="character-img" style="background-image: url('/images/character_img_fst.png')">
-                        <div class="text-img" style="background-image: url('/images/text_img_fst.png')"></div></div>
+                        <div class="text-img" style="background-image: url('/images/text_img_fst.png')"></div>
+                      </div>
 											<!-- <div class="pagination-space">
 												<div class="pagination" style="background-image:url('/images/lobby_pagination_fst.png')"></div>
 											</div>
@@ -70,10 +73,14 @@
 													<div class="textimg" style="background-image:url('/images/lobby_textimg_up_fst.png')"></div>
 											</div>
 											<div class="button-space"><div class="choose-menu" onclick="location.href='/chat';"></div></div> -->
-										</div></div>
-										<div class="swiper-slide"><div class="color-bg" style="background-image: url('/images/color_bg_snd.png')">
+										</div>
+                  </div>
+
+
+									<div class="swiper-slide"><div class="color-bg" style="background-image: url('/images/color_bg_snd.png')">
                       <div class="character-img" style="background-image: url('/images/character_img_snd.png')">
-                      <div class="text-img" style="background-image: url('/images/text_img_snd.png')"></div></div>
+                        <div class="text-img" style="background-image: url('/images/text_img_snd.png')"></div>
+                      </div>
 											<!-- <div class="pagination-space">
 												<div class="pagination" style="background-image:url('/images/lobby_up_pagination.png')"></div>
 											</div>
@@ -81,7 +88,9 @@
 													<div class="textimg" style="background-image:url('/images/lobby_textimg_up_snd.png')"></div>
 											</div>
 											<div class="button-space"><div class="choose-menu" onclick="location.href='/chat';"></div></div> -->
-										</div></div>
+										</div>
+                  </div>
+                    
 										<div class="swiper-slide"><div class="color-bg" style="background-image: url('/images/color_bg_trd.png')">
                       <div class="character-img" style="background-image: url('/images/character_img_trd.png')">
                       <div class="text-img" style="background-image: url('/images/text_img_trd.png')"></div></div>
@@ -175,8 +184,10 @@
                 <div id="back-to-lobby-question" class="back-button"></div>
                 <div id="onetoone-bar" class="avail-bar">1:1 문의</div>
                 <!-- <form class="question-form"> -->
-                  <input id="question-name" type="text" class="question-account" style="margin: 7vh 0 0 0;" disabled></input>
-                  <input id="question-email" type="text" class="question-account" disabled></input>
+                  <input id="question-name" type="text" class="question-account" style="margin: 7vh 0 0 0;"></input>
+                  <input id="question-email" type="text" class="question-account"></input>
+                  <!-- <input id="question-name" type="text" class="question-account" style="margin: 7vh 0 0 0;" disabled></input> -->
+                  <!-- <input id="question-email" type="text" class="question-account" disabled></input> -->
                   <select id="question-subject" class="custom-select">
                     <option class="init" disabled selected>주제를 선택해주세요</option>
                     <option value="일반 문의">일반 문의</option>
@@ -224,20 +235,19 @@
         <div class="ssm-overlay ssm-toggle-nav ssm-nav-visible"></div>
 
         <script>
+          $(document).ready(function(){
+          // $(document).ready(() =>{
 
-          $(document).ready(() =>{
-
-            // if (location.protocol != 'https:')
-            // {
-            //   location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-            // }
-
-            console.log(`present stage: ${sessionStorage.getItem('stage')}`);
+            //IE console defiition
+            // var console = window.console || {log:function(){}};
+            console.log('present stage : ' + sessionStorage.getItem('stage'));
+            // console.log(`present stage: ${sessionStorage.getItem('stage')}`);
             // var list=['강남역', '건대입구역', '광화문역', '뚝섬역', '망원역', '서울대입구역', '성수역', '사당역', '신사역', '여의도역', '역삼역', '을지로입구역', '이태원역', '종로3가역', '종각역', '합정역', '홍대입구역', '혜화역'];
             var list=['강남역', '서울대입구역', '선릉역'];
             var i;
             for(i=0;i<list.length;i++){
-              $('#station-list').append(`<div class="stationname">${list[i]}</div>`);
+              // $('#station-list').append(`<div class="stationname">${list[i]}</div>`);
+              $('#station-list').append('<div class="stationname">' + list[i] + '</div>');
             }
           });
 
@@ -261,7 +271,7 @@
             }
           })
 
-          $('.question-send').click(() => {
+          $('.question-send').click(function(){
       			let email = $('#question-email').val(),
       				name = $('#question-name').val(),
       				subject = $('#question-subject').val(),

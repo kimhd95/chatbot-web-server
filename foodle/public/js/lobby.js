@@ -109,8 +109,8 @@ function logout(loginValue) {
   // }
 
 }
-
-$(document).ready(() => {
+$(document).ready(function(){
+// $(document).ready(() => {
 
   let loginValue = sessionStorage.getItem('login');
   let emailValue = sessionStorage.getItem('email');
@@ -238,7 +238,7 @@ $(document).ready(() => {
     logout(loginValue);
   })
 
-  $('#withdraw-btn').click(() => {
+  $('#withdraw-btn').click(function() {
     var password = prompt("비밀번호를 입력하세요", "");
 
     if(password === null) {
