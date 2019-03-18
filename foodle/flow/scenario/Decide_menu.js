@@ -84,7 +84,7 @@ class Decide_menu {
     } else if (user_data.state === 'search_food') {
       key = 'search_result';
     } else if (key.includes('search_food')) {
-        key = 'search_food';
+      key = 'search_food';
     } else if (user_data.state === 'search_result') {
       key = 'before_decide';
     //} else if (key.includes('decide_menu/lunch')) {
@@ -468,7 +468,7 @@ class Decide_menu {
                     const chlist = [search_food+' 찾았다! 이걸로 추천해줄게 잠깐만~',search_food+' 있다있어~ 잠깐만 기다료바'];
                     const leng = chlist.length;
                     const rand = Math.floor(leng * Math.random());
-                    index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`,['go_search_food', '추천 보러가기'], ['get_started', '처음으로']);
+                    index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`,['view_recommend_food', '추천 보러가기'], ['get_started', '처음으로']);
                 }else {
                     // await info_update.profile.update_state(socket.id, '1', 'decide_menu');
                     index.sendSocketMessage(socket.id, 'chat message button', search_food+` 검색어로 찾을 수 있는 식당이 없네ㅠㅠ 다시 검색해볼래?`, ['search_food', '다시 검색하기'], ['get_started', '처음으로 돌아가기']);
@@ -1136,9 +1136,10 @@ class Decide_menu {
           } else {
             index.sendSocketMessage(socket.id, 'chat message button image', '조건에 맞는 식당이 아직 없어... 다시 골라줘!', 'emoji/hungry3.PNG',['get_started', '돌아가기']);
           }
-        } else if (value.includes('go_search_food')) {
+        } else if (value.includes('view_recommend_food')) {
           // search_food 인 경우
           const foods = await info_update.food.verify_search_food(socket.id, user_data.food_name, user_data.subway);
+          console.log(foods);
           const foods_info = foods.message;
           if (foods_info.length === 2) {
             await info_update.profile.update_rest2(user_data.kakao_id, foods_info[0].id, foods_info[1].id);
