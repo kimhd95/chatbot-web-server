@@ -194,6 +194,22 @@ class Decide_menu {
   decide_menu(value, socket, user_data) {
     (async function () {
       try {
+        // const restaurantList = await info_update.food.get_restaurant_subway(socket.id, '강남역');
+        // console.log(restaurantList);
+        // let sendList = []
+        // for (let i = 0; i<restaurantList.length; i++) {
+        //   const bodyawait info_update.food.set_closedown(socket.id, `https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=${restaurantList[i].subway} ${restaurantList[i].res_name}`)
+        //   console.log("요청 전송됨");
+        //   // const re = JSON.parse(body);
+        //   // console.log(body);
+        //   // if (re.documents.length == 0) {
+        // // } else {
+        //   // console.log("re.documents == null");
+        //     // sendLis/t.push({'id' : restaurantList[i].id, 'lat' : re.documents[0].y, 'lng' : re.documents[0].x})
+        //   // }
+        // }
+        // setTimeout(() => {info_update.food.set_restaurant_latlng(socket.id, sendList)}, 5000);
+
         // db 갱신 관련 코드 나중에 또 이용
         // const restaurantList = await info_update.food.get_restaurant_subway(socket.id, '합정역');
         // console.log(restaurantList);
@@ -1139,6 +1155,8 @@ class Decide_menu {
           console.log("일반적인 경우");
           const foods = await info_update.food.get_restaurant(socket.id, user_data.subway, user_data.exit_quarter, price_lunch, price_dinner, user_data.with_mood, user_data.mood2, taste, user_data.hate_food, user_data.food_type, user_data.food_name);
           const foods_info = foods.message;
+          console.log(foods);
+          console.log(foods_info);
           if (foods_info.length === 2) {
             await info_update.profile.update_rest2(user_data.kakao_id, foods_info[0].id, foods_info[1].id);
             if (foods.try === 1) {
