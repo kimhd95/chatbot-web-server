@@ -3,26 +3,6 @@ const Api = require('../api_prototype');
 
 const Food = new Api();
 
-Food.set_closedown_ = function (kakaoid, url) {
-  const self = this;
-  return new Promise(((resolve, reject) => {
-    const name = 'food.set_closedown';
-    const method = 'POST';
-    const url = '/api/v1/users/set_closedown';
-    const json = {
-      apikey: '9Y3-7bE-Ud3-7Ja',
-      url: url,
-    };
-
-    const func = function (error, response, body) {
-      error === null
-        ? resolve(body.message)
-        : reject(error);
-    };
-    self.apicall(kakaoid, name, method, url, json, func);
-  }));
-};
-
 Food.get_restaurant_info = function (kakaoid, id) {
   const self = this;
   return new Promise(((resolve, reject) => {
@@ -348,7 +328,7 @@ Food.verify_search_food = function (kakaoid, search_food, subway) {
 
         const func = function (error, response, body) {
             error === null
-                ? resolve(body.result)
+                ? resolve(body)
                 : reject(error);
         };
         self.apicall(kakaoid, name, method, url, json, func);

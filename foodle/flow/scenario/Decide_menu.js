@@ -194,21 +194,6 @@ class Decide_menu {
   decide_menu(value, socket, user_data) {
     (async function () {
       try {
-        // const restaurantList = await info_update.food.get_restaurant_subway(socket.id, '강남역');
-        // console.log(restaurantList);
-        // let sendList = []
-        // for (let i = 0; i<restaurantList.length; i++) {
-        //   const bodyawait info_update.food.set_closedown(socket.id, `https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=${restaurantList[i].subway} ${restaurantList[i].res_name}`)
-        //   console.log("요청 전송됨");
-        //   // const re = JSON.parse(body);
-        //   // console.log(body);
-        //   // if (re.documents.length == 0) {
-        // // } else {
-        //   // console.log("re.documents == null");
-        //     // sendLis/t.push({'id' : restaurantList[i].id, 'lat' : re.documents[0].y, 'lng' : re.documents[0].x})
-        //   // }
-        // }
-        // setTimeout(() => {info_update.food.set_restaurant_latlng(socket.id, sendList)}, 5000);
 
         // db 갱신 관련 코드 나중에 또 이용
         // const restaurantList = await info_update.food.get_restaurant_subway(socket.id, '합정역');
@@ -477,13 +462,13 @@ class Decide_menu {
                 let subway;
                     subway = user_data.subway;
                     console.log('subway: '+subway);
-                    const result = await info_update.food.verify_search_food(socket.id, search_food, subway);
-                if (result === 'success') {
+                    const apicall = await info_update.food.verify_search_food(socket.id, search_food, subway);
+                if (apicall.result === 'success') {
                    await info_update.profile.update_food_name(socket.id, search_food);
                     const chlist = [search_food+' 찾았다! 이걸로 추천해줄게 잠깐만~',search_food+' 있다있어~ 잠깐만 기다료바'];
                     const leng = chlist.length;
                     const rand = Math.floor(leng * Math.random());
-                    index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`,['location/0', '응 정했어'], ['location/seoul', '서울 어디든 좋아']);
+                    index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`,['go_search_food', '추천 보러가기'], ['get_started', '처음으로']);
                 }else {
                     // await info_update.profile.update_state(socket.id, '1', 'decide_menu');
                     index.sendSocketMessage(socket.id, 'chat message button', search_food+` 검색어로 찾을 수 있는 식당이 없네ㅠㅠ 다시 검색해볼래?`, ['search_food', '다시 검색하기'], ['get_started', '처음으로 돌아가기']);
@@ -1101,6 +1086,7 @@ class Decide_menu {
       try {
           // const user_food_type = 'all';
           //if (user_data.price_lunch==null || user_data.price_dinner==null) {
+          console.log(`value : ${value}`);
           let price_lunch = user_data.price_lunch;
           let price_dinner = user_data.price_dinner;
           let taste = user_data.taste;
@@ -1143,6 +1129,16 @@ class Decide_menu {
           // search_near 인 경우
           console.log("search_near case");
           const foods = await info_update.food.get_near_restaurant(socket.id, user_data.subway, price_lunch, price_dinner, user_data.hate_food, user_data.lat, user_data.lng);
+          const foods_info = foods.message;
+          if (foods_info.length === 2) {
+            await info_update.profile.update_rest2(user_data.kakao_id, foods_info[0].id, foods_info[1].id);
+            index.sendSocketMessage(socket.id, 'chat message button', '2곳을 골라줄테니까 한 번 골라봐!', ['decide_final', '고고'], ['get_started', '안할래']);
+          } else {
+            index.sendSocketMessage(socket.id, 'chat message button image', '조건에 맞는 식당이 아직 없어... 다시 골라줘!', 'emoji/hungry3.PNG',['get_started', '돌아가기']);
+          }
+        } else if (value.includes('go_search_food')) {
+          // search_food 인 경우
+          const foods = await info_update.food.verify_search_food(socket.id, user_data.food_name, user_data.subway);
           const foods_info = foods.message;
           if (foods_info.length === 2) {
             await info_update.profile.update_rest2(user_data.kakao_id, foods_info[0].id, foods_info[1].id);
