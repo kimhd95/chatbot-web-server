@@ -639,7 +639,7 @@ function getLocation2(callback) {
           resolve(arr);
         }
       }
-      navigator.geolocation.watchPosition(function(position) {
+      navigator.geolocation.getCurrentPosition(function(position) {
         let current_lat=position.coords.latitude;
         let current_lng=position.coords.longitude;
         console.log(current_lat);
