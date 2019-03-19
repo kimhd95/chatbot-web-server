@@ -621,9 +621,10 @@ function getLocation2(callback) {
       let geo_options = {
         enableHighAccuracy: false,
         maximumAge: Infinity,
-        timeout: 5000,
+        timeout: 10000,
       }
       function error(err){
+        console.log(err);
         console.warn(`ERROR(${err.code}): ${err.message}`);
         if(err.code == 1) {
           alert("gps 권한이 없습니다. gps를 켜주세요");
@@ -631,7 +632,7 @@ function getLocation2(callback) {
         } else if(err.code == 2) {
           alert("현재 사용자 위치 확인이 불가합니다.");
           resolve(arr);
-        } else if(err.code ==3) {
+        } else if(err.code == 3) {
           alert("사용자 위치를 확인하는데 시간이 초과하였습니다.");
           resolve(arr);
         } else {
