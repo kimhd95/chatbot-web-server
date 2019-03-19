@@ -621,13 +621,25 @@ function getLocation2(callback) {
       let geo_options = {
         enableHighAccuracy: false,
         maximumAge: Infinity,
-        timeout: 3000,
+        timeout: 5000,
       }
       function error(err){
         console.warn(`ERROR(${err.code}): ${err.message}`);
-        resolve(arr);
+        if(err.code == 1) {
+          alert("gps 권한이 없습니다. gps를 켜주세요");
+          resolve(arr);
+        } else if(err.code == 2) {
+          alert("현재 사용자 위치 확인이 불가합니다.");
+          resolve(arr);
+        } else if(err.code ==3) {
+          alert("사용자 위치를 확인하는데 시간이 초과하였습니다.");
+          resolve(arr);
+        } else {
+          alert("알 수 없는 에러가 발생하였습니다.");
+          resolve(arr);
+        }
       }
-      navigator.geolocation.getCurrentPosition(function(position) {
+      navigator.geolocation.watchPosition(function(position) {
         let current_lat=position.coords.latitude;
         let current_lng=position.coords.longitude;
         console.log(current_lat);
@@ -743,7 +755,6 @@ $(function () {
       var temp = setTimeout(function() {
         socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + '_'+ arr.lat + '/' + arr.lng);
       }, 2000);
-
       $('.checkbox:checked').attr('checked', false);
       $('.messaging-button').hide();
       $('.messaging-button-checkbox').hide();
@@ -752,7 +763,7 @@ $(function () {
       getLocation2().then(function (arr){
         console.log(arr);
         if(arr.lat == undefined || arr.lng == undefined) {
-          socket.emit('chat message button rule', $(e.target).attr('name'), 'no_gps');
+          socket.emit('chat message button rule', $(e.target).attr('name'), 'geolocation_err');
         } else {
           socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + '_'+ arr.lat + '/' + arr.lng);
         }

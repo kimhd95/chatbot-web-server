@@ -170,7 +170,7 @@ class Decide_menu {
       'hobulho_hate': this.hobulho_hate,
       'hobulho_hate_feedback': this.hobulho_hate_feedback,
       'random_decide': this.random_decide,
-      'no_gps': this.no_gps,
+      'geolocation_err': this.geolocation_err,
     };
     this.execute(key, value, socket, user_data);
   }
@@ -253,10 +253,10 @@ class Decide_menu {
     }());
   }
 
-  no_gps(value, socket, user_data) {
+  geolocation_err(value, socket, user_data) {
     (async function() {
       try {
-        index.sendSocketMessage(socket.id, 'chat message button', '위치를 확인할수 없어 ㅠㅠ 이 기능은 gps를 키고 이용해줘!', ['get_started', '처음으로 돌아가기'])
+        index.sendSocketMessage(socket.id, 'chat message button', '위치를 확인할수 없어 ㅠㅠ', ['get_started', '처음으로 돌아가기'])
       } catch(e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
         console.log(e);
