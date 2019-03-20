@@ -422,16 +422,14 @@ class Decide_menu {
             await info_update.profile.update_mood2(socket.id, '998');
             await info_update.profile.update_exit_quarter(socket.id, '999');
             const chlist = ['원하는 음식 종류를 말해줘!!<br>ex) 치킨', '뭐 먹고 싶은지 말해봐🍚<br>ex) 피자'];
-            const leng = chlist.length;
-            const rand = Math.floor(leng * Math.random());
-            index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`);
-            //}
-
+            const rand = Math.floor(chlist.length * Math.random());
+            index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`, ['고기', '고기'], ['한식', '한식'], ['매운 음식', '매운 음식'], ['초밥', '초밥'], ['피자', '피자'], ['치킨', '치킨'], ['-직접 입력', '직접 입력']);
         } catch (e) {
             index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
         }
     }());
   }
+
 
   // search_near(value, socket, user_data) {
   //   (async function () {
@@ -456,23 +454,39 @@ class Decide_menu {
   search_result(value, socket, user_data) {
     (async function () {
         try {
-                let search_food;
-                    console.log(`search_food = ${value}`);
-                    search_food = value;
-                let subway;
-                    subway = user_data.subway;
-                    console.log('subway: '+subway);
-                    const apicall = await info_update.food.verify_search_food(socket.id, search_food, subway);
+          if (value === '-직접 입력') {
+            await info_update.profile.update_state(socket.id, '1', 'search_food');
+            const chlist = ['원하는 음식 종류를 말해줘!!<br>ex) 치킨', '뭐 먹고 싶은지 말해봐🍚<br>ex) 피자'];
+            const rand = Math.floor(chlist.length * Math.random());
+            index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`);
+          }
+          else {
+                let search_food = value;
+                let subway = user_data.subway;
+
+                let apicall;
+
+                // 예외처리 하는부분
+                if (search_food === '초밥') {
+                  apicall = await info_update.food.verify_search_food(socket.id, ['초밥', '스시', '오마카세'], subway);
+                } else if (search_food === '매운 음식') {
+                  apicall = await info_update.food.verify_search_food(socket.id, '매운', subway);
+                } else if (search_food === '분식') {
+                  apicall = await info_update.food.verify_search_food(socket.id, ['김밥', '떡볶이'], subway);
+                } else {
+                  apicall = await info_update.food.verify_search_food(socket.id, search_food, subway);
+                }
+
                 if (apicall.result === 'success') {
-                   await info_update.profile.update_food_name(socket.id, search_food);
+                    await info_update.profile.update_food_name(socket.id, search_food);
                     const chlist = [search_food+' 찾았다! 이걸로 추천해줄게 잠깐만~',search_food+' 있다있어~ 잠깐만 기다료바'];
-                    const leng = chlist.length;
-                    const rand = Math.floor(leng * Math.random());
+                    //const leng = chlist.length;
+                    const rand = Math.floor(chlist.length * Math.random());
                     index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`,['view_recommend_food', '추천 보러가기'], ['get_started', '처음으로']);
-                }else {
-                    // await info_update.profile.update_state(socket.id, '1', 'decide_menu');
+                } else {
                     index.sendSocketMessage(socket.id, 'chat message button', search_food+` 검색어로 찾을 수 있는 식당이 없네ㅠㅠ 다시 검색해볼래?`, ['search_food', '다시 검색하기'], ['get_started', '처음으로 돌아가기']);
                 }
+          }
         } catch (e) {
             index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
         }
