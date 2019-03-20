@@ -620,13 +620,8 @@ function getLocation2(callback) {
     if (navigator.geolocation) {
       let geo_options = {
         enableHighAccuracy: false,
-<<<<<<< HEAD
         maximumAge: 300000,   // 반환받을 캐시된 위치값의 최대수명
-        timeout: 5000,
-=======
-        maximumAge: Infinity,
         timeout: 10000,
->>>>>>> 9e3550ade23b0294604dcfd6f26d410d7214512f
       }
       function error(err){
         console.log(err);
