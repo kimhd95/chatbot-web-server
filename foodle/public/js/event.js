@@ -620,10 +620,16 @@ function getLocation2(callback) {
     if (navigator.geolocation) {
       let geo_options = {
         enableHighAccuracy: false,
+<<<<<<< HEAD
         maximumAge: 300000,   // 반환받을 캐시된 위치값의 최대수명
         timeout: 5000,
+=======
+        maximumAge: Infinity,
+        timeout: 10000,
+>>>>>>> 9e3550ade23b0294604dcfd6f26d410d7214512f
       }
       function error(err){
+        console.log(err);
         console.warn(`ERROR(${err.code}): ${err.message}`);
         // code 1: 권한없음 2: 위치확인 불가 3: 시간초과
         if(err.code == 1) {
@@ -632,7 +638,7 @@ function getLocation2(callback) {
         } else if(err.code == 2) {
           alert("현재 사용자 위치 확인이 불가합니다.");
           resolve(arr);
-        } else if(err.code ==3) {
+        } else if(err.code == 3) {
           alert("사용자 위치를 확인하는데 시간이 초과하였습니다.");
           resolve(arr);
         } else {

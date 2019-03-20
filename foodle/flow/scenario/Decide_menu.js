@@ -373,10 +373,10 @@ class Decide_menu {
             }
             const qna_list = [
                 { //지하철역 검색->현재위치 500m내
-                    'question': '어떤 방식으로 메뉴를 정해보까나', 'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색', 'button2_id': 'price_under10', 'button2_value': '1만원 미만','button3_id': 'mood2', 'button3_value': '식당 분위기 필터링','button4_id': 'search_food', 'button4_value': '음식 종류 검색', 'button5_id': 'search_near', 'button5_value': '내 주변 300m 내 식당 검색',
+                    'question': '어떤 방식으로 메뉴를 정해보까나', 'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색', 'button2_id': 'price_under10', 'button2_value': '1만원 미만','button3_id': 'mood2', 'button3_value': '식당 분위기 필터링','button4_id': 'search_food', 'button4_value': '음식 종류 검색', 'button5_id': 'search_near', 'button5_value': '내 주변 300m 내 식당 검색(GPS 켜줘!)',
                 },
                 {
-                    'question': '오늘 메뉴는 어떻게 골라줄까?', 'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색','button2_id': 'price_under10', 'button2_value': '1만원 미만','button3_id': 'mood2', 'button3_value': '식당 분위기 필터링','button4_id': 'search_food', 'button4_value': '음식 종류 검색', 'button5_id': 'search_near', 'button5_value': '내 주변 300m 내 식당 검색',
+                    'question': '오늘 메뉴는 어떻게 골라줄까?', 'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색','button2_id': 'price_under10', 'button2_value': '1만원 미만','button3_id': 'mood2', 'button3_value': '식당 분위기 필터링','button4_id': 'search_food', 'button4_value': '음식 종류 검색', 'button5_id': 'search_near', 'button5_value': '내 주변 300m 내 식당 검색(GPS 켜줘!)',
                 },
                 // {
                 //     'question': '오늘 메뉴의 키워드는 뭐야?','button1_id': 'location/withexit', 'button1_value': '지하철역 검색', 'button2_id': 'mood2', 'button2_value': '식당 분위기','button3_id': 'decision/taste', 'button3_value': '음식 종류',
