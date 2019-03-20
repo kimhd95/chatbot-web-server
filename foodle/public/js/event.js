@@ -620,11 +620,12 @@ function getLocation2(callback) {
     if (navigator.geolocation) {
       let geo_options = {
         enableHighAccuracy: false,
-        maximumAge: Infinity,
+        maximumAge: 300000,   // 반환받을 캐시된 위치값의 최대수명
         timeout: 5000,
       }
       function error(err){
         console.warn(`ERROR(${err.code}): ${err.message}`);
+        // code 1: 권한없음 2: 위치확인 불가 3: 시간초과
         if(err.code == 1) {
           alert("gps 권한이 없습니다. gps를 켜주세요");
           resolve(arr);
