@@ -458,7 +458,8 @@ class Decide_menu {
             await info_update.profile.update_state(socket.id, '1', 'search_food');
             const chlist = ['원하는 음식 종류를 말해줘!!<br>ex) 치킨', '뭐 먹고 싶은지 말해봐🍚<br>ex) 피자'];
             const rand = Math.floor(chlist.length * Math.random());
-            await index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`);
+            // await index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`);
+            setTimeout(() => {index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`);}, 1000);
           }
           else {
                 let search_food = value;
