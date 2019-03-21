@@ -332,15 +332,13 @@ class Decide_menu {
     (async function () {
         try {
             let subway;
-            if(value.includes('near_station')){
+            if(value.includes('near_station') || value.includes('middle')){
               subway = value.slice(value.lastIndexOf('/')+1);
-            } else if (value.includes('middle')) {
-              subway = value.slice(value.lastIndexOf('/')+1);
-              console.log(`middle에서 subway: ${subway}`);
-            } else {
-              console.log(`exitnum의 value, subway = ${value}`);
-              // subway = value;
-              subway = value.replace(/ /gi, '');
+              console.log(`near_st | middle - subway: ${subway}`);
+            }
+            else {
+              console.log(`exitnum - subway: ${value}`);
+              subway = value.replace(/ /gi, '');    // 입력값에서 공백제거
               if (subway.slice(-1) !== '역') {
                   subway = `${subway}역`;
               }
@@ -377,10 +375,6 @@ class Decide_menu {
                 default:
                   break;
               }
-
-              // if (value.slice(-1) !== '역') {
-              //     subway = `${subway}역`;
-              // }
             }
             const subways = await info_update.food.get_all_subway(socket.id, '');
             const result = await info_update.food.verify_subway(socket.id, subway);
@@ -468,27 +462,6 @@ class Decide_menu {
     }());
   }
 
-
-  // search_near(value, socket, user_data) {
-  //   (async function () {
-  //       try {
-  //           await info_update.profile.update_food_type(socket.id, 'all');
-  //           await info_update.profile.update_taste(socket.id, 'all');
-  //           await info_update.profile.update_mood2(socket.id, '998');
-  //           await info_update.profile.update_exit_quarter(socket.id, '999');
-  //           // const chlist = ['원하는 음식 종류를 말해줘!!<br>ex) 치킨', '뭐 먹고 싶은지 말해봐🍚<br>ex) 피자'];
-  //           // const leng = chlist.length;
-  //           // const rand = Math.floor(leng * Math.random());
-  //           await index.sendSocketMessage(socket.id, 'chat message button', '잠깐만~~ 지금 열씨미 찾는중이야 ㅎㅎ');
-  //           await index.sendSocketMessage(socket.id, 'chat message loader', 2000);
-  //           //}
-  //
-  //       } catch (e) {
-  //           index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
-  //       }
-  //   }());
-  // }
-
   search_result(value, socket, user_data) {
     (async function () {
         try {
@@ -503,7 +476,6 @@ class Decide_menu {
           else {
                 let search_food = value;
                 let subway = user_data.subway;
-
                 let apicall;
 
                 // 예외처리 하는부분
