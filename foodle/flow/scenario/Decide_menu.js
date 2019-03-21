@@ -363,6 +363,9 @@ class Decide_menu {
                 case '을입역':
                   subway = '을지로입구역';
                   break;
+                case '이화여대역':
+                  subway = '이대역';
+                  break;
                 case '홍대역':
                 case '홍익대역':
                 case '홍익대입구역':
