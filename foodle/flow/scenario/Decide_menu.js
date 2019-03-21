@@ -339,9 +339,35 @@ class Decide_menu {
               console.log(`middle에서 subway: ${subway}`);
             } else {
               console.log(`exitnum의 value, subway = ${value}`);
-              subway = value;
+              // subway = value;
+              switch (value) {
+                case '건대':
+                case '건국대':
+                case '건입':
+                  subway = '건대입구';
+                  break;
+                case '서울대':
+                case '설입':
+                  subway = '서울대입구';
+                  break;
+                case '센텀':
+                  subway = '센텀시티';
+                  break;
+                case '을입':
+                  subway = '을지로입구';
+                  break;
+                case '홍대':
+                case '홍익대':
+                case '홍입':
+                  subway = '홍대입구';
+                  break;
+
+                default:
+                  subway = value
+              }
+
               if (value.slice(-1) !== '역') {
-                  subway = `${value}역`;
+                  subway = `${subway}역`;
               }
             }
             const subways = await info_update.food.get_all_subway(socket.id, '');
