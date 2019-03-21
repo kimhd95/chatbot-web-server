@@ -1154,15 +1154,34 @@ class Decide_menu {
           }
         } else if (value.includes('view_recommend_food')) {
           // search_food 인 경우
-          const foods = await info_update.food.verify_search_food(socket.id, user_data.food_name, user_data.subway);
-          console.log(foods);
-          const foods_info = foods.message;
-          if (foods_info.length === 2) {
-            await info_update.profile.update_rest2(user_data.kakao_id, foods_info[0].id, foods_info[1].id);
-            index.sendSocketMessage(socket.id, 'chat message button', '2곳을 골라줄테니까 한 번 골라봐!', ['decide_final', '고고'], ['get_started', '안할래']);
-          } else {
-            index.sendSocketMessage(socket.id, 'chat message button image', '조건에 맞는 식당이 아직 없어... 다시 골라줘!', 'emoji/hungry3.PNG',['get_started', '돌아가기']);
+          function getFoods(callback) {
+            return new Promise(function (resolve, reject) {
+              if (user_data.food_name === '초밥') {
+                const foods = info_update.food.verify_search_food(socket.id, ['초밥', '스시', '오마카세'], user_data.subway);
+                resolve(foods);
+              } else if (user_data.food_name === '매운 음식') {
+                const foods = info_update.food.verify_search_food(socket.id, '매운', user_data.subway);
+                resolve(foods);
+              } else if (user_data.food_name === '분식') {
+                const foods = info_update.food.verify_search_food(socket.id, ['김밥', '떡볶이'], user_data.subway);
+                resolve(foods);
+              } else {
+                const foods = info_update.food.verify_search_food(socket.id, user_data.food_name, user_data.subway);
+                resolve(foods);
+              }
+            });
           }
+          getFoods().then(async function (foods) {
+            console.log(foods);
+            const foods_info = foods.message;
+            if (foods_info.length === 2) {
+              await info_update.profile.update_rest2(user_data.kakao_id, foods_info[0].id, foods_info[1].id);
+              index.sendSocketMessage(socket.id, 'chat message button', '2곳을 골라줄테니까 한 번 골라봐!', ['decide_final', '고고'], ['get_started', '안할래']);
+            } else {
+              index.sendSocketMessage(socket.id, 'chat message button image', '조건에 맞는 식당이 아직 없어... 다시 골라줘!', 'emoji/hungry3.PNG',['get_started', '돌아가기']);
+            }
+          });
+          // const foods = await info_update.food.verify_search_food(socket.id, user_data.food_name, user_data.subway);
         } else {
           // search_near 아닌경우
           console.log("일반적인 경우");
