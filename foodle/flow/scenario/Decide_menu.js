@@ -421,7 +421,7 @@ class Decide_menu {
             await info_update.profile.update_taste(socket.id, 'all');
             await info_update.profile.update_mood2(socket.id, '998');
             await info_update.profile.update_exit_quarter(socket.id, '999');
-            const chlist = ['원하는 음식 종류를 말해줘!!<br>ex) 치킨', '뭐 먹고 싶은지 말해봐🍚<br>ex) 피자'];
+            const chlist = ['원하는 음식 종류를 골라줘!!', '뭐 먹고 싶은지 골라봐🍚'];
             const rand = Math.floor(chlist.length * Math.random());
             index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`, ['고기', '고기'], ['한식', '한식'], ['매운 음식', '매운 음식'], ['초밥', '초밥'], ['피자', '피자'], ['치킨', '치킨'], ['-직접 입력', '직접 입력']);
         } catch (e) {
@@ -456,7 +456,7 @@ class Decide_menu {
         try {
           if (value === '-직접 입력') {
             // await info_update.profile.update_state(socket.id, '1', 'search_food');
-            const chlist = ['원하는 음식 종류를 골라줘!!', '뭐 먹고 싶은지 골라봐🍚'];
+            const chlist = ['원하는 음식 종류를 말해줘!!<br>ex) 치킨', '뭐 먹고 싶은지 골라봐🍚<br>ex) 피자'];
             const rand = Math.floor(chlist.length * Math.random());
             // await index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`);
             setTimeout(() => {info_update.profile.update_state(socket.id, '1', 'search_food');}, 100);
