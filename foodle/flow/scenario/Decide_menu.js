@@ -340,35 +340,47 @@ class Decide_menu {
             } else {
               console.log(`exitnum의 value, subway = ${value}`);
               // subway = value;
-              switch (value) {
-                case '건대':
-                case '건국대':
-                case '건입':
-                  subway = '건대입구';
+              subway = value.replace(/ /gi, '');
+              if (subway.slice(-1) !== '역') {
+                  subway = `${subway}역`;
+              }
+              switch (subway) {
+                case '건대역':
+                case '건국대역':
+                case '건국대입구역':
+                case '건국대학교역':
+                case '건국대학교입구역':
+                case '건입역':
+                  subway = '건대입구역';
                   break;
-                case '서울대':
-                case '설입':
-                  subway = '서울대입구';
+                case '서울대역':
+                case '서울대학교역':
+                case '서울대학교입구역':
+                case '설입역':
+                  subway = '서울대입구역';
                   break;
-                case '센텀':
-                  subway = '센텀시티';
+                case '센텀역':
+                  subway = '센텀시티역';
                   break;
-                case '을입':
-                  subway = '을지로입구';
+                case '을입역':
+                  subway = '을지로입구역';
                   break;
-                case '홍대':
-                case '홍익대':
-                case '홍입':
-                  subway = '홍대입구';
+                case '홍대역':
+                case '홍익대역':
+                case '홍익대입구역':
+                case '홍익대학교역':
+                case '홍익대학교입구역':
+                case '홍입역':
+                  subway = '홍대입구역';
                   break;
 
                 default:
-                  subway = value
+                  break;
               }
 
-              if (value.slice(-1) !== '역') {
-                  subway = `${subway}역`;
-              }
+              // if (value.slice(-1) !== '역') {
+              //     subway = `${subway}역`;
+              // }
             }
             const subways = await info_update.food.get_all_subway(socket.id, '');
             const result = await info_update.food.verify_subway(socket.id, subway);
