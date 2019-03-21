@@ -456,11 +456,11 @@ class Decide_menu {
         try {
           if (value === '-직접 입력') {
             // await info_update.profile.update_state(socket.id, '1', 'search_food');
-            const chlist = ['원하는 음식 종류를 말해줘!!<br>ex) 치킨', '뭐 먹고 싶은지 말해봐🍚<br>ex) 피자'];
+            const chlist = ['원하는 음식 종류를 골라줘!!', '뭐 먹고 싶은지 골라봐🍚'];
             const rand = Math.floor(chlist.length * Math.random());
             // await index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`);
-            setTimeout(() => {info_update.profile.update_state(socket.id, '1', 'search_food');}, 500);
-            setTimeout(() => {index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`);}, 1000);
+            setTimeout(() => {info_update.profile.update_state(socket.id, '1', 'search_food');}, 100);
+            setTimeout(() => {index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`);}, 150);
           }
           else {
                 let search_food = value;
