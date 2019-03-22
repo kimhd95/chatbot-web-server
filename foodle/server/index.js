@@ -161,6 +161,13 @@ module.exports = function(){
 			// console.log('message: ' + msg);
 		});
 
+		socket.on('chat message button rule previous', function(msg, val){
+			console.log('chat message button rule previous 에 들어옴');
+			console.log(msg);
+			console.log(val);
+			scenario_rule.scenario_rule(val, socket);
+		});
+
 	});
 
 	exports.sendSocketMessage = function (socket_id, message_type, message, ...args) {
