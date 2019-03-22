@@ -332,6 +332,20 @@ class Decide_menu {
     (async function () {
         try {
             console.log("stack 업데이트 전");
+            // 이전으로 돌아온경우, 일반경우 통합 db 원상복구 작업
+            await info_update.profile.update_exit_quarter(socket.id, 'null');
+            await info_update.profile.update_taste(socket.id, 'null');
+            await info_update.profile.update_food_type(socket.id, 'null');
+            await info_update.profile.update_food_name(socket.id, 'null');
+            await info_update.profile.update_mood2(socket.id, 'null');
+            await info_update.profile.update_mood1(socket.id, 'null');
+            if(user_data.price_lunch == 'x') {
+              await info_update.profile.update_price_level_dinner(socket.id, 'null');
+            } else if(user_data.price_dinner == 'x'){
+              await info_update.profile.update_price_level_lunch(socket.id, 'null');
+            }
+
+
             await info_update.profile.update_stack(socket.id, `{"state": "${user_data.state}", "value": "${value}"}`);
             let subway;
             if(value.includes('near_station') || value.includes('middle')){
