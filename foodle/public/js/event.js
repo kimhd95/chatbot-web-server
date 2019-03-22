@@ -701,6 +701,7 @@ $(function () {
 
   $('body').on('click', '.messaging-button', (e) => {
     clickNum=0;
+
     if($(e.target).attr('id')==='get_started'){
       sessionStorage.removeItem('stage');
     }
@@ -721,11 +722,19 @@ $(function () {
       $('#m').autocomplete('disable');
     }
     if ($(e.target).attr('id') === ('mood2/') || $(e.target).attr('id') === ('exit/') || $(e.target).attr('id') === ('drink_type/') || $(e.target).attr('id') === ('price/') ||  $(e.target).attr('id') === ('hobulho_hate/')) {
+      console.log("messaging button의 exit/눌렸을경우");
+      console.log($(e.target).attr('id'));
       const checked_array = [];
       const checked_name_array = [];
       $('.checkbox:checked').each(function () {
-        checked_array.push(this.id);
-        checked_name_array.push(this.name);
+        // 이전으로 돌아가기 버튼 아닌경우에만 checked_array에 추가
+        console.log(this);
+        if ($(e.target).attr('id').includes('previous')) {
+          console.log("이전으로 돌아가기 버튼");
+        } else {
+          checked_array.push(this.id);
+          checked_name_array.push(this.name);
+        }
       });
 
       if (checked_array.length === 0) {
@@ -747,6 +756,8 @@ $(function () {
             break;
         }
       } else {
+        console.log(checked_name_array);
+        console.log(checked_array);
         socket.emit('chat message button rule', checked_name_array, ($(e.target).attr('id') + checked_array));
         $('.messaging-button').hide();
         $('.messaging-button-checkbox').hide();
@@ -770,11 +781,71 @@ $(function () {
           socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + '_'+ arr.lat + '/' + arr.lng);
         }
       });
-
-
       $('.checkbox:checked').attr('checked', false);
       $('.messaging-button').hide();
       $('.messaging-button-checkbox').hide();
+    } else if($(e.target).attr('id').includes('previous')) {
+        console.log('previous1 clicked');
+        let userStack = $(e.target).attr('id').replace(/@/gi, `"`).slice(9);
+        console.log(userStack);
+        let stack = JSON.parse("["+userStack+"]");
+        // console.log(stack);
+        let element = stack.pop();
+        console.log(element.state);
+        // console.log(stack);
+        stack = JSON.stringify(stack);
+        // console.log(stack);
+        stack = stack.slice(1, -1);
+        console.log(stack);
+        function getFinalStack(callback) {
+          return new Promise(function (resolve, reject) {
+            if(stack === '') {
+              console.log("stack 빔");
+              resolve('null');
+            } else {
+              console.log("Stack 남아있음");
+              resolve(stack);
+            }
+          });
+        }
+        getFinalStack().then(function (stack){
+          console.log(stack);
+          const info = {
+            url: "/api/v1/users/update_user",
+            method: 'POST',
+            body: {
+              kakao_id: socket.id,
+              stack: stack,
+            },
+            success: function(res) {
+              $('#m').prop('disabled', true);
+              $('#input-button').attr('disabled', true);
+              $('.messaging-button').hide();
+              $('.messaging-button-checkbox').hide();
+              $('.bot-message').children(':last').hide();
+              const info2 ={
+                url: "/api/v1/users/update_user",
+                method: 'POST',
+                body: {
+                  kakao_id: socket.id,
+                  state: element.state,
+                },
+                success: function(res) {
+                  socket.emit('chat message button rule previous', stack, element.value);
+                },
+                error: function (e) {
+                  console.log(e);
+                }
+              }
+              sendReq(info2);
+            },
+            error: function (e) {
+              console.log(e);
+            }
+          }
+          sendReq(info);
+        });
+
     } else {
       socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id'));
       $('.checkbox:checked').attr('checked', false);
@@ -806,6 +877,68 @@ $(function () {
       } else{
         socket.emit('chat message button rule', $(e.target).attr('name'), 'drink_type/'+$(e.target).attr('id'));
       }
+    } else if($(e.target).attr('id').includes('previous')) {
+        console.log('previous2 clicked');
+        let userStack = $(e.target).attr('id').replace(/@/gi, `"`).slice(9);
+        console.log(userStack);
+        let stack = JSON.parse("["+userStack+"]");
+        // console.log(stack);
+        let element = stack.pop();
+        console.log(element.state);
+        // console.log(stack);
+        stack = JSON.stringify(stack);
+        // console.log(stack);
+        stack = stack.slice(1, -1);
+        console.log(stack);
+        function getFinalStack(callback) {
+          return new Promise(function (resolve, reject) {
+            if(stack === '') {
+              console.log("stack 빔");
+              resolve('null');
+            } else {
+              console.log("Stack 남아있음");
+              resolve(stack);
+            }
+          });
+        }
+        getFinalStack().then(function (stack){
+          console.log(stack);
+          const info = {
+            url: "/api/v1/users/update_user",
+            method: 'POST',
+            body: {
+              kakao_id: socket.id,
+              stack: stack,
+            },
+            success: function(res) {
+              $('#m').prop('disabled', true);
+              $('#input-button').attr('disabled', true);
+              $('.messaging-button').hide();
+              $('.messaging-button-checkbox').hide();
+              $('.bot-message').children(':last').hide();
+              const info2 ={
+                url: "/api/v1/users/update_user",
+                method: 'POST',
+                body: {
+                  kakao_id: socket.id,
+                  state: element.state,
+                },
+                success: function(res) {
+                  socket.emit('chat message button rule previous', stack, element.value);
+                },
+                error: function (e) {
+                  console.log(e);
+                }
+              }
+              sendReq(info2);
+            },
+            error: function (e) {
+              console.log(e);
+            }
+          }
+          sendReq(info);
+        });
+
     } else {
       // $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', false);
       // $('.messaging-button-checkbox:not(:hidden)').first().removeClass('messaging-button-checkbox-checked');
@@ -819,14 +952,20 @@ $(function () {
       $(e.target).toggleClass('messaging-button-checkbox-checked');
       // $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked');
       console.log($(e.target).attr('id'));
+      console.log("체크박스 선택 해제");
       if ($(e.target).attr('id') != '999' && $(e.target).attr('id') != '998')
         clickNum--;
     } else{
-      $(e.target).children('input[type=checkbox]').prop('checked', true);
-      // console.log($(e.target).children('input[type=checkbox]').attr('checked'));
-      $(e.target).toggleClass('messaging-button-checkbox-checked');
-      // $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked');
-      clickNum++;
+      if($(e.target).attr('id').includes('previous')) {
+        console.log("이전으로 돌아가기 버튼 클릭");
+      } else {
+        console.log("체크박스 선택");
+        $(e.target).children('input[type=checkbox]').prop('checked', true);
+        // console.log($(e.target).children('input[type=checkbox]').attr('checked'));
+        $(e.target).toggleClass('messaging-button-checkbox-checked');
+        // $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked');
+        clickNum++;
+      }
     }
     console.log(clickNum);
     (clickNum > 0) ? $('.complete-button').prop('disabled', false)
@@ -936,6 +1075,7 @@ $(function () {
       $('#input-button').attr('disabled', true);
     }
     $('#messages').scrollTop(1E10);
+
 
     if(loginValue!=='-1'){
       if(msg.includes("오늘의 선택")){

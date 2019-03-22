@@ -331,6 +331,8 @@ class Decide_menu {
   decision_method(value, socket, user_data) {
     (async function () {
         try {
+            console.log("stack 업데이트 전");
+            await info_update.profile.update_stack(socket.id, `{"state": "${user_data.state}", "value": "${value}"}`);
             let subway;
             if(value.includes('near_station') || value.includes('middle')){
               subway = value.slice(value.lastIndexOf('/')+1);
@@ -511,6 +513,7 @@ class Decide_menu {
   price(value, socket, user_data) {
     (async function () {
         try {
+          await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
           if (value.includes('exit/')) {
             const user_quarter = value.split('/')[1];
             await info_update.profile.update_exit_quarter(socket.id, user_quarter);
@@ -545,7 +548,7 @@ class Decide_menu {
             const price_leng = price_list.length;
             const price_rand = Math.floor(price_leng * Math.random());
             index.sendSocketMessage(socket.id, 'chat message button checkbox price', price_list[price_rand],
-                ['0', '~1만원 미만'], ['1', '1만원 대'], ['2', '2만원 대'], ['3,4', '3만원 이상'], ['price/', '선택완료']);
+                ['0', '~1만원 미만'], ['1', '1만원 대'], ['2', '2만원 대'], ['3,4', '3만원 이상'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기'], ['price/', '선택완료']);
         } catch (e) {
             index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
             console.log(e);
@@ -708,6 +711,7 @@ class Decide_menu {
     (async function () {
       try {
          let subway;
+         await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
          subway = user_data.subway;
         // if(value.includes('near_station')){
         //   subway = value.slice(value.lastIndexOf('/')+1);
@@ -739,7 +743,7 @@ class Decide_menu {
           const exit_rand = Math.floor(exit_leng * Math.random());
           switch (subway) {
               case '강남역': {
-                  await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/강남역.png', ['999', '상관없어'], ['4', '1,2,3,4번'], ['3', '5,6,7,8번'], ['2', '9,10번'], ['1', '11,12번'], ['exit/', '선택완료']);
+                  await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/강남역.png', ['999', '상관없어'], ['4', '1,2,3,4번'], ['3', '5,6,7,8번'], ['2', '9,10번'], ['1', '11,12번'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기'], ['exit/', '선택완료']);
                   break;
               }
               // case '선릉역': {
@@ -747,11 +751,11 @@ class Decide_menu {
               //     break;
               // }
               case '서울대입구역': {
-                  await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/서울대입구역.png', ['999', '상관없어'], ['4', '1,2번'], ['3', '3,4번'], ['2', '5,6번'], ['1', '7,8번'], ['exit/', '선택완료']);
+                  await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/서울대입구역.png', ['999', '상관없어'], ['4', '1,2번'], ['3', '3,4번'], ['2', '5,6번'], ['1', '7,8번'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기'], ['exit/', '선택완료']);
                   break;
               }
               case '이대역': {
-                  await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/이대역.png', ['999', '상관없어'], ['4', '5번'], ['3', '6번'], ['2', '1, 2번'], ['1', '3,4번'], ['exit/', '선택완료']);
+                  await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/이대역.png', ['999', '상관없어'], ['4', '5번'], ['3', '6번'], ['2', '1, 2번'], ['1', '3,4번'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기'], ['exit/', '선택완료']);
                   break;
               }
               default:
@@ -1113,6 +1117,7 @@ class Decide_menu {
   before_decide(value, socket, user_data) {
     (async function () {
       try {
+          await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
           // const user_food_type = 'all';
           //if (user_data.price_lunch==null || user_data.price_dinner==null) {
           console.log(`value : ${value}`);
@@ -1200,12 +1205,11 @@ class Decide_menu {
           console.log("일반적인 경우");
           const foods = await info_update.food.get_restaurant(socket.id, user_data.subway, user_data.exit_quarter, price_lunch, price_dinner, user_data.with_mood, user_data.mood2, taste, user_data.hate_food, user_data.food_type, user_data.food_name);
           const foods_info = foods.message;
-          console.log(foods);
-          console.log(foods_info);
           if (foods_info.length === 2) {
             await info_update.profile.update_rest2(user_data.kakao_id, foods_info[0].id, foods_info[1].id);
             if (foods.try === 1) {
-              index.sendSocketMessage(socket.id, 'chat message button', '2곳을 골라줄테니까 한 번 골라봐!', ['decide_final', '고고'], ['get_started', '안할래']);
+              console.log(user_data.stack);
+              index.sendSocketMessage(socket.id, 'chat message button', '2곳을 골라줄테니까 한 번 골라봐!', ['decide_final', '고고'], ['get_started', '안할래'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
             } else if (foods.try === 2) {
               index.sendSocketMessage(socket.id, 'chat message button', `그 출구에는 딱 이거다 하는 곳은 없구... ${user_data.subway} 전체에서 2곳을 골라줄테니까 한 번 골라봐!`, ['decide_final', '고고'], ['get_started', '안할래']);
             }

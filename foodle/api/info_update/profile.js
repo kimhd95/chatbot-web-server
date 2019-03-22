@@ -4,6 +4,27 @@ const Api = require('../api_prototype');
 // TODO : apikey 값이 하드코딩 되어있는데 config 파일에서 불러오도록 리팩토링 필요
 const Profile = new Api();
 
+Profile.update_stack = function (kakaoid, stack) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'profile.update_stack';
+    const method = 'POST';
+    const url = '/api/v1/users/update_user';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      stack: stack,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
 Profile.update_price_level_lunch = function (kakaoid, lunch) {
   const self = this;
   return new Promise(((resolve, reject) => {
