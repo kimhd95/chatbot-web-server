@@ -818,6 +818,13 @@ $(function () {
               stack: stack,
             },
             success: function(res) {
+              console.log("== 일반 이전버튼에서 메세지지우기 ==");
+              const prevElement = $('.bot-message').children(':last').parent().prev();
+              if (prevElement.attr('class') == 'bot-message') {
+                if (prevElement.children(':last').attr('class') == 'img-fluid rest-img') {
+                  prevElement.hide();
+                }
+              }
               $('#m').prop('disabled', true);
               $('#input-button').attr('disabled', true);
               $('.messaging-button').hide();
@@ -911,6 +918,18 @@ $(function () {
               stack: stack,
             },
             success: function(res) {
+              console.log("== 체크박스 이전버튼에서 메세지 지우기 ==");
+              const parentElement = $('.bot-message').children(':last').parent(); // bot message요소의 <div> parent
+              // img 포함일때 지우기
+              if (parentElement.prev().attr('class') == 'bot-message') {
+                if (parentElement.prev().children(':last').attr('class') == 'img-fluid rest-img') {
+                  parentElement.prev().hide();
+                }
+              }
+              // map 포함일때 지우기
+              else if (parentElement.next().children(':first').attr('href') != null) {
+                parentElement.next().hide();
+              }
               $('#m').prop('disabled', true);
               $('#input-button').attr('disabled', true);
               $('.messaging-button').hide();
