@@ -192,6 +192,28 @@ Food.get_similar_restaurant = function (kakaoid, rest) {
   }));
 };
 
+Food.get_other_restaurant = function (kakaoid, userid, rest1, rest2) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'food.get_other_restaurant';
+    const method = 'POST';
+    const url = '/api/v1/users/get_other_restaurant';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      userid,
+      rest1,
+      rest2,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
 Food.get_last_history = function (kakaoid) {
   const self = this;
   return new Promise(((resolve, reject) => {

@@ -154,6 +154,7 @@ class Decide_menu {
       'decide_final': this.decide_final,
       'final': this.final,
       'decide_final_similar': this.decide_final_similar,
+      'decide_final_others': this.decide_final_others,
       'final_info_direct': this.final_info_direct,
       'show_image': this.show_image,
       'taste': this.taste,
@@ -1266,17 +1267,55 @@ class Decide_menu {
             await index.sendSocketMessage(socket.id, 'chat message button', chlist[rand]);
             await index.sendSocketMessage(socket.id, 'chat message loader', 500);
             await index.sendSocketMessage(socket.id, 'chat message button', '2개 음식점중 더 가고싶은 곳을 골라줘!');
-            await index.sendSocketMessage(socket.id, 'chat message card no image', ['final/1/similar', foods[0].res_name], ['final/2/similar', foods[1].res_name], ['final/3/similar', '코기가 골라주기'], [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url], [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url]);
+            await index.sendSocketMessage(socket.id, 'chat message card no image', ['final/1/similar', foods[0].res_name], ['final/2/similar', foods[1].res_name], ['final/3/similar', '코기가 골라주기'], [], [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url], [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url]);
           } else {
             await index.sendSocketMessage(socket.id, 'chat message button', chlist[rand]);
             await index.sendSocketMessage(socket.id, 'chat message loader', 500);
             await index.sendSocketMessage(socket.id, 'chat message button', '2개 음식점중 더 가고싶은 곳을 골라줘!');
-            await index.sendSocketMessage(socket.id, 'chat message card', ['final/1/similar', foods[0].res_name], ['final/2/similar', foods[1].res_name], ['final/3/similar', '코기가 골라주기'], [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
+            await index.sendSocketMessage(socket.id, 'chat message card', ['final/1/similar', foods[0].res_name], ['final/2/similar', foods[1].res_name], ['final/3/similar', '코기가 골라주기'], [],[foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
           }//TODO: 전화번호 예약 연결(완료), 내비연결, 오픈-클로즈,휴무,라스트오더, 위시리스트
         } else {
           index.sendSocketMessage(socket.id, 'chat message button image', '여긴 비슷한 식당이 없네 ㅠㅠ... 힝힝.', 'emoji/disappointed.PNG',['get_started', '처음으로 돌아가기']);
         }
 
+      } catch (e) {
+        index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
+        console.log(e);
+      }
+    }());
+  }
+  decide_final_others(value, socket, user_data) {
+    (async function () {
+      try {
+        // 1. 다른 식당으로 DB 업데이트
+        const result = await info_update.food.get_other_restaurant(socket.id, user_data.id, user_data.rest1, user_data.rest2);
+        const foods = await result.message;
+        if(result.success) {
+          info_update.profile.update_rest2(user_data.kakao_id, foods[0].id, foods[1].id);
+          const first_url = `https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${foods[0].subway} ${foods[0].res_name}`;
+          const second_url = `https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${foods[1].subway} ${foods[1].res_name}`;
+          const first_map_url = `https://map.naver.com/index.nhn?query=${foods[0].subway} ${foods[0].res_name}&tab=1`;
+          const second_map_url = `https://map.naver.com/index.nhn?query=${foods[1].subway} ${foods[1].res_name}&tab=1`;
+
+          const image = await info_update.food.crawl_two_image(socket.id, `${foods[0].subway.slice(0, -1)} ${foods[0].res_name}`, `${foods[1].subway.slice(0, -1)} ${foods[1].res_name}`);
+
+          const chlist = [`다른 식당 찾는중`,`까다로워 증말...`,`다른 식당 찾는중🐕🐕`,'아~~ 이번에는 맘에 들어씀 조케땅~~'];
+          const rand = Math.floor(chlist.length * Math.random());
+          if (image.res1 === 'no image') {
+            await index.sendSocketMessage(socket.id, 'chat message button', chlist[rand]);
+            await index.sendSocketMessage(socket.id, 'chat message loader', 500);
+            await index.sendSocketMessage(socket.id, 'chat message button', '2개 음식점중 더 가고싶은 곳을 골라줘!');
+            await index.sendSocketMessage(socket.id, 'chat message card no image', ['final/1', foods[0].res_name], ['final/2', foods[1].res_name], ['final/3', '코기가 골라주기'], ['decide_final_others', '다른 식당 보기'], [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url], [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url]);
+          } else {
+            await index.sendSocketMessage(socket.id, 'chat message button', chlist[rand]);
+            await index.sendSocketMessage(socket.id, 'chat message loader', 500);
+            await index.sendSocketMessage(socket.id, 'chat message button', '2개 음식점중 더 가고싶은 곳을 골라줘!');
+            await index.sendSocketMessage(socket.id, 'chat message card', ['final/1', foods[0].res_name], ['final/2', foods[1].res_name], ['final/3', '코기가 골라주기'], ['decide_final_others', '다른 식당 보기'], [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
+          }//TODO: 전화번호 예약 연결(완료), 내비연결, 오픈-클로즈,휴무,라스트오더, 위시리스트
+        } else {
+          console.log(result.message);
+          index.sendSocketMessage(socket.id, 'chat message button image', '여긴 다른 식당이 없네 ㅠㅠ... 힝힝.', 'emoji/disappointed.PNG',['get_started', '처음으로 돌아가기']);
+        }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
         console.log(e);
@@ -1305,12 +1344,12 @@ class Decide_menu {
           await index.sendSocketMessage(socket.id, 'chat message button image', chlist[rand],`${imglist[rand2]}`);
           await index.sendSocketMessage(socket.id, 'chat message loader', 500);
           await index.sendSocketMessage(socket.id, 'chat message button', '2개 음식점중 더 가고싶은 곳을 골라줘!');
-          await index.sendSocketMessage(socket.id, 'chat message card no image', ['final/1', foods[0].res_name], ['final/2', foods[1].res_name], ['final/3', '코기가 골라주기'], [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url], [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url]);
+          await index.sendSocketMessage(socket.id, 'chat message card no image', ['final/1', foods[0].res_name], ['final/2', foods[1].res_name], ['final/3', '코기가 골라주기'], ['decide_final_others', '다른 식당 보기'], [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url], [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url]);
         } else {
           await index.sendSocketMessage(socket.id, 'chat message button image', chlist[rand],`${imglist[rand2]}`);
           await index.sendSocketMessage(socket.id, 'chat message loader', 500);
           await index.sendSocketMessage(socket.id, 'chat message button', '2개 음식점중 더 가고싶은 곳을 골라줘!');
-          await index.sendSocketMessage(socket.id, 'chat message card', ['final/1', foods[0].res_name], ['final/2', foods[1].res_name], ['final/3', '코기가 골라주기'], [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
+          await index.sendSocketMessage(socket.id, 'chat message card', ['final/1', foods[0].res_name], ['final/2', foods[1].res_name], ['final/3', '코기가 골라주기'], ['decide_final_others', '다른 식당 보기'], [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
         }//TODO: 전화번호 예약 연결(완료), 내비연결, 오픈-클로즈,휴무,라스트오더, 위시리스트
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
