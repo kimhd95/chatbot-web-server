@@ -694,41 +694,40 @@ $(function () {
   var socket = io();
 
   $('#kakao-btn').click(() => {
+    html2canvas($('#chat-room'), {
+       onrendered: function(canvas) {
+         var imgData = canvas.toDataURL('image/png');
+         socket.emit('save screenshot', imgData);
 
-    // html2canvas(document.querySelector('#messages'), {
-    //  onrendered: function(canvas) {
-    //    var doc = new jsPDF('p','mm','a4');
-    //    var imgData = canvas.toDataURL('image/png');
-    //    doc.addImage(imgData, 'PNG', 0, 0);
-    //    doc.save('screenshot.pdf');
-    //  }
-    // });
-    alert("kakao-btn clicked");
-
-    function sendLink() {
-       Kakao.Link.sendDefault({
-         objectType: 'feed',
-         content: {
-           title: '외식코기 베리베리굳',
-           description: '#어플 #추천 #선택장애 #맛집추천 #술집추천 #카페추천',
-           imageUrl: 'http://localhost:8001/images/back.png',
-           link: {
-             mobileWebUrl: 'https://corgi.jellylab.io',
-             webUrl: 'https://corgi.jellylab.io'
-           }
-         },
-         buttons: [
-           {
-             title: '외식코기에게 추천 받으러 가기',
-             link: {
-               mobileWebUrl: 'https://corgi.jellylab.io',
-               webUrl: 'https://corgi.jellylab.io'
-             }
-           },
-         ]
-       });
-     }
-    sendLink();
+         socket.on('saved screenshot', function(msg) {
+           console.log(msg);
+           function sendLink() {
+              Kakao.Link.sendDefault({
+                objectType: 'feed',
+                content: {
+                  title: '외식코기 베리베리굳',
+                  description: '#어플 #추천 #선택장애 #맛집추천 #술집추천 #카페추천',
+                  imageUrl: msg,
+                  link: {
+                    mobileWebUrl: 'https://corgi.jellylab.io',
+                    webUrl: 'https://corgi.jellylab.io'
+                  }
+                },
+                buttons: [
+                  {
+                    title: '외식코기에게 추천 받으러 가기',
+                    link: {
+                      mobileWebUrl: 'https://corgi.jellylab.io',
+                      webUrl: 'https://corgi.jellylab.io'
+                    }
+                  },
+                ]
+              });
+            }
+           sendLink();
+         });
+       }
+     });
   });
 
   $('.back-btn').click(function(){
