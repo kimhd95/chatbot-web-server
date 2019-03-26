@@ -712,7 +712,7 @@ $(function () {
            console.log(msg);
            function sendLink() {
               Kakao.Link.scrapImage({
-                imageUrl: 'https://corgi.jellylab.io/screenshots/naver.png'
+                imageUrl: msg
               }).then(function(res){
                 console.log(res.infos.original.url);
                 Kakao.Link.sendDefault({
