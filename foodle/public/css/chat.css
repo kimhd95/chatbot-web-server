@@ -420,6 +420,11 @@
     border-radius: 0;
 }
 
+#config-modal2 button {
+    background: #ffffff;
+    border-radius: 0;
+}
+
 .decide-update-password, .decide-withdrawl {
     color: #ffffff;
     background-color: #ff7f8c!important;

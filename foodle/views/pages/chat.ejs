@@ -23,9 +23,13 @@
     <link rel="stylesheet" href="/css/jquery-ui.theme.min.css">
     <link rel="stylesheet" href="/css/chat.css">
     <title>외식코기</title>
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
 <body>
     <div id="chat-room">
+      <script type='text/javascript'>
+        Kakao.init('25750dfff20e0fff39840db368e1236d');
+      </script>
         <div class="card">
             <div class="card-header">
                 <div class="info">
@@ -33,6 +37,16 @@
                     <img class="logo" src="/images/chat-logo.png" alt="logo">
                     <span class="title">외식코기</span>
                 </div>
+
+                <button id="share-btn" data-toggle="modal" data-target="#config-modal2"><i class="fas fa-share-square"></i></button>
+                <div class="modal fade bd-example-modal-sm" id="config-modal2" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                      <div class="modal-content">
+                        <button id="kakao-btn" href="javascript:sendLink()" class="btn">카카오톡으로 공유하기</button>
+                      </div>
+                    </div>
+                </div>
+
                 <button id="share-btn" data-toggle="modal" data-target="#config-modal"><i class="fas fa-share-square"></i></button>
                 <div class="modal fade bd-example-modal-sm" id="config-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-sm">
@@ -40,7 +54,6 @@
                         <button id="logout-btn" class="btn">로그아웃</button>
                         <button id="delete-log-btn" class="btn">채팅기록 지우기</button>
                         <button id="update-password-btn" class="btn update-password" data-toggle="collapse" data-target="#update-password">비밀번호 변경</button>
-                        <!-- <button id="withdraw-btn" class="btn social-signed-in">회원탈퇴</button> -->
                         <button id="withdraw-btn" class="btn email-signed-in" data-toggle="collapse" data-target="#email-signed-in" >회원탈퇴</button>
                         <div class="collapse" id="update-password">
                             <div>
@@ -111,7 +124,9 @@
     <script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://superal.github.io/canvas2image/canvas2image.js"></script>
     <!-- <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script> -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/base.js"></script>
