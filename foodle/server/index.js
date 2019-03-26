@@ -70,6 +70,14 @@ module.exports = function(){
 			});
 		})
 
+		socket.on('delete screenshot', function() {
+			fs.unlink(`./public/screenshots/${socket.id}.png`, function(err){
+				if(err) {
+					console.log(err);
+				}
+			});
+		});
+
 		socket.on('disconnect', function(){
 			console.log(socket.id + 'user disconnected');
 		});

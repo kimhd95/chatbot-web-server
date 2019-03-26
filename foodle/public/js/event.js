@@ -697,34 +697,51 @@ $(function () {
     html2canvas($('#chat-room'), {
        onrendered: function(canvas) {
          var imgData = canvas.toDataURL('image/png');
+
+         //이미지 리사이징 할때 쓰는 코드
+         // var resizedCanvas = document.createElement("canvas");
+         // var resizedContext = resizedCanvas.getContext("2d");
+         // resizedCanvas.height = "512";
+         // resizedCanvas.width = "512";
+         // resizedContext.drawImage(canvas, 0, 0, 512, 512);
+         // var myResizedData = resizedCanvas.toDataURL('image/png');
+
          socket.emit('save screenshot', imgData);
 
          socket.on('saved screenshot', function(msg) {
            console.log(msg);
            function sendLink() {
-              Kakao.Link.sendDefault({
-                objectType: 'feed',
-                content: {
-                  title: '외식코기 베리베리굳',
-                  description: '#어플 #추천 #선택장애 #맛집추천 #술집추천 #카페추천',
-                  imageUrl: msg,
-                  link: {
-                    mobileWebUrl: 'https://corgi.jellylab.io',
-                    webUrl: 'https://corgi.jellylab.io'
-                  }
-                },
-                buttons: [
-                  {
-                    title: '외식코기에게 추천 받으러 가기',
+              Kakao.Link.scrapImage({
+                imageUrl: 'https://corgi.jellylab.io/screenshots/naver.png'
+              }).then(function(res){
+                console.log(res.infos.original.url);
+                Kakao.Link.sendDefault({
+                  objectType: 'feed',
+                  content: {
+                    title: '외식코기 베리베리굳',
+                    description: '#어플 #추천 #선택장애 #맛집추천 #술집추천 #카페추천',
+                    imageUrl: res.infos.original.url,
                     link: {
-                      mobileWebUrl: 'https://corgi.jellylab.io',
-                      webUrl: 'https://corgi.jellylab.io'
+                      mobileWebUrl: res.infos.original.url,
+                      webUrl: res.infos.original.url
                     }
                   },
-                ]
-              });
+                  buttons: [
+                    {
+                      title: '외식코기에게 추천 받으러 가기',
+                      link: {
+                        mobileWebUrl: 'https://corgi.jellylab.io',
+                        webUrl: 'https://corgi.jellylab.io'
+                      }
+                    },
+                  ]
+                });
+              })
             }
            sendLink();
+           setTimeout(function() {
+             socket.emit('delete screenshot')
+           }, 10000);
          });
        }
      });
