@@ -694,6 +694,7 @@ $(function () {
   var socket = io();
 
   $('#kakao-btn').click(() => {
+    alert("kakao-btn clicked");
     html2canvas($('#chat-room'), {
        onrendered: function(canvas) {
          var imgData = canvas.toDataURL('image/png');
@@ -767,7 +768,7 @@ $(function () {
   });
 
   $('#facebook-btn').click(() => {
-    // alert('facebook-btn clicked');
+    alert('facebook-btn clicked');
     html2canvas($('#chat-room'), {
        onrendered: function(canvas) {
          var imgData = canvas.toDataURL('image/png');
