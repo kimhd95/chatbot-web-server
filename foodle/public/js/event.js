@@ -694,11 +694,9 @@ $(function () {
   var socket = io();
 
   $('#kakao-btn').click(() => {
-    alert("kakao-btn clicked");
     html2canvas($('#chat-room'), {
        onrendered: function(canvas) {
          var imgData = canvas.toDataURL('image/png');
-
          //이미지 리사이징 할때 쓰는 코드
          // var resizedCanvas = document.createElement("canvas");
          // var resizedContext = resizedCanvas.getContext("2d");
@@ -706,103 +704,92 @@ $(function () {
          // resizedCanvas.width = "512";
          // resizedContext.drawImage(canvas, 0, 0, 512, 512);
          // var myResizedData = resizedCanvas.toDataURL('image/png');
-
-         socket.emit('save screenshot', imgData);
-
-         socket.on('saved screenshot', function(msg) {
-           console.log(msg);
-           function sendLink(callback) {
-             return new Promise(function(resolve, reject) {
-               Kakao.Link.scrapImage({
-                 imageUrl: msg
-               }).then(function(res){
-                 console.log(res.infos.original.url);
-                 Kakao.Link.sendDefault({
-                   objectType: 'feed',
-                   content: {
-                     title: '외식코기 베리베리굳',
-                     description: '#어플 #추천 #선택장애 #맛집추천 #술집추천 #카페추천',
-                     imageUrl: res.infos.original.url,
-                     link: {
-                       mobileWebUrl: res.infos.original.url,
-                       webUrl: res.infos.original.url
-                     }
-                   },
-                   buttons: [
-                     {
-                       title: '외식코기에게 추천 받으러 가기',
-                       link: {
-                         mobileWebUrl: 'https://corgi.jellylab.io',
-                         webUrl: 'https://corgi.jellylab.io'
-                       }
-                     },
-                   ]
-                 });
-                 resolve('finish');
-               }).catch(function(err) {
-                 console.log("카카오톡 scrap api catch");
-                 console.log(err);
-                 reject('error');
-               })
-             });
-            }
-            sendLink().then(function(msg) {
-              console.log(msg);
-              socket.emit('delete screenshot');
-            }).catch(function (err) {
-              console.log("err");
-              socket.emit('delete screenshot');
-            })
-           // console.log("1").then(function() {
-             // console.log("2");
-           // })
-           // sendLink().then(function() {
-             // console.log("sendLink 실행");
-           // });
-           // setTimeout(function() {
-             // socket.emit('delete screenshot')
-           // }, 10000);
-         });
+         socket.emit('save screenshot', imgData, 'kakao');
        }
      });
   });
 
   $('#facebook-btn').click(() => {
-    alert('facebook-btn clicked');
     html2canvas($('#chat-room'), {
        onrendered: function(canvas) {
          var imgData = canvas.toDataURL('image/png');
-         socket.emit('save screenshot', imgData);
-
-         socket.on('saved screenshot', function(msg) {
-           console.log(msg);
-           Kakao.Link.scrapImage({
-             imageUrl: msg
-           }).then(function(res){
-             console.log(res.infos.original.url)
-             FB.ui({
-               method: 'share_open_graph',
-               hashtag: '#외식코기',
-               action_type: 'og.likes',
-               action_properties: JSON.stringify({
-                 object: {
-                   'og:url': 'https://corgi.jellylab.io',
-                   'og:title': '외식코기 베리베리굳',
-                   'og:description': '#어플 #추천 #선택장애 #맛집추천 #술집추천 #카페추천',
-                   'og:image': res.infos.original.url,
-                 }
-               })
-             });
-           });
-           setTimeout(function() {
-             socket.emit('delete screenshot')
-           }, 10000);
-         });
+         socket.emit('save screenshot', imgData, 'facebook');
        }
      });
   });
 
-
+  socket.on('saved screenshot', function(url, msg) {
+    if(msg == 'kakao') {
+      // function sendLink(callback) {
+        // return new Promise(function(resolve, reject) {
+        Kakao.Link.scrapImage({
+          imageUrl: url
+        }).then(function(res){
+          console.log(res.infos.original.url);
+          socket.emit('delete screenshot')
+          Kakao.Link.sendDefault({
+            objectType: 'feed',
+            content: {
+              title: '외식코기 베리베리굳',
+              description: '#어플 #추천 #선택장애 #맛집추천 #술집추천 #카페추천',
+              imageUrl: res.infos.original.url,
+              link: {
+                mobileWebUrl: res.infos.original.url,
+                webUrl: res.infos.original.url
+              }
+            },
+            buttons: [
+              {
+                title: '외식코기에게 추천 받으러 가기',
+                link: {
+                  mobileWebUrl: 'https://corgi.jellylab.io',
+                  webUrl: 'https://corgi.jellylab.io'
+                }
+              },
+            ]
+          });
+          // resolve('finish');
+        }).catch(function(err) {
+          console.log("카카오톡 scrap api catch");
+          console.log(err);
+          socket.emit('delete screenshot')
+          // reject('error');
+        })
+        // });
+       // }
+       // sendLink().then(function(msg) {
+       //   console.log(msg);
+       //   socket.emit('delete screenshot');
+       // }).catch(function (err) {
+       //   console.log("err");
+       //   socket.emit('delete screenshot');
+       // })
+    } else if(msg == 'facebook') {
+      Kakao.Link.scrapImage({
+        imageUrl: url
+      }).then(function(res){
+        socket.emit('delete screenshot')
+        console.log(res.infos.original.url)
+        FB.ui({
+          method: 'share_open_graph',
+          hashtag: '#외식코기',
+          action_type: 'og.likes',
+          action_properties: JSON.stringify({
+            object: {
+              'og:url': 'https://corgi.jellylab.io',
+              'og:title': '외식코기 베리베리굳',
+              'og:description': '#어플 #추천 #선택장애 #맛집추천 #술집추천 #카페추천',
+              'og:image': res.infos.original.url,
+            }
+          })
+        });
+      }).catch(function(err) {
+        console.log("카카오톡 scrap api catch");
+        console.log(err);
+        socket.emit('delete screenshot')
+      })
+    }
+  });
 
   $('.back-btn').click(function(){
     location.href='/lobby';

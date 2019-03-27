@@ -60,13 +60,13 @@ module.exports = function(){
 			io.to(socket.id).emit('file number', allfile.length, index);
 		});
 
-		socket.on('save screenshot', function(a) {
+		socket.on('save screenshot', function(a, msg) {
 			console.log("save screenshot 에 들어옴");
 			var base64Data = a.replace(/^data:image\/png;base64,/, "");
 			const testFolder = './public/screenshots';
 			fs.writeFile(testFolder + `/${socket.id}.png`, base64Data, 'base64', function(err) {
 				console.log("write");
-				io.to(socket.id).emit('saved screenshot', `https://corgi.jellylab.io/screenshots/${socket.id}.png`);
+				io.to(socket.id).emit('saved screenshot', `https://corgi.jellylab.io/screenshots/${socket.id}.png`, msg);
 			});
 		})
 
