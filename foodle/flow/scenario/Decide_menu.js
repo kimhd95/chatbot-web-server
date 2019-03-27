@@ -1179,7 +1179,7 @@ class Decide_menu {
         // }
         //await info_update.profile.update_food_type(socket.id, user_food_type);
 
-        if (user_data.lat != null && user_data.lng != null) {
+        if (user_data.lat != null && user_data.lng != null && user_data.lat != 0 && user_data.lng != 0) {
           // search_near 인 경우
           console.log("search_near case");
           const foods = await info_update.food.get_near_restaurant(socket.id, user_data.subway, price_lunch, price_dinner, user_data.hate_food, user_data.lat, user_data.lng);
