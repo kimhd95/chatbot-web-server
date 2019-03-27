@@ -974,16 +974,16 @@ $(function () {
         socket.emit('chat message button rule', $(e.target).attr('name'), 'drink_type/'+$(e.target).attr('id'));
       }
     } else if($(e.target).attr('id').includes('previous')) {
-        console.log('previous2 clicked');
+        $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').prop('checked', false);
+        $('.messaging-button-checkbox:not(hidden)').removeClass('messaging-button-checkbox-checked');
+        $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').removeClass('messaging-button-checkbox-checked');
+
         let userStack = $(e.target).attr('id').replace(/@/gi, `"`).slice(9);
         console.log(userStack);
         let stack = JSON.parse("["+userStack+"]");
-        // console.log(stack);
         let element = stack.pop();
         console.log(element.state);
-        // console.log(stack);
         stack = JSON.stringify(stack);
-        // console.log(stack);
         stack = stack.slice(1, -1);
         console.log(stack);
         function getFinalStack(callback) {
@@ -1065,6 +1065,7 @@ $(function () {
         clickNum--;
     } else{
       if($(e.target).attr('id').includes('previous')) {
+        clickNum = 0;
         console.log("이전으로 돌아가기 버튼 클릭");
       } else {
         console.log("체크박스 선택");

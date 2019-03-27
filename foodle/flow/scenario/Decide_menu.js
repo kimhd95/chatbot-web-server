@@ -762,10 +762,12 @@ class Decide_menu {
           const exit_leng = exit_list.length;
           const exit_rand = Math.floor(exit_leng * Math.random());
 
-          const available_subway = {'강남역': ['1,2,3,4번', '5,6,7,8번', '9,10번', '11,12번'],
+          const available_subway = {
+                                    '강남역': ['1,2,3,4번', '5,6,7,8번', '9,10번', '11,12번'],
                                     '선릉역': ['1,2번', '3,4번', '5,6,7번', '8,9,10번'],
                                     '서울대입구역': ['1,2번', '3,4번', '5,6번', '7,8번'],
-                                    '이대역': ['5번', '6번', '1,2번', '3,4번']};
+                                    '이대역': ['5번', '6번', '1,2번', '3,4번']
+                                   };
           if (subway in available_subway) {
             await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, `images/${subway}.png`, ['999', '상관없어'], ['4', '1,2,3,4번'], ['3', '5,6,7,8번'], ['2', '9,10번'], ['1', '11,12번'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기'], ['exit/', '선택완료'])
           }
