@@ -518,7 +518,8 @@ class Decide_menu {
                     const rand = Math.floor(chlist.length * Math.random());
                     index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`,['view_recommend_food', '추천 보러가기'], ['get_started', '처음으로'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
                 } else {
-                    index.sendSocketMessage(socket.id, 'chat message button', search_food+` 검색어로 찾을 수 있는 식당이 없네ㅠㅠ 다시 검색해볼래?`, ['previous/' + user_data.stack.replace(/"/gi, "@"), '다시 검색하기'], ['get_started', '처음으로 돌아가기']);
+                  await info_update.profile.update_state(socket.id, '1', 'search_food');
+                  await index.sendSocketMessage(socket.id, 'chat message button', search_food+` 검색어로 찾을 수 있는 식당이 없네ㅠㅠ 다시 검색해볼래?`, ['-직접 입력', '다시 검색하기'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로']);
                 }
           }
         } catch (e) {
