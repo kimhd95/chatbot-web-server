@@ -747,6 +747,27 @@ $(function () {
      });
   });
 
+  $('#facebook-btn').click(() => {
+    alert('facebook-btn clicked');
+
+    FB.ui({
+      method: 'share_open_graph',
+      hashtag: '#외식코기',
+      action_type: 'og.likes',
+      action_properties: JSON.stringify({
+        object: {
+          'og:url': 'https://corgi.jellylab.io',
+          'og:title': '외식코기 베리베리굳',
+          'og:description': '#어플 #추천 #선택장애 #맛집추천 #술집추천 #카페추천',
+          'og:image': 'https://corgi.jellylab.io/images/logo.png',
+        }
+      })
+    });
+
+  });
+
+
+
   $('.back-btn').click(function(){
     location.href='/lobby';
     sessionStorage.removeItem('stage');
