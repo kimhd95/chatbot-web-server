@@ -748,7 +748,7 @@ $(function () {
   });
 
   $('#facebook-btn').click(() => {
-    alert('facebook-btn clicked');
+    // alert('facebook-btn clicked');
     html2canvas($('#chat-room'), {
        onrendered: function(canvas) {
          var imgData = canvas.toDataURL('image/png');
@@ -780,7 +780,6 @@ $(function () {
          });
        }
      });
-
   });
 
 
@@ -848,8 +847,6 @@ $(function () {
             break;
         }
       } else {
-        console.log(checked_name_array);
-        console.log(checked_array);
         socket.emit('chat message button rule', checked_name_array, ($(e.target).attr('id') + checked_array));
         $('.messaging-button').hide();
         $('.messaging-button-checkbox').hide();

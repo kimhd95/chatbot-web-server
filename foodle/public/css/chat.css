@@ -81,7 +81,11 @@
   color: #61451b;
 }
 
-.card-header #share-btn {
+.card-header .card-share {
+  align-items: center;
+}
+
+.card-header .card-share #share-btn {
     border-radius: 0;
     padding: 0;
     height: inherit;
