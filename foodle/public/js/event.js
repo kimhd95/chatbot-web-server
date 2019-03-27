@@ -710,38 +710,57 @@ $(function () {
 
          socket.on('saved screenshot', function(msg) {
            console.log(msg);
-           function sendLink() {
-              Kakao.Link.scrapImage({
-                imageUrl: msg
-              }).then(function(res){
-                console.log(res.infos.original.url);
-                Kakao.Link.sendDefault({
-                  objectType: 'feed',
-                  content: {
-                    title: '외식코기 베리베리굳',
-                    description: '#어플 #추천 #선택장애 #맛집추천 #술집추천 #카페추천',
-                    imageUrl: res.infos.original.url,
-                    link: {
-                      mobileWebUrl: res.infos.original.url,
-                      webUrl: res.infos.original.url
-                    }
-                  },
-                  buttons: [
-                    {
-                      title: '외식코기에게 추천 받으러 가기',
-                      link: {
-                        mobileWebUrl: 'https://corgi.jellylab.io',
-                        webUrl: 'https://corgi.jellylab.io'
-                      }
-                    },
-                  ]
-                });
-              })
+           function sendLink(callback) {
+             return new Promise(function(resolve, reject) {
+               Kakao.Link.scrapImage({
+                 imageUrl: msg
+               }).then(function(res){
+                 console.log(res.infos.original.url);
+                 Kakao.Link.sendDefault({
+                   objectType: 'feed',
+                   content: {
+                     title: '외식코기 베리베리굳',
+                     description: '#어플 #추천 #선택장애 #맛집추천 #술집추천 #카페추천',
+                     imageUrl: res.infos.original.url,
+                     link: {
+                       mobileWebUrl: res.infos.original.url,
+                       webUrl: res.infos.original.url
+                     }
+                   },
+                   buttons: [
+                     {
+                       title: '외식코기에게 추천 받으러 가기',
+                       link: {
+                         mobileWebUrl: 'https://corgi.jellylab.io',
+                         webUrl: 'https://corgi.jellylab.io'
+                       }
+                     },
+                   ]
+                 });
+                 resolve('finish');
+               }).catch(function(err) {
+                 console.log("카카오톡 scrap api catch");
+                 console.log(err);
+                 reject('error');
+               })
+             });
             }
-           sendLink();
-           setTimeout(function() {
-             socket.emit('delete screenshot')
-           }, 10000);
+            sendLink().then(function(msg) {
+              console.log(msg);
+              socket.emit('delete screenshot');
+            }).catch(function (err) {
+              console.log("err");
+              socket.emit('delete screenshot');
+            })
+           // console.log("1").then(function() {
+             // console.log("2");
+           // })
+           // sendLink().then(function() {
+             // console.log("sendLink 실행");
+           // });
+           // setTimeout(function() {
+             // socket.emit('delete screenshot')
+           // }, 10000);
          });
        }
      });
