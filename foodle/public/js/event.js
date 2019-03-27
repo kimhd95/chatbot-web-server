@@ -1024,8 +1024,6 @@ $(function () {
             body: {
               kakao_id: socket.id,
               stack: stack,
-              lat: 0,
-              lng: 0,
             },
             success: function(res) {
               console.log("== 체크박스 이전버튼에서 메세지 지우기 ==");

@@ -340,6 +340,8 @@ class Decide_menu {
             await info_update.profile.update_food_name(socket.id, 'null');
             await info_update.profile.update_mood2(socket.id, 'null');
             await info_update.profile.update_mood1(socket.id, 'null');
+            await info_update.profile.update_lat(socket.id, 'null');
+            await info_update.profile.update_lng(socket.id, 'null');
             if(user_data.price_lunch == 'x') {
               await info_update.profile.update_price_level_dinner(socket.id, 'null');
             } else if(user_data.price_dinner == 'x'){
@@ -759,27 +761,38 @@ class Decide_menu {
           const exit_list = [`${subway} 몇 번 출구쪽이 좋아??`, `${subway}에서 더 편한 출구가 있다면 골라줘!(중복선택)`, `${subway} 몇 번 출구쪽이 편해?(중복선택)`, `${subway} 몇 번 출구쪽이 좋아? 모르면 "상관없음" 버튼을 눌러주면 돼!`]
           const exit_leng = exit_list.length;
           const exit_rand = Math.floor(exit_leng * Math.random());
-          switch (subway) {
-              case '강남역': {
-                  await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/강남역.png', ['999', '상관없어'], ['4', '1,2,3,4번'], ['3', '5,6,7,8번'], ['2', '9,10번'], ['1', '11,12번'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기'], ['exit/', '선택완료']);
-                  break;
-              }
-              // case '선릉역': {
-              //     await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/선릉역.png', ['999', '상관없어'], ['4', '1,2번'], ['3', '3,4번'], ['2', '5,6,7번'], ['1', '8,9,10번'], ['exit/', '선택완료']);
-              //     break;
-              // }
-              case '서울대입구역': {
-                  await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/서울대입구역.png', ['999', '상관없어'], ['4', '1,2번'], ['3', '3,4번'], ['2', '5,6번'], ['1', '7,8번'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기'], ['exit/', '선택완료']);
-                  break;
-              }
-              case '이대역': {
-                  await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/이대역.png', ['999', '상관없어'], ['4', '5번'], ['3', '6번'], ['2', '1, 2번'], ['1', '3,4번'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기'], ['exit/', '선택완료']);
-                  break;
-              }
-              default:
-                  index.sendSocketMessage(socket.id, 'chat message button', `지금 밥집 고르기를 이용 가능한 곳은 서울[강남역, 서울대입구역, 이대역]이야. 다른 곳 식당도 열심히 가서 먹어보고 곧 알려줄게!`, ['decide_subway/elsewhere', '다시 장소 입력하기'], ['get_started', '처음으로 돌아가기']);
-                  break;
+
+          const available_subway = {'강남역': ['1,2,3,4번', '5,6,7,8번', '9,10번', '11,12번'],
+                                    '선릉역': ['1,2번', '3,4번', '5,6,7번', '8,9,10번'],
+                                    '서울대입구역': ['1,2번', '3,4번', '5,6번', '7,8번'],
+                                    '이대역': ['5번', '6번', '1,2번', '3,4번']};
+          if (subway in available_subway) {
+            await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, `images/${subway}.png`, ['999', '상관없어'], ['4', '1,2,3,4번'], ['3', '5,6,7,8번'], ['2', '9,10번'], ['1', '11,12번'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기'], ['exit/', '선택완료'])
           }
+          else {
+            index.sendSocketMessage(socket.id, 'chat message button', `지금 밥집 고르기를 이용 가능한 곳은 서울[${Object.keys(available_subway).toString()}]이야. 다른 곳 식당도 열심히 가서 먹어보고 곧 알려줄게!`, ['decide_subway/elsewhere', '다시 장소 입력하기'], ['get_started', '처음으로 돌아가기']);
+          }
+          // switch (subway) {
+          //     case '강남역': {
+          //         await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/강남역.png', ['999', '상관없어'], ['4', available_subway[subway][0]], ['3', available_subway[subway][1]], ['2', available_subway[subway][2]], ['1', available_subway[subway][3]], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기'], ['exit/', '선택완료']);
+          //         break;
+          //     }
+          //     case '선릉역': {
+          //         await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/선릉역.png', ['999', '상관없어'], ['4', '1,2번'], ['3', '3,4번'], ['2', '5,6,7번'], ['1', '8,9,10번'], ['exit/', '선택완료']);
+          //         break;
+          //     }
+          //     case '서울대입구역': {
+          //         await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/서울대입구역.png', ['999', '상관없어'], ['4', '1,2번'], ['3', '3,4번'], ['2', '5,6번'], ['1', '7,8번'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기'], ['exit/', '선택완료']);
+          //         break;
+          //     }
+          //     case '이대역': {
+          //         await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, 'images/이대역.png', ['999', '상관없어'], ['4', '5번'], ['3', '6번'], ['2', '1, 2번'], ['1', '3,4번'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기'], ['exit/', '선택완료']);
+          //         break;
+          //     }
+          //     default:
+          //         index.sendSocketMessage(socket.id, 'chat message button', `지금 밥집 고르기를 이용 가능한 곳은 서울[강남역, 서울대입구역, 이대역]이야. 다른 곳 식당도 열심히 가서 먹어보고 곧 알려줄게!`, ['decide_subway/elsewhere', '다시 장소 입력하기'], ['get_started', '처음으로 돌아가기']);
+          //         break;
+          // }
         //}
        // else {
           // await info_update.profile.update_state(socket.id, '1', 'decide_menu');
@@ -1180,7 +1193,7 @@ class Decide_menu {
         // }
         //await info_update.profile.update_food_type(socket.id, user_food_type);
 
-        if (user_data.lat != null && user_data.lng != null && user_data.lat != 0 && user_data.lng != 0) {
+        if (user_data.lat != null && user_data.lng != null) {
           // search_near 인 경우
           console.log("search_near case");
           const foods = await info_update.food.get_near_restaurant(socket.id, user_data.subway, price_lunch, price_dinner, user_data.hate_food, user_data.lat, user_data.lng);
