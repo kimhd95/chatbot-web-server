@@ -694,6 +694,10 @@ $(function () {
   var socket = io();
 
   $('#kakao-btn').click(() => {
+    $('#kakao-btn').attr({
+      "data-dismiss": 'modal',
+      "aria-hidden": true
+    });
     html2canvas($('#chat-room'), {
        onrendered: function(canvas) {
          var imgData = canvas.toDataURL('image/png');
@@ -710,6 +714,10 @@ $(function () {
   });
 
   $('#facebook-btn').click(() => {
+    $('#facebook-btn').attr({
+      "data-dismiss": 'modal',
+      "aria-hidden": true
+    });
     html2canvas($('#chat-room'), {
        onrendered: function(canvas) {
          var imgData = canvas.toDataURL('image/png');
