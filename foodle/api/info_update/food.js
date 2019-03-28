@@ -134,7 +134,6 @@ Food.get_near_restaurant = function (kakaoid, subway, price_lunch, price_dinner,
     const json = {
       apikey: '9Y3-7bE-Ud3-7Ja',
       kakao_id: kakaoid,
-      subway: subway,
       price_lunch: price_lunch,
       price_dinner: price_dinner,
       hate_food: hate_food,
