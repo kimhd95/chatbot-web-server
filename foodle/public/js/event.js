@@ -694,28 +694,41 @@ $(function () {
   var socket = io();
 
   $('#kakao-btn').click(() => {
-    html2canvas($('#chat-room'), {
-       onrendered: function(canvas) {
-         var imgData = canvas.toDataURL('image/png');
-         //이미지 리사이징 할때 쓰는 코드
-         // var resizedCanvas = document.createElement("canvas");
-         // var resizedContext = resizedCanvas.getContext("2d");
-         // resizedCanvas.height = "512";
-         // resizedCanvas.width = "512";
-         // resizedContext.drawImage(canvas, 0, 0, 512, 512);
-         // var myResizedData = resizedCanvas.toDataURL('image/png');
-         socket.emit('save screenshot', imgData, 'kakao');
-       }
-     });
+    $('#kakao-btn').attr({
+      "data-dismiss": 'modal',
+      "aria-hidden": true
+    });
+
+    setTimeout(function() {
+      html2canvas($('#chat-room'), {
+         onrendered: function(canvas) {
+           var imgData = canvas.toDataURL('image/png');
+           //이미지 리사이징 할때 쓰는 코드
+           // var resizedCanvas = document.createElement("canvas");
+           // var resizedContext = resizedCanvas.getContext("2d");
+           // resizedCanvas.height = "512";
+           // resizedCanvas.width = "512";
+           // resizedContext.drawImage(canvas, 0, 0, 512, 512);
+           // var myResizedData = resizedCanvas.toDataURL('image/png');
+           socket.emit('save screenshot', imgData, 'kakao');
+         }
+       });
+    }, 300);
   });
 
   $('#facebook-btn').click(() => {
-    html2canvas($('#chat-room'), {
-       onrendered: function(canvas) {
-         var imgData = canvas.toDataURL('image/png');
-         socket.emit('save screenshot', imgData, 'facebook');
-       }
-     });
+    $('#facebook-btn').attr({
+      "data-dismiss": 'modal',
+      "aria-hidden": true
+    });
+    setTimeout(function() {
+      html2canvas($('#chat-room'), {
+         onrendered: function(canvas) {
+           var imgData = canvas.toDataURL('image/png');
+           socket.emit('save screenshot', imgData, 'facebook');
+         }
+       });
+    }, 300);
   });
 
   socket.on('saved screenshot', function(url, msg) {
