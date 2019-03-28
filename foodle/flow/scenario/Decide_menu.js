@@ -195,9 +195,8 @@ class Decide_menu {
   decide_menu(value, socket, user_data) {
     (async function () {
       try {
-
         // db 갱신 관련 코드 나중에 또 이용
-        // const restaurantList = await info_update.food.get_restaurant_subway(socket.id, '합정역');
+        // const restaurantList = await info_update.food.get_restaurant_subway(socket.id, '선릉역');
         // console.log(restaurantList);
         // let sendList = []
         // for (let i = 0; i<restaurantList.length; i++) {
@@ -211,38 +210,41 @@ class Decide_menu {
         // }
         // setTimeout(() => {info_update.food.set_restaurant_latlng(socket.id, sendList)}, 5000);
 
+        const chlist = ['안녕!! 배고플땐 언제나 코기를 찾아줘😏😆',
+                        '안녕 배고프지? 얼렁 메뉴를 정해볼까...🍚',
+                        '배고프지? 오늘도 스겜하자ㅋㅋㅋ⚡', '코기 와쪄😝🐶',
+                        '식사시간엔 결국 나를 찾게 되어있지^~^',
+                        '뿅🐕🐕 나왔다!',
+                        '솔직히 나만큼 세상을 평화롭게 하는 강아지는 없을거야',
+                        '이왕 먹는 밥 스트레스 안받고 깔끔하게 정하자구',
+                        '안녕 코기 와쪄~!🐕',
+                        'ㅎㅇㅎㅇㅎㅇ',
+                        '배고프다 배고파!',
+                        '맛있는~게~ 너무~ 많아~~~ ',
+                        '메뉴 정하는 데 5분이 넘게 걸린다면 그건 비효율적인 삶이야',
+                        '결정장애는 부끄러운게 아냐 충분히 치유 가능하니까!!! 내가 있다면😘',
+                        '어서와!! 메뉴 정하러 가자👽',
+                        '2시간이나 굶었더니 당 떨어진다...👻'];
+        const imglist = ['emoji/hello.png',
+                         'emoji/hello2.png',
+                         'emoji/hello3.png',
+                         'emoji/hello4.png',
+                         'emoji/hello_soup.png',
+                         'emoji/sushicorgi.PNG'];
+
         await info_update.profile.update_place_start(socket.id);
         const user_info = await info_update.profile.load_user(socket.id);
         const verify_limit = await info_update.profile.verify_limit(socket.id, user_data.limit_cnt, user_data.decide_updated_at);
         const { result } = verify_limit;
         if (user_info.registered == -1) {
-            const chlist = ['안녕!! 배고플땐 언제나 코기를 찾아줘😏😆', '안녕 배고프지? 얼렁 메뉴를 정해볼까...🍚', '배고프지? 오늘도 스겜하자ㅋㅋㅋ⚡', '코기 와쪄😝🐶',
-                '식사시간엔 결국 나를 찾게 되어있지^~^', '뿅🐕🐕 나왔다!', '솔직히 나만큼 세상을 평화롭게 하는 강아지는 없을거야',
-                '이왕 먹는 밥 스트레스 안받고 깔끔하게 정하자구','안녕 코기 와쪄~!🐕','ㅎㅇㅎㅇㅎㅇ','배고프다 배고파!','맛있는~게~ 너무~ 많아~~~ ',
-                '메뉴 정하는 데 5분이 넘게 걸린다면 그건 비효율적인 삶이야','결정장애는 부끄러운게 아냐 충분히 치유 가능하니까!!! 내가 있다면😘',
-                '어서와!! 메뉴 정하러 가자👽', '2시간이나 굶었더니 당 떨어진다...👻'];
-            const leng = chlist.length;
-            const rand = Math.floor(leng * Math.random());
-            const imglist = ['emoji/hello.png','emoji/hello2.png','emoji/hello3.png','emoji/hello4.png', 'emoji/hello_soup.png', 'emoji/sushicorgi.PNG'];
-            const leng2 = imglist.length;
-            const rand2 = Math.floor(leng2 * Math.random());
+            const rand = Math.floor(chlist.length * Math.random());
+            const rand2 = Math.floor(imglist.length * Math.random());
             index.sendSocketMessage(socket.id, 'chat message button image', `${chlist[rand]}`, `${imglist[rand2]}`,['decide_menu/lunch', '점심 고르기(평일)'],['decide_menu/dinner', '점심 고르기(주말)'],  ['decide_menu/dinner', '저녁 고르기'],['hobulho_hate_start', '못 먹는 음식 체크']); //TODO: 식당/메뉴명으로 검색하기
-            //index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`, ['decide_menu/lunch', '점심 고르기(평일)'],['decide_menu/dinner', '점심 고르기(주말)'],  ['decide_menu/dinner', '저녁 고르기'],['hobulho_hate_start', '못 먹는 음식 체크']); //TODO: 식당/메뉴명으로 검색하기
-            //index.sendSocketMessage(socket.id, 'chat message button', '오늘은 어느 곳의 메뉴를 정해볼까? 원하는 곳에서 가까운 지하철역을 입력해줘🚋');
         } else {
           if (result === 'success') {
-            const chlist = ['안녕!! 배고플땐 언제나 코기를 찾아줘😏😆', '안녕 배고프지? 얼렁 메뉴를 정해볼까...🍚', '배고프지? 오늘도 스겜하자ㅋㅋㅋ⚡', '코기 와쪄😝🐶',
-              '식사시간엔 결국 나를 찾게 되어있지^~^', '뿅🐕🐕 나왔다!', '솔직히 나만큼 세상을 평화롭게 하는 강아지는 없을거야',
-              '이왕 먹는 밥 스트레스 안받고 깔끔하게 정하자구','안녕 코기 와쪄~!🐕','ㅎㅇㅎㅇㅎㅇ','배고프다 배고파!','맛있는~게~ 너무~ 많아~~~ ',
-              '메뉴 정하는 데 5분이 넘게 걸린다면 그건 비효율적인 삶이야','결정장애는 부끄러운게 아냐 충분히 치유 가능하니까!!! 내가 있다면😘',
-              '어서와!! 메뉴 정하러 가자👽', '2시간이나 굶었더니 당 떨어진다...👻'];
-            const leng = chlist.length;
-            const rand = Math.floor(leng * Math.random());
-            const imglist = ['emoji/hello.png','emoji/hello2.png','emoji/hello3.png','emoji/hello4.png', 'emoji/hello_soup.png', 'emoji/sushicorgi.PNG'];
-            const leng2 = imglist.length;
-            const rand2 = Math.floor(leng2 * Math.random());
+            const rand = Math.floor(chlist.length * Math.random());
+            const rand2 = Math.floor(imglist.length * Math.random());
             index.sendSocketMessage(socket.id, 'chat message button image', `${chlist[rand]}`, `${imglist[rand2]}`,['decide_menu/lunch', '점심 고르기(평일)'],['decide_menu/dinner', '점심 고르기(주말)'],  ['decide_menu/dinner', '저녁 고르기'],['hobulho_hate_start', '못 먹는 음식 체크']); //TODO: 식당/메뉴명으로 검색하기
-            //index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`, ['decide_menu/lunch', '점심 고르기(평일)'],['decide_menu/dinner', '점심 고르기(주말)'], ['decide_menu/dinner', '저녁 고르기'],['hobulho_hate_start', '못 먹는 음식 체크']); //TODO: 식당/메뉴명으로 검색하기
           } else {
             index.sendSocketMessage(socket.id, 'chat message button image', '아... 너무 많이 말했더니 🐶피곤.... 30분만 자고 다시 올게😪🌙', 'emoji/drunk2',['get_started', '처음으로 돌아가기']);
           }
