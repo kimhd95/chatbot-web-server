@@ -693,12 +693,12 @@ let clickNum=0;
 $(function () {
   var socket = io();
 
-  $('#kakao-btn').click(() => {
-    $('#kakao-btn').attr({
+  $('#kakao-btn').click(async function (){
+    await $('#kakao-btn').attr({
       "data-dismiss": 'modal',
       "aria-hidden": true
     });
-    html2canvas($('#chat-room'), {
+    await html2canvas($('#chat-room'), {
        onrendered: function(canvas) {
          var imgData = canvas.toDataURL('image/png');
          //이미지 리사이징 할때 쓰는 코드
@@ -713,12 +713,12 @@ $(function () {
      });
   });
 
-  $('#facebook-btn').click(() => {
-    $('#facebook-btn').attr({
+  $('#facebook-btn').click(async function (){
+    await $('#facebook-btn').attr({
       "data-dismiss": 'modal',
       "aria-hidden": true
     });
-    html2canvas($('#chat-room'), {
+    await html2canvas($('#chat-room'), {
        onrendered: function(canvas) {
          var imgData = canvas.toDataURL('image/png');
          socket.emit('save screenshot', imgData, 'facebook');
