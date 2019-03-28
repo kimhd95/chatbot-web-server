@@ -419,12 +419,17 @@
   }
 }
 
-#config-modal button {
-    background: #ffffff;
-    border-radius: 0;
+#config-modal2 #kakao-btn {
+  background: #fcff59;
+  border-radius: 0;
 }
 
-#config-modal2 button {
+#config-modal2 #facebook-btn {
+  background: #46c8fc;
+  border-radius: 0;
+}
+
+#config-modal button {
     background: #ffffff;
     border-radius: 0;
 }
