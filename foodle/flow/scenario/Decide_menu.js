@@ -1170,6 +1170,11 @@ class Decide_menu {
                   price_lunch = 'x';
                   price_dinner = user_price;
                   await info_update.profile.update_price_level_dinner(socket.id, user_price);
+              } else {
+                price_lunch = user_price;
+                price_dinner = user_price;
+                await info_update.profile.update_price_level_lunch(socket.id, user_price);
+                await info_update.profile.update_price_level_dinner(socket.id, user_price);
               }
           }
               //await info_update.profile.update_with_mood(socket.id, '캐주얼');
