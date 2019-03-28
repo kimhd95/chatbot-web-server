@@ -125,7 +125,7 @@ Food.get_restaurant = function (kakaoid, subway, exit_quarter, price_lunch, pric
   }));
 };
 
-Food.get_near_restaurant = function (kakaoid, subway, price_lunch, price_dinner, hate_food, lat, lng) {
+Food.get_near_restaurant = function (kakaoid, price_lunch, price_dinner, hate_food, lat, lng) {
   const self = this;
   return new Promise(((resolve, reject) => {
     const name = 'food.get_near_restaurant';
