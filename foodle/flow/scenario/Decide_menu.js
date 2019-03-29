@@ -416,42 +416,39 @@ class Decide_menu {
                 return;
               }
             }
-            const qna_list = [
-                { //지하철역 검색->현재위치 500m내
-                    'question': '어떤 방식으로 메뉴를 정해보까나', 'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색', 'button2_id': 'price_under10', 'button2_value': '1만원 미만','button3_id': 'mood2', 'button3_value': '식당 분위기 필터링','button4_id': 'search_food', 'button4_value': '음식 종류 검색', 'button5_id': 'previous/' + user_data.stack.replace(/"/gi, "@"), 'button5_value': '이전으로 돌아가기',
-                },
-                {
-                    'question': '오늘 메뉴는 어떻게 골라줄까?', 'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색','button2_id': 'price_under10', 'button2_value': '1만원 미만','button3_id': 'mood2', 'button3_value': '식당 분위기 필터링','button4_id': 'search_food', 'button4_value': '음식 종류 검색', 'button5_id': 'previous/' + user_data.stack.replace(/"/gi, "@"), 'button5_value': '이전으로 돌아가기',
-                },
-                // {
-                //     'question': '오늘 메뉴의 키워드는 뭐야?','button1_id': 'location/withexit', 'button1_value': '지하철역 검색', 'button2_id': 'mood2', 'button2_value': '식당 분위기','button3_id': 'decision/taste', 'button3_value': '음식 종류',
-                // },
-                // {
-                //     'question': '딱 정해줄까? 아님 길게 물어봐줄까?', 'button1_id': 'decision/random', 'button1_value': '그냥 너가 정해', 'button2_id': 'decision/taste', 'button2_value': '자세히 물어봐줘',
-                // },
-                // {
-                //     'question': '내가 그냥 정해줄까? 아니면 자세히 물어봐줄까?', 'button1_id': 'decision/random', 'button1_value': '가라는 곳으로 가겠습니다', 'button2_id': 'decision/taste', 'button2_value': '길게 물어봐',
-                // },
-                // {
-                //     'question': '어떤 방식으로 메뉴를 정해보까나', 'button1_id': 'decision/random', 'button1_value': '코기의 랜덤픽', 'button2_id': 'mood2', 'button2_value': '맛/음식종류/분위기 필터링',
-                // },
-                // {
-                //     'question': '오늘 메뉴는 어떻게 골라줄까?', 'button1_id': 'decision/random', 'button1_value': '코기의 랜덤픽', 'button2_id': 'mood2', 'button2_value': '맛/음식종류/분위기 필터링',
-                // },
-                // {
-                //     'question': '혹시 조금이라도 땡긴다거나 하는 음식종류가 있어??', 'button1_id': 'decision/random', 'button1_value': '당연히 없지~헤헷', 'button2_id': 'mood2', 'button2_value': '뭔가 살짝 땡기기는 해',
-            ];
-            const qna_list_leng = qna_list.length;
-            const qna_list_rand = Math.floor(qna_list_leng * Math.random());
-            const imglist = ['emoji/checking.png','emoji/checking2.png','emoji/thinking.png','emoji/thinking2.png'];
-            const leng2 = imglist.length;
-            const rand2 = Math.floor(leng2 * Math.random());
-            // if (value.includes('middle')) {
-            //   index.sendSocketMessage(socket.id, 'chat message button image', qna_list[qna_list_rand].question, `${imglist[rand2]}`, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value], [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value], [qna_list[qna_list_rand].button4_id, qna_list[qna_list_rand].button4_value]);
-            // } else {
-            //   index.sendSocketMessage(socket.id, 'chat message button image', qna_list[qna_list_rand].question, `${imglist[rand2]}`, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value], [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value], [qna_list[qna_list_rand].button4_id, qna_list[qna_list_rand].button4_value], [qna_list[qna_list_rand].button5_id, qna_list[qna_list_rand].button5_value]);
-            // }
-            index.sendSocketMessage(socket.id, 'chat message button image', qna_list[qna_list_rand].question, `${imglist[rand2]}`, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value], [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value], [qna_list[qna_list_rand].button4_id, qna_list[qna_list_rand].button4_value], [qna_list[qna_list_rand].button5_id, qna_list[qna_list_rand].button5_value]);
+            if (value.includes('middle')) {
+              await info_update.profile.update_lat(socket.id, 'null');
+              await info_update.profile.update_lng(socket.id, 'null');
+              const qna_list = [
+                  { //지하철역 검색->현재위치 500m내
+                      'question': '어떤 방식으로 메뉴를 정해보까나', 'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색', 'button2_id': 'price_under10', 'button2_value': '1만원 미만','button3_id': 'mood2', 'button3_value': '식당 분위기 필터링','button4_id': 'search_food', 'button4_value': '음식 종류 검색',
+                  },
+                  {
+                      'question': '오늘 메뉴는 어떻게 골라줄까?', 'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색','button2_id': 'price_under10', 'button2_value': '1만원 미만','button3_id': 'mood2', 'button3_value': '식당 분위기 필터링','button4_id': 'search_food', 'button4_value': '음식 종류 검색',
+                  },
+              ];
+              const qna_list_leng = qna_list.length;
+              const qna_list_rand = Math.floor(qna_list_leng * Math.random());
+              const imglist = ['emoji/checking.png','emoji/checking2.png','emoji/thinking.png','emoji/thinking2.png'];
+              const leng2 = imglist.length;
+              const rand2 = Math.floor(leng2 * Math.random());
+              index.sendSocketMessage(socket.id, 'chat message button image', qna_list[qna_list_rand].question, `${imglist[rand2]}`, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value], [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value], [qna_list[qna_list_rand].button4_id, qna_list[qna_list_rand].button4_value]);
+            } else {
+              const qna_list = [
+                  { //지하철역 검색->현재위치 500m내
+                      'question': '어떤 방식으로 메뉴를 정해보까나', 'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색', 'button2_id': 'price_under10', 'button2_value': '1만원 미만','button3_id': 'mood2', 'button3_value': '식당 분위기 필터링','button4_id': 'search_food', 'button4_value': '음식 종류 검색', 'button5_id': 'previous/' + user_data.stack.replace(/"/gi, "@"), 'button5_value': '이전으로 돌아가기',
+                  },
+                  {
+                      'question': '오늘 메뉴는 어떻게 골라줄까?', 'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색','button2_id': 'price_under10', 'button2_value': '1만원 미만','button3_id': 'mood2', 'button3_value': '식당 분위기 필터링','button4_id': 'search_food', 'button4_value': '음식 종류 검색', 'button5_id': 'previous/' + user_data.stack.replace(/"/gi, "@"), 'button5_value': '이전으로 돌아가기',
+                  },
+              ];
+              const qna_list_leng = qna_list.length;
+              const qna_list_rand = Math.floor(qna_list_leng * Math.random());
+              const imglist = ['emoji/checking.png','emoji/checking2.png','emoji/thinking.png','emoji/thinking2.png'];
+              const leng2 = imglist.length;
+              const rand2 = Math.floor(leng2 * Math.random());
+              index.sendSocketMessage(socket.id, 'chat message button image', qna_list[qna_list_rand].question, `${imglist[rand2]}`, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value], [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value], [qna_list[qna_list_rand].button4_id, qna_list[qna_list_rand].button4_value], [qna_list[qna_list_rand].button5_id, qna_list[qna_list_rand].button5_value]);
+            }
         } catch (e) {
             index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
             console.log(e);
