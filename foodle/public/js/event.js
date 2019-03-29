@@ -214,6 +214,81 @@ function bot_messaging_card(res_name, res_type, food_name, naver_url, map_url, i
   return (message_info);
 }
 
+function bot_messaging_card_distance(res_name, res_type, food_name, naver_url, map_url, image, image2, image3, distance) {
+  const carousel_id = `carousel${String(Math.floor(Math.random() * 10000) + 1)}`;
+  let message_info = `<div class="bot-message">
+            <div class="choice_carousel">
+              <div class="choice_card">
+                <div id="${carousel_id}" class="carousel slide" data-ride="carousel" data-wrap="false">
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img class="rest-img" src="${image}" alt="First slide">
+                    </div>
+                    <div class="carousel-item">
+                      <img class="rest-img" src="${image2}" alt="slide">
+                    </div>
+                    <div class="carousel-item">
+                      <img class="rest-img" src="${image3}" alt="slide">
+                    </div>
+                  </div>
+                  <a class="carousel-control-prev" href="#${carousel_id}" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                    <a class="carousel-control-next" href="#${carousel_id}" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+              <div class="choice_card_content">
+                <h5 class="card-title">${res_name}</h5>
+                <p class="card-text">${res_type} / ${food_name}</p>
+                <p class="card-text"><i class="fas fa-link link-icon"></i>${distance}m</a></p>
+                <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
+                <p class="card-text"><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a></p>
+              </div>
+            </div>
+          </div>
+      `;
+  if (res_type === null || res_type === undefined) {
+    message_info = `<div class="bot-message">
+              <div class="choice_carousel">
+                <div class="choice_card">
+                  <div id="${carousel_id}" class="carousel slide" data-ride="carousel" data-wrap="false">
+                    <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img class="rest-img" src="${image}" alt="First slide">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="rest-img" src="${image2}" alt="slide">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="rest-img" src="${image3}" alt="slide">
+                      </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#${carousel_id}" role="button" data-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                      <a class="carousel-control-next" href="#${carousel_id}" role="button" data-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </div>
+                <div class="choice_card_content">
+                  <h5 class="card-title">${res_name}</h5>
+                  <p class="card-text">${food_name}</p>
+                  <p class="card-text"><i class="fas fa-link link-icon"></i>${distance}m</a></p>
+                  <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
+                  <p class="card-text"><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a></p>
+                </div>
+              </div>
+            </div>
+        `;
+  }
+  return (message_info);
+}
+
 function bot_messaging_card_inner(res_name, res_type, food_name, naver_url, map_url, image, image2, image3) {
   const carousel_id = `carousel${String(Math.floor(Math.random() * 10000) + 1)}`;
   let message_info = `
@@ -1314,6 +1389,24 @@ $(function () {
 
   socket.on('chat message card', (socket_id, button1, button2, button3, button4, rest1, rest2) => {
     $('#messages').append(bot_messaging_card(rest1[0], rest1[1], rest1[2], rest1[3], rest1[4], rest1[5], rest1[6], rest1[7]));
+    $('.choice_carousel').last().append(bot_messaging_card_inner(rest2[0], rest2[1], rest2[2], rest2[3], rest2[4], rest2[5], rest2[6], rest2[7]));
+    $('#messages').append(bot_messaging_button(button1[0], button1[1])).append(bot_messaging_button(button2[0], button2[1])).append(bot_messaging_button(button3[0], button3[1]));
+    if (button4.length > 0) {
+      $('#messages').append(bot_messaging_button(button4[0], button4[1]));
+    }
+    $('#m').prop('disabled', true);
+    $('#input-button').attr('disabled', true);
+    setTimeout(() => {
+      $('#messages').scrollTop(1E10);
+    }, 100);
+    if(loginValue!=='-1'){
+      updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
+    }
+  });
+
+  socket.on('chat message card distance', (socket_id, button1, button2, button3, button4, rest1, rest2, distance1, distance2) => {
+    console.log(distance1+'m', distance2+'m');
+    $('#messages').append(bot_messaging_card_distance(rest1[0], rest1[1], rest1[2], rest1[3], rest1[4], rest1[5], rest1[6], rest1[7], distance1));
     $('.choice_carousel').last().append(bot_messaging_card_inner(rest2[0], rest2[1], rest2[2], rest2[3], rest2[4], rest2[5], rest2[6], rest2[7]));
     $('#messages').append(bot_messaging_button(button1[0], button1[1])).append(bot_messaging_button(button2[0], button2[1])).append(bot_messaging_button(button3[0], button3[1]));
     if (button4.length > 0) {
