@@ -747,9 +747,8 @@ class Decide_menu {
   exitnum(value, socket, user_data) {
     (async function () {
       try {
-         let subway;
          await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
-         subway = user_data.subway;
+         let subway = user_data.subway;
         // if(value.includes('near_station')){
         //   subway = value.slice(value.lastIndexOf('/')+1);
         // } else if(value ==='exitnum')
@@ -775,18 +774,38 @@ class Decide_menu {
         //     await info_update.profile.update_freq_subway(socket.id, 'null');
         //   }
         //  await info_update.profile.update_subway(socket.id, subway);
-          const exit_list = [`${subway} 몇 번 출구쪽이 좋아??`, `${subway}에서 더 편한 출구가 있다면 골라줘!(중복선택)`, `${subway} 몇 번 출구쪽이 편해?(중복선택)`, `${subway} 몇 번 출구쪽이 좋아? 모르면 "상관없음" 버튼을 눌러주면 돼!`]
-          const exit_leng = exit_list.length;
-          const exit_rand = Math.floor(exit_leng * Math.random());
+          const exit_list = [`${subway} 몇 번 출구쪽이 좋아??`,
+                             `${subway}에서 더 편한 출구가 있다면 골라줘!(중복선택)`,
+                             `${subway} 몇 번 출구쪽이 편해?(중복선택)`,
+                             `${subway} 몇 번 출구쪽이 좋아? 모르면 "상관없음" 버튼을 눌러주면 돼!`]
+          const exit_rand = Math.floor(exit_list.length * Math.random());
 
           const available_subway = {
                                     '강남역': ['1,2,3,4번', '5,6,7,8번', '9,10번', '11,12번'],
                                     '선릉역': ['1,2번', '3,4번', '5,6,7번', '8,9,10번'],
                                     '서울대입구역': ['1,2번', '3,4번', '5,6번', '7,8번'],
-                                    '이대역': ['5번', '6번', '1,2번', '3,4번']
+                                    '이대역': ['5번', '6번', '1,2번', '3,4번'],
+                                    '건대입구역': ['롯데백화점 스타시티 방면', '5,6번', '1,2번', '3,4번'],
+                                    '광화문역': ['5번', '6번', '1,7,8번', '2,3,4,9번'],
+                                    '뚝섬역': ['5,6번', '7,8번', '1,2번', '3,4번'],
+                                    // '망원역': ['1번', '2번'],
+                                    '사당역': ['1,2,3번', '4,5,6번', '7,8,9,10번', '11,12,13,14번'],
+                                    '삼성역': ['1,2번', '3,4번', '5,6번', '7,8번'],
+                                    '선정릉역': ['3번', '4번', '1번', '2번'],
+                                    '성수역': ['3번', '4번', '1번', '2번'],
+                                    '여의도역': ['5번', '6번', '1,2번', '3,4번'],
+                                    '역삼역': ['1번', '2,3번', '4,5,6번', '7,8번'],
+                                    // '왕십리역': ['6,13번', '6-1,7,8,9,10,11,12번', '1,2,3,4,5번'],
+                                    '을지로입구역': ['5,6번', '7,8번', '1, 1-1, 2번', '3,4번'],
+                                    '이태원역': ['3번', '4번', '1번', '2번'],
+                                    '잠실역': ['1, 2, 2-1, 10, 11번', '3,4번', '5,6번', '7,8,9번'],
+                                    '종각역': ['4번', '5,6번', '1,2번', '3, 3-1번'],
+                                    '합정역': ['3,4,5,6번', '7번', '8번', '1,2,9,10번'],
+                                    '혜화역': ['2번', '3번', '4번', '1번'],
+                                    // '홍대입구역': ['4,5,6번', '7,8,9번', '1,2,3번'],
                                    };
           if (subway in available_subway) {
-            await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, `images/${subway}.png`, ['999', '상관없어'], ['4', '1,2,3,4번'], ['3', '5,6,7,8번'], ['2', '9,10번'], ['1', '11,12번'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기'], ['exit/', '선택완료'])
+            await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, `images/${subway}.png`, ['999', '상관없어'], ['4', available_subway[subway][0]], ['3', available_subway[subway][1]], ['2', available_subway[subway][2]], ['1', available_subway[subway][3]], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기'], ['exit/', '선택완료'])
           }
           else {
             index.sendSocketMessage(socket.id, 'chat message button', `지금 밥집 고르기를 이용 가능한 곳은 서울[${Object.keys(available_subway).toString()}]이야. 다른 곳 식당도 열심히 가서 먹어보고 곧 알려줄게!`, ['decide_subway/elsewhere', '다시 장소 입력하기'], ['get_started', '처음으로 돌아가기']);
