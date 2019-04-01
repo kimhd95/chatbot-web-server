@@ -363,11 +363,26 @@ class Decide_menu {
                 case '건입역':
                   subway = '건대입구역';
                   break;
+                case '고대역':
+                case '고려대학교역':
+                  subway = '고려대역';
+                  break;
+                case '고터역':
+                  subway = '고속터미널역';
+                  break;
+                case '남터역':
+                  subway = '남부터미널역';
+                  break;
                 case '서울대역':
                 case '서울대학교역':
                 case '서울대학교입구역':
                 case '설입역':
                   subway = '서울대입구역';
+                  break;
+                case '성대역':
+                case '성대입구역':
+                case '성신여대역':
+                  subway = '성신여대입구역';
                   break;
                 case '센텀역':
                   subway = '센텀시티역';
