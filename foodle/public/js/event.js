@@ -1595,8 +1595,8 @@ $(function () {
   });
 
   socket.on('chat message card no image', (socket_id, button1, button2, button3, button4, rest1, rest2) => {
-    $('#messages').append(bot_messaging_card_no_image_distance(rest1[0], rest1[1], rest1[2], rest1[3], rest1[4], distance1));
-    $('.choice_carousel').last().append(bot_messaging_card_inner_no_image_distance(rest2[0], rest2[1], rest2[2], rest2[3], rest2[4], distance2));
+    $('#messages').append(bot_messaging_card_no_image(rest1[0], rest1[1], rest1[2], rest1[3], rest1[4]));
+    $('.choice_carousel').last().append(bot_messaging_card_inner_no_image(rest2[0], rest2[1], rest2[2], rest2[3], rest2[4]));
     $('#messages').append(bot_messaging_button(button1[0], button1[1])).append(bot_messaging_button(button2[0], button2[1])).append(bot_messaging_button(button3[0], button3[1]));
     if (button4.length > 0) {
       $('#messages').append(bot_messaging_button(button4[0], button4[1]));
@@ -1611,8 +1611,8 @@ $(function () {
   });
 
   socket.on('chat message card no image distance', (socket_id, button1, button2, button3, button4, rest1, rest2, distance1, distance2) => {
-    $('#messages').append(bot_messaging_card_no_image(rest1[0], rest1[1], rest1[2], rest1[3], rest1[4]));
-    $('.choice_carousel').last().append(bot_messaging_card_inner_no_image(rest2[0], rest2[1], rest2[2], rest2[3], rest2[4]));
+    $('#messages').append(bot_messaging_card_no_image_distance(rest1[0], rest1[1], rest1[2], rest1[3], rest1[4], distance1));
+    $('.choice_carousel').last().append(bot_messaging_card_inner_no_image_distance(rest2[0], rest2[1], rest2[2], rest2[3], rest2[4], distance2));
     $('#messages').append(bot_messaging_button(button1[0], button1[1])).append(bot_messaging_button(button2[0], button2[1])).append(bot_messaging_button(button3[0], button3[1]));
     if (button4.length > 0) {
       $('#messages').append(bot_messaging_button(button4[0], button4[1]));
