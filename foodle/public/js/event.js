@@ -1030,7 +1030,7 @@ $(function () {
     } else {
       $('#m').autocomplete('disable');
     }
-    if ($(e.target).attr('id') === ('mood2/') || $(e.target).attr('id') === ('exit/') || $(e.target).attr('id') === ('drink_type/') || $(e.target).attr('id') === ('price/') ||  $(e.target).attr('id') === ('hobulho_hate/')) {
+    if ($(e.target).attr('id') === ('mood2/') || $(e.target).attr('id') === ('exit/') || $(e.target).attr('id') === ('S4/') || $(e.target).attr('id') === ('price/') ||  $(e.target).attr('id') === ('hobulho_hate/')) {
       console.log("messaging button의 exit/눌렸을경우");
       console.log($(e.target).attr('id'));
       const checked_array = [];
@@ -1054,7 +1054,7 @@ $(function () {
           case 'exit/':
             socket.emit('chat message button rule', $(e.target).attr('name'), 'no_exit');
             break;
-          case 'drink_type/':
+          case 'S4/':
             socket.emit('chat message button rule', $(e.target).attr('name'), 'no_drink_type');
             break;
           case 'price/':
@@ -1080,12 +1080,25 @@ $(function () {
       $('.messaging-button-checkbox').hide();
     } else if ($(e.target).attr('id')==='search_near') {
       console.log("search_near clicked");
-      getLocation2().then(function (arr){
+      getLocation2().then(function (arr) {
         console.log(arr);
         if(arr.lat == undefined || arr.lng == undefined) {
           socket.emit('chat message button rule', $(e.target).attr('name'), 'geolocation_err');
         } else {
           socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + '_'+ arr.lat + '/' + arr.lng);
+        }
+      });
+      $('.checkbox:checked').attr('checked', false);
+      $('.messaging-button').hide();
+      $('.messaging-button-checkbox').hide();
+    } else if ($(e.target).attr('id')==='S2_2/gps') {
+      console.log("S2_2/gps clicked");
+      getLocation2().then(function (arr) {
+        console.log(arr);
+        if(arr.lat == undefined || arr.lng == undefined) {
+          socket.emit('chat message button rule', $(e.target).attr('name'), 'geolocation_err');
+        } else {
+          socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + `:${arr.lat},${arr.lng}`);
         }
       });
       $('.checkbox:checked').attr('checked', false);
@@ -1174,7 +1187,7 @@ $(function () {
     } else {
       $('#m').autocomplete('disable');
     }
-    if ($(e.target).attr('id') === '999' || $(e.target).attr('id') === '998' || $(e.target).attr('id') === '900' || $(e.target).attr('id') === '상관없음' || $(e.target).attr('id') === '없음') {
+    if ($(e.target).attr('id') === '999' || $(e.target).attr('id') === '998' || $(e.target).attr('id') === '900' || $(e.target).attr('id') === '888' || $(e.target).attr('id') === '상관없음' || $(e.target).attr('id') === '없음') {
       clickNum=0;
       $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').prop('checked', false);
       $('.messaging-button-checkbox:not(:hidden)').removeClass('messaging-button-checkbox-checked');
@@ -1188,8 +1201,8 @@ $(function () {
         socket.emit('chat message button rule', $(e.target).attr('name'), 'mood2/'+$(e.target).attr('id'));
       } else if ($(e.target).attr('id') === '900'){
           socket.emit('chat message button rule', $(e.target).attr('name'), 'hobulho_hate/'+$(e.target).attr('id'));
-      } else{
-        socket.emit('chat message button rule', $(e.target).attr('name'), 'drink_type/'+$(e.target).attr('id'));
+      } else {
+        socket.emit('chat message button rule', $(e.target).attr('name'), 'S4/'+$(e.target).attr('id'));
       }
     } else if($(e.target).attr('id').includes('previous')) {
         $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').prop('checked', false);

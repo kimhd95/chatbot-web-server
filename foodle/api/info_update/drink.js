@@ -25,7 +25,7 @@ Drink.find_subway_drink_type = function (kakaoid, subway, exit_quarter) {
   }));
 };
 
-Drink.get_drink_restaurant = function (kakaoid, subway, exit_quarter, mood2, taste, drink_round, drink_type) {
+Drink.get_drink_restaurant = function (kakaoid, subway, price_dinner, mood1, mood2, drink_round, drink_type, lat, lng) {
   const self = this;
   return new Promise(((resolve, reject) => {
     const name = 'drink.get_drink_restaurant';
@@ -35,11 +35,13 @@ Drink.get_drink_restaurant = function (kakaoid, subway, exit_quarter, mood2, tas
       apikey: '9Y3-7bE-Ud3-7Ja',
       kakao_id: kakaoid,
       subway,
-      exit_quarter,
+      price_dinner,
+      mood: mood1,
       mood2,
-      taste,
       drink_round,
       drink_type,
+      lat,
+      lng,
     };
 
     const func = function (error, response, body) {
