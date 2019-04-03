@@ -524,9 +524,9 @@ class Decide_cafe {
             const second_map_url = `https://map.naver.com/index.nhn?query=${cafe_list[1].subway} ${cafe_list[1].cafe_name}&tab=1`;
             const image = await info_update.food.crawl_two_image(socket.id, `${cafe_list[0].subway.slice(0, -1)} ${cafe_list[0].cafe_name}`, `${cafe_list[1].subway.slice(0, -1)} ${cafe_list[1].cafe_name}`);
             if (image.res1 === 'no image') {
-              await index.sendSocketMessage(socket.id, 'chat message card no image', ['final/1', cafe_list[0].cafe_name], ['final/2',cafe_list[1].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe_list[0].cafe_name, cafe_list[0].mainmenu_type, cafe_list[0].drink_name, first_url, first_map_url], [cafe_list[1].cafe_name, cafe_list[1].mainmenu_type, cafe_list[1].drink_name, second_url, second_map_url]);
+              await index.sendSocketMessage(socket.id, 'chat message card no image cafe', ['final/1', cafe_list[0].cafe_name], ['final/2',cafe_list[1].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe_list[0].cafe_name, cafe_list[0].mainmenu_type, cafe_list[0].drink_name, first_url, first_map_url], [cafe_list[1].cafe_name, cafe_list[1].mainmenu_type, cafe_list[1].drink_name, second_url, second_map_url]);
             } else {
-              await index.sendSocketMessage(socket.id, 'chat message card', ['final/1', cafe_list[0].cafe_name], ['final/2', cafe_list[1].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe_list[0].cafe_name, cafe_list[0].mainmenu_type, cafe_list[0].drink_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [cafe_list[1].cafe_name, cafe_list[1].mainmenu_type, cafe_list[1].drink_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
+              await index.sendSocketMessage(socket.id, 'chat message card cafe', ['final/1', cafe_list[0].cafe_name], ['final/2', cafe_list[1].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe_list[0].cafe_name, cafe_list[0].mainmenu_type, cafe_list[0].drink_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [cafe_list[1].cafe_name, cafe_list[1].mainmenu_type, cafe_list[1].drink_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
             }
           } else {
             index.sendSocketMessage(socket.id, 'chat message button', '아직 조건에 맞는 카페가 없어 ㅠㅠ', ['get_started', '처음으로 돌아가기']);
@@ -568,9 +568,9 @@ class Decide_cafe {
           const second_map_url = `https://map.naver.com/index.nhn?query=${cafe_list[1].subway} ${cafe_list[1].cafe_name}&tab=1`;
           const image = await info_update.food.crawl_two_image(socket.id, `${cafe_list[0].subway.slice(0, -1)} ${cafe_list[0].cafe_name}`, `${cafe_list[1].subway.slice(0, -1)} ${cafe_list[1].cafe_name}`);
           if (image.res1 === 'no image') {
-            await index.sendSocketMessage(socket.id, 'chat message card no image', ['final/1', cafe_list[0].cafe_name], ['final/2',cafe_list[1].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe_list[0].cafe_name, cafe_list[0].mainmenu_type, cafe_list[0].drink_name, first_url, first_map_url], [cafe_list[1].cafe_name, cafe_list[1].mainmenu_type, cafe_list[1].drink_name, second_url, second_map_url]);
+            await index.sendSocketMessage(socket.id, 'chat message card no image cafe', ['final/1', cafe_list[0].cafe_name], ['final/2',cafe_list[1].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe_list[0].cafe_name, cafe_list[0].mainmenu_type, cafe_list[0].drink_name, first_url, first_map_url], [cafe_list[1].cafe_name, cafe_list[1].mainmenu_type, cafe_list[1].drink_name, second_url, second_map_url]);
           } else {
-            await index.sendSocketMessage(socket.id, 'chat message card', ['final/1', cafe_list[0].cafe_name], ['final/2', cafe_list[1].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe_list[0].cafe_name, cafe_list[0].mainmenu_type, cafe_list[0].drink_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [cafe_list[1].cafe_name, cafe_list[1].mainmenu_type, cafe_list[1].drink_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
+            await index.sendSocketMessage(socket.id, 'chat message card cafe', ['final/1', cafe_list[0].cafe_name], ['final/2', cafe_list[1].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe_list[0].cafe_name, cafe_list[0].mainmenu_type, cafe_list[0].drink_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [cafe_list[1].cafe_name, cafe_list[1].mainmenu_type, cafe_list[1].drink_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
           }
         } else {
           index.sendSocketMessage(socket.id, 'chat message button', '아직 조건에 맞는 카페가 없어 ㅠㅠ', ['get_started', '처음으로 돌아가기']);
@@ -756,9 +756,9 @@ scenario10_5 (value, socket, user_data) {
             const second_map_url = `https://map.naver.com/index.nhn?query=${cafe_list[1].subway} ${cafe_list[1].cafe_name}&tab=1`;
             const image = await info_update.food.crawl_two_image(socket.id, `${cafe_list[0].subway.slice(0, -1)} ${cafe_list[0].cafe_name}`, `${cafe_list[1].subway.slice(0, -1)} ${cafe_list[1].cafe_name}`);
             if (image.res1 === 'no image') {
-              await index.sendSocketMessage(socket.id, 'chat message card no image', ['final/1', cafe_list[0].cafe_name], ['final/2',cafe_list[1].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe_list[0].cafe_name, cafe_list[0].mainmenu_type, cafe_list[0].drink_name, first_url, first_map_url], [cafe_list[1].cafe_name, cafe_list[1].mainmenu_type, cafe_list[1].drink_name, second_url, second_map_url]);
+              await index.sendSocketMessage(socket.id, 'chat message card no image cafe', ['final/1', cafe_list[0].cafe_name], ['final/2',cafe_list[1].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe_list[0].cafe_name, cafe_list[0].mainmenu_type, cafe_list[0].drink_name, first_url, first_map_url], [cafe_list[1].cafe_name, cafe_list[1].mainmenu_type, cafe_list[1].drink_name, second_url, second_map_url]);
             } else {
-              await index.sendSocketMessage(socket.id, 'chat message card', ['final/1', cafe_list[0].cafe_name], ['final/2', cafe_list[1].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe_list[0].cafe_name, cafe_list[0].mainmenu_type, cafe_list[0].drink_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [cafe_list[1].cafe_name, cafe_list[1].mainmenu_type, cafe_list[1].drink_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
+              await index.sendSocketMessage(socket.id, 'chat message card cafe', ['final/1', cafe_list[0].cafe_name], ['final/2', cafe_list[1].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe_list[0].cafe_name, cafe_list[0].mainmenu_type, cafe_list[0].drink_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [cafe_list[1].cafe_name, cafe_list[1].mainmenu_type, cafe_list[1].drink_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
             }
           } else {
             index.sendSocketMessage(socket.id, 'chat message button', '아직 조건에 맞는 카페가 없어 ㅠㅠ', ['get_started', '처음으로 돌아가기']);
@@ -899,9 +899,9 @@ scenario10_5 (value, socket, user_data) {
               const second_map_url = `https://map.naver.com/index.nhn?query=${cafe_list[1].subway} ${cafe_list[1].cafe_name}&tab=1`;
               const image = await info_update.food.crawl_two_image(socket.id, `${cafe_list[0].subway.slice(0, -1)} ${cafe_list[0].cafe_name}`, `${cafe_list[1].subway.slice(0, -1)} ${cafe_list[1].cafe_name}`);
               if (image.res1 === 'no image') {
-                await index.sendSocketMessage(socket.id, 'chat message card no image', ['final/1', cafe_list[0].cafe_name], ['final/2',cafe_list[1].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe_list[0].cafe_name, cafe_list[0].mainmenu_type, cafe_list[0].drink_name, first_url, first_map_url], [cafe_list[1].cafe_name, cafe_list[1].mainmenu_type, cafe_list[1].drink_name, second_url, second_map_url]);
+                await index.sendSocketMessage(socket.id, 'chat message card no image cafe', ['final/1', cafe_list[0].cafe_name], ['final/2',cafe_list[1].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe_list[0].cafe_name, cafe_list[0].mainmenu_type, cafe_list[0].drink_name, first_url, first_map_url], [cafe_list[1].cafe_name, cafe_list[1].mainmenu_type, cafe_list[1].drink_name, second_url, second_map_url]);
               } else {
-                await index.sendSocketMessage(socket.id, 'chat message card', ['final/1', cafe_list[0].cafe_name], ['final/2', cafe_list[1].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe_list[0].cafe_name, cafe_list[0].mainmenu_type, cafe_list[0].drink_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [cafe_list[1].cafe_name, cafe_list[1].mainmenu_type, cafe_list[1].drink_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
+                await index.sendSocketMessage(socket.id, 'chat message card cafe', ['final/1', cafe_list[0].cafe_name], ['final/2', cafe_list[1].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe_list[0].cafe_name, cafe_list[0].mainmenu_type, cafe_list[0].drink_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [cafe_list[1].cafe_name, cafe_list[1].mainmenu_type, cafe_list[1].drink_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
               }
             } else {
               index.sendSocketMessage(socket.id, 'chat message button', '아직 조건에 맞는 카페가 없어 ㅠㅠ', ['get_started', '처음으로 돌아가기']);
@@ -1082,9 +1082,9 @@ scenario10_5 (value, socket, user_data) {
             const second_map_url = `https://map.naver.com/index.nhn?query=${cafe_list[1][0].subway} ${cafe_list[1][0].cafe_name}&tab=1`;
             const image = await info_update.food.crawl_two_image(socket.id, `${cafe_list[0][0].subway.slice(0, -1)} ${cafe_list[0][0].cafe_name}`, `${cafe_list[1][0].subway.slice(0, -1)} ${cafe_list[1][0].cafe_name}`);
             if (image.res1 === 'no image') {
-              await index.sendSocketMessage(socket.id, 'chat message card no image', ['final/1', cafe_list[0][0].cafe_name], ['final/2',cafe_list[1][0].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe_list[0][0].cafe_name, cafe_list[0][0].mainmenu_type, cafe_list[0][0].drink_name, first_url, first_map_url], [cafe_list[1][0].cafe_name, cafe_list[1][0].mainmenu_type, cafe_list[1][0].drink_name, second_url, second_map_url]);
+              await index.sendSocketMessage(socket.id, 'chat message card no image cafe', ['final/1', cafe_list[0][0].cafe_name], ['final/2',cafe_list[1][0].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe_list[0][0].cafe_name, cafe_list[0][0].mainmenu_type, cafe_list[0][0].drink_name, first_url, first_map_url], [cafe_list[1][0].cafe_name, cafe_list[1][0].mainmenu_type, cafe_list[1][0].drink_name, second_url, second_map_url]);
             } else {
-              await index.sendSocketMessage(socket.id, 'chat message card', ['final/1', cafe_list[0][0].cafe_name], ['final/2', cafe_list[1][0].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe_list[0][0].cafe_name, cafe_list[0][0].mainmenu_type, cafe_list[0][0].drink_name, first_url, first_map_url, image.res1[0], image.res1[1][0], image.res1[2]], [cafe_list[1][0].cafe_name, cafe_list[1][0].mainmenu_type, cafe_list[1][0].drink_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
+              await index.sendSocketMessage(socket.id, 'chat message card cafe', ['final/1', cafe_list[0][0].cafe_name], ['final/2', cafe_list[1][0].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe_list[0][0].cafe_name, cafe_list[0][0].mainmenu_type, cafe_list[0][0].drink_name, first_url, first_map_url, image.res1[0], image.res1[1][0], image.res1[2]], [cafe_list[1][0].cafe_name, cafe_list[1][0].mainmenu_type, cafe_list[1][0].drink_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
             }
           } else {
             index.sendSocketMessage(socket.id, 'chat message button', '아직 조건에 맞는 카페가 없어 ㅠㅠ', ['get_started', '처음으로 돌아가기']);
@@ -1239,9 +1239,9 @@ scenario10_5 (value, socket, user_data) {
         await index.sendSocketMessage(socket.id, 'chat message button', '오키 잘알겠어~ 2곳을 골라줄테니까 한 번 골라봐!');
         await index.sendSocketMessage(socket.id, 'chat message loader', 2500);
         if (image.res1 === 'no image') {
-          await index.sendSocketMessage(socket.id, 'chat message card no image', ['final/1', cafe1[0].cafe_name], ['final/2', cafe2[0].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe1[0].cafe_name, cafe1[0].mainmenu_type, cafe1[0].drink_name, first_url, first_map_url], [cafe2[0].cafe_name, cafe2[0].mainmenu_type, cafe2[0].drink_name, second_url, second_map_url]);
+          await index.sendSocketMessage(socket.id, 'chat message card no image cafe', ['final/1', cafe1[0].cafe_name], ['final/2', cafe2[0].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe1[0].cafe_name, cafe1[0].mainmenu_type, cafe1[0].drink_name, first_url, first_map_url], [cafe2[0].cafe_name, cafe2[0].mainmenu_type, cafe2[0].drink_name, second_url, second_map_url]);
         } else {
-          await index.sendSocketMessage(socket.id, 'chat message card', ['final/1', cafe1[0].cafe_name], ['final/2', cafe2[0].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe1[0].cafe_name, cafe1[0].mainmenu_type, cafe1[0].drink_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [cafe2[0].cafe_name, cafe2[0].mainmenu_type, cafe2[0].drink_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
+          await index.sendSocketMessage(socket.id, 'chat message card cafe', ['final/1', cafe1[0].cafe_name], ['final/2', cafe2[0].cafe_name], ['final/3', '챗봇이 골라주기'], [cafe1[0].cafe_name, cafe1[0].mainmenu_type, cafe1[0].drink_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [cafe2[0].cafe_name, cafe2[0].mainmenu_type, cafe2[0].drink_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
         }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);

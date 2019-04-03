@@ -1540,6 +1540,20 @@ $(function () {
     }
   });
 
+  socket.on('chat message card cafe', (socket_id, button1, button2, button3, rest1, rest2) => {
+  $('#messages').append(bot_messaging_card(rest1[0], rest1[1], rest1[2], rest1[3], rest1[4], rest1[5], rest1[6], rest1[7]));
+  $('.choice_carousel').last().append(bot_messaging_card_inner(rest2[0], rest2[1], rest2[2], rest2[3], rest2[4], rest2[5], rest2[6], rest2[7]));
+  $('#messages').append(bot_messaging_button(button1[0], button1[1])).append(bot_messaging_button(button2[0], button2[1])).append(bot_messaging_button(button3[0], button3[1]));
+  $('#m').prop('disabled', true);
+  $('#input-button').attr('disabled', true);
+  setTimeout(() => {
+    $('#messages').scrollTop(1E10);
+  }, 100);
+  if(loginValue!=='-1'){
+    updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
+  }
+});
+
   socket.on('chat message card distance', (socket_id, button1, button2, button3, button4, rest1, rest2, distance1, distance2) => {
     console.log(distance1+'m', distance2+'m');
     $('#messages').append(bot_messaging_card_distance(rest1[0], rest1[1], rest1[2], rest1[3], rest1[4], rest1[5], rest1[6], rest1[7], distance1));
@@ -1614,6 +1628,20 @@ $(function () {
     if (button4.length > 0) {
       $('#messages').append(bot_messaging_button(button4[0], button4[1]));
     }
+    $('#m').prop('disabled', true);
+    setTimeout(() => {
+      $('#messages').scrollTop(1E10);
+    }, 100);
+    if(loginValue!=='-1'){
+      updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
+    }
+  });
+
+  socket.on('chat message card no image cafe', (socket_id, button1, button2, button3, rest1, rest2) => {
+    console.log("Present stage: "+sessionStorage.getItem('stage'));
+    $('#messages').append(bot_messaging_card_no_image(rest1[0], rest1[1], rest1[2], rest1[3], rest1[4]));
+    $('.choice_carousel').last().append(bot_messaging_card_inner_no_image(rest2[0], rest2[1], rest2[2], rest2[3], rest2[4]));
+    $('#messages').append(bot_messaging_button(button1[0], button1[1])).append(bot_messaging_button(button2[0], button2[1])).append(bot_messaging_button(button3[0], button3[1]));
     $('#m').prop('disabled', true);
     setTimeout(() => {
       $('#messages').scrollTop(1E10);

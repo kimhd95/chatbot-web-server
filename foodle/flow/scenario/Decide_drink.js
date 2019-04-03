@@ -531,14 +531,14 @@ class Decide_drink {
                                                                                   ['final/1', foods[0].res_name],
                                                                                   ['final/2', foods[1].res_name],
                                                                                   ['final/3', '코기가 골라주기'],
-                                                                                  ['decide_final_others', '다른 식당 보기'],
+                                                                                  ['decide_final_others', '다른 술집 보기'],
                                                                                   [results[0].res_name, results[0].food_type, results[0].food_name, first_url, first_map_url],
                                                                                   [results[1].res_name, results[1].food_type, results[1].food_name, second_url, second_map_url])
                                         : await index.sendSocketMessage(socket.id, 'chat message card',
                                                                                   ['S10_1/1', results[0].res_name],
                                                                                   ['S10_1/2', results[1].res_name],
                                                                                   ['S10_1/random', '코기가 골라주기'],
-                                                                                  ['decide_final_others', '다른 식당 보기'],
+                                                                                  ['decide_final_others', '다른 술집 보기'],
                                                                                   [results[0].res_name, results[0].food_type, results[0].food_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]],
                                                                                   [results[1].res_name, results[1].food_type, results[1].food_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
           }
