@@ -53,4 +53,27 @@ Drink.get_drink_restaurant = function (kakaoid, subway, price_dinner, mood1, moo
   }));
 };
 
+Drink.get_other_drink_restaurant = function (kakaoid, userid, rest1, rest2) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'drink.get_other_drink_restaurant';
+    const method = 'POST';
+    const url = '/api/v1/users/get_other_drink_restaurant';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      userid,
+      rest1,
+      rest2,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
 module.exports = Drink;
