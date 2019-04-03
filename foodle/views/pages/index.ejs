@@ -252,6 +252,11 @@
        //     $('.abcRioButton').trigger('click');
        // });
 
+       $('#find-info').click(() => {
+         console.log("clicked");
+         $('#find-pw').modal('show');
+       });
+
        $('input[type=text]').on('keydown', function(e) {
            if (e.which == 13) {
                loginValidationCheck();
