@@ -344,10 +344,10 @@ $(document).ready(function(){
         }
     })
 
-    $('#platform-list-button').click(() => {
+    $('#platform-list-button').click(function() {
       $('#platform-list').modal('show');
     });
-    $('#year-list-button').click(() => {
+    $('#year-list-button').click(function() {
       $('#year-list').modal('show');
     });
     $('#access-terms').click(function() {

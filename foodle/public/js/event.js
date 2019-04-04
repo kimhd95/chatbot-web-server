@@ -891,7 +891,7 @@ let clickNum=0;
 $(function () {
   var socket = io();
 
-  $('#kakao-btn').click(() => {
+  $('#kakao-btn').click(function() {
     $('#kakao-btn').attr({
       "data-dismiss": 'modal',
       "aria-hidden": true
@@ -914,7 +914,7 @@ $(function () {
     }, 300);
   });
 
-  $('#facebook-btn').click(() => {
+  $('#facebook-btn').click(function() {
     $('#facebook-btn').attr({
       "data-dismiss": 'modal',
       "aria-hidden": true
@@ -1853,11 +1853,11 @@ $(document).ready(() => {
      		$(this).autocomplete("search", $(this).val());
   });
 
-  $('#logout-btn').click(() => {
+  $('#logout-btn').click(function() {
     logout(loginValue);
   });
 
-  $('#delete-log-btn').click(() => {
+  $('#delete-log-btn').click(function() {
     if (confirm('채팅기록을 지우시겠습니까? 모든 기록이 지워집니다.')) {
       const currentStage=sessionStorage.getItem('stage');
       console.log(currentStage);
@@ -1897,7 +1897,7 @@ $(document).ready(() => {
     }
   });
 
-  $('.decide-withdrawl').click(() => {
+  $('.decide-withdrawl').click(function() {
     if (confirm('정말 탈퇴하시겠습니까? 탈퇴하시면 모든 데이터가 소멸됩니다.')) {
       const info = {
         url: '/api/v1/users/member_withdraw',
@@ -1925,7 +1925,7 @@ $(document).ready(() => {
     }
   });
 
-  $('.decide-update-password').click(() => {
+  $('.decide-update-password').click(function() {
     if ($('.cur-password').val() === '') {
       alert('현재 비밀번호를 입력하세요.');
       return;

@@ -178,7 +178,7 @@ function sendInquiry () {
         }
     })
 }
-$(document).ready(() => {
+$(document).ready(function() {
     if (sessionStorage.getItem('login') === '0' || sessionStorage.getItem('login') === null) {
         const info = {
             url: '/api/v1/users/verify_token',
@@ -234,15 +234,15 @@ $(document).ready(() => {
         location.href='/chat';
     }
 
-    $('#login-btn').click(() => {
+    $('#login-btn').click(function() {
         loginValidationCheck();
     })
 
-    $('#reissue-pw').click(() => {
+    $('#reissue-pw').click(function() {
         reIssueValidationCheck();
     })
 
-    $('.send-inq').click(() => {
+    $('.send-inq').click(function() {
         sendInquiry();
     })
 });
