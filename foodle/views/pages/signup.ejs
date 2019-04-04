@@ -114,7 +114,10 @@
             <div class="modal fade bd-example-modal-sm" id="year-list" tabindex="-1" role="dialog" aria-labelledby="platformList" aria-hidden="true">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content btn-group-vertical">
-                        <div class="modal-body"></div>
+                        <div class="modal-body">
+                            <!-- <div class="birth-year" onclick="selectAge(1)" data-dismiss="modal">1</div>
+                            <div class="birth-year" onclick="selectAge(2)" data-dismiss="modal">2</div> -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -141,25 +144,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
     <script src="/js/base.js"></script>
     <script src="/js/signup.js"></script>
-
-    <script>
-      $(document).ready(function(){
-        $('#platform-list-button').click(() => {
-          $('#platform-list').modal('show');
-        });
-        $('#year-list-button').click(() => {
-          for(var i = 2005; i >= 1970; i--) {
-              $('#year-list .modal-body').append(`<div class="birth-year" onclick="selectAge(${i})" data-dismiss="modal">${i}</div>`)
-          }
-          $('#year-list').modal('show');
-          // 출생년도 초기화
-
-        });
-
-      });
-    </script>
-
-
 
 </body>
 </html>
