@@ -230,7 +230,12 @@ input[type=checkbox]:checked + label:before {
     margin-right: 10px!important;
 }
 
-.show-terms {
+.show-terms-access {
+    color: #aaaaaa;
+    font-size: 14px;
+    opacity: 1;
+}
+.show-terms-privacy {
     color: #aaaaaa;
     font-size: 14px;
     opacity: 1;
