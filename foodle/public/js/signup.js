@@ -349,7 +349,6 @@ $(document).ready(function(){
     });
     $('#year-list-button').click(() => {
       $('#year-list').modal('show');
-      $('#year-list').appendTo('body');
     });
     $('#access-terms').click(function() {
       autoAgree();
