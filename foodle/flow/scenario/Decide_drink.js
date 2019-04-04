@@ -1,12 +1,6 @@
-
-
 const moment = require('moment');
 const Info = require('../../api/info_update');
-
-
 const index = require('../../server/index');
-
-
 const info_update = new Info();
 
 class Decide_drink {
@@ -17,10 +11,7 @@ class Decide_drink {
     } else if (key.startsWith('S1/')) {
       key = 'S1';
     } else if (user_data.state === 'S1') {
-      if (user_data.drink_round === '1')
-        key = 'S2_1';
-      else if (user_data.drink_round === '2,3')
-        key = 'S2_2';
+      key = (user_data.drink_round === '1') ? 'S2_1' : 'S2_2';
     } else if (key.startsWith('S2_2/')) {
       key = 'S2_2';
     } else if (key.startsWith('S3/')) {
@@ -29,48 +20,20 @@ class Decide_drink {
       key = 'S4';
     } else if (key.startsWith('S11/')) {
       key = 'S11';
-    } else if (key === 'geolocation_err') {
-      key = 'geolocation_err';
     }
-    // else if (user_data.state === 'decide_drink') {
-    //   key = 'exitnum';
-    // } else if (key.includes('exit/')) {
-    //   key = 'drink_type';
-    // } else if (key.includes('drink_type/')) {
-    //   key = 'drink_round';
-    // } else if (key.includes('drink_round_3/')) {
-    //   key = 'drink_round_3';
-    // } else if (key.includes('mood2/') || key.includes('taste/')) {
-    //   key = 'fake_qna';
-    // } else if (key.includes('final/')) {
-    //   key = 'final';
-    // }
 
     this.strategies = {
       'decide_drink': this.decide_drink,
-      // 'exitnum': this.exitnum,
-      // 'drink_type': this.drink_type,
-      // 'no_drink_type': this.no_drink_type,
-      // 'drink_round': this.drink_round,
-      // 'drink_round_3': this.drink_round_3,
-      // 'drink_food': this.drink_food,
-      // 'fake_qna': this.fake_qna,
-      // 'decide_final': this.decide_final,
-      // 'final': this.final,
-      // 'final_info_direct': this.final_info_direct,
-      'show_image': this.show_image,
-      // 'decide_final_again': this.decide_final_again,
-
       'S1': this.S1__decide_subway,
       'S2_1': this.S2_1_decide_price_dinner,
       'S2_2': this.S2_2_decide_mood,
       'S3': this.S3__decide_drink_type,
-      // 'S3_1': this.S3_1_decide_drink_type_reaction,
       'S4': this.S4__ask_fake_question,
       'S10': this.S10__decide_final,
       'S10_1': this.S10_1_decide_final_others,
       'S10_2': this.S10_2_decide_final_similar,
       'S11': this.S11__final,
+      'show_image': this.show_image,
       'geolocation_err': this.geolocation_err,
     };
     this.execute(key, value, socket, user_data);
@@ -78,7 +41,8 @@ class Decide_drink {
 
   execute(key, value, socket, user_data) {
     this.update_state(socket.id, '6', key);
-    this.strategies[key] == null ? index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']) : this.strategies[key](value, socket, user_data);
+    this.strategies[key] == null ? index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기'])
+                                 : this.strategies[key](value, socket, user_data);
   }
 
   update_state(id, scenario, state) {
