@@ -356,10 +356,10 @@ $(document).ready(function(){
     $('#privacy-policy').click(function() {
       autoAgree();
     })
-    $('#show-terms-access').click(function() {
+    $('.show-terms-access').click(function() {
       $('#access-terms-modal').modal('show');
     })
-    $('#show-terms-privacy').click(function() {
+    $('.show-terms-privacy').click(function() {
       $('#privacy-policy-modal').modal('show');
     })
 });
