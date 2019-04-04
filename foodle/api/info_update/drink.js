@@ -76,4 +76,45 @@ Drink.get_other_drink_restaurant = function (kakaoid, userid, rest1, rest2) {
   }));
 };
 
+Drink.get_similar_drink_restaurant = function (kakaoid, rest) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'drink.get_similar_drink_restaurant';
+    const method = 'POST';
+    const url = '/api/v1/users/get_similar_drink_restaurant';
+    const json = {
+      apikey: '9Y3-7bE-Ud3-7Ja',
+      kakao_id: kakaoid,
+      rest,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
+Drink.verify_drinktype_list = function (kakaoid, userid) {
+  const self = this;
+  return new Promise(((resolve, reject) => {
+    const name = 'drink.verify_drinktype_list';
+    const method = 'POST';
+    const url = '/api/v1/users/verify_drinktype_list';
+    const json = {
+      kakao_id: kakaoid,
+      userid,
+    };
+
+    const func = function (error, response, body) {
+      error === null
+        ? resolve(body)
+        : reject(error);
+    };
+    self.apicall(kakaoid, name, method, url, json, func);
+  }));
+};
+
 module.exports = Drink;
