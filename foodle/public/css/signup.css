@@ -252,18 +252,6 @@ input[type=checkbox]:checked + label:before {
     padding-left: 20px;
 }
 
-/* #platform-list .modal-content .platform-btn {
-    width: 100%;
-    padding: 10px 0;
-    background-color: #ffffff;
-    border: 0.5px solid #61451b;
-    color: #61451b;
-    font-weight: 500;
-    text-align: left;
-    padding-left: 20px;
-} */
-
-
 /* #year-list .modal-body {
     width: 100%;
     height: 100%;
