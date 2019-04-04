@@ -148,7 +148,12 @@
           $('#platform-list').modal('show');
         });
         $('#year-list-button').click(() => {
+          for(var i = 2005; i >= 1970; i--) {
+              $('#year-list .modal-body').append(`<div class="birth-year" onclick="selectAge(${i})" data-dismiss="modal">${i}</div>`)
+          }
           $('#year-list').modal('show');
+          // 출생년도 초기화
+
         });
 
       });

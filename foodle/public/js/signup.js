@@ -286,10 +286,7 @@ $(document).ready(function(){
         //alert('이미 로그인되어 있습니다.');
         location.href="/lobby";
     }
-    // 출생년도 초기화
-    for(var i = 2005; i >= 1950; i--) {
-        $('#year-list .modal-body').append(`<div class="birth-year" onclick="selectAge(${i})" data-dismiss="modal">${i}</div>`)
-    }
+    
     // 다음 버튼 터치
     $('.next-button').click(function() {
         firstInfoValidationCheck();
