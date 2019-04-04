@@ -233,6 +233,9 @@ function signUpReq(name, gender, email, password, birthYear, phone) {
 $(document).ready(function(){
 // $(document).ready(() => {
     if (sessionStorage.getItem('login') === '0' || sessionStorage.getItem('login') === null) {
+        for(var i = 2005; i >= 1970; i--) {
+            $('#year-list .modal-body').append(`<button class="birth-year" onclick="selectAge(${i})" data-dismiss="modal">${i}</button>`)
+        }
         const info = {
             url: '/api/v1/users/verify_token',
             method: 'POST',
@@ -285,10 +288,6 @@ $(document).ready(function(){
     else {
         //alert('이미 로그인되어 있습니다.');
         location.href="/lobby";
-    }
-    // 출생년도 초기화
-    for(var i = 2005; i >= 1950; i--) {
-        $('#year-list .modal-body').append(`<div class="birth-year" onclick="selectAge(${i})" data-dismiss="modal">${i}</div>`)
     }
     // 다음 버튼 터치
     $('.next-button').click(function() {
@@ -344,10 +343,23 @@ $(document).ready(function(){
             $('#privacy-policy')[0].checked = true;
         }
     })
+
+    $('#platform-list-button').click(function() {
+      $('#platform-list').modal('show');
+    });
+    $('#year-list-button').click(function() {
+      $('#year-list').modal('show');
+    });
     $('#access-terms').click(function() {
-        autoAgree();
+      autoAgree();
     })
     $('#privacy-policy').click(function() {
-        autoAgree();
+      autoAgree();
+    })
+    $('.show-terms-access').click(function() {
+      $('#access-terms-modal').modal('show');
+    })
+    $('.show-terms-privacy').click(function() {
+      $('#privacy-policy-modal').modal('show');
     })
 });

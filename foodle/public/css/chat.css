@@ -45,12 +45,18 @@
 
     animation-duration: 0.5s;
     overflow:hidden;
+
+    /* 추가 */
+    justify-content: center;
+    display: flex;
 }
 #chat-room .card {
     height: 100vh;
-    /* border-radius: 10px;
+
+    /* 추가 */
+    border-radius: 10px;
     width: 400px;
-    box-shadow: 0 5px 35px 9px #ccc; */
+    box-shadow: 0 5px 35px 9px #ccc;
 }
 
 .card-header {

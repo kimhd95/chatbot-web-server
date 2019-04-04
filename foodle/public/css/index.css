@@ -1,8 +1,31 @@
-.card {
+#index-room {
+    display: flex;
+    justify-content: center;
+    background-color: rgba(220,220,220,0.3);
+    z-index: 1000;
+
+    animation-duration: 0.5s;
+}
+
+#index-room .card {
+      /* 추가 */
+      /* justify-content: center;
+      display: flex;
+      animation-duration: 0.5s;
+      border-radius: 10px;
+      width: 400px; */
+      /* height: 100vh; */
+      border-radius: 10px;
+      width: 400px;
+      height: 100vh;
+      box-shadow: 0 5px 35px 9px #ccc;
+}
+
+/* .card {
     border: none;
     height: 100vh;
     text-align: center;
-}
+} */
 .card-body {
     display: flex;
     flex-direction: column;
@@ -64,13 +87,13 @@
 .naver-login, .google-login {
     height: 70px;
 }
-.signup {
+
+
+/* .signup {
   width: 100%;
   margin-top: 10%;
-    /* width: 40vw; */
 }
 .signup-deco {
-    /* position: relative; */
     width: 50vw;
 }
 .signup-btn {
@@ -78,8 +101,31 @@
     right: 25%;
     left: 25%;
     margin-top: 3%;
-    font-size: 4vw;
+    font-size: 2vw;
     color: #61451b;
+} */
+
+.signup {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 10%;
+  /* margin: 15px 0; */
+
+  justify-content: space-between;
+  /* justify-content: center; */
+  /* align-items: center; */
+}
+.signup-deco {
+  width: 100%;
+}
+.signup-btn {
+  position: absolute;
+  right: 25%;
+  left: 25%;
+  margin-top: 5%;
+  font-size: 120%;
+  color: #61451b;
 }
 /* 비밀번호 찾기 */
 #find-pw .modal-body {

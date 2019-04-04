@@ -36,11 +36,12 @@
                     <input id="female" name="gender" type="checkbox">
                     <label class="gender-text" for="female">여자</label>
                 </div>
+
                 <div class="email-container">
                     <input id="email" class="email" type="text" placeholder="이메일">
                     <span class="at">@</span>
                     <input id="platform" class="platform" type="text" disabled>
-                    <div class="platform-list-button" data-toggle="modal" data-target="#platform-list">
+                    <div class="platform-list-button" id="platform-list-button" data-toggle="modal" data-target="#platform-list">
                         <i class="fas fa-chevron-down"></i>
                     </div>
                 </div>
@@ -65,7 +66,7 @@
             <div class="second-input-container">
                 <div class="year-container">
                     <input class="year" type="text" placeholder="2018" disabled>
-                    <div class="year-list-button" data-toggle="modal" data-target="#year-list">
+                    <div class="year-list-button" id="year-list-button" data-toggle="modal" data-target="#year-list">
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <span style="color: #61451b; font-weight: 700;">년생</span>
@@ -77,12 +78,12 @@
                     <div class="terms">
                         <input id="access-terms" type="checkbox">
                         <label class="terms-text" for="access-terms">이용약관에 동의합니다.</label>
-                        <span class="show-terms" data-toggle="modal" data-target="#access-terms-modal">(보기)</span>
+                        <span class="show-terms-access" data-toggle="modal" data-target="#access-terms-modal">(보기)</span>
                     </div>
                     <div class="terms">
                         <input id="privacy-policy" type="checkbox">
                         <label class="terms-text" for="privacy-policy">개인정보 취급방침에 동의합니다.</label>
-                        <span class="show-terms" data-toggle="modal" data-target="#privacy-policy-modal">(보기)</span>
+                        <span class="show-terms-privacy" data-toggle="modal" data-target="#privacy-policy-modal">(보기)</span>
                     </div>
                     <div class="terms">
                         <input id="all-agree" type="checkbox">
@@ -90,7 +91,6 @@
                     </div>
                 </div>
             </div>
-
 
 
             <button class="next-button">다음</button>
@@ -111,7 +111,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade bd-example-modal-sm" id="year-list" tabindex="-1" role="dialog" aria-labelledby="platformList" aria-hidden="true">
+            <div class="modal fade bd-example-modal-sm" id="year-list" tabindex="-1" role="dialog" aria-labelledby="yearList" aria-hidden="true">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content btn-group-vertical">
                         <div class="modal-body"></div>
@@ -141,15 +141,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
     <script src="/js/base.js"></script>
     <script src="/js/signup.js"></script>
-
-    <!-- <script>
-      $(document).ready(function(){
-        $('.back-btn').click(function() {
-            location.href = '/';
-        });
-      });
-    </script> -->
-
 
 </body>
 </html>

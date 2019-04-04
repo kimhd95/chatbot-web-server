@@ -1,5 +1,5 @@
 
-$(document).ready(() => {
+$(document).ready(function() {
     if (sessionStorage.getItem('login') === '0' || sessionStorage.getItem('login') === null) {
         const info = {
             url: '/api/v1/users/verify_token',
@@ -376,7 +376,7 @@ $(document).ready(() => {
                 '- 전자우편:<br>'
 
     }
-    $('.back').click(() => {
+    $('.back').click(function() {
         history.back();
     });
 })
