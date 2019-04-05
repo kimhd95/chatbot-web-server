@@ -1031,7 +1031,6 @@ $(function () {
       $('#m').autocomplete('disable');
     }
     if ($(e.target).attr('id') === ('mood2/') || $(e.target).attr('id') === ('exit/') || $(e.target).attr('id') === ('S4/') || $(e.target).attr('id') === ('price/') ||  $(e.target).attr('id') === ('hobulho_hate/')) {
-      console.log("messaging button의 exit/눌렸을경우");
       console.log($(e.target).attr('id'));
       const checked_array = [];
       const checked_name_array = [];
@@ -1079,7 +1078,6 @@ $(function () {
       $('.messaging-button').hide();
       $('.messaging-button-checkbox').hide();
     } else if ($(e.target).attr('id')==='search_near') {
-      console.log("search_near clicked");
       getLocation2().then(function (arr) {
         console.log(arr);
         if(arr.lat == undefined || arr.lng == undefined) {
@@ -1092,7 +1090,6 @@ $(function () {
       $('.messaging-button').hide();
       $('.messaging-button-checkbox').hide();
     } else if ($(e.target).attr('id')==='S2_2/gps') {
-      console.log("S2_2/gps clicked");
       getLocation2().then(function (arr) {
         console.log(arr);
         if(arr.lat == undefined || arr.lng == undefined) {
@@ -1109,12 +1106,9 @@ $(function () {
         let userStack = $(e.target).attr('id').replace(/@/gi, `"`).slice(9);
         console.log(userStack);
         let stack = JSON.parse("["+userStack+"]");
-        // console.log(stack);
         let element = stack.pop();
         console.log(element.state);
-        // console.log(stack);
         stack = JSON.stringify(stack);
-        // console.log(stack);
         stack = stack.slice(1, -1);
         console.log(stack);
         function getFinalStack(callback) {
@@ -1138,7 +1132,6 @@ $(function () {
               stack: stack,
             },
             success: function(res) {
-              console.log("== 일반 이전버튼에서 메세지지우기 ==");
               const prevElement = $('.bot-message').children(':last').parent().prev();
               if (prevElement.attr('class') == 'bot-message') {
                 if (prevElement.children(':last').attr('class') == 'img-fluid rest-img') {
@@ -1238,7 +1231,6 @@ $(function () {
               stack: stack,
             },
             success: function(res) {
-              console.log("== 체크박스 이전버튼에서 메세지 지우기 ==");
               const parentElement = $('.bot-message').children(':last').parent(); // bot message요소의 <div> parent
               // img 포함일때 지우기
               if (parentElement.prev().attr('class') == 'bot-message') {
@@ -1653,10 +1645,7 @@ $(function () {
       }
       $('#messages').append(bot_messaging(msg)).children(':last').hide()
         .fadeIn(150);
-      // console.log(args);
-      console.log(args[0]);
       const args_length = args[0].length;
-      console.log(`args_length : ${args_length}`);
       $('#messages').append(bot_messaging_image(img));
       for (let i = 0; i < args_length - 1; i += 1) {
         $('#messages').append(bot_messaging_button_checkbox(args[0][i][0], args[0][i][1]));
