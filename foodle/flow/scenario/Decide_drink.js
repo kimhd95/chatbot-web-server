@@ -61,7 +61,7 @@ class Decide_drink {
       key = 'decide_drink';
     } else if (key.startsWith('S1/')) {
       key = 'S1';
-    } else if (user_data.state === 'S1') {
+    } else if (user_data.state === 'S1' || key === 'S2_freq') {
       key = (user_data.drink_round === '1') ? 'S2_1' : 'S2_2';
     } else if (key.startsWith('S2_2/')) {
       key = 'S2_2';
@@ -135,18 +135,41 @@ class Decide_drink {
         console.log("S1 value >> ", value);
         await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
         const drink_round = value.split('/')[1];
-        await info_update.profile.update_drink_round(socket.id, drink_round);
-        const chlist = ['약속장소에서 가까운 지하철역을 입력해줘🚋',
-                        '어디 근처의 술집을 정해줄까?',
-                        '이번엔 어디에서 마셔볼까🍾',
-                        '오늘은 어디 술집을 털러 가볼까나😈',
-                        '오늘 술자리는 어디야?',
-                        '오늘은 어느 역 근처 술집을 털어볼까?',
-                        '어느 역 근처 술집을 골라줄까?',
-                        '술 어디에서 마실거야~?'];
-        const rand = Math.floor(chlist.length * Math.random());
 
-        index.sendSocketMessage(socket.id, 'chat message button', chlist[rand]);
+        let revisit;
+        if (drink_round === 'another') {
+          revisit = null;
+          await info_update.profile.update_freq_subway(socket.id, 'null');
+        } else {
+          revisit = user_data.freq_subway;
+          await info_update.profile.update_drink_round(socket.id, drink_round);
+        }
+        // 자주가는 지하철역 o
+        if (revisit != null) {
+          const chlist = [`이번에도 ${revisit} 고고?`,
+                          `이번에도 ${revisit}에서 술 마실거야?`,
+                          `이번에도 ${revisit}에서 마시는거 맞지?`,
+                          `오늘도 ${revisit}?`,
+                          `오늘도 ${revisit}에서 골라볼까?`,
+                          `이번에도 ${revisit}에서 정하는거 맞아맞아?`,
+                          `오늘도 ${revisit}에서 정해볼까?`,
+                          `이번에도 ${revisit}에서 마실 곳 찾는거야?`];
+          const rand = Math.floor(chlist.length * Math.random());
+          index.sendSocketMessage(socket.id, 'chat message button', chlist[rand], ['S2_freq', '응 맞아'], ['S1/another','다른 곳이야!']);
+        }
+        // 자주가는 지하철역 x
+        else {
+          const chlist = ['약속장소에서 가까운 지하철역을 입력해줘🚋',
+                          '어디 근처의 술집을 정해줄까?',
+                          '이번엔 어디에서 마셔볼까🍾',
+                          '오늘은 어디 술집을 털러 가볼까나😈',
+                          '오늘 술자리는 어디야?',
+                          '오늘은 어느 역 근처 술집을 털어볼까?',
+                          '어느 역 근처 술집을 골라줄까?',
+                          '술 어디에서 마실거야~?'];
+          const rand = Math.floor(chlist.length * Math.random());
+          index.sendSocketMessage(socket.id, 'chat message button', chlist[rand]);
+        }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, ['get_started', '처음으로 돌아가기']);
         console.log(e);
@@ -159,23 +182,32 @@ class Decide_drink {
       try {
         await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
         console.log("S2_1 value >> ", value);
-        let subway = value.replace(/ /gi, '');    // 입력값에서 공백제거
-        subway = (subway.slice(-1) !== '역') ? check_subway(`${subway}역`) : check_subway(subway);
 
-        const result = await info_update.food.verify_subway(socket.id, subway);
-        if (result === 'success') {
-            await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
-            const user_info = await info_update.profile.load_user(socket.id);
-            const db_subway = await user_info.subway;
-            (subway === db_subway) ? await info_update.profile.update_freq_subway(socket.id, subway)
-                                   : await info_update.profile.update_freq_subway(socket.id, 'null');
-            await info_update.profile.update_subway(socket.id, subway);
+        // 자주 가는 지하철역으로 올 경우
+        if (value === 'S2_freq') {
+          await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+          await info_update.profile.update_subway(socket.id, user_data.freq_subway);
         }
+        // 그 외
         else {
-          await index.sendSocketMessage(socket.id, 'chat message button', wrong_subway_input_msg(value), ['S1', '다시 입력하기']);
-          return;
-        }
+          let subway = value.replace(/ /gi, '');    // 입력값에서 공백제거
+          subway = (subway.slice(-1) !== '역') ? check_subway(`${subway}역`) : check_subway(subway);
 
+          const result = await info_update.food.verify_subway(socket.id, subway);
+          if (result === 'success') {
+              await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+              const user_info = await info_update.profile.load_user(socket.id);
+              const db_subway = await user_info.subway;
+              (subway === db_subway) ? await info_update.profile.update_freq_subway(socket.id, subway)
+                                     : await info_update.profile.update_freq_subway(socket.id, 'null');
+              await info_update.profile.update_subway(socket.id, subway);
+          }
+          else {
+            await index.sendSocketMessage(socket.id, 'chat message button', wrong_subway_input_msg(value), ['S1', '다시 입력하기']);
+            return;
+          }
+        }
+        
         const chlist = ['원하는 술+밥집 키워드를 하나만 골라봐!'];
         const rand = Math.floor(chlist.length * Math.random());
         index.sendSocketMessage(socket.id, 'chat message button', chlist[rand], ['S3/11', '가성비 좋은'], ['S3/12', '캐주얼한 식사/술'], ['S3/13', '고급진 요리/술'], ['S3/14', '아주 특별한 기념일$$$$'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
@@ -191,8 +223,14 @@ class Decide_drink {
       try {
         await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
         console.log("S2_2 value >> ", value);
+
+        // 자주가는 지하철역으로 왔을경우
+        if (value === 'S2_freq') {
+          await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+          await info_update.profile.update_subway(socket.id, user_data.freq_subway);
+        }
         // S0 500m내 에서 왔을경우
-        if(value.includes('gps')) {
+        else if (value.includes('gps')) {
           if (value.split('/')[1].includes('gps')) {
             const lat = value.split(':')[1].split(',')[0];
             const lng = value.split(':')[1].split(',')[1];
@@ -200,6 +238,7 @@ class Decide_drink {
             await info_update.profile.update_lng(socket.id, lng);
           }
         }
+
         // 그 외의 경우
         else {
           let subway = value.replace(/ /gi, '');    // 입력값에서 공백제거
