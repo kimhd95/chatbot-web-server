@@ -287,7 +287,9 @@ $(document).ready(function(){
     }
     else {
         //alert('이미 로그인되어 있습니다.');
-        location.href="/lobby";
+        // console.log("바로 로비창으로");
+        // location.href="/lobby";
+        console.log("비회원")
     }
     // 다음 버튼 터치
     $('.next-button').click(function() {
