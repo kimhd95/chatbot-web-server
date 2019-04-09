@@ -425,7 +425,7 @@ class Decide_drink {
                            '자! 더 마음에 드는데를 골라봐📌📌',
                            '둘중에 어디 갈까!!(이것도 고르기 힘들면 내가 골라줌^___^)',
                            '어디가 더 가고싶어?? 골라골라'];
-          const imglist = ['emoji/calculate.png', 'emoji/calculate2.png', 'emoji/letmesee.PNG', 'emoji/letmesee2.png', 'emoji/letmesee3.png', 'emoji/letmesee4.PNG'];
+          const imglist = ['emoji/calculate.png', 'emoji/calculate2.png', 'emoji/letmesee.png', 'emoji/letmesee2.png', 'emoji/letmesee3.png', 'emoji/letmesee4.png'];
           const rand1 = Math.floor(chlist1.length * Math.random());
           const rand2 = Math.floor(chlist2.length * Math.random());
           const rand_img = Math.floor(imglist.length * Math.random());
@@ -607,7 +607,11 @@ class Decide_drink {
             }
           }
         } else {
+<<<<<<< HEAD
           index.sendSocketMessage(socket.id, 'chat message button image', '여긴 다른 술집이 없네 ㅠㅠ... 힝힝', 'emoji/disappointed.PNG',['get_started', '처음으로 돌아가기']);
+=======
+          index.sendSocketMessage(socket.id, 'chat message button image', '여긴 다른 술집이 없네 ㅠㅠ... 힝힝.', 'emoji/disappointed.png',['get_started', '처음으로 돌아가기']);
+>>>>>>> 2b6dcbf2e35a17821bc6f6a8edf6f84aa0c1c2ae
         }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, ['get_started', '처음으로 돌아가기']);
@@ -673,7 +677,11 @@ class Decide_drink {
                                                                                   [rests[0].res_name, rests[0].drink_type, rests[0].food_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]]);
           }
         } else {
+<<<<<<< HEAD
           index.sendSocketMessage(socket.id, 'chat message button image', '여긴 비슷한 술집이 없네 ㅠㅠ... 힝힝', 'emoji/disappointed.PNG',['get_started', '처음으로 돌아가기']);
+=======
+          index.sendSocketMessage(socket.id, 'chat message button image', '여긴 비슷한 술집이 없네 ㅠㅠ... 힝힝.', 'emoji/disappointed.png',['get_started', '처음으로 돌아가기']);
+>>>>>>> 2b6dcbf2e35a17821bc6f6a8edf6f84aa0c1c2ae
         }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, ['get_started', '처음으로 돌아가기']);
@@ -715,7 +723,7 @@ class Decide_drink {
         await info_update.profile.create_decide_history(socket.id, user_data.rest1, user_data.rest2, final_value, food_value[0].res_name, food_value[0].subway);
         const naver_url = `https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${food_value[0].subway} ${food_value[0].res_name}`;
         const map_url = `https://map.naver.com/index.nhn?query=${food_value[0].subway} ${food_value[0].res_name}&tab=1`;
-        const chooseimglist = ['emoji/choose.PNG','emoji/choose2.PNG','emoji/choose3.png','emoji/goodchoice.PNG'];
+        const chooseimglist = ['emoji/choose.png','emoji/choose2.png','emoji/choose3.png','emoji/goodchoice.png'];
         const rand2 = Math.floor(chooseimglist.length * Math.random());
 
         await index.sendSocketMessage(socket.id, 'chat message button image', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name} 전문 ${food_value[0].drink_type}집이야!<br>`
