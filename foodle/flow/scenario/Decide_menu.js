@@ -1279,7 +1279,7 @@ class Decide_menu {
           const foods_info = foods.message;
           if (foods_info.length === 2) {
             await info_update.profile.update_rest2(user_data.kakao_id, foods_info[0].id, foods_info[1].id);
-            if (foods.try === 1) {
+            if (foods.try === 1 || foods.try === 0) {
               index.sendSocketMessage(socket.id, 'chat message button', '2곳을 골라줄테니까 한 번 골라봐!', ['decide_final', '고고'], ['get_started', '안할래'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
             } else if (foods.try === 2) {
               index.sendSocketMessage(socket.id, 'chat message button', `그 출구에는 딱 이거다 하는 곳은 없구... ${user_data.subway} 전체에서 2곳을 골라줄테니까 한 번 골라봐!`, ['decide_final', '고고'], ['get_started', '안할래'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
