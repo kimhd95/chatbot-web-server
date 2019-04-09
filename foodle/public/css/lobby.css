@@ -6,7 +6,7 @@
 
 @font-face {
   font-family: 'yeogi';
-  src: url('/fonts/ygotjalnanfont.ttf') format('truetype');
+  src: url('/fonts/ygotjalnanfont.ttf') format('embedded-opentype');
 
 }
 
