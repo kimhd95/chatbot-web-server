@@ -607,11 +607,7 @@ class Decide_drink {
             }
           }
         } else {
-<<<<<<< HEAD
           index.sendSocketMessage(socket.id, 'chat message button image', '여긴 다른 술집이 없네 ㅠㅠ... 힝힝', 'emoji/disappointed.PNG',['get_started', '처음으로 돌아가기']);
-=======
-          index.sendSocketMessage(socket.id, 'chat message button image', '여긴 다른 술집이 없네 ㅠㅠ... 힝힝.', 'emoji/disappointed.png',['get_started', '처음으로 돌아가기']);
->>>>>>> 2b6dcbf2e35a17821bc6f6a8edf6f84aa0c1c2ae
         }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, ['get_started', '처음으로 돌아가기']);
@@ -677,11 +673,7 @@ class Decide_drink {
                                                                                   [rests[0].res_name, rests[0].drink_type, rests[0].food_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]]);
           }
         } else {
-<<<<<<< HEAD
           index.sendSocketMessage(socket.id, 'chat message button image', '여긴 비슷한 술집이 없네 ㅠㅠ... 힝힝', 'emoji/disappointed.PNG',['get_started', '처음으로 돌아가기']);
-=======
-          index.sendSocketMessage(socket.id, 'chat message button image', '여긴 비슷한 술집이 없네 ㅠㅠ... 힝힝.', 'emoji/disappointed.png',['get_started', '처음으로 돌아가기']);
->>>>>>> 2b6dcbf2e35a17821bc6f6a8edf6f84aa0c1c2ae
         }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, ['get_started', '처음으로 돌아가기']);

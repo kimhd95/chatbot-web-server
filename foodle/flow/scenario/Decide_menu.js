@@ -43,10 +43,34 @@ const dictionary = {
     // { 'name': '종로3가역', 'lat': '37.5715', 'lng': '126.9912475' },
     // { 'name': '을지로3가역', 'lat': '37.566286', 'lng': '126.9917735' },
     // { 'name': '안국역', 'lat': '37.576556', 'lng': '126.985472' },
-
   ],
 };
+
 const data = dictionary.station;
+const available_subway = {
+                          '강남역': ['1,2,3,4번', '5,6,7,8번', '9,10번', '11,12번'],
+                          '선릉역': ['1,2번', '3,4번', '5,6,7번', '8,9,10번'],
+                          '서울대입구역': ['1,2번', '3,4번', '5,6번', '7,8번'],
+                          // '이대역': ['5번', '6번', '1,2번', '3,4번'],
+                          // '건대입구역': ['롯데백화점 스타시티 방면', '5,6번', '1,2번', '3,4번'],
+                          // '광화문역': ['5번', '6번', '1,7,8번', '2,3,4,9번'],
+                          // '뚝섬역': ['5,6번', '7,8번', '1,2번', '3,4번'],
+                          // '망원역': ['1번', '2번'],
+                          // '사당역': ['1,2,3번', '4,5,6번', '7,8,9,10번', '11,12,13,14번'],
+                          // '삼성역': ['1,2번', '3,4번', '5,6번', '7,8번'],
+                          // '선정릉역': ['3번', '4번', '1번', '2번'],
+                          // '성수역': ['3번', '4번', '1번', '2번'],
+                          // '여의도역': ['5번', '6번', '1,2번', '3,4번'],
+                          // '역삼역': ['1번', '2,3번', '4,5,6번', '7,8번'],
+                          // '왕십리역': ['6,13번', '6-1,7,8,9,10,11,12번', '1,2,3,4,5번'],
+                          // '을지로입구역': ['5,6번', '7,8번', '1, 1-1, 2번', '3,4번'],
+                          // '이태원역': ['3번', '4번', '1번', '2번'],
+                          '잠실역': ['1, 2, 2-1, 10, 11번', '3,4번', '5,6번', '7,8,9번'],
+                          // '종각역': ['4번', '5,6번', '1,2번', '3, 3-1번'],
+                          // '합정역': ['3,4,5,6번', '7번', '8번', '1,2,9,10번'],
+                          // '혜화역': ['2번', '3번', '4번', '1번'],
+                          // '홍대입구역': ['4,5,6번', '7,8,9번', '1,2,3번'],
+                         };
 
 function distance(lat1, lon1, lat2, lon2, value) { // Haversine 공식 : 구(지구) 에서 두 점(좌표) 사이 최단거리를 구하는 공식
   const p = 0.017453292519943295; // Math.PI / 180
@@ -450,28 +474,50 @@ class Decide_menu {
               const rand2 = Math.floor(imglist.length * Math.random());
               index.sendSocketMessage(socket.id, 'chat message button image', qna_list[qna_list_rand].question, `${imglist[rand2]}`, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value], [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value], [qna_list[qna_list_rand].button4_id, qna_list[qna_list_rand].button4_value]);
             } else {
-              const qna_list = [
-                  { //지하철역 검색->현재위치 500m내
-                      'question': '어떤 방식으로 메뉴를 정해보까나',
-                      'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색',
-                      'button2_id': 'price_under10', 'button2_value': '1만원 미만',
-                      'button3_id': 'mood2', 'button3_value': '식당 분위기 필터링',
-                      'button4_id': 'search_food', 'button4_value': '음식 종류 검색',
-                      'button5_id': 'previous/' + user_data.stack.replace(/"/gi, "@"), 'button5_value': '이전으로 돌아가기',
-                  },
-                  {
-                      'question': '오늘 메뉴는 어떻게 골라줄까?',
-                      'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색',
-                      'button2_id': 'price_under10', 'button2_value': '1만원 미만',
-                      'button3_id': 'mood2', 'button3_value': '식당 분위기 필터링',
-                      'button4_id': 'search_food', 'button4_value': '음식 종류 검색',
-                      'button5_id': 'previous/' + user_data.stack.replace(/"/gi, "@"), 'button5_value': '이전으로 돌아가기',
-                  },
-              ];
-              const qna_list_rand = Math.floor(qna_list.length * Math.random());
               const imglist = ['emoji/checking.png','emoji/checking2.png','emoji/thinking.png','emoji/thinking2.png'];
               const rand2 = Math.floor(imglist.length * Math.random());
-              index.sendSocketMessage(socket.id, 'chat message button image', qna_list[qna_list_rand].question, `${imglist[rand2]}`, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value], [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value], [qna_list[qna_list_rand].button4_id, qna_list[qna_list_rand].button4_value], [qna_list[qna_list_rand].button5_id, qna_list[qna_list_rand].button5_value]);
+              console.log(subway);
+              if (subway in available_subway) {
+                const qna_list = [
+                                    { //지하철역 검색->현재위치 500m내
+                                        'question': '어떤 방식으로 메뉴를 정해보까나',
+                                        'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색',
+                                        'button2_id': 'price_under10', 'button2_value': '1만원 미만',
+                                        'button3_id': 'mood2', 'button3_value': '식당 분위기 필터링',
+                                        'button4_id': 'search_food', 'button4_value': '음식 종류 검색',
+                                        'button5_id': 'previous/' + user_data.stack.replace(/"/gi, "@"), 'button5_value': '이전으로 돌아가기',
+                                    },
+                                    {
+                                        'question': '오늘 메뉴는 어떻게 골라줄까?',
+                                        'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색',
+                                        'button2_id': 'price_under10', 'button2_value': '1만원 미만',
+                                        'button3_id': 'mood2', 'button3_value': '식당 분위기 필터링',
+                                        'button4_id': 'search_food', 'button4_value': '음식 종류 검색',
+                                        'button5_id': 'previous/' + user_data.stack.replace(/"/gi, "@"), 'button5_value': '이전으로 돌아가기',
+                                    },
+                                ];
+                const qna_list_rand = Math.floor(qna_list.length * Math.random());
+                await index.sendSocketMessage(socket.id, 'chat message button image', qna_list[qna_list_rand].question, `${imglist[rand2]}`, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value], [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value], [qna_list[qna_list_rand].button4_id, qna_list[qna_list_rand].button4_value], [qna_list[qna_list_rand].button5_id, qna_list[qna_list_rand].button5_value]);
+              } else {
+                const qna_list = [
+                                    { //지하철역 검색->현재위치 500m내
+                                        'question': '어떤 방식으로 메뉴를 정해보까나',
+                                        'button1_id': 'price_under10', 'button1_value': '1만원 미만',
+                                        'button2_id': 'mood2', 'button2_value': '식당 분위기 필터링',
+                                        'button3_id': 'search_food', 'button3_value': '음식 종류 검색',
+                                        'button4_id': 'previous/' + user_data.stack.replace(/"/gi, "@"), 'button4_value': '이전으로 돌아가기',
+                                    },
+                                    {
+                                        'question': '오늘 메뉴는 어떻게 골라줄까?',
+                                        'button1_id': 'price_under10', 'button1_value': '1만원 미만',
+                                        'button2_id': 'mood2', 'button2_value': '식당 분위기 필터링',
+                                        'button3_id': 'search_food', 'button3_value': '음식 종류 검색',
+                                        'button4_id': 'previous/' + user_data.stack.replace(/"/gi, "@"), 'button4_value': '이전으로 돌아가기',
+                                    },
+                                ];
+                const qna_list_rand = Math.floor(qna_list.length * Math.random());
+                await index.sendSocketMessage(socket.id, 'chat message button image', qna_list[qna_list_rand].question, `${imglist[rand2]}`, [qna_list[qna_list_rand].button1_id, qna_list[qna_list_rand].button1_value], [qna_list[qna_list_rand].button2_id, qna_list[qna_list_rand].button2_value], [qna_list[qna_list_rand].button3_id, qna_list[qna_list_rand].button3_value], [qna_list[qna_list_rand].button4_id, qna_list[qna_list_rand].button4_value]);
+              }
             }
         } catch (e) {
             index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
@@ -517,7 +563,9 @@ class Decide_menu {
                 let apicall;
 
                 // 예외처리 하는부분
-                if (search_food === '초밥') {
+                if (search_food === '고기') {
+                  apicall = await info_update.food.verify_search_food(socket.id, ['고기', '바비큐'], subway);
+                } else if (search_food === '초밥') {
                   apicall = await info_update.food.verify_search_food(socket.id, ['초밥', '스시', '오마카세'], subway);
                 } else if (search_food === '매운 음식') {
                   apicall = await info_update.food.verify_search_food(socket.id, '매운', subway);
@@ -528,10 +576,10 @@ class Decide_menu {
                 }
 
                 if (apicall.result === 'success') {
-                    await info_update.profile.update_food_name(socket.id, search_food);
-                    const chlist = [search_food+' 찾았다! 이걸로 추천해줄게 잠깐만~',search_food+' 있다있어~ 잠깐만 기다료바'];
-                    const rand = Math.floor(chlist.length * Math.random());
-                    index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`,['view_recommend_food', '추천 보러가기'], ['get_started', '처음으로'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
+                  await info_update.profile.update_food_name(socket.id, search_food);
+                  const chlist = [search_food+' 찾았다! 이걸로 추천해줄게 잠깐만~',search_food+' 있다있어~ 잠깐만 기다료바'];
+                  const rand = Math.floor(chlist.length * Math.random());
+                  index.sendSocketMessage(socket.id, 'chat message button', `${chlist[rand]}`,['view_recommend_food', '추천 보러가기'], ['get_started', '처음으로'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
                 } else {
                   await info_update.profile.update_state(socket.id, '1', 'search_food');
                   await index.sendSocketMessage(socket.id, 'chat message button', search_food+` 검색어로 찾을 수 있는 식당이 없네ㅠㅠ 다시 검색해볼래?`, ['-직접 입력', '다시 검색하기'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로']);
@@ -766,30 +814,6 @@ class Decide_menu {
                              `${subway} 몇 번 출구쪽이 좋아? 모르면 "상관없음" 버튼을 눌러주면 돼!`];
           const exit_rand = Math.floor(exit_list.length * Math.random());
 
-          const available_subway = {
-                                    '강남역': ['1,2,3,4번', '5,6,7,8번', '9,10번', '11,12번'],
-                                    '선릉역': ['1,2번', '3,4번', '5,6,7번', '8,9,10번'],
-                                    '서울대입구역': ['1,2번', '3,4번', '5,6번', '7,8번'],
-                                    '이대역': ['5번', '6번', '1,2번', '3,4번'],
-                                    '건대입구역': ['롯데백화점 스타시티 방면', '5,6번', '1,2번', '3,4번'],
-                                    '광화문역': ['5번', '6번', '1,7,8번', '2,3,4,9번'],
-                                    '뚝섬역': ['5,6번', '7,8번', '1,2번', '3,4번'],
-                                    // '망원역': ['1번', '2번'],
-                                    '사당역': ['1,2,3번', '4,5,6번', '7,8,9,10번', '11,12,13,14번'],
-                                    '삼성역': ['1,2번', '3,4번', '5,6번', '7,8번'],
-                                    '선정릉역': ['3번', '4번', '1번', '2번'],
-                                    '성수역': ['3번', '4번', '1번', '2번'],
-                                    '여의도역': ['5번', '6번', '1,2번', '3,4번'],
-                                    '역삼역': ['1번', '2,3번', '4,5,6번', '7,8번'],
-                                    // '왕십리역': ['6,13번', '6-1,7,8,9,10,11,12번', '1,2,3,4,5번'],
-                                    '을지로입구역': ['5,6번', '7,8번', '1, 1-1, 2번', '3,4번'],
-                                    '이태원역': ['3번', '4번', '1번', '2번'],
-                                    '잠실역': ['1, 2, 2-1, 10, 11번', '3,4번', '5,6번', '7,8,9번'],
-                                    '종각역': ['4번', '5,6번', '1,2번', '3, 3-1번'],
-                                    '합정역': ['3,4,5,6번', '7번', '8번', '1,2,9,10번'],
-                                    '혜화역': ['2번', '3번', '4번', '1번'],
-                                    // '홍대입구역': ['4,5,6번', '7,8,9번', '1,2,3번'],
-                                   };
           if (subway in available_subway) {
             await index.sendSocketMessage(socket.id, 'chat message button checkbox map', `${subway} 몇 번 출구?`, `${subway}`, `images/${subway}.png`, ['999', '상관없어'], ['4', available_subway[subway][0]], ['3', available_subway[subway][1]], ['2', available_subway[subway][2]], ['1', available_subway[subway][3]], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기'], ['exit/', '선택완료']);
           }
