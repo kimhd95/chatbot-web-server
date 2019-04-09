@@ -233,7 +233,7 @@ class Decide_menu {
                          'emoji/hello3.png',
                          'emoji/hello4.png',
                          'emoji/hello_soup.png',
-                         'emoji/sushicorgi.PNG'];
+                         'emoji/sushicorgi.png'];
 
         await info_update.profile.update_place_start(socket.id);
         const user_info = await info_update.profile.load_user(socket.id);
@@ -1220,7 +1220,7 @@ class Decide_menu {
             await info_update.profile.update_rest2(user_data.kakao_id, foods_info[0].id, foods_info[1].id);
             index.sendSocketMessage(socket.id, 'chat message button', '2곳을 골라줄테니까 한 번 골라봐!', [`decide_final/${foods_info[0].distance},${foods_info[1].distance}`, '고고'], ['get_started', '안할래'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
           } else {
-            index.sendSocketMessage(socket.id, 'chat message button image', '조건에 맞는 식당이 아직 없어... 다시 골라줘!', 'emoji/hungry3.PNG',['get_started', '처음으로'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
+            index.sendSocketMessage(socket.id, 'chat message button image', '조건에 맞는 식당이 아직 없어... 다시 골라줘!', 'emoji/hungry3.png',['get_started', '처음으로'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
           }
         } else if (value.includes('view_recommend_food')) {
           // search_food 인 경우
@@ -1245,7 +1245,7 @@ class Decide_menu {
               await info_update.profile.update_rest2(user_data.kakao_id, foods_info[0].id, foods_info[1].id);
               index.sendSocketMessage(socket.id, 'chat message button', '2곳을 골라줄테니까 한 번 골라봐!', ['decide_final', '고고'], ['get_started', '안할래'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
             } else {
-              index.sendSocketMessage(socket.id, 'chat message button image', '조건에 맞는 식당이 아직 없어... 다시 골라줘!', 'emoji/hungry3.PNG',['get_started', '처음으로'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
+              index.sendSocketMessage(socket.id, 'chat message button image', '조건에 맞는 식당이 아직 없어... 다시 골라줘!', 'emoji/hungry3.png',['get_started', '처음으로'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
             }
           });
           // const foods = await info_update.food.verify_search_food(socket.id, user_data.food_name, user_data.subway);
@@ -1261,7 +1261,7 @@ class Decide_menu {
               index.sendSocketMessage(socket.id, 'chat message button', `그 출구에는 딱 이거다 하는 곳은 없구... ${user_data.subway} 전체에서 2곳을 골라줄테니까 한 번 골라봐!`, ['decide_final', '고고'], ['get_started', '안할래'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
             }
           } else {
-            index.sendSocketMessage(socket.id, 'chat message button image', '조건에 맞는 식당이 아직 없어... 다시 골라줘!', 'emoji/hungry3.PNG',['get_started', '처음으로'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
+            index.sendSocketMessage(socket.id, 'chat message button image', '조건에 맞는 식당이 아직 없어... 다시 골라줘!', 'emoji/hungry3.png',['get_started', '처음으로'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
           }
         }
       } catch (e) {
@@ -1299,7 +1299,7 @@ class Decide_menu {
             await index.sendSocketMessage(socket.id, 'chat message card', ['final/1/similar', foods[0].res_name], ['final/2/similar', foods[1].res_name], ['final/3/similar', '코기가 골라주기'], [],[foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
           }//TODO: 전화번호 예약 연결(완료), 내비연결, 오픈-클로즈,휴무,라스트오더, 위시리스트
         } else {
-          index.sendSocketMessage(socket.id, 'chat message button image', '여긴 비슷한 식당이 없네 ㅠㅠ... 힝힝.', 'emoji/disappointed.PNG',['get_started', '처음으로 돌아가기']);
+          index.sendSocketMessage(socket.id, 'chat message button image', '여긴 비슷한 식당이 없네 ㅠㅠ... 힝힝.', 'emoji/disappointed.png',['get_started', '처음으로 돌아가기']);
         }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
@@ -1363,7 +1363,7 @@ class Decide_menu {
                                                                                   [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
           }
         } else {
-          index.sendSocketMessage(socket.id, 'chat message button image', '여긴 다른 식당이 없네 ㅠㅠ... 힝힝.', 'emoji/disappointed.PNG',['get_started', '처음으로 돌아가기']);
+          index.sendSocketMessage(socket.id, 'chat message button image', '여긴 다른 식당이 없네 ㅠㅠ... 힝힝.', 'emoji/disappointed.png',['get_started', '처음으로 돌아가기']);
         }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
@@ -1391,10 +1391,10 @@ class Decide_menu {
                         '머리굴러가는소리 도륵도륵'];
         const imglist = ['emoji/calculate.png',
                          'emoji/calculate2.png',
-                         'emoji/letmesee.PNG',
+                         'emoji/letmesee.png',
                          'emoji/letmesee2.png',
                          'emoji/letmesee3.png',
-                         'emoji/letmesee4.PNG'];
+                         'emoji/letmesee4.png'];
         const rand = Math.floor(chlist.length * Math.random());
         const rand2 = Math.floor(imglist.length * Math.random());
 
@@ -1468,7 +1468,7 @@ class Decide_menu {
         await info_update.profile.create_decide_history(socket.id, user_data.rest1, user_data.rest2, final_value, food_value[0].res_name, food_value[0].subway);
         const naver_url = `https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${food_value[0].subway} ${food_value[0].res_name}`;
         const map_url = `https://map.naver.com/index.nhn?query=${food_value[0].subway} ${food_value[0].res_name}&tab=1`;
-        const chooseimglist = ['emoji/choose.PNG','emoji/choose2.PNG','emoji/choose3.png','emoji/goodchoice.PNG'];
+        const chooseimglist = ['emoji/choose.png','emoji/choose2.png','emoji/choose3.png','emoji/goodchoice.png'];
         const rand2 = Math.floor(chooseimglist.length * Math.random());
 
           if(value.split('/')[2] === 'similar') {
