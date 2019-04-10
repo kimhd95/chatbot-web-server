@@ -344,9 +344,9 @@
 
   /* overflow-x: scroll; */
 
-  width: 179px;
+  width: 164px;
   max-height: 100%;
-  /* margin-right: 20px; */
+  margin-right: 15px;
   border-radius: 10px;
   background: #61451b;
   color: #ffffff;
