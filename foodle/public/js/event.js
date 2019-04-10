@@ -290,7 +290,7 @@ function bot_messaging_card_distance(res_name, res_type, food_name, naver_url, m
 function bot_messaging_card_inner(res_name, res_type, food_name, naver_url, map_url, image, image2, image3) {
   const carousel_id = `carousel${String(Math.floor(Math.random() * 10000) + 1)}`;
   let message_info = `
-              <div class="choice_card">
+              <div class="choice_card_inner">
                 <div id="${carousel_id}" class="carousel slide" data-ride="carousel" data-wrap="false">
                   <div class="carousel-inner">
                     <div class="carousel-item active">
@@ -322,7 +322,7 @@ function bot_messaging_card_inner(res_name, res_type, food_name, naver_url, map_
       `;
   if (res_type === null || res_type === undefined) {
     message_info = `
-                <div class="choice_card">
+                <div class="choice_card_inner">
                   <div id="${carousel_id}" class="carousel slide" data-ride="carousel" data-wrap="false">
                     <div class="carousel-inner">
                       <div class="carousel-item active">
@@ -359,7 +359,7 @@ function bot_messaging_card_inner(res_name, res_type, food_name, naver_url, map_
 function bot_messaging_card_inner_distance(res_name, res_type, food_name, naver_url, map_url, image, image2, image3, distance) {
   const carousel_id = `carousel${String(Math.floor(Math.random() * 10000) + 1)}`;
   let message_info = `
-              <div class="choice_card">
+              <div class="choice_card_inner">
                 <div id="${carousel_id}" class="carousel slide" data-ride="carousel" data-wrap="false">
                   <div class="carousel-inner">
                     <div class="carousel-item active">
@@ -391,7 +391,7 @@ function bot_messaging_card_inner_distance(res_name, res_type, food_name, naver_
       `;
   if (res_type === null || res_type === undefined) {
     message_info = `
-                <div class="choice_card">
+                <div class="choice_card_inner">
                   <div id="${carousel_id}" class="carousel slide" data-ride="carousel" data-wrap="false">
                     <div class="carousel-inner">
                       <div class="carousel-item active">
@@ -490,7 +490,7 @@ function bot_messaging_card_no_image_distance(res_name, res_type, food_name, nav
 
 function bot_messaging_card_inner_no_image(res_name, res_type, food_name, naver_url, map_url) {
   let message_info = `
-              <div class="choice_card">
+              <div class="choice_card_inner">
                 <div class="choice_card_content">
                   <h5 class="card-title">${res_name}</h5>
                   <p class="card-text">${res_type} / ${food_name}</p>
@@ -501,7 +501,7 @@ function bot_messaging_card_inner_no_image(res_name, res_type, food_name, naver_
       `;
   if (res_type === null || res_type === undefined) {
     message_info = `
-                <div class="choice_card">
+                <div class="choice_card_inner">
                   <div class="choice_card_content">
                     <h5 class="card-title">${res_name}</h5>
                     <p class="card-text">${food_name}</p>
@@ -515,7 +515,7 @@ function bot_messaging_card_inner_no_image(res_name, res_type, food_name, naver_
 }
 function bot_messaging_card_inner_no_image_distance(res_name, res_type, food_name, naver_url, map_url, distance) {
   let message_info = `
-              <div class="choice_card">
+              <div class="choice_card_inner">
                 <div class="choice_card_content">
                   <h5 class="card-title">${res_name +' ('+distance+'m)'}</h5>
                   <p class="card-text">${res_type} / ${food_name}</p>
@@ -526,7 +526,7 @@ function bot_messaging_card_inner_no_image_distance(res_name, res_type, food_nam
       `;
   if (res_type === null || res_type === undefined) {
     message_info = `
-                <div class="choice_card">
+                <div class="choice_card_inner">
                   <div class="choice_card_content">
                     <h5 class="card-title">${res_name +' ('+distance+'m)'}</h5>
                     <p class="card-text">${food_name}</p>

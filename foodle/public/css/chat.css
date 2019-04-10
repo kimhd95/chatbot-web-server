@@ -342,16 +342,27 @@
   display:flex;
   flex-direction: column;
 
-  /* overflow-x: scroll; */
-
-  width: 164px;
+  width: 170px;
   max-height: 100%;
-  margin-right: 15px;
+  margin-right: 18px;
   border-radius: 10px;
   background: #61451b;
   color: #ffffff;
   box-shadow: 1px 3px 2px 1px #ccc;
 }
+
+.choice_card_inner{
+  position: relative;
+  display:flex;
+  flex-direction: column;
+  width: 170px;
+  max-height: 100%;
+  border-radius: 10px;
+  background: #61451b;
+  color: #ffffff;
+  box-shadow: 1px 3px 2px 1px #ccc;
+}
+
 
 .choice_card_winner {
   position: absolute;
