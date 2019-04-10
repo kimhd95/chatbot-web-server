@@ -112,7 +112,7 @@ function logout(loginValue) {
 
 window.onpageshow = function(event) {
   if (event.persisted) {
-    const userinfo = {
+    let userinfo2 = {
         method: "POST",
         url: '/api/v1/users/update_state_email',
         body: {
@@ -146,7 +146,7 @@ window.onpageshow = function(event) {
             alert("정보 업데이트가 실패했습니다.");
         }
     };
-    sendReq(userinfo);
+    sendReq(userinfo2);
   } else {
     $(document).ready(function(){
     // $(document).ready(() => {
