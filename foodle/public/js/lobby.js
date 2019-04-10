@@ -111,213 +111,212 @@ function logout(loginValue) {
 }
 
 window.onpageshow = function(event) {
-  if (event.persisted) {
-    alert("모바일 백 이벤트")
-  } else {
-    $(document).ready(function(){
-    // $(document).ready(() => {
+  // if (event.persisted) {
+  //   alert("모바일 백 이벤트")
+  // }
+  $(document).ready(function(){
+  // $(document).ready(() => {
 
-      let loginValue = sessionStorage.getItem('login');
-      let emailValue = sessionStorage.getItem('email');
-    
-      if(loginValue===null && emailValue!==null && emailValue.split('@')[1]!=='jellylab.io'){
-        sessionStorage.setItem('login', '0');
-      }
+    let loginValue = sessionStorage.getItem('login');
+    let emailValue = sessionStorage.getItem('email');
 
-      if(loginValue===null && emailValue!==null && emailValue.split('@')[1]==='jellylab.io'){
-        onetimeLogout();
-      }
+    if(loginValue===null && emailValue!==null && emailValue.split('@')[1]!=='jellylab.io'){
+      sessionStorage.setItem('login', '0');
+    }
 
-      const info = {
-          url: '/api/v1/users/verify_token',
-          method: 'POST',
-          data: null,
-          async: true,
-          crossDomain: true,
-          redirect: 'follow',
+    if(loginValue===null && emailValue!==null && emailValue.split('@')[1]==='jellylab.io'){
+      onetimeLogout();
+    }
 
-          xhrFields: {
-              withCredentials: true
-          },
-          success: function (res) {
-              if (res.success) {
-                  console.log(res);
-                  console.log('verifyToken success');
-                  $('#question-name').val(res.name);
-                  if(sessionStorage.getItem('login')==='0' || sessionStorage.getItem('login')===null){
-                    sessionStorage.setItem('login', '0');
-                    sessionStorage.setItem('email', res.email);
-                    $('#profile-name').addClass('.a');
-                    $('#profile-name').append(res.name + " 님");
-                    $('#profile-email').addClass('.a');
-                    $('#profile-email').append(res.email);
-                    $('#question-email').val(res.email);
-                  }
-                  // $('#question-content').attr("placeholder", "Type here to search");
-                } else {
-                  console.log('verifyToken fail');
-                  console.log(res);
-              }
-          },
-          error: function (e) {
-              console.log('ajax call error: login page - verifyToken');
-              if (e.status === 404 && e.responseText.includes("API call URL not found.")) {
-                  console.log("check your URL, method(GET/POST)");
-              }else if(e.status === 403){
-                  if (e.responseText.includes("No token provided.")) {
-                      console.log("No token, no problem.");
-                      alert('로그인해주세요.');
-                      location.href = '/';
-                  }
-                  else if (e.responseText.includes("jwt malformed"))
-                      console.log("Malformed token");
-                  else if (e.responseText.includes("invalid signature"))
-                      console.log("Modified token");
-                  else console.log(e);
-              } else if(e.status === 0){
-                  if(navigator.onLine){
-                      console.log('status : 0');
-                  }else {
-                      console.log('internet disconnected');
-                      window.location.reload();
-                  }
-              } else{
-                  console.log('status: ' + e.status + ', message: ' + e.responseText);
-                  console.log(e);
-              }
-          }
+    const info = {
+        url: '/api/v1/users/verify_token',
+        method: 'POST',
+        data: null,
+        async: true,
+        crossDomain: true,
+        redirect: 'follow',
+
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (res) {
+            if (res.success) {
+                console.log(res);
+                console.log('verifyToken success');
+                $('#question-name').val(res.name);
+                if(sessionStorage.getItem('login')==='0' || sessionStorage.getItem('login')===null){
+                  sessionStorage.setItem('login', '0');
+                  sessionStorage.setItem('email', res.email);
+                  $('#profile-name').addClass('.a');
+                  $('#profile-name').append(res.name + " 님");
+                  $('#profile-email').addClass('.a');
+                  $('#profile-email').append(res.email);
+                  $('#question-email').val(res.email);
+                }
+                // $('#question-content').attr("placeholder", "Type here to search");
+              } else {
+                console.log('verifyToken fail');
+                console.log(res);
+            }
+        },
+        error: function (e) {
+            console.log('ajax call error: login page - verifyToken');
+            if (e.status === 404 && e.responseText.includes("API call URL not found.")) {
+                console.log("check your URL, method(GET/POST)");
+            }else if(e.status === 403){
+                if (e.responseText.includes("No token provided.")) {
+                    console.log("No token, no problem.");
+                    alert('로그인해주세요.');
+                    location.href = '/';
+                }
+                else if (e.responseText.includes("jwt malformed"))
+                    console.log("Malformed token");
+                else if (e.responseText.includes("invalid signature"))
+                    console.log("Modified token");
+                else console.log(e);
+            } else if(e.status === 0){
+                if(navigator.onLine){
+                    console.log('status : 0');
+                }else {
+                    console.log('internet disconnected');
+                    window.location.reload();
+                }
+            } else{
+                console.log('status: ' + e.status + ', message: ' + e.responseText);
+                console.log(e);
+            }
         }
-        sendTokenReq(info);
-
-      if(loginValue==='-1'){
-        $('#profile').remove();
-        $('#alarm-setting').remove();
-        $('#wing-logout').remove();
-        $('#wing-withdraw').remove();
-        $('#wing-ask').css('margin-top','5vh');
-        $('.alarm-space').css('height', '8vh');
-        $('#wing-login').show();
-        $('#wing-signup').show();
       }
+      sendTokenReq(info);
 
-      $('#wing-login').click(function(){
-        onetimeLogout('login');
-      })
+    if(loginValue==='-1'){
+      $('#profile').remove();
+      $('#alarm-setting').remove();
+      $('#wing-logout').remove();
+      $('#wing-withdraw').remove();
+      $('#wing-ask').css('margin-top','5vh');
+      $('.alarm-space').css('height', '8vh');
+      $('#wing-login').show();
+      $('#wing-signup').show();
+    }
 
-      $('#wing-signup').click(function(){
-        onetimeLogout('signup');
-      })
+    $('#wing-login').click(function(){
+      onetimeLogout('login');
+    })
 
-      $('#choose-rest').click(function(){
-        sessionStorage.setItem('stage', 'decide_menu');
-        sessionStorage.setItem('name', '식당 고르기');
-        console.log('restaurant choose');
-        location.href='/chat';
-      })
+    $('#wing-signup').click(function(){
+      onetimeLogout('signup');
+    })
 
-      $('#choose-drink').click(function(){
-        sessionStorage.setItem('stage','decide_drink');
-        sessionStorage.setItem('name', '술집 고르기');
-        console.log('drink choose');
-        location.href='/chat';
-      })
+    $('#choose-rest').click(function(){
+      sessionStorage.setItem('stage', 'decide_menu');
+      sessionStorage.setItem('name', '식당 고르기');
+      console.log('restaurant choose');
+      location.href='/chat';
+    })
 
-      $('#choose-middle').click(function(){
-        sessionStorage.setItem('stage','decide_place');
-        sessionStorage.setItem('name', '중간지점 찾기(서울)');
-        console.log('middle choose');
-        location.href='/chat';
-      })
+    $('#choose-drink').click(function(){
+      sessionStorage.setItem('stage','decide_drink');
+      sessionStorage.setItem('name', '술집 고르기');
+      console.log('drink choose');
+      location.href='/chat';
+    })
 
-      $('#choose-cafe').click(function(){
-        sessionStorage.setItem('stage','decide_cafe');
-        sessionStorage.setItem('name', '카페 고르기');
-        console.log('cafe choose');
-        location.href='/chat';
-      })
+    $('#choose-middle').click(function(){
+      sessionStorage.setItem('stage','decide_place');
+      sessionStorage.setItem('name', '중간지점 찾기(서울)');
+      console.log('middle choose');
+      location.href='/chat';
+    })
 
-      $('.nav').slideAndSwipe();
+    $('#choose-cafe').click(function(){
+      sessionStorage.setItem('stage','decide_cafe');
+      sessionStorage.setItem('name', '카페 고르기');
+      console.log('cafe choose');
+      location.href='/chat';
+    })
 
-      $('#logout-btn').click(function(){
-        console.log('logout clicked');
-        logout(loginValue);
-      })
+    $('.nav').slideAndSwipe();
 
-      $('#withdraw-btn').click(function() {
-        var password = prompt("비밀번호를 입력하세요", "");
+    $('#logout-btn').click(function(){
+      console.log('logout clicked');
+      logout(loginValue);
+    })
 
-        if(password === null) {
-          console.log("취소");
-        } else {
-          if (confirm('정말 탈퇴하시겠습니까? 탈퇴하시면 모든 데이터가 소멸됩니다.')) {
-            const info = {
-              url: '/api/v1/users/member_withdraw',
-              method: 'POST',
-              body: {
-                email: sessionStorage.getItem('email'),
-                password: password
-              },
-              success: function(res) {
-                if (res.success) {
-                  // if (sessionStorage.getItem('login') === '3') {
-                  //   googleSignOut();
-                  // }
-                  sessionStorage.clear();
-                  localStorage.clear();
-                  alert('탈퇴했습니다.');
-                  window.location.replace(res.redirect);
-                }
-              },
-              error: function (e) {
-                console.log(e.responseJSON);
-                if(e.responseJSON.message.indexOf('not match') !== -1) {
-                  alert('비밀번호가 틀렸습니다.');
-                }
+    $('#withdraw-btn').click(function() {
+      var password = prompt("비밀번호를 입력하세요", "");
+
+      if(password === null) {
+        console.log("취소");
+      } else {
+        if (confirm('정말 탈퇴하시겠습니까? 탈퇴하시면 모든 데이터가 소멸됩니다.')) {
+          const info = {
+            url: '/api/v1/users/member_withdraw',
+            method: 'POST',
+            body: {
+              email: sessionStorage.getItem('email'),
+              password: password
+            },
+            success: function(res) {
+              if (res.success) {
+                // if (sessionStorage.getItem('login') === '3') {
+                //   googleSignOut();
+                // }
+                sessionStorage.clear();
+                localStorage.clear();
+                alert('탈퇴했습니다.');
+                window.location.replace(res.redirect);
+              }
+            },
+            error: function (e) {
+              console.log(e.responseJSON);
+              if(e.responseJSON.message.indexOf('not match') !== -1) {
+                alert('비밀번호가 틀렸습니다.');
               }
             }
-            sendTokenReq(info);
           }
+          sendTokenReq(info);
         }
-      });
-
-      const userinfo = {
-          method: "POST",
-          url: '/api/v1/users/update_state_email',
-          body: {
-              email: emailValue,
-          },
-          success: function (res) {
-              if (res.success){
-                  console.log("updateStateReq: success!");
-              }else {
-                  console.log("signUpReq: fail!");
-                  console.log(res);
-              }
-          },
-          error: function(e) {
-              console.log('ajax call error: signup page - updateStateReq');
-              if (e.status === 404 && e.responseText.includes("API call URL not found."))
-                  console.log("check your URL, method(GET/POST)");
-              else if ((e.status === 400 && e.responseText.includes("not provided"))
-                  || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
-                  console.log("check your parameters");
-              } else if(e.status === 0){
-                  if(navigator.onLine){
-                      console.log('status : 0');
-                  }else {
-                      console.log('internet disconnected');
-                      window.location.reload();
-                  }
-              } else {
-                  console.log('status: ' + e.status + ', message: ' + e.responseText);
-              }
-              alert("정보 업데이트가 실패했습니다.");
-          }
-      };
-      sendReq(userinfo);
-
+      }
     });
-  }
+
+    const userinfo = {
+        method: "POST",
+        url: '/api/v1/users/update_state_email',
+        body: {
+            email: emailValue,
+        },
+        success: function (res) {
+            if (res.success){
+                console.log("updateStateReq: success!");
+            }else {
+                console.log("signUpReq: fail!");
+                console.log(res);
+            }
+        },
+        error: function(e) {
+            console.log('ajax call error: signup page - updateStateReq');
+            if (e.status === 404 && e.responseText.includes("API call URL not found."))
+                console.log("check your URL, method(GET/POST)");
+            else if ((e.status === 400 && e.responseText.includes("not provided"))
+                || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
+                console.log("check your parameters");
+            } else if(e.status === 0){
+                if(navigator.onLine){
+                    console.log('status : 0');
+                }else {
+                    console.log('internet disconnected');
+                    window.location.reload();
+                }
+            } else {
+                console.log('status: ' + e.status + ', message: ' + e.responseText);
+            }
+            alert("정보 업데이트가 실패했습니다.");
+        }
+    };
+    sendReq(userinfo);
+
+  });
 }
 // $(document).ready(function(){
 // // $(document).ready(() => {
