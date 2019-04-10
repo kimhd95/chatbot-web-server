@@ -51,7 +51,8 @@
     display: flex;
 }
 #chat-room .card {
-    height: 100vh;
+    /* height: 100vh; */
+    height:100%;
 
     /* 추가 */
     border-radius: 10px;
