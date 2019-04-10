@@ -113,6 +113,7 @@ function logout(loginValue) {
 window.onpageshow = function(event) {
   if (event.persisted) {
     alert('모바일 백 이벤트')
+    let emailValue = sessionStorage.getItem('email');
     let userinfo2 = {
         method: "POST",
         url: '/api/v1/users/update_state_email',
