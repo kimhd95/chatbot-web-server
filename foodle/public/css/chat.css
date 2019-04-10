@@ -107,7 +107,8 @@
 }
 
 .card-body {
-    height: 500px;
+    /* height: 500px; */
+    height:80%;
     overflow: scroll;
 }
 
