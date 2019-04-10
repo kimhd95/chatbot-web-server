@@ -315,9 +315,9 @@
   position: relative;
   display:flex;
   flex-direction: row;
-  overflow-x: auto;
+  /* overflow-x: auto; */
   /* overflow-y: scroll; */
-  height: 404px;
+  /* height: 404px; */
   /* -webkit-overflow-scrolling:touch; */
   margin-bottom: 10px;
 }
@@ -341,6 +341,9 @@
   position: relative;
   display:flex;
   flex-direction: column;
+
+  overflow-y: scroll;
+
   width: 220px;
   max-height: 100%;
   margin-right: 20px;
