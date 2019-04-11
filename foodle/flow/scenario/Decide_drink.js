@@ -139,7 +139,7 @@ class Decide_drink {
     (async function () {
       try {
         console.log("S1 value >> ", value);
-        await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+        await info_update.profile.update_stack(socket.id, `${user_data.stack},{"state":"${user_data.state}","value":"${value}"}`);
         const drink_round = value.split('/')[1];
 
         let revisit;
@@ -188,7 +188,7 @@ class Decide_drink {
 
         // 자주 가는 지하철역으로 올 경우
         if (value === 'S2_freq') {
-          await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+          await info_update.profile.update_stack(socket.id, `${user_data.stack},{"state":"${user_data.state}","value":"${value}"}`);
           await info_update.profile.update_subway(socket.id, user_data.freq_subway);
         }
         // 그 외
@@ -198,7 +198,7 @@ class Decide_drink {
 
           const result = await info_update.food.verify_subway(socket.id, subway);
           if (result === 'success') {
-              await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+              await info_update.profile.update_stack(socket.id, `${user_data.stack},{"state":"${user_data.state}","value":"${value}"}`);
               const user_info = await info_update.profile.load_user(socket.id);
               const db_subway = await user_info.subway;
               (subway === db_subway) ? await info_update.profile.update_freq_subway(socket.id, subway)
@@ -223,12 +223,12 @@ class Decide_drink {
   S2_2_decide_mood(value, socket, user_data) {
     (async function () {
       try {
-        await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+        await info_update.profile.update_stack(socket.id, `${user_data.stack},{"state":"${user_data.state}","value":"${value}"}`);
         console.log("S2_2 value >> ", value);
 
         // 자주가는 지하철역으로 왔을경우
         if (value === 'S2_freq') {
-          await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+          await info_update.profile.update_stack(socket.id, `${user_data.stack},{"state":"${user_data.state}","value":"${value}"}`);
           await info_update.profile.update_subway(socket.id, user_data.freq_subway);
         }
         // S0 500m내 에서 왔을경우
@@ -248,7 +248,7 @@ class Decide_drink {
 
           const result = await info_update.food.verify_subway(socket.id, subway);
           if (result === 'success') {
-              await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+              await info_update.profile.update_stack(socket.id, `${user_data.stack},{"state":"${user_data.state}","value":"${value}"}`);
               const user_info = await info_update.profile.load_user(socket.id);
               const db_subway = await user_info.subway;
               (subway === db_subway) ? await info_update.profile.update_freq_subway(socket.id, subway)
@@ -272,7 +272,7 @@ class Decide_drink {
   S3__decide_drink_type(value, socket, user_data) {
     (async function () {
       try {
-        await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+        await info_update.profile.update_stack(socket.id, `${user_data.stack},{"state":"${user_data.state}","value":"${value}"}`);
         console.log("S3 value >> ", value);
         const keyword = value.split('/')[1];
         switch (keyword) {
@@ -348,7 +348,7 @@ class Decide_drink {
   S4__ask_fake_question(value, socket, user_data) {
     (async function () {
       try {
-        await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+        await info_update.profile.update_stack(socket.id, `${user_data.stack},{"state":"${user_data.state}","value":"${value}"}`);
         console.log("S4 value >> ", value);
         const drink_type = value.split('/')[1];
         await info_update.profile.update_drink_type(socket.id, drink_type);
@@ -406,7 +406,7 @@ class Decide_drink {
     (async function () {
       try {
         console.log("S10 value >> ", value);
-        await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+        await info_update.profile.update_stack(socket.id, `${user_data.stack},{"state":"${user_data.state}","value":"${value}"}`);
         // await info_update.profile.update_limit_cnt(socket.id, user_data.limit_cnt + 1);
         const response = await info_update.drink.get_drink_restaurant(socket.id, user_data.subway, user_data.price_dinner, user_data.mood1, user_data.mood2, user_data.drink_round, user_data.drink_type, user_data.lat, user_data.lng);
         const results = response.message;

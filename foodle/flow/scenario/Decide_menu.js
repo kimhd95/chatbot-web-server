@@ -423,7 +423,7 @@ class Decide_menu {
             const subways = await info_update.food.get_all_subway(socket.id, '');
             const result = await info_update.food.verify_subway(socket.id, subway);
             if (result === 'success') {
-                await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+                await info_update.profile.update_stack(socket.id, `${user_data.stack},{"state":"${user_data.state}","value":"${value}"}`);
                 const user_info = await info_update.profile.load_user(socket.id);
                 const db_subway = await user_info.subway;
                 (subway === db_subway) ? await info_update.profile.update_freq_subway(socket.id, subway)
@@ -523,7 +523,7 @@ class Decide_menu {
   search_food(value, socket, user_data) { //TODO: 검색기능 구현(res_name, food_type, food_name)
     (async function () {
         try {
-            await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+            await info_update.profile.update_stack(socket.id, `${user_data.stack},{"state":"${user_data.state}","value":"${value}"}`);
             await info_update.profile.update_food_type(socket.id, 'all');
             await info_update.profile.update_taste(socket.id, 'all');
             await info_update.profile.update_mood2(socket.id, '998');
@@ -583,7 +583,7 @@ class Decide_menu {
   price(value, socket, user_data) {
     (async function () {
         try {
-          await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+          await info_update.profile.update_stack(socket.id, `${user_data.stack},{"state":"${user_data.state}","value":"${value}"}`);
           if (value.includes('exit/')) {
             const user_quarter = value.split('/')[1];
             await info_update.profile.update_exit_quarter(socket.id, user_quarter);
@@ -720,7 +720,7 @@ class Decide_menu {
       (async function () {
           try {
               if (value != 'method/elsewhere') {
-                await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+                await info_update.profile.update_stack(socket.id, `${user_data.stack},{"state":"${user_data.state}","value":"${value}"}`);
               }
               if (value.includes('lunch')) {
                   await info_update.profile.update_price_level_dinner(socket.id, 'x');
@@ -759,7 +759,7 @@ class Decide_menu {
   exitnum(value, socket, user_data) {
     (async function () {
       try {
-         await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+         await info_update.profile.update_stack(socket.id, `${user_data.stack},{"state":"${user_data.state}","value":"${value}"}`);
          let subway = user_data.subway;
         // if(value.includes('near_station')){
         //   subway = value.slice(value.lastIndexOf('/')+1);
@@ -857,7 +857,7 @@ class Decide_menu {
   mood2(value, socket, user_data) {
     (async function () {
       try {
-        await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+        await info_update.profile.update_stack(socket.id, `${user_data.stack},{"state":"${user_data.state}","value":"${value}"}`);
         const mood2_list = ['원하는 식당 분위기를 골라줘!(중복선택)', '특별히 원하는 식당 분위기가 있다면 골라줘!(중복선택)', '가고 싶은 식당의 키워드를 몇개 골라봐!! (못고르겠으면 상관없음ㄱㄱ)'];
         const imglist = ['emoji/checking.png','emoji/checking2.png'];
 
@@ -916,7 +916,7 @@ class Decide_menu {
   taste(value, socket, user_data) {
     (async function () {
       try {
-        await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+        await info_update.profile.update_stack(socket.id, `${user_data.stack},{"state":"${user_data.state}","value":"${value}"}`);
         const user_price = await value.split('/')[1];;
 
         if (value.includes('price_under10')) {
@@ -1148,7 +1148,7 @@ class Decide_menu {
   before_decide(value, socket, user_data) {
     (async function () {
       try {
-          await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+          await info_update.profile.update_stack(socket.id, `${user_data.stack},{"state":"${user_data.state}","value":"${value}"}`);
           // const user_food_type = 'all';
           //if (user_data.price_lunch==null || user_data.price_dinner==null) {
           let price_lunch = user_data.price_lunch;
