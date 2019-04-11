@@ -427,30 +427,30 @@ function bot_messaging_card_inner_distance(res_name, res_type, food_name, naver_
 
 function bot_messaging_card_no_image(res_name, res_type, food_name, naver_url, map_url) {
   let message_info = `<div class="bot-message">
-            <button type="button" class="btn btn-light arrow-left"><</button>
-            <button type="button" class="btn btn-light arrow-right">></button>
+    <div class="choice_carousel">
               <div class="choice_card">
                 <div class="choice_card_content">
                   <h5 class="card-title">${res_name}</h5>
                   <p class="card-text">${res_type} / ${food_name}</p>
-                  <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
+                  <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:15%;"><i class="fas fa-map-marked-alt link-icon"></i>지도 보기</a></p>
                   <p class="card-text"><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a></p>
                 </div>
               </div>
+            </div>
           </div>
       `;
   if (res_type === null || res_type === undefined) {
     message_info = `<div class="bot-message">
-              <button type="button" class="btn btn-light arrow-left"><</button>
-              <button type="button" class="btn btn-light arrow-right">></button>
+    <div class="choice_carousel">
                 <div class="choice_card">
                   <div class="choice_card_content">
                     <h5 class="card-title">${res_name}</h5>
                     <p class="card-text">${food_name}</p>
-                    <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
+                    <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:15%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
                     <p class="card-text"><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a></p>
                   </div>
                 </div>
+              </div>
             </div>
         `;
   }
@@ -458,30 +458,34 @@ function bot_messaging_card_no_image(res_name, res_type, food_name, naver_url, m
 }
 function bot_messaging_card_no_image_distance(res_name, res_type, food_name, naver_url, map_url, distance) {
   let message_info = `<div class="bot-message">
+  <div class="choice_carousel">
             <button type="button" class="btn btn-light arrow-left"><</button>
             <button type="button" class="btn btn-light arrow-right">></button>
               <div class="choice_card">
                 <div class="choice_card_content">
                   <h5 class="card-title">${res_name +' ('+distance+'m)'}</h5>
                   <p class="card-text">${res_type} / ${food_name}</p>
-                  <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
+                  <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:15%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
                   <p class="card-text"><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a></p>
                 </div>
               </div>
+            </div>
           </div>
       `;
   if (res_type === null || res_type === undefined) {
     message_info = `<div class="bot-message">
+    <div class="choice_carousel">
               <button type="button" class="btn btn-light arrow-left"><</button>
               <button type="button" class="btn btn-light arrow-right">></button>
                 <div class="choice_card">
                   <div class="choice_card_content">
                     <h5 class="card-title">${res_name +' ('+distance+'m)'}</h5>
                     <p class="card-text">${food_name}</p>
-                    <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
+                    <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:15%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
                     <p class="card-text"><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a></p>
                   </div>
                 </div>
+              </div>
             </div>
         `;
   }
@@ -494,7 +498,7 @@ function bot_messaging_card_inner_no_image(res_name, res_type, food_name, naver_
                 <div class="choice_card_content">
                   <h5 class="card-title">${res_name}</h5>
                   <p class="card-text">${res_type} / ${food_name}</p>
-                  <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
+                  <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:15%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
                   <p class="card-text"><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a></p>
                 </div>
               </div>
@@ -505,7 +509,7 @@ function bot_messaging_card_inner_no_image(res_name, res_type, food_name, naver_
                   <div class="choice_card_content">
                     <h5 class="card-title">${res_name}</h5>
                     <p class="card-text">${food_name}</p>
-                    <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
+                    <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:15%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
                     <p class="card-text"><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a></p>
                   </div>
                 </div>
@@ -519,7 +523,7 @@ function bot_messaging_card_inner_no_image_distance(res_name, res_type, food_nam
                 <div class="choice_card_content">
                   <h5 class="card-title">${res_name +' ('+distance+'m)'}</h5>
                   <p class="card-text">${res_type} / ${food_name}</p>
-                  <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
+                  <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:15%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
                   <p class="card-text"><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a></p>
                 </div>
               </div>
@@ -530,7 +534,7 @@ function bot_messaging_card_inner_no_image_distance(res_name, res_type, food_nam
                   <div class="choice_card_content">
                     <h5 class="card-title">${res_name +' ('+distance+'m)'}</h5>
                     <p class="card-text">${food_name}</p>
-                    <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
+                    <p class="card-text"><a href="${map_url}" target="_blank" class="card-link" style="bottom:15%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a></p>
                     <p class="card-text"><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a></p>
                   </div>
                 </div>
