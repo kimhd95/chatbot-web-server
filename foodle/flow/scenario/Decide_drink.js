@@ -212,7 +212,7 @@ class Decide_drink {
         }
 
         const chlist = ['원하는 술+밥집 키워드를 하나만 골라봐!'];
-        index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist), ['S3/11', '가성비 좋은'], ['S3/12', '캐주얼한 식사/술'], ['S3/13', '고급진 요리/술'], ['S3/14', '아주 특별한 기념일$$$$'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
+        index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist), ['S3/11', '가성비 좋은'], ['S3/12', '캐주얼한 식사/술'], ['S3/13', '고급진 요리/술'], ['S3/14', '아주 특별한 기념일$$$$'], previous_button(user_data.stack));
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, ['get_started', '처음으로 돌아가기']);
         console.log(e);
@@ -261,7 +261,7 @@ class Decide_drink {
           }
         }
         const chlist = ['어떤 컨셉의 술집을 골라줄까?'];
-        index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist), ['S3/21', '가성비 술집'], ['S3/22', '가볍게 수다떨며 한잔'], ['S3/23', '분위기 있게 한잔'], ['S3/24', '아주 특별한 기념일$$$$'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
+        index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist), ['S3/21', '가성비 술집'], ['S3/22', '가볍게 수다떨며 한잔'], ['S3/23', '분위기 있게 한잔'], ['S3/24', '아주 특별한 기념일$$$$'], previous_button(user_data.stack));
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, ['get_started', '처음으로 돌아가기']);
         console.log(e);
@@ -321,7 +321,7 @@ class Decide_drink {
           drink_type_list.forEach(type => {
             optionArr.push([type, type]);
           })
-          optionArr.push(['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
+          optionArr.push(previous_button(user_data.stack));
           optionArr.push(['S4/', '선택완료']);
 
           const chlist = ['땡기는 주종은 뭐야!! 말만해!!!',
@@ -336,7 +336,7 @@ class Decide_drink {
           await index.sendSocketMessage(socket.id, 'chat message button', `여긴 ${drink_type_list[0]} 파는 술집 밖에 없네..이걸로 찾아줄까?`, [`S4/${drink_type_list[0]}`, '고고'], [`previous/${user_data.stack.replace(/"/gi, "@")}`, '다시 고를래'], ['decide_drink', '처음으로 돌아가기']);
         }
         else {
-          await index.sendSocketMessage(socket.id, 'chat message button', `여긴 검색 결과가 없다.. 다시 골라줘야 할 것 같아..`, [`previous/${user_data.stack.replace(/"/gi, "@")}`, '이전으로'], ['decide_drink', '처음으로 돌아가기']);
+          await index.sendSocketMessage(socket.id, 'chat message button', `여긴 검색 결과가 없다.. 다시 골라줘야 할 것 같아..`, previous_button(user_data.stack), ['decide_drink', '처음으로 돌아가기']);
         }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, ['get_started', '처음으로 돌아가기']);
@@ -386,11 +386,11 @@ class Decide_drink {
         const pick = random_pick(questions);
         setTimeout(async () => {
           if (pick.answer.length === 2) {
-            await index.sendSocketMessage(socket.id, 'chat message button', pick.question, ['S10', pick.answer[0]], ['S10', pick.answer[1]], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
+            await index.sendSocketMessage(socket.id, 'chat message button', pick.question, ['S10', pick.answer[0]], ['S10', pick.answer[1]], previous_button(user_data.stack));
           } else if (pick.answer.length === 3) {
-            await index.sendSocketMessage(socket.id, 'chat message button', pick.question, ['S10', pick.answer[0]], ['S10', pick.answer[1]], ['S10', pick.answer[2]], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
+            await index.sendSocketMessage(socket.id, 'chat message button', pick.question, ['S10', pick.answer[0]], ['S10', pick.answer[1]], ['S10', pick.answer[2]], previous_button(user_data.stack));
           } else if (pick.answer.length === 4) {
-            await index.sendSocketMessage(socket.id, 'chat message button', pick.question, ['S10', pick.answer[0]], ['S10', pick.answer[1]], ['S10', pick.answer[2]], ['S10', pick.answer[3]], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
+            await index.sendSocketMessage(socket.id, 'chat message button', pick.question, ['S10', pick.answer[0]], ['S10', pick.answer[1]], ['S10', pick.answer[2]], ['S10', pick.answer[3]], previous_button(user_data.stack));
           } else {
             await index.sendSocketMessage(socket.id, 'chat message button', `Decide_drink S4 :: answer in questions array length error. (${pick.answer.length})`, ['get_started', '처음으로 돌아가기']);
           }
