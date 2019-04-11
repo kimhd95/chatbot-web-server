@@ -314,11 +314,11 @@ class Decide_menu {
         const { result } = verify_limit;
         if (user_info.registered == -1) {
             await info_update.profile.update_stack(socket.id, `{"state": "${user_data.state}", "value": "${value}"}`);
-            index.sendSocketMessage(socket.id, 'chat message button image', `${random_pick(chlist)}`, `${random_pick(imglist)}`,['decide_menu/lunch', '점심 고르기(평일)'],['decide_menu/dinner', '점심 고르기(주말)'],  ['decide_menu/dinner', '저녁 고르기'],['hobulho_hate_start', '못 먹는 음식 체크'], ['search_near', '내 주변 500m 내 식당 검색(GPS 켜줘!)']); //TODO: 식당/메뉴명으로 검색하기
+            index.sendSocketMessage(socket.id, 'chat message button image', random_pick(chlist), random_pick(imglist),['decide_menu/lunch', '점심 고르기(평일)'],['decide_menu/dinner', '점심 고르기(주말)'],  ['decide_menu/dinner', '저녁 고르기'],['hobulho_hate_start', '못 먹는 음식 체크'], ['search_near', '내 주변 500m 내 식당 검색(GPS 켜줘!)']); //TODO: 식당/메뉴명으로 검색하기
         } else {
           if (result === 'success') {
             await info_update.profile.update_stack(socket.id, `{"state": "${user_data.state}", "value": "${value}"}`);
-            index.sendSocketMessage(socket.id, 'chat message button image', `${random_pick(chlist)}`, `${random_pick(imglist)}`,['decide_menu/lunch', '점심 고르기(평일)'],['decide_menu/dinner', '점심 고르기(주말)'],  ['decide_menu/dinner', '저녁 고르기'],['hobulho_hate_start', '못 먹는 음식 체크'], ['search_near', '내 주변 500m 내 식당 검색(GPS 켜줘!)']); //TODO: 식당/메뉴명으로 검색하기
+            index.sendSocketMessage(socket.id, 'chat message button image', random_pick(chlist), random_pick(imglist), ['decide_menu/lunch', '점심 고르기(평일)'],['decide_menu/dinner', '점심 고르기(주말)'],  ['decide_menu/dinner', '저녁 고르기'],['hobulho_hate_start', '못 먹는 음식 체크'], ['search_near', '내 주변 500m 내 식당 검색(GPS 켜줘!)']); //TODO: 식당/메뉴명으로 검색하기
           } else {
             index.sendSocketMessage(socket.id, 'chat message button image', '아... 너무 많이 말했더니 🐶피곤.... 30분만 자고 다시 올게😪🌙', 'emoji/drunk2.png',['get_started', '처음으로 돌아가기']);
           }
@@ -365,7 +365,7 @@ class Decide_menu {
             console.log('내가 싫어하는 음식: '+user_data.hate_food);
             const hobulho_hate_feedback_list = ['오케이 이제부터 참고 하겠어', '오키! 많이 거를수록 선택의 폭은 좁아지겠지만... 호불호는 다 있는거니까😄 이제 메뉴 골라볼까',
                 'ㅋㅋㅋ이해해!! 나는 저거 다 먹을 수 있지만... 앞으로 참고하고 추천할게!'];
-            index.sendSocketMessage(socket.id, 'chat message button', `${random_pick(hobulho_hate_feedback_list)}`,['decide_menu/lunch', '점심 고르기(평일)'],['decide_menu/dinner', '점심 고르기(주말)'],  ['decide_menu/dinner', '저녁 고르기'],['hobulho_hate_start', '못 먹는 음식 체크'], ['search_near', '내 주변 500m 내 식당 검색(GPS 켜줘!)']);
+            index.sendSocketMessage(socket.id, 'chat message button', random_pick(hobulho_hate_feedback_list),['decide_menu/lunch', '점심 고르기(평일)'],['decide_menu/dinner', '점심 고르기(주말)'],  ['decide_menu/dinner', '저녁 고르기'],['hobulho_hate_start', '못 먹는 음식 체크'], ['search_near', '내 주변 500m 내 식당 검색(GPS 켜줘!)']);
         } catch (e) {
             index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
             console.log(e);
@@ -391,7 +391,7 @@ class Decide_menu {
             ];
             const qna_pick = random_pick(qna_list);
             const imglist = ['emoji/checking.png','emoji/checking2.png','emoji/thinking.png','emoji/thinking2.png'];
-            index.sendSocketMessage(socket.id, 'chat message button image', qna_pick.question, `${random_pick(imglist)}`, [qna_pick.button1_id, qna_pick.button1_value], [qna_pick.button2_id, qna_pick.button2_value],  [qna_pick.button3_id, qna_pick.button3_value],  [qna_pick.button4_id, qna_pick.button4_value]);
+            index.sendSocketMessage(socket.id, 'chat message button image', qna_pick.question, random_pick(imglist), [qna_pick.button1_id, qna_pick.button1_value], [qna_pick.button2_id, qna_pick.button2_value],  [qna_pick.button3_id, qna_pick.button3_value],  [qna_pick.button4_id, qna_pick.button4_value]);
         } catch (e) {
             index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
             console.log(e);
@@ -461,7 +461,7 @@ class Decide_menu {
               ];
               const imglist = ['emoji/checking.png','emoji/checking2.png','emoji/thinking.png','emoji/thinking2.png'];
               const qna_pick = random_pick(qna_list);
-              index.sendSocketMessage(socket.id, 'chat message button image', qna_pick.question, `${random_pick(imglist)}`,
+              index.sendSocketMessage(socket.id, 'chat message button image', qna_pick.question, random_pick(imglist),
                   [qna_pick.button1_id, qna_pick.button1_value], [qna_pick.button2_id, qna_pick.button2_value],
                   [qna_pick.button3_id, qna_pick.button3_value], [qna_pick.button4_id, qna_pick.button4_value]);
             } else {
@@ -486,7 +486,7 @@ class Decide_menu {
                                     },
                                 ];
                 const qna_pick = random_pick(qna_list);
-                await index.sendSocketMessage(socket.id, 'chat message button image', qna_pick.question, `${random_pick(imglist)}`,
+                await index.sendSocketMessage(socket.id, 'chat message button image', qna_pick.question, random_pick(imglist),
                 [qna_pick.button1_id, qna_pick.button1_value], [qna_pick.button2_id, qna_pick.button2_value],
                 [qna_pick.button3_id, qna_pick.button3_value], [qna_pick.button4_id, qna_pick.button4_value],
                 [qna_pick.button5_id, qna_pick.button5_value]);
@@ -508,7 +508,7 @@ class Decide_menu {
                                     },
                                 ];
                 const qna_pick = random_pick(qna_list);
-                await index.sendSocketMessage(socket.id, 'chat message button image', qna_pick.question, `${random_pick(imglist)}`,
+                await index.sendSocketMessage(socket.id, 'chat message button image', qna_pick.question, random_pick(imglist),
                 [qna_pick.button1_id, qna_pick.button1_value], [qna_pick.button2_id, qna_pick.button2_value],
                 [qna_pick.button3_id, qna_pick.button3_value], [qna_pick.button4_id, qna_pick.button4_value]);
               }
@@ -702,7 +702,7 @@ class Decide_menu {
                 const freq_list = [`이번에도 ${revisit}에서 메뉴를 정하면 될까?`, `이번에도 ${revisit} 고고?`, `이번에도 ${revisit}에서 밥 먹을거야?`,
                     `이번에도 ${revisit}에서 먹는거 맞지?`, `오늘도 ${revisit}?`, `오늘도 ${revisit}에서 골라볼까?`,
                     `이번에도 ${revisit}에서 정하는거 맞아맞아?`, `오늘도 ${revisit}에서 메뉴 정해볼까?`, `이번에도 ${revisit}에서 먹을 곳 찾는거야?`];
-                index.sendSocketMessage(socket.id, 'chat message button', random_pick(freq_list), [`${revisit}`, '응 맞아!'], ['decide_subway/elsewhere', '다른 곳이야!']);
+                index.sendSocketMessage(socket.id, 'chat message button', random_pick(freq_list), [revisit, '응 맞아!'], ['decide_subway/elsewhere', '다른 곳이야!']);
             } else { //todo: freq_subway 구현(완료)
                 const chlist = ['어느 역 근처의 메뉴를 정해줄까?', '밥 어디에서 먹을거야?🍚', '밥 어디에서 먹어?', '어느 역 근처 메뉴를 정해줄까?',
                     '위치가 어디야? 원하는 곳에서 가까운 지하철역을 입력해줘🚋', '밥 어디에서 먹어? 챱챱', '이번에는 어느 역 근처의 메뉴를 정해볼까?',
@@ -742,7 +742,7 @@ class Decide_menu {
                   const freq_list = [`이번에도 ${revisit}에서 메뉴를 정하면 될까?`, `이번에도 ${revisit} 고고?`, `이번에도 ${revisit}에서 밥 먹을거야?`,
                       `이번에도 ${revisit}에서 먹는거 맞지?`, `오늘도 ${revisit}?`, `오늘도 ${revisit}에서 골라볼까?`,
                       `이번에도 ${revisit}에서 정하는거 맞아맞아?`, `오늘도 ${revisit}에서 메뉴 정해볼까?`, `이번에도 ${revisit}에서 먹을 곳 찾는거야?`];
-                  index.sendSocketMessage(socket.id, 'chat message button', random_pick(freq_list), [`${revisit}`, '응 맞아!'], ['decide_subway/elsewhere', '다른 곳이야!'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
+                  index.sendSocketMessage(socket.id, 'chat message button', random_pick(freq_list), [revisit, '응 맞아!'], ['decide_subway/elsewhere', '다른 곳이야!'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
               } else {
                   const chlist = ['어느 역 근처의 메뉴를 정해줄까?', '밥 어디에서 먹을거야?🍚', '밥 어디에서 먹어?', '어느 역 근처 메뉴를 정해줄까?',
                       '위치가 어디야? 원하는 곳에서 가까운 지하철역을 입력해줘🚋', '밥 어디에서 먹어? 챱챱', '이번에는 어느 역 근처의 메뉴를 정해볼까?',
@@ -889,7 +889,7 @@ class Decide_menu {
         await show_list.push(['mood2/', '선택완료']);
         console.log(show_list);
         if (result.length !== 0) {
-           await index.sendSocketMessage(socket.id, 'chat message button checkbox image', random_pick(mood2_list), `${random_pick(imglist)}`, show_list);
+           await index.sendSocketMessage(socket.id, 'chat message button checkbox image', random_pick(mood2_list), random_pick(imglist), show_list);
            // index.sendSocketMessage(socket.id, 'chat message button checkbox image', mood2_list[mood2_rand],`${imglist[rand2]}`, ['998', '상관없음'], ['가벼운', '간단한'], ['인스타', '#인스타감성'], ['깔끔','깔끔한'], ['큰프', '프랜차이즈'], ['뷔페', '뷔페/무한리필'], ['mood2/', '선택완료']);
         } else {
           const item = new Decide_menu('mood2/998', socket, user_data);
@@ -1007,11 +1007,11 @@ class Decide_menu {
         const valid_pick = random_pick(valid_list);
         const qnas_pick = random_pick(taste.qnas);
         if (valid_list.length > 0) {
-          index.sendSocketMessage(socket.id, 'chat message button image', valid_pick.question,`${random_pick(imglist)}`,
+          index.sendSocketMessage(socket.id, 'chat message button image', valid_pick.question,random_pick(imglist),
                 [valid_pick.button1_id, valid_pick.button1_value], [valid_pick.button2_id, valid_pick.button2_value],
                 ['taste/all', '상관없음'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
         } else {
-          index.sendSocketMessage(socket.id, 'chat message button image', qnas_pick.question,`${random_pick(imglist)}`,
+          index.sendSocketMessage(socket.id, 'chat message button image', qnas_pick.question,random_pick(imglist),
                 [qnas_pick.button1_id, qnas_pick.button1_value], [qnas_pick.button2_id, qnas_pick.button2_value],
                 ['taste/all', '상관없음'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
         }
@@ -1262,7 +1262,7 @@ class Decide_menu {
           const first_map_url = `https://map.naver.com/index.nhn?query=${foods[0].subway} ${foods[0].res_name}&tab=1`;
           const second_map_url = `https://map.naver.com/index.nhn?query=${foods[1].subway} ${foods[1].res_name}&tab=1`;
 
-          const image = await info_update.food.crawl_two_image(socket.id, `${foods[0].res_name}`, `${foods[1].res_name}`);
+          const image = await info_update.food.crawl_two_image(socket.id, foods[0].res_name, foods[1].res_name);
 
           const chlist = [`비슷한 식당 찾는중`, `까다로워 증말...`, `비슷한 식당 찾는중🐕🐕`, '아~~ 이번에는 맘에 들어씀 조케땅~~'];
           if (image.res1 === 'no image') {
@@ -1297,7 +1297,7 @@ class Decide_menu {
           const first_map_url = `https://map.naver.com/index.nhn?query=${foods[0].subway} ${foods[0].res_name}&tab=1`;
           const second_map_url = `https://map.naver.com/index.nhn?query=${foods[1].subway} ${foods[1].res_name}&tab=1`;
 
-          const image = await info_update.food.crawl_two_image(socket.id, `${foods[0].res_name}`, `${foods[1].res_name}`);
+          const image = await info_update.food.crawl_two_image(socket.id, foods[0].res_name, foods[1].res_name);
 
           const chlist = [`다른 식당 찾는중`, `까다로워 증말...`, `다른 식당 찾는중🐕🐕`, '아~~ 이번에는 맘에 들어씀 조케땅~~'];
 
@@ -1360,7 +1360,7 @@ class Decide_menu {
         const second_map_url = `https://map.naver.com/index.nhn?query=${foods[1].subway} ${foods[1].res_name}&tab=1`;
 
         // const image = await info_update.food.crawl_two_image(socket.id, `${foods[0].subway.slice(0, -1)} ${foods[0].res_name}`, `${foods[1].subway.slice(0, -1)} ${foods[1].res_name}`);
-        const image = await info_update.food.crawl_two_image(socket.id, `${foods[0].res_name}`, `${foods[1].res_name}`);
+        const image = await info_update.food.crawl_two_image(socket.id, foods[0].res_name, foods[1].res_name);
         const chlist = [`기 다 료 방`,
                         `두구두구두구...`,
                         `열씨미찾는중🐕🐕`,
@@ -1374,7 +1374,7 @@ class Decide_menu {
                          'emoji/letmesee3.png',
                          'emoji/letmesee4.png'];
 
-        await index.sendSocketMessage(socket.id, 'chat message button image', random_pick(chlist),`${random_pick(imglist)}`);
+        await index.sendSocketMessage(socket.id, 'chat message button image', random_pick(chlist),random_pick(imglist));
         await index.sendSocketMessage(socket.id, 'chat message loader', 500);
         await index.sendSocketMessage(socket.id, 'chat message button', '2개 음식점중 더 가고싶은 곳을 골라줘!');
 
@@ -1492,11 +1492,11 @@ class Decide_menu {
           //if (moment().format('HH') >= 10 && moment().format('HH') <= 15 && food_value[0].lunch_option === 1) {
             index.sendSocketMessage(socket.id, 'chat message button image', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name} 전문 ${food_value[0].food_type}집이야!<br>(런치메뉴 있음)`
               + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a><br><a class="card-link" target="_self" href="#" onclick="location.href='tel:${food_value[0].phone}';"><i class="fa fa-phone"></i> 전화 걸기</a>`,
-                `${random_pick(chooseimglist)}`,  ['show_image/similar', '사진 보기'], ['get_started', '처음으로 돌아가기']);
+                random_pick(chooseimglist),  ['show_image/similar', '사진 보기'], ['get_started', '처음으로 돌아가기']);
           } else {
             index.sendSocketMessage(socket.id, 'chat message button image', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name} 전문 ${food_value[0].food_type}집이야!`
               + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a><br><a target="_self" class="card-link" href="#" onclick="location.href='tel:${food_value[0].phone}';"><i class="fa fa-phone"></i> 전화 걸기</a>`,
-                `${random_pick(chooseimglist)}`, ['show_image/similar', '사진 보기'], ['get_started', '처음으로 돌아가기']);
+                random_pick(chooseimglist), ['show_image/similar', '사진 보기'], ['get_started', '처음으로 돌아가기']);
           }
         } else {
 
@@ -1507,21 +1507,21 @@ class Decide_menu {
             if(result.success) {
               index.sendSocketMessage(socket.id, 'chat message button image', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name} 전문 ${food_value[0].food_type}집이야!<br>(런치메뉴 있음)`
                 + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a><br><a class="card-link" target="_self" href="#" onclick="location.href='tel:${food_value[0].phone}';"><i class="fa fa-phone"></i> 전화 걸기</a>`,
-                  `${random_pick(chooseimglist)}`,['show_image', '사진 보기'], ['decide_final', '뒤로가기'], ['decide_final_similar', '비슷한 식당 보기'], ['get_started', '처음으로 돌아가기']);
+                  random_pick(chooseimglist),['show_image', '사진 보기'], ['decide_final', '뒤로가기'], ['decide_final_similar', '비슷한 식당 보기'], ['get_started', '처음으로 돌아가기']);
             } else {
               index.sendSocketMessage(socket.id, 'chat message button image', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name} 전문 ${food_value[0].food_type}집이야!<br>(런치메뉴 있음)`
                 + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a><br><a class="card-link" target="_self" href="#" onclick="location.href='tel:${food_value[0].phone}';"><i class="fa fa-phone"></i> 전화 걸기</a>`,
-                  `${random_pick(chooseimglist)}`,['show_image', '사진 보기'], ['decide_final', '뒤로가기'], ['get_started', '처음으로 돌아가기']);
+                  random_pick(chooseimglist),['show_image', '사진 보기'], ['decide_final', '뒤로가기'], ['get_started', '처음으로 돌아가기']);
             }
           } else {
             if(result.success) {
               index.sendSocketMessage(socket.id, 'chat message button image', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name} 전문 ${food_value[0].food_type}집이야!`
                 + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a><br><a target="_self" class="card-link" href="#" onclick="location.href='tel:${food_value[0].phone}';"><i class="fa fa-phone"></i> 전화 걸기</a>`,
-                  `${random_pick(chooseimglist)}`,['show_image', '사진 보기'], ['decide_final', '뒤로가기'], ['decide_final_similar', '비슷한 식당 보기'], ['get_started', '처음으로 돌아가기']);
+                  random_pick(chooseimglist),['show_image', '사진 보기'], ['decide_final', '뒤로가기'], ['decide_final_similar', '비슷한 식당 보기'], ['get_started', '처음으로 돌아가기']);
             } else {
               index.sendSocketMessage(socket.id, 'chat message button image', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name} 전문 ${food_value[0].food_type}집이야!`
                 + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a><br><a target="_self" class="card-link" href="#" onclick="location.href='tel:${food_value[0].phone}';"><i class="fa fa-phone"></i> 전화 걸기</a>`,
-                  `${random_pick(chooseimglist)}`,['show_image', '사진 보기'], ['decide_final', '뒤로가기'], ['get_started', '처음으로 돌아가기']);
+                  random_pick(chooseimglist),['show_image', '사진 보기'], ['decide_final', '뒤로가기'], ['get_started', '처음으로 돌아가기']);
             }
           }
         }

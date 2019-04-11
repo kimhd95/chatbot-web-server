@@ -368,8 +368,7 @@ class Decide_drink {
               reaction_list = ['혹시 실례가 안 된다면 샷 하나만...🍸', '양주는 숙취가 많이 없대니까 쭈욱 마셔 (악마의 속삭임)'];
               break;
           }
-          const r = Math.floor(reaction_list.length * Math.random());
-          await index.sendSocketMessage(socket.id, 'chat message button', reaction_list[r]);
+          await index.sendSocketMessage(socket.id, 'chat message button', random_pick(reaction_list));
         }
 
         const questions = [{'question': '오늘 주량 (소주로 치면) 소최몇 예상? (소주 최대 몇병)', 'answer': ['1병 미만', '2병', '3병 이상']},
@@ -432,7 +431,7 @@ class Decide_drink {
             const second_url = `https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${results[1].subway} ${results[1].res_name}`;
             const first_map_url = `https://map.naver.com/index.nhn?query=${results[0].subway} ${results[0].res_name}&tab=1`;
             const second_map_url = `https://map.naver.com/index.nhn?query=${results[1].subway} ${results[1].res_name}&tab=1`;
-            const image = await info_update.food.crawl_two_image(socket.id, `${results[0].res_name}`, `${results[1].res_name}`);
+            const image = await info_update.food.crawl_two_image(socket.id, results[0].res_name, results[1].res_name);
 
             await index.sendSocketMessage(socket.id, 'chat message button', `오키 잘 알겠어~ 검색된 ${response.num}개 식당 중에 2곳을 추천해줄게!`);
             await index.sendSocketMessage(socket.id, 'chat message loader', 500);
@@ -521,7 +520,7 @@ class Decide_drink {
             await info_update.profile.update_rest2(user_data.kakao_id, results[0].id, 'null');
             const first_url = `https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${results[0].subway} ${results[0].res_name}`;
             const first_map_url = `https://map.naver.com/index.nhn?query=${results[0].subway} ${results[0].res_name}&tab=1`;
-            const image = await info_update.food.crawl_two_image(socket.id, `${results[0].res_name}`, `네이버`);
+            const image = await info_update.food.crawl_two_image(socket.id, results[0].res_name, `네이버`);
 
             await index.sendSocketMessage(socket.id, 'chat message button', '조건에 맞는 술집이 1곳 뿐이네! 이거라도 보여줄게 기다료바!!');
             await index.sendSocketMessage(socket.id, 'chat message loader', 500);
@@ -566,7 +565,7 @@ class Decide_drink {
             const first_map_url = `https://map.naver.com/index.nhn?query=${rests[0].subway} ${rests[0].res_name}&tab=1`;
             const second_map_url = `https://map.naver.com/index.nhn?query=${rests[1].subway} ${rests[1].res_name}&tab=1`;
 
-            const image = await info_update.food.crawl_two_image(socket.id, `${rests[0].res_name}`, `${rests[1].res_name}`);
+            const image = await info_update.food.crawl_two_image(socket.id, rests[0].res_name, rests[1].res_name);
 
             await index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist));
             await index.sendSocketMessage(socket.id, 'chat message loader', 500);
@@ -613,7 +612,7 @@ class Decide_drink {
             const first_url = `https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${rests[0].subway} ${rests[0].res_name}`;
             const first_map_url = `https://map.naver.com/index.nhn?query=${rests[0].subway} ${rests[0].res_name}&tab=1`;
 
-            const image = await info_update.food.crawl_two_image(socket.id, `${rests[0].res_name}`, `네이버`);
+            const image = await info_update.food.crawl_two_image(socket.id, rests[0].res_name, `네이버`);
 
             await index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist));
             await index.sendSocketMessage(socket.id, 'chat message loader', 500);
@@ -666,7 +665,7 @@ class Decide_drink {
             const second_url = `https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${rests[1].subway} ${rests[1].res_name}`;
             const first_map_url = `https://map.naver.com/index.nhn?query=${rests[0].subway} ${rests[0].res_name}&tab=1`;
             const second_map_url = `https://map.naver.com/index.nhn?query=${rests[1].subway} ${rests[1].res_name}&tab=1`;
-            const image = await info_update.food.crawl_two_image(socket.id, `${rests[0].res_name}`, `${rests[1].res_name}`);
+            const image = await info_update.food.crawl_two_image(socket.id, rests[0].res_name, rests[1].res_name);
 
             await index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist));
             await index.sendSocketMessage(socket.id, 'chat message loader', 500);
@@ -691,7 +690,7 @@ class Decide_drink {
             await info_update.profile.update_rest2(user_data.kakao_id, rests[0].id, 'null');
             const first_url = `https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${rests[0].subway} ${rests[0].res_name}`;
             const first_map_url = `https://map.naver.com/index.nhn?query=${rests[0].subway} ${rests[0].res_name}&tab=1`;
-            const image = await info_update.food.crawl_two_image(socket.id, `${rests[0].res_name}`, `네이버`);
+            const image = await info_update.food.crawl_two_image(socket.id, rests[0].res_name, `네이버`);
 
             await index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist));
             await index.sendSocketMessage(socket.id, 'chat message loader', 500);
@@ -754,11 +753,11 @@ class Decide_drink {
         if (result.success) {
           await index.sendSocketMessage(socket.id, 'chat message button image', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name} 전문 ${food_value[0].drink_type}집이야!<br>`
             + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a><br><a class="card-link" target="_self" href="#" onclick="location.href='tel:${food_value[0].phone}';"><i class="fa fa-phone"></i> 전화 걸기</a>`,
-              `${random_pick(chooseimglist)}`,  ['show_image', '사진 보기'], ['S10_2', '비슷한 술집 보기'], ['get_started', '처음으로 돌아가기']);
+              random_pick(chooseimglist),  ['show_image', '사진 보기'], ['S10_2', '비슷한 술집 보기'], ['get_started', '처음으로 돌아가기']);
         } else {
           await index.sendSocketMessage(socket.id, 'chat message button image', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name} 전문 ${food_value[0].drink_type}집이야!<br>`
             + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a><br><a class="card-link" target="_self" href="#" onclick="location.href='tel:${food_value[0].phone}';"><i class="fa fa-phone"></i> 전화 걸기</a>`,
-              `${random_pick(chooseimglist)}`,  ['show_image', '사진 보기'], ['get_started', '처음으로 돌아가기']);
+              random_pick(chooseimglist),  ['show_image', '사진 보기'], ['get_started', '처음으로 돌아가기']);
         }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, ['get_started', '처음으로 돌아가기']);
