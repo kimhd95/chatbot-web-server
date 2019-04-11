@@ -7,6 +7,9 @@ const error_msg = '오류가 발생했습니다.';
 const wrong_subway_input_msg = (value) => {
   return `${value}가 어딘지 모르겠어 ㅠㅠ 다른 곳으로 입력해줄래?`;
 }
+const random_pick = (arr) => {
+  return arr[Math.floor(arr.length * Math.random())];
+}
 const check_subway = (subway) => {
   switch (subway) {
     case '건대역':
@@ -21,6 +24,9 @@ const check_subway = (subway) => {
       return '고려대역';
     case '고터역':
       return '고속터미널역';
+    case '교육대역':
+    case '교육대학교역':
+      return '교대역';
     case '남터역':
       return '남부터미널역';
     case '서울대역':
@@ -117,9 +123,7 @@ class Decide_drink {
                         '뿅🐕🐕 나왔다!!',
                         '꼭 불금 불토만 있는게 아니지! 불월 불화(?) 불수 불목 불일 언제든 가능하다구ㅎㅎ',
                         'Life is Alcohol!!'];
-        const rand = Math.floor(chlist.length * Math.random());
-
-        index.sendSocketMessage(socket.id, 'chat message button', chlist[rand], ['S1/1', '1차 (술+밥)'], ['S1/2,3', '2차 이상'], ['S2_2/gps', '500m 이내 술집 찾기 (GPS 켜줘!)']);
+        index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist), ['S1/1', '1차 (술+밥)'], ['S1/2,3', '2차 이상'], ['S2_2/gps', '500m 이내 술집 찾기 (GPS 켜줘!)']);
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, ['get_started', '처음으로 돌아가기']);
         console.log(e);
@@ -152,8 +156,7 @@ class Decide_drink {
                           `이번에도 ${revisit}에서 정하는거 맞아맞아?`,
                           `오늘도 ${revisit}에서 정해볼까?`,
                           `이번에도 ${revisit}에서 마실 곳 찾는거야?`];
-          const rand = Math.floor(chlist.length * Math.random());
-          index.sendSocketMessage(socket.id, 'chat message button', chlist[rand], ['S2_freq', '응 맞아'], ['S1/another','다른 곳이야!']);
+          index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist), ['S2_freq', '응 맞아'], ['S1/another','다른 곳이야!']);
         }
         // 자주가는 지하철역 x
         else {
@@ -165,8 +168,7 @@ class Decide_drink {
                           '오늘은 어느 역 근처 술집을 털어볼까?',
                           '어느 역 근처 술집을 골라줄까?',
                           '술 어디에서 마실거야~?'];
-          const rand = Math.floor(chlist.length * Math.random());
-          index.sendSocketMessage(socket.id, 'chat message button', chlist[rand]);
+          index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist));
         }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, ['get_started', '처음으로 돌아가기']);
@@ -206,8 +208,7 @@ class Decide_drink {
         }
 
         const chlist = ['원하는 술+밥집 키워드를 하나만 골라봐!'];
-        const rand = Math.floor(chlist.length * Math.random());
-        index.sendSocketMessage(socket.id, 'chat message button', chlist[rand], ['S3/11', '가성비 좋은'], ['S3/12', '캐주얼한 식사/술'], ['S3/13', '고급진 요리/술'], ['S3/14', '아주 특별한 기념일$$$$'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
+        index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist), ['S3/11', '가성비 좋은'], ['S3/12', '캐주얼한 식사/술'], ['S3/13', '고급진 요리/술'], ['S3/14', '아주 특별한 기념일$$$$'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, ['get_started', '처음으로 돌아가기']);
         console.log(e);
@@ -256,8 +257,7 @@ class Decide_drink {
           }
         }
         const chlist = ['어떤 컨셉의 술집을 골라줄까?'];
-        const rand = Math.floor(chlist.length * Math.random());
-        index.sendSocketMessage(socket.id, 'chat message button', chlist[rand], ['S3/21', '가성비 술집'], ['S3/22', '가볍게 수다떨며 한잔'], ['S3/23', '분위기 있게 한잔'], ['S3/24', '아주 특별한 기념일$$$$'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
+        index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist), ['S3/21', '가성비 술집'], ['S3/22', '가볍게 수다떨며 한잔'], ['S3/23', '분위기 있게 한잔'], ['S3/24', '아주 특별한 기념일$$$$'], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, ['get_started', '처음으로 돌아가기']);
         console.log(e);
@@ -326,8 +326,7 @@ class Decide_drink {
                           '자 오늘의 주종을 선택해 봅시다!',
                           '어떤 술이 좋아?? 질문이 너무 어렵나..?💀',
                           '마시고 싶은 술 종류를 모두~~ 골라봐~~~👻'];
-          const rand = Math.floor(chlist.length * Math.random());
-          await index.sendSocketMessage(socket.id, 'chat message button checkbox array', chlist[rand], optionArr);
+          await index.sendSocketMessage(socket.id, 'chat message button checkbox array', random_pick(chlist), optionArr);
         }
         else if (drink_type_list.length === 1) {
           await index.sendSocketMessage(socket.id, 'chat message button', `여긴 ${drink_type_list[0]} 파는 술집 밖에 없네..이걸로 찾아줄까?`, [`S4/${drink_type_list[0]}`, '고고'], [`previous/${user_data.stack.replace(/"/gi, "@")}`, '다시 고를래'], ['decide_drink', '처음으로 돌아가기']);
@@ -381,21 +380,18 @@ class Decide_drink {
                            {'question': '오늘 컨디션 어때?', 'answer': ['컨디션 최고!', '피곤해 피곤해..', '그냥 중간이야']},
                            {'question': '술버릇이 있는 편이야?', 'answer': ['ㅇㅇ', '그런 거 없다']},
                            {'question': '술을 권하는 자리야?', 'answer': ['ㅇㅇ', '그런 거 없다']}];
-
-        const rand = Math.floor(questions.length * Math.random());
-
+        const pick = random_pick(questions);
         setTimeout(async () => {
-          if (questions[rand].answer.length === 2) {
-            await index.sendSocketMessage(socket.id, 'chat message button', questions[rand].question, ['S10', questions[rand].answer[0]], ['S10', questions[rand].answer[1]], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
-          } else if (questions[rand].answer.length === 3) {
-            await index.sendSocketMessage(socket.id, 'chat message button', questions[rand].question, ['S10', questions[rand].answer[0]], ['S10', questions[rand].answer[1]], ['S10', questions[rand].answer[2]], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
-          } else if (questions[rand].answer.length === 4) {
-            await index.sendSocketMessage(socket.id, 'chat message button', questions[rand].question, ['S10', questions[rand].answer[0]], ['S10', questions[rand].answer[1]], ['S10', questions[rand].answer[2]], ['S10', questions[rand].answer[3]], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
+          if (pick.answer.length === 2) {
+            await index.sendSocketMessage(socket.id, 'chat message button', pick.question, ['S10', pick.answer[0]], ['S10', pick.answer[1]], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
+          } else if (pick.answer.length === 3) {
+            await index.sendSocketMessage(socket.id, 'chat message button', pick.question, ['S10', pick.answer[0]], ['S10', pick.answer[1]], ['S10', pick.answer[2]], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
+          } else if (pick.answer.length === 4) {
+            await index.sendSocketMessage(socket.id, 'chat message button', pick.question, ['S10', pick.answer[0]], ['S10', pick.answer[1]], ['S10', pick.answer[2]], ['S10', pick.answer[3]], ['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기']);
           } else {
-            await index.sendSocketMessage(socket.id, 'chat message button', 'Decide_drink S4 :: answer in questions array length error.', ['get_started', '처음으로 돌아가기']);
+            await index.sendSocketMessage(socket.id, 'chat message button', `Decide_drink S4 :: answer in questions array length error. (${pick.answer.length})`, ['get_started', '처음으로 돌아가기']);
           }
         }, 400);
-
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, ['get_started', '처음으로 돌아가기']);
         console.log(e);
@@ -408,8 +404,7 @@ class Decide_drink {
       try {
         console.log("S10 value >> ", value);
         await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
-
-        await info_update.profile.update_limit_cnt(socket.id, user_data.limit_cnt + 1);
+        // await info_update.profile.update_limit_cnt(socket.id, user_data.limit_cnt + 1);
         const response = await info_update.drink.get_drink_restaurant(socket.id, user_data.subway, user_data.price_dinner, user_data.mood1, user_data.mood2, user_data.drink_round, user_data.drink_type, user_data.lat, user_data.lng);
         const results = response.message;
         if (response.success) {
@@ -426,9 +421,6 @@ class Decide_drink {
                            '둘중에 어디 갈까!!(이것도 고르기 힘들면 내가 골라줌^___^)',
                            '어디가 더 가고싶어?? 골라골라'];
           const imglist = ['emoji/calculate.png', 'emoji/calculate2.png', 'emoji/letmesee.png', 'emoji/letmesee2.png', 'emoji/letmesee3.png', 'emoji/letmesee4.png'];
-          const rand1 = Math.floor(chlist1.length * Math.random());
-          const rand2 = Math.floor(chlist2.length * Math.random());
-          const rand_img = Math.floor(imglist.length * Math.random());
 
           if (results.length === 2) {
             await info_update.profile.update_rest2(user_data.kakao_id, results[0].id, results[1].id);
@@ -440,15 +432,16 @@ class Decide_drink {
 
             await index.sendSocketMessage(socket.id, 'chat message button', `오키 잘 알겠어~ 검색된 ${response.num}개 식당 중에 2곳을 추천해줄게!`);
             await index.sendSocketMessage(socket.id, 'chat message loader', 500);
-            await index.sendSocketMessage(socket.id, 'chat message button image', chlist1[rand1], imglist[rand_img]);
+            await index.sendSocketMessage(socket.id, 'chat message button image', random_pick(chlist1), random_pick(imglist));
             await index.sendSocketMessage(socket.id, 'chat message loader', 500);
-            await index.sendSocketMessage(socket.id, 'chat message button', chlist2[rand2]);
+            await index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist2));
 
             const result = await info_update.drink.get_other_drink_restaurant(socket.id, user_data.id, user_data.rest1, user_data.rest2);
+            // 1. GPS 시나리오
             if (user_data.lat != null && user_data.lng != null) {
               const distance1 = results[0].distance;
               const distance2 = results[1].distance;
-              if(result.success) {
+              if (result.success) {
                 (image.res1 === 'no image') ? await index.sendSocketMessage(socket.id, 'chat message card no image distance',
                                                                                       ['S1l/1', results[0].res_name],
                                                                                       ['S11/2', results[1].res_name],
@@ -484,8 +477,9 @@ class Decide_drink {
                                                                                       distance1, distance2);
               }
             }
+            // 2. 일반적인 시나리오
             else {
-              if(result.success) {
+              if (result.success) {
                 (image.res1 === 'no image') ? await index.sendSocketMessage(socket.id, 'chat message card no image',
                                                                                       ['S11/1', results[0].res_name],
                                                                                       ['S11/2', results[1].res_name],
@@ -559,7 +553,6 @@ class Decide_drink {
         const rests = await result.message;
         if (result.success) {
           const chlist = [`다른 술집 찾는 중`, `까다로워 증말...`, `다른 술집 찾는 중🐕🐕`, '아~~ 이번에는 맘에 들어씀 조케땅~~'];
-          const rand = Math.floor(chlist.length * Math.random());
 
           // 결과 2개일때
           if (result.num >= 2) {
@@ -571,7 +564,7 @@ class Decide_drink {
 
             const image = await info_update.food.crawl_two_image(socket.id, `${rests[0].res_name}`, `${rests[1].res_name}`);
 
-            await index.sendSocketMessage(socket.id, 'chat message button', chlist[rand]);
+            await index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist));
             await index.sendSocketMessage(socket.id, 'chat message loader', 500);
             await index.sendSocketMessage(socket.id, 'chat message button', '2개 술집 중에 더 가고싶은 곳을 골라줘!');
             if (user_data.lat != null && user_data.lng != null) {
@@ -618,7 +611,7 @@ class Decide_drink {
 
             const image = await info_update.food.crawl_two_image(socket.id, `${rests[0].res_name}`, `네이버`);
 
-            await index.sendSocketMessage(socket.id, 'chat message button', chlist[rand]);
+            await index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist));
             await index.sendSocketMessage(socket.id, 'chat message loader', 500);
             await index.sendSocketMessage(socket.id, 'chat message button', '조건에 맞는 술집이 1곳 뿐이네! 이거라도 보여줄게 기다료바!!');
             if (user_data.lat != null && user_data.lng != null) {
@@ -662,8 +655,6 @@ class Decide_drink {
         const rests = await result.message;
         if (result.success) {
           const chlist = [`비슷한 술집 찾는 중`, `비슷한 술집 찾는 중🐕🐕`];
-          const rand = Math.floor(chlist.length * Math.random());
-
           // 결과 2개일때
           if (result.num >= 2) {
             await info_update.profile.update_rest2(user_data.kakao_id, rests[0].id, rests[1].id);
@@ -673,7 +664,7 @@ class Decide_drink {
             const second_map_url = `https://map.naver.com/index.nhn?query=${rests[1].subway} ${rests[1].res_name}&tab=1`;
             const image = await info_update.food.crawl_two_image(socket.id, `${rests[0].res_name}`, `${rests[1].res_name}`);
 
-            await index.sendSocketMessage(socket.id, 'chat message button', chlist[rand]);
+            await index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist));
             await index.sendSocketMessage(socket.id, 'chat message loader', 500);
             await index.sendSocketMessage(socket.id, 'chat message button', '2개 술집 중에 더 가고싶은 곳을 골라줘!');
             (image.res1 === 'no image') ? await index.sendSocketMessage(socket.id, 'chat message card no image',
@@ -698,7 +689,7 @@ class Decide_drink {
             const first_map_url = `https://map.naver.com/index.nhn?query=${rests[0].subway} ${rests[0].res_name}&tab=1`;
             const image = await info_update.food.crawl_two_image(socket.id, `${rests[0].res_name}`, `네이버`);
 
-            await index.sendSocketMessage(socket.id, 'chat message button', chlist[rand]);
+            await index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist));
             await index.sendSocketMessage(socket.id, 'chat message loader', 500);
             await index.sendSocketMessage(socket.id, 'chat message button', '조건에 맞는 술집이 1곳 뿐이네! 이거라도 보여줄게 기다료바!!');
             (image.res1 === 'no image') ? await index.sendSocketMessage(socket.id, 'chat message card no image single',
@@ -754,17 +745,16 @@ class Decide_drink {
         const naver_url = `https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${food_value[0].subway} ${food_value[0].res_name}`;
         const map_url = `https://map.naver.com/index.nhn?query=${food_value[0].subway} ${food_value[0].res_name}&tab=1`;
         const chooseimglist = ['emoji/choose.png','emoji/choose2.png','emoji/choose3.png','emoji/goodchoice.png'];
-        const rand2 = Math.floor(chooseimglist.length * Math.random());
 
         const result = await info_update.drink.get_similar_drink_restaurant(socket.id, user_data.rest_final);
         if (result.success) {
           await index.sendSocketMessage(socket.id, 'chat message button image', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name} 전문 ${food_value[0].drink_type}집이야!<br>`
             + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a><br><a class="card-link" target="_self" href="#" onclick="location.href='tel:${food_value[0].phone}';"><i class="fa fa-phone"></i> 전화 걸기</a>`,
-              `${chooseimglist[rand2]}`,  ['show_image', '사진 보기'], ['S10_2', '비슷한 술집 보기'], ['get_started', '처음으로 돌아가기']);
+              `${random_pick(chooseimglist)}`,  ['show_image', '사진 보기'], ['S10_2', '비슷한 술집 보기'], ['get_started', '처음으로 돌아가기']);
         } else {
           await index.sendSocketMessage(socket.id, 'chat message button image', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name} 전문 ${food_value[0].drink_type}집이야!<br>`
             + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a><br><a class="card-link" target="_self" href="#" onclick="location.href='tel:${food_value[0].phone}';"><i class="fa fa-phone"></i> 전화 걸기</a>`,
-              `${chooseimglist[rand2]}`,  ['show_image', '사진 보기'], ['get_started', '처음으로 돌아가기']);
+              `${random_pick(chooseimglist)}`,  ['show_image', '사진 보기'], ['get_started', '처음으로 돌아가기']);
         }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, ['get_started', '처음으로 돌아가기']);

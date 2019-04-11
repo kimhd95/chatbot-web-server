@@ -1408,13 +1408,34 @@ $(function () {
     }
     $('#messages').scrollTop(1E10);
 
-
     if(loginValue!=='-1'){
       if(msg.includes("오늘의 선택")){
         updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
       }
     }
   });
+
+  // socket.on('chat message button array', (socket_id, msg, arr) => {
+  //   $('#messages').append(bot_messaging(msg)).children(':last').hide()
+  //     .fadeIn(150);
+  //   for (let i = 0; i < arr.length; i++) {
+  //       $('#messages').append(bot_messaging_button(arr[i][0], arr[i][1]));
+  //   }
+  //   if (arr.length === 0) {
+  //       $('#m').prop('disabled', false);
+  //       $('#input-button').attr('disabled', false);
+  //   } else {
+  //     $('#m').prop('disabled', true);
+  //     $('#input-button').attr('disabled', true);
+  //   }
+  //   $('#messages').scrollTop(1E10);
+  //
+  //   if (loginValue!=='-1') {
+  //     if (msg.includes("오늘의 선택")) {
+  //       updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
+  //     }
+  //   }
+  // });
 
   socket.on('chat message button checkbox price', (socket_id, msg, ...args) => {
     if (args.length === 0) {
