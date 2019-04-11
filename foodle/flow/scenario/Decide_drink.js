@@ -10,6 +10,10 @@ const wrong_subway_input_msg = (value) => {
 const random_pick = (arr) => {
   return arr[Math.floor(arr.length * Math.random())];
 }
+const previous_button = (stack) => {
+  return [`previous/${stack.replace(/"/gi,"@")}`, '이전으로 돌아가기'];
+}
+const get_started_button = ['get_started', '처음으로 돌아가기'];
 const check_subway = (subway) => {
   switch (subway) {
     case '건대역':
