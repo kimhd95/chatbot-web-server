@@ -352,4 +352,96 @@ $(document).ready(function(){
       }
   };
   sendReq(userinfo);
+
+
+  const list = ['강남역', '서울대입구역', '선릉역'];
+  for (let i = 0; i < list.length; i++) {
+    $('#station-list').append('<div class="stationname">' + list[i] + '</div>');
+  }
+});
+
+$('.service-btn, #back-to-lobby-service').click(function(){
+    $('.avail-slide').toggleClass('close');
+  });
+
+$('.onetoone-btn, #back-to-lobby-question').click(function(){
+    $('.onetoone').toggleClass('close');
+  });
+
+$('#contents-btn').click(function(){
+  location.href='/contents';
+});
+
+$("#toggle").change(function(){
+  if($('#toggle').is(':checked')){
+    console.log("checked");
+  } else{
+    console.log("unchecked");
+  }
+})
+
+$('.question-send').click(function(){
+  let email = $('#question-email').val(),
+    name = $('#question-name').val(),
+    subject = $('#question-subject').val(),
+    text = $('#question-content').val();
+
+  if (subject === null) {
+    alert('문의 유형을 선택해주세요.');
+    return;
+  }
+  if (text === '') {
+    alert('내용을 입력해주세요.');
+    return;
+  }
+
+  $('.question-send').attr('disabled', true);
+
+  $.ajax({
+    url: '/sendEmail',
+    async: true,
+    type: 'POST',
+    data: {
+      name: name,
+      email: email,
+      subject: subject,
+      message: text
+    },
+    dataType: 'text',
+    success: function () {
+      alert('작성하신 문의가 성공적으로 전송되었습니다.');
+      $('.question-send').attr('disabled', false);
+      $('.onetoone').toggleClass('close');
+      // $('#question-subject')[0].value = 'undefined';
+      // $('#question-content')[0].value = '';
+      // $('.dropdown').find('input').attr('value', $(this).attr('id'));
+      // $('.dropdown').find('input').attr('value', $(this).attr('id'));
+      // $('.custom-select').text('주제를 선택해주세요');
+      // $('#question-subject').attr('value','-1');
+      $('.init').prop('disabled', false);
+      $('.init').prop('selected', false);
+      $('.init').prop('selected', true);
+      $('.init').prop('disabled', true);
+      $('#question-content').val('');
+    },
+    error: function () {
+      alert('전송에 실패했습니다.');
+      $('.question-send').attr('disabled', false);
+    }
+  });
+});
+
+
+//
+// if($('#toggle').is(':checked')){
+//   console.log('checked');
+// } else{
+//   console.log('unchecked');
+// }
+
+var swiperImg = new Swiper('.swiper-container', {
+  slidesPerView: 'auto',
+  initialSlide: 0,
+  // resistanceRatio: 0,
+  slideToClickedSlide: false,
 });

@@ -443,33 +443,34 @@ class Decide_menu {
                 return;
               }
             }
+            
+            const imglist = ['emoji/checking.png','emoji/checking2.png','emoji/thinking.png','emoji/thinking2.png'];
 
             if (value.includes('middle')) {
               await info_update.profile.update_lat(socket.id, 'null');
               await info_update.profile.update_lng(socket.id, 'null');
               const qna_list = [
-                  { //지하철역 검색->현재위치 500m내
-                      'question': '어떤 방식으로 메뉴를 정해보까나',
-                      'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색',
-                      'button2_id': 'price_under10', 'button2_value': '1만원 미만',
-                      'button3_id': 'mood2', 'button3_value': '식당 분위기 필터링',
-                      'button4_id': 'search_food', 'button4_value': '음식 종류 검색',
-                  },
-                  {
-                      'question': '오늘 메뉴는 어떻게 골라줄까?',
-                      'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색',
-                      'button2_id': 'price_under10', 'button2_value': '1만원 미만',
-                      'button3_id': 'mood2', 'button3_value': '식당 분위기 필터링',
-                      'button4_id': 'search_food', 'button4_value': '음식 종류 검색',
-                  },
-              ];
-              const imglist = ['emoji/checking.png','emoji/checking2.png','emoji/thinking.png','emoji/thinking2.png'];
+                                  { //지하철역 검색->현재위치 500m내
+                                      'question': '어떤 방식으로 메뉴를 정해보까나',
+                                      'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색',
+                                      'button2_id': 'price_under10', 'button2_value': '1만원 미만',
+                                      'button3_id': 'mood2', 'button3_value': '식당 분위기 필터링',
+                                      'button4_id': 'search_food', 'button4_value': '음식 종류 검색',
+                                  },
+                                  {
+                                      'question': '오늘 메뉴는 어떻게 골라줄까?',
+                                      'button1_id': 'exitnum', 'button1_value': '지하철 출구별 검색',
+                                      'button2_id': 'price_under10', 'button2_value': '1만원 미만',
+                                      'button3_id': 'mood2', 'button3_value': '식당 분위기 필터링',
+                                      'button4_id': 'search_food', 'button4_value': '음식 종류 검색',
+                                  },
+                              ];
+
               const qna_pick = random_pick(qna_list);
               index.sendSocketMessage(socket.id, 'chat message button image', qna_pick.question, random_pick(imglist),
                   [qna_pick.button1_id, qna_pick.button1_value], [qna_pick.button2_id, qna_pick.button2_value],
                   [qna_pick.button3_id, qna_pick.button3_value], [qna_pick.button4_id, qna_pick.button4_value]);
             } else {
-              const imglist = ['emoji/checking.png','emoji/checking2.png','emoji/thinking.png','emoji/thinking2.png'];
               if (subway in available_subway) {
                 const qna_list = [
                                     { //지하철역 검색->현재위치 500m내
@@ -509,8 +510,8 @@ class Decide_menu {
                                 ];
                 const qna_pick = random_pick(qna_list);
                 await index.sendSocketMessage(socket.id, 'chat message button image', qna_pick.question, random_pick(imglist),
-                [qna_pick.button1_id, qna_pick.button1_value], [qna_pick.button2_id, qna_pick.button2_value],
-                [qna_pick.button3_id, qna_pick.button3_value], previous_button(user_data.stack));
+                    [qna_pick.button1_id, qna_pick.button1_value], [qna_pick.button2_id, qna_pick.button2_value],
+                    [qna_pick.button3_id, qna_pick.button3_value], previous_button(user_data.stack));
               }
             }
         } catch (e) {
@@ -607,22 +608,17 @@ class Decide_menu {
             await info_update.profile.update_lat(socket.id, lat);
             await info_update.profile.update_lng(socket.id, lng);
           }
-            // if (value.includes('lunch')) {
-            //     await info_update.profile.update_price_level_dinner(socket.id, 'x');
-            // } else if (value.includes('dinner')) {
-            //     await info_update.profile.update_price_level_lunch(socket.id,'x');
-            // }
-            const price_list = ['식사 예산은 1인당 어느 정도 생각해? (중복선택가능!)',
-                                '오늘 너의 텅장💸이 허락하는 한도는??(1인 기준, 중복선택)',
-                                '식사 가격은 1인당 얼마 정도였으면 좋겠어? (중복선택)',
-                                '이번 식사. 얼마면 돼?!💰(1인 기준, 중복선택)',
-                                '오늘 식사의 가격대는 어느 정도로 생각해~~?(1인 기준, 중복선택)',
-                                '1인당 얼마까지 긁을 수 있어? 💳 (중복선택가능!)'];
-            index.sendSocketMessage(socket.id, 'chat message button checkbox price', random_pick(price_list),
+          const price_list = ['식사 예산은 1인당 어느 정도 생각해? (중복선택가능!)',
+                              '오늘 너의 텅장💸이 허락하는 한도는??(1인 기준, 중복선택)',
+                              '식사 가격은 1인당 얼마 정도였으면 좋겠어? (중복선택)',
+                              '이번 식사. 얼마면 돼?!💰(1인 기준, 중복선택)',
+                              '오늘 식사의 가격대는 어느 정도로 생각해~~?(1인 기준, 중복선택)',
+                              '1인당 얼마까지 긁을 수 있어? 💳 (중복선택가능!)'];
+          index.sendSocketMessage(socket.id, 'chat message button checkbox price', random_pick(price_list),
                 ['0', '~1만원 미만'], ['1', '1만원 대'], ['2', '2만원 대'], ['3,4', '3만원 이상'], previous_button(user_data.stack), ['price/', '선택완료']);
         } catch (e) {
-            index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
-            console.log(e);
+          index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
+          console.log(e);
         }
     }());
   }
@@ -709,7 +705,6 @@ class Decide_menu {
                     '어디 근처로 골라볼까?', '어떤 지하철역 근처로 정해볼까?'];
                 index.sendSocketMessage(socket.id, 'chat message button', `${random_pick(chlist)}<br>ex) 강남역,이대역`);
             }
-
         } catch (e) {
             index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         }
@@ -865,7 +860,6 @@ class Decide_menu {
         await info_update.profile.update_taste(socket.id, 'all');;
         await info_update.profile.update_exit_quarter(socket.id, '999');
         await info_update.profile.update_food_name(socket.id, 'x');
-        //await info_update.profile.update_with_mood(socket.id, '약속');
         const result = await info_update.food.verify_mood2(socket.id, user_data.subway);
         console.log(result);
 

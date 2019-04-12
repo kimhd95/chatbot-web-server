@@ -90,7 +90,7 @@
 											<div class="button-space"><div class="choose-menu" onclick="location.href='/chat';"></div></div> -->
 										</div>
                   </div>
-                    
+
 										<div class="swiper-slide"><div class="color-bg" style="background-image: url('/images/color_bg_trd.png')">
                       <div class="character-img" style="background-image: url('/images/character_img_trd.png')">
                       <div class="text-img" style="background-image: url('/images/text_img_trd.png')"></div></div>
@@ -234,125 +234,16 @@
 
         <div class="ssm-overlay ssm-toggle-nav ssm-nav-visible"></div>
 
-        <script>
-          $(document).ready(function(){
-          // $(document).ready(() =>{
-
-            //IE console defiition
-            // var console = window.console || {log:function(){}};
-            console.log('present stage : ' + sessionStorage.getItem('stage'));
-            // console.log(`present stage: ${sessionStorage.getItem('stage')}`);
-            // var list=['강남역', '건대입구역', '광화문역', '뚝섬역', '망원역', '서울대입구역', '성수역', '사당역', '신사역', '여의도역', '역삼역', '을지로입구역', '이태원역', '종로3가역', '종각역', '합정역', '홍대입구역', '혜화역'];
-            var list=['강남역', '서울대입구역', '선릉역'];
-            var i;
-            for(i=0;i<list.length;i++){
-              // $('#station-list').append(`<div class="stationname">${list[i]}</div>`);
-              $('#station-list').append('<div class="stationname">' + list[i] + '</div>');
-            }
-          });
-
-          $('.service-btn, #back-to-lobby-service').click(function(){
-              $('.avail-slide').toggleClass('close');
-            });
-
-          $('.onetoone-btn, #back-to-lobby-question').click(function(){
-              $('.onetoone').toggleClass('close');
-            });
-
-          $('#contents-btn').click(function(){
-            location.href='/contents';
-          });
-
-          $("#toggle").change(function(){
-            if($('#toggle').is(':checked')){
-              console.log("checked");
-            } else{
-              console.log("unchecked");
-            }
-          })
-
-          $('.question-send').click(function(){
-      			let email = $('#question-email').val(),
-      				name = $('#question-name').val(),
-      				subject = $('#question-subject').val(),
-      				text = $('#question-content').val();
-
-            if (subject === null) {
-              alert('문의 유형을 선택해주세요.');
-              return;
-            }
-            if (text === '') {
-              alert('내용을 입력해주세요.');
-              return;
-            }
-
-            $('.question-send').attr('disabled', true);
-
-      			$.ajax({
-      				url: '/sendEmail',
-      				async: true,
-      				type: 'POST',
-      				data: {
-      					name: name,
-      					email: email,
-      					subject: subject,
-      					message: text
-      				},
-      				dataType: 'text',
-      				success: function () {
-      					alert('작성하신 문의가 성공적으로 전송되었습니다.');
-                $('.question-send').attr('disabled', false);
-                $('.onetoone').toggleClass('close');
-                // $('#question-subject')[0].value = 'undefined';
-                // $('#question-content')[0].value = '';
-                // $('.dropdown').find('input').attr('value', $(this).attr('id'));
-                // $('.dropdown').find('input').attr('value', $(this).attr('id'));
-                // $('.custom-select').text('주제를 선택해주세요');
-                // $('#question-subject').attr('value','-1');
-                $('.init').prop('disabled', false);
-                $('.init').prop('selected', false);
-                $('.init').prop('selected', true);
-                $('.init').prop('disabled', true);
-                $('#question-content').val('');
-      				},
-      				error: function () {
-      					alert('전송에 실패했습니다.');
-                $('.question-send').attr('disabled', false);
-      				}
-      			});
-          });
-
-
-          //
-          // if($('#toggle').is(':checked')){
-          //   console.log('checked');
-          // } else{
-          //   console.log('unchecked');
-          // }
-
-					var swiperImg = new Swiper('.swiper-container', {
-			      slidesPerView: 'auto',
-			      initialSlide: 0,
-			      // resistanceRatio: 0,
-			      slideToClickedSlide: false,
-			    });
-				</script>
-
-
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <!-- <script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script> -->
         <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script> -->
         <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script> -->
-
         <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script> -->
-
         <!-- <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script> -->
         <script src="/socket.io/socket.io.js"></script>
         <script src="/js/base.js"></script>
         <script src="/js/lobby.js"></script>
         <!-- <script src="/js/event.js"></script> -->
-
-
         <!-- <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script> -->
     </body>
 </html>
