@@ -1153,22 +1153,14 @@ class Decide_menu {
         const food_value = await info_update.food.get_restaurant_info(socket.id, user_data.rest_final);
         let image = await info_update.food.crawl_image(socket.id, `${food_value[0].subway.slice(0, -1)} ${food_value[0].res_name}`);
 
-        if (value.split('/')[1] === 'similar') {
-          if (image.res1 === 'no image') {
-            index.sendSocketMessage(socket.id, 'chat message button', `아직 ${food_value[0].subway} ${food_value[0].res_name}에 대한 사진이 없어요..ㅠㅠㅠ`, ['S12_2/similar', '돌아가기'], get_started_button);
-          } else {
-            image = image.res1;
-            index.sendSocketMessage(socket.id, 'chat message image', '자 귀찮은 너를 위해 대신 구글링한 사진이야', ['S12_2/similar', '돌아가기'], get_started_button, image[0], image.length, image.splice(1));
-            return;
-          }
+        const back_button = (value.split('/')[1] === 'similar') ? ['S12_2/similar','이전으로'] : ['S12_2','이전으로'];
+        if (image.res1 === 'no image') {
+          index.sendSocketMessage(socket.id, 'chat message button', `아직 ${food_value[0].subway} ${food_value[0].res_name}에 대한 사진이 없어요..ㅠㅠㅠ`,
+                back_button, get_started_button);
         } else {
-          if (image.res1 === 'no image') {
-            index.sendSocketMessage(socket.id, 'chat message button', `아직 ${food_value[0].subway} ${food_value[0].res_name}에 대한 사진이 없어요..ㅠㅠㅠ`, ['S12_2', '돌아가기'], get_started_button);
-          } else {
-            image = image.res1;
-            index.sendSocketMessage(socket.id, 'chat message image', '자 귀찮은 너를 위해 대신 구글링한 사진이야', ['S12_2', '돌아가기'], get_started_button, image[0], image.length, image.splice(1));
-            return;
-          }
+          image = image.res1;
+          index.sendSocketMessage(socket.id, 'chat message image', '자 귀찮은 너를 위해 대신 구글링한 사진이야',
+                back_button, get_started_button, image[0], image.length, image.splice(1));
         }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
@@ -1208,19 +1200,6 @@ class Decide_menu {
       }
     }());
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
