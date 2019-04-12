@@ -1034,7 +1034,9 @@ $(function () {
     } else {
       $('#m').autocomplete('disable');
     }
-    if ($(e.target).attr('id') === ('mood2/') || $(e.target).attr('id') === ('exit/') || $(e.target).attr('id') === ('S4/') || $(e.target).attr('id') === ('price/') ||  $(e.target).attr('id') === ('hobulho_hate/')) {
+    if ($(e.target).attr('id') === ('mood2/') || $(e.target).attr('id') === ('exit/') || $(e.target).attr('id') === ('S4/') ||
+        $(e.target).attr('id') === ('price/') ||  $(e.target).attr('id') === ('hobulho_hate/') || $(e.target).attr('id') === ('S0_2/') ||
+        $(e.target).attr('id') === ('S4_1/mood2/') || $(e.target).attr('id') === ('S4_1/exit/') || $(e.target).attr('id') === ('S10/price/')) {
       console.log($(e.target).attr('id'));
       const checked_array = [];
       const checked_name_array = [];
@@ -1063,7 +1065,7 @@ $(function () {
           case 'price/':
             socket.emit('chat message button rule', $(e.target).attr('name'), 'no_price');
             break;
-          case 'hobulho_hate/':
+          case 'S0_2/':
             socket.emit('chat message button rule', $(e.target).attr('name'), 'no_hobulho_hate');
             break;
         }
@@ -1193,11 +1195,13 @@ $(function () {
       $('.messaging-button').hide();
       $('.messaging-button-checkbox').hide();
       if($(e.target).attr('id') === '999'){
-        socket.emit('chat message button rule', $(e.target).attr('name'), 'exit/'+$(e.target).attr('id'));
+        // socket.emit('chat message button rule', $(e.target).attr('name'), 'exit/'+$(e.target).attr('id'));
+        socket.emit('chat message button rule', $(e.target).attr('name'), 'S4_1/exit/'+$(e.target).attr('id'));
       } else if ($(e.target).attr('id') === '998'){
-        socket.emit('chat message button rule', $(e.target).attr('name'), 'mood2/'+$(e.target).attr('id'));
+        // socket.emit('chat message button rule', $(e.target).attr('name'), 'mood2/'+$(e.target).attr('id'));
+        socket.emit('chat message button rule', $(e.target).attr('name'), 'S4_1/mood2/'+$(e.target).attr('id'));
       } else if ($(e.target).attr('id') === '900'){
-          socket.emit('chat message button rule', $(e.target).attr('name'), 'hobulho_hate/'+$(e.target).attr('id'));
+          socket.emit('chat message button rule', $(e.target).attr('name'), 'S0_2/'+$(e.target).attr('id'));
       } else {
         socket.emit('chat message button rule', $(e.target).attr('name'), 'S4/'+$(e.target).attr('id'));
       }
@@ -1334,9 +1338,7 @@ $(function () {
         success: function (res) {
             if (res.success){
                 console.log("signUpReq: success!");
-                console.log(stage);
-                console.log(loginValue);
-                if(stage!==null){
+                if (stage!==null) {
                   if(loginValue!=='-1'){
                     getPartLog(user_email, sessionStorage.getItem('stage'));
                   }
@@ -1346,7 +1348,7 @@ $(function () {
                   $('.messaging-button').hide();
                   $('.messaging-button-checkbox').hide();
                 }
-            }else {
+            } else {
                 console.log("signUpReq: fail!");
                 console.log(res);
             }
