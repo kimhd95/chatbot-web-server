@@ -76,53 +76,32 @@ const random_pick = (arr) => {
  return arr[Math.floor(arr.length * Math.random())];
 }
 const check_subway = (subway) => {
- switch (subway) {
-   case '건대역':
-   case '건국대역':
-   case '건국대입구역':
-   case '건국대학교역':
-   case '건국대학교입구역':
-   case '건입역':
+  switch (subway) {
+    case '건대역': case '건국대역': case '건국대입구역': case '건국대학교역': case '건국대학교입구역': case '건입역':
      return '건대입구역';
-   case '고대역':
-   case '고려대학교역':
+    case '고대역': case '고려대학교역':
      return '고려대역';
-   case '고터역':
+    case '고터역':
      return '고속터미널역';
-   case '교육대역':
-   case '교육대학교역':
+    case '교육대역': case '교육대학교역':
      return '교대역';
-   case '남터역':
+    case '남터역':
      return '남부터미널역';
-   case '서울대역':
-   case '서울대학교역':
-   case '서울대학교입구역':
-   case '설입역':
+    case '서울대역': case '서울대학교역': case '서울대학교입구역': case '설입역':
      return '서울대입구역';
-   case '성대역':
-   case '성대입구역':
-   case '성신여대역':
-   case '성신여자대학교역':
-   case '성신여자대학교입구역':
+    case '성대역': case '성대입구역': case '성신여대역': case '성신여자대학교역': case '성신여자대학교입구역':
      return '성신여대입구역';
-   case '센텀역':
+    case '센텀역':
      return '센텀시티역';
-   case '을입역':
+    case '을입역':
      return '을지로입구역';
-   case '이화여대역':
-   case '이화여자대학교역':
+    case '이화여대역': case '이화여자대학교역':
      return '이대역';
-   case '홍대역':
-   case '홍익대역':
-   case '홍익대입구역':
-   case '홍익대학교역':
-   case '홍익대학교입구역':
-   case '홍입역':
+    case '홍대역': case '홍익대역': case '홍익대입구역': case '홍익대학교역': case '홍익대학교입구역': case '홍입역':
      return '홍대입구역';
-
-   default:
+    default:
      return subway;
- }
+  }
 }
 
 function distance(lat1, lon1, lat2, lon2, value) { // Haversine 공식 : 구(지구) 에서 두 점(좌표) 사이 최단거리를 구하는 공식
@@ -140,8 +119,7 @@ class Decide_menu {
   constructor(value, socket, user_data) {
     console.log('value: '+value);
     console.log('user_data의 state: '+user_data.state);
-    let key;
-    key = value;
+    let key = value;
     if (key === 'decide_menu') {
       key = 'decide_menu';
     // } else if (key === 'decide_subway') {
@@ -443,7 +421,7 @@ class Decide_menu {
                 return;
               }
             }
-            
+
             const imglist = ['emoji/checking.png','emoji/checking2.png','emoji/thinking.png','emoji/thinking2.png'];
 
             if (value.includes('middle')) {
@@ -622,7 +600,7 @@ class Decide_menu {
         }
     }());
   }
-
+//*
   no_price(value, socket, user_data) {
       (async function () {
           try {
@@ -633,7 +611,7 @@ class Decide_menu {
           }
       }());
   }
-
+//*
   location(value, socket, user_data) {
       (async function () {
           try {
@@ -647,7 +625,7 @@ class Decide_menu {
           }
       }());
   }
-
+//*
   decide_subway_corgi(value, socket, user_data) {
     (async function () {
         try {
@@ -660,7 +638,7 @@ class Decide_menu {
         }
     }());
   }
-
+//*
   near_station(value, socket, user_data) {
       (async function () {
         const lat= value.slice(value.indexOf('_')+1, value.lastIndexOf('/'));
@@ -689,7 +667,7 @@ class Decide_menu {
       }());
   }
 
-
+//?
   decide_subway_withexit(value, socket, user_data) {
     (async function () {
         try {
@@ -863,7 +841,7 @@ class Decide_menu {
         const result = await info_update.food.verify_mood2(socket.id, user_data.subway);
         console.log(result);
 
-        var show_list = await [['998', '상관없음']];
+        const show_list = await [['998', '상관없음']];
         if (result.includes('가벼운')) {
           await show_list.push(['가벼운', '간단한']);
         }
