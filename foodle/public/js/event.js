@@ -1382,13 +1382,15 @@ $(function () {
   });
 
   socket.on('chat message_self', (msg) => {
-    $('#messages').append(user_messaging(msg)).children(':last').hide()
-      .fadeIn(150);
-    if(msg.includes("처음으로") || msg.includes("돌아가기") || msg.includes("안할래")){
-      $('#messages').append(`<hr>`);
+    if (msg != null) {
+      $('#messages').append(user_messaging(msg)).children(':last').hide()
+        .fadeIn(150);
+      if(msg.includes("처음으로") || msg.includes("돌아가기") || msg.includes("안할래")){
+        $('#messages').append(`<hr>`);
+      }
+      // $('#messages').append($('<li>').text(answer));
+      // window.scrollTo(0, document.body.scrollHeight);
     }
-    // $('#messages').append($('<li>').text(answer));
-    // window.scrollTo(0, document.body.scrollHeight);
   });
 
   // TODO : 임시로 만들어 놓은 현재 접속자 -> 추후 삭제 해야함
@@ -1403,45 +1405,49 @@ $(function () {
     $('#messages').append(bot_messaging(msg)).children(':last').hide()
       .fadeIn(150);
     for (let i = 0; i < args.length; i += 1) {
-        $('#messages').append(bot_messaging_button(args[i][0], args[i][1]));
+      $('#messages').append(bot_messaging_button(args[i][0], args[i][1]));
     }
     if (args.length === 0) {
-        $('#m').prop('disabled', false);
-        $('#input-button').attr('disabled', false);
+      $('#m').prop('disabled', false);
+      $('#input-button').attr('disabled', false);
+    } else if (args[0] === '-skip') {
+      console.log("skip ========= ", args[0]);
+      socket.emit('skip');
+      return;
+      $('#m').prop('disabled', true);
+      $('#input-button').attr('disabled', true);
     } else {
       $('#m').prop('disabled', true);
       $('#input-button').attr('disabled', true);
     }
     $('#messages').scrollTop(1E10);
 
-    if(loginValue!=='-1'){
-      if(msg.includes("오늘의 선택")){
+    if (loginValue!=='-1') {
+      if (msg.includes("오늘의 선택")) {
         updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
       }
     }
   });
 
-  // socket.on('chat message button array', (socket_id, msg, arr) => {
-  //   $('#messages').append(bot_messaging(msg)).children(':last').hide()
-  //     .fadeIn(150);
-  //   for (let i = 0; i < arr.length; i++) {
-  //       $('#messages').append(bot_messaging_button(arr[i][0], arr[i][1]));
-  //   }
-  //   if (arr.length === 0) {
-  //       $('#m').prop('disabled', false);
-  //       $('#input-button').attr('disabled', false);
-  //   } else {
-  //     $('#m').prop('disabled', true);
-  //     $('#input-button').attr('disabled', true);
-  //   }
-  //   $('#messages').scrollTop(1E10);
-  //
-  //   if (loginValue!=='-1') {
-  //     if (msg.includes("오늘의 선택")) {
-  //       updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
-  //     }
-  //   }
-  // });
+  socket.on('chat message no button', (socket_id, msg, ...args) => {
+    console.log(`socket_id: ${socket_id}, msg: ${msg}, args: ${args}`);
+    $('#messages').append(bot_messaging(msg)).children(':last').hide()
+      .fadeIn(150);
+    $('#m').prop('disabled', true);
+    $('#input-button').attr('disabled', true);
+    $('#messages').scrollTop(1E10);
+    socket.emit('chat message button rule', $('.bot-message').children(':last').attr('name'), 'S11');
+  });
+
+  socket.on('chat message no button distance', (socket_id, msg, ...args) => {
+    console.log(`socket_id: ${socket_id}, msg: ${msg}, args: ${args}`);
+    $('#messages').append(bot_messaging(msg)).children(':last').hide()
+      .fadeIn(150);
+    $('#m').prop('disabled', true);
+    $('#input-button').attr('disabled', true);
+    $('#messages').scrollTop(1E10);
+    socket.emit('chat message button rule', $('.bot-message').children(':last').attr('name'), `S11/${args[0]},${args[1]}`);
+  });
 
   socket.on('chat message button checkbox price', (socket_id, msg, ...args) => {
     if (args.length === 0) {

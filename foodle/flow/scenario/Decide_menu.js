@@ -226,7 +226,7 @@ class Decide_menu {
       key = 'S4_2';
     } else if (key.startsWith('S10/') || user_data.state == 'S4_2') {
       key = 'S10';
-    } else if (key.startsWith('S11/')) {
+    } else if (key.startsWith('S11/') || user_data.state == 'S10') {
       key = 'S11';
     } else if (key.startsWith('S11_1/')) {
       key = 'S11_1';
@@ -242,7 +242,6 @@ class Decide_menu {
 
 
     this.strategies = {
-
       // 'price': this.price,
       // 'no_price': this.no_price,  //
       // 'decide_subway': this.decide_subway,
@@ -818,7 +817,8 @@ class Decide_menu {
           const foods_info = foods.message;
           if (foods_info.length === 2) {
             await info_update.profile.update_rest2(user_data.kakao_id, foods_info[0].id, foods_info[1].id);
-            index.sendSocketMessage(socket.id, 'chat message button', '2곳을 골라줄테니까 한 번 골라봐!', [`S11/${foods_info[0].distance},${foods_info[1].distance}`, '고고'], ['get_started', '안할래'], previous_button(user_data.stack));
+            index.sendSocketMessage(socket.id, 'chat message no button distance', '2곳을 골라줄테니까 한 번 골라봐!', foods_info[0].distance, foods_info[1].distance);//, [`S11/${foods_info[0].distance},${foods_info[1].distance}`, '고고'], ['get_started', '안할래'], previous_button(user_data.stack));
+            return;
           } else {
             index.sendSocketMessage(socket.id, 'chat message button image', '조건에 맞는 식당이 아직 없어... 다시 골라줘!', 'emoji/hungry3.png',get_started_button, previous_button(user_data.stack));
           }
@@ -847,7 +847,8 @@ class Decide_menu {
             const foods_info = foods.message;
             if (foods_info.length === 2) {
               await info_update.profile.update_rest2(user_data.kakao_id, foods_info[0].id, foods_info[1].id);
-              index.sendSocketMessage(socket.id, 'chat message button', '2곳을 골라줄테니까 한 번 골라봐!', ['S11', '고고'], ['get_started', '안할래'], previous_button(user_data.stack));
+              index.sendSocketMessage(socket.id, 'chat message no button', '2곳을 골라줄테니까 한 번 골라봐!');//, ['S11', '고고'], ['get_started', '안할래'], previous_button(user_data.stack));
+              return;
             } else {
               index.sendSocketMessage(socket.id, 'chat message button image', '조건에 맞는 식당이 아직 없어... 다시 골라줘!', 'emoji/hungry3.png',get_started_button, previous_button(user_data.stack));
             }
@@ -860,12 +861,14 @@ class Decide_menu {
           if (foods_info.length === 2) {
             await info_update.profile.update_rest2(user_data.kakao_id, foods_info[0].id, foods_info[1].id);
             if (foods.try === 1) {
-              index.sendSocketMessage(socket.id, 'chat message button', '2곳을 골라줄테니까 한 번 골라봐!', ['S11', '고고'], ['get_started', '안할래'], previous_button(user_data.stack));
+              index.sendSocketMessage(socket.id, 'chat message no button', '2곳을 골라줄테니까 한 번 골라봐!');//, ['S11', '고고'], ['get_started', '안할래'], previous_button(user_data.stack));
+              return;
             } else if (foods.try === 2) {
-              index.sendSocketMessage(socket.id, 'chat message button', `그 출구에는 딱 이거다 하는 곳은 없구... ${user_data.subway} 전체에서 2곳을 골라줄테니까 한 번 골라봐!`, ['S11', '고고'], ['get_started', '안할래'], previous_button(user_data.stack));
+              index.sendSocketMessage(socket.id, 'chat message no button', `그 출구에는 딱 이거다 하는 곳은 없구... ${user_data.subway} 전체에서 2곳을 골라줄테니까 한 번 골라봐!`);//, ['S11', '고고'], ['get_started', '안할래'], previous_button(user_data.stack));
+              return;
             }
           } else {
-            index.sendSocketMessage(socket.id, 'chat message button image', '조건에 맞는 식당이 아직 없어... 다시 골라줘!', 'emoji/hungry3.png',get_started_button, previous_button(user_data.stack));
+            index.sendSocketMessage(socket.id, 'chat message button image', '조건에 맞는 식당이 아직 없어... 다시 골라줘!', 'emoji/hungry3.png', get_started_button, previous_button(user_data.stack));
           }
         }
       } catch (e) {
@@ -878,6 +881,7 @@ class Decide_menu {
   S11__decide_final(value, socket, user_data) {
     (async function () {
       try {
+        console.log('### [S11] Value: ', value);
         await info_update.profile.update_limit_cnt(socket.id, user_data.limit_cnt + 1);
         const foods = await info_update.food.get_two_restaurant(socket.id, user_data.rest1, user_data.rest2);
         const first_url = `https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${foods[0].subway} ${foods[0].res_name}`;
