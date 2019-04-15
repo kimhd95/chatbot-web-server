@@ -1083,7 +1083,7 @@ $(function () {
       $('.checkbox:checked').attr('checked', false);
       $('.messaging-button').hide();
       $('.messaging-button-checkbox').hide();
-    } else if ($(e.target).attr('id')==='search_near') {
+    } else if ($(e.target).attr('id')==='S4_1/search_near') {
       getLocation2().then(function (arr) {
         console.log(arr);
         if(arr.lat == undefined || arr.lng == undefined) {
