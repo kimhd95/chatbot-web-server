@@ -360,7 +360,7 @@ class Decide_menu {
           await info_update.profile.update_stack(socket.id, `{"state":"${user_data.state}","value":"${value}"}`);
           index.sendSocketMessage(socket.id, 'chat message button image', random_pick(chlist), random_pick(imglist),
                 ['S1/lunch', '점심 고르기(평일)'], ['S1/dinner', '점심 고르기(주말)'], ['S1/dinner', '저녁 고르기'], ['S0_1', '못 먹는 음식 체크'],
-                ['S4_1/search_near', '내 주변 500m 내 식당 검색(GPS 켜줘!)']); //TODO: 식당/메뉴명으로 검색하기
+                ['S4_1/search_near/', '내 주변 500m 내 식당 검색(GPS 켜줘!)']); //TODO: 식당/메뉴명으로 검색하기
         } else {
           index.sendSocketMessage(socket.id, 'chat message button image', '아... 너무 많이 말했더니 🐶피곤.... 30분만 자고 다시 올게😪🌙', 'emoji/drunk2.png',get_started_button);
         }
@@ -402,7 +402,7 @@ class Decide_menu {
                                             'ㅋㅋㅋ이해해!! 나는 저거 다 먹을 수 있지만... 앞으로 참고하고 추천할게!'];
         index.sendSocketMessage(socket.id, 'chat message button', random_pick(hobulho_hate_feedback_list),
               ['S1/lunch', '점심 고르기(평일)'],['S1/dinner', '점심 고르기(주말)'], ['S1/dinner', '저녁 고르기'],
-              ['S0_1', '못 먹는 음식 체크'], ['S4_1/search_near', '내 주변 500m 내 식당 검색(GPS 켜줘!)']);
+              ['S0_1', '못 먹는 음식 체크'], ['S4_1/search_near/', '내 주변 500m 내 식당 검색(GPS 켜줘!)']);
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
@@ -709,11 +709,10 @@ class Decide_menu {
             await info_update.profile.update_food_type(socket.id, 'all');
             await info_update.profile.update_taste(socket.id, 'all');
             await info_update.profile.update_food_name(socket.id, 'x');
-          } else if(value.includes('search_near')) {
-            const first = value.indexOf('_');
-            const second = value.indexOf('_', first + 1);
-            const lat= value.slice(second + 1, value.lastIndexOf('/'));
-            const lng= value.slice(value.lastIndexOf('/')+1);
+          } else if(value.includes('search_near/')) {
+            const lat = value.split('search_near/')[1].split(',')[0];
+            const lng = value.split('search_near/')[1].split(',')[1];
+            console.log("lat, lng >> ", lat, lng);
             await info_update.profile.update_lat(socket.id, lat);
             await info_update.profile.update_lng(socket.id, lng);
           }

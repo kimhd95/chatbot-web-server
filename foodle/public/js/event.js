@@ -1078,18 +1078,18 @@ $(function () {
     } else if ($(e.target).attr('id')==='location/current'){
       let arr = getLocation(socket.id);
       var temp = setTimeout(function() {
-        socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + '_'+ arr.lat + '/' + arr.lng);
+        socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + arr.lat + ',' + arr.lng);
       }, 2000);
       $('.checkbox:checked').attr('checked', false);
       $('.messaging-button').hide();
       $('.messaging-button-checkbox').hide();
-    } else if ($(e.target).attr('id')==='S4_1/search_near') {
+    } else if ($(e.target).attr('id').includes('S4_1/search_near/')) {
       getLocation2().then(function (arr) {
         console.log(arr);
         if(arr.lat == undefined || arr.lng == undefined) {
           socket.emit('chat message button rule', $(e.target).attr('name'), 'geolocation_err');
         } else {
-          socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + '_'+ arr.lat + '/' + arr.lng);
+          socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + arr.lat + ',' + arr.lng);
         }
       });
       $('.checkbox:checked').attr('checked', false);
