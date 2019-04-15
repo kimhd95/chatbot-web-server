@@ -1339,14 +1339,46 @@ $(function () {
             if (res.success){
                 console.log("signUpReq: success!");
                 if (stage!==null) {
-                  if(loginValue!=='-1'){
-                    getPartLog(user_email, sessionStorage.getItem('stage'));
+                  if(stage == 'decide_menu' || stage == 'decide_drink' || stage == 'decide_cafe') {
+                    let scenario;
+                    if(stage == 'decide_menu'){
+                      scenario = 1;
+                    } else if(stage == 'decide_drink'){
+                      scenario = 6;
+                    } else if(stage == 'decide_cafe'){
+                      scenario = 7;
+                    }
+                    console.log(`scenario = ${scenario}`)
+                    const info2 ={
+                      url: "/api/v1/users/update_user",
+                      method: 'POST',
+                      body: {
+                        kakao_id: socket.id,
+                        scenario: scenario,
+                      },
+                      success: function(res) {
+                        if(loginValue!=='-1'){
+                          getPartLog(user_email, sessionStorage.getItem('stage'));
+                        }
+                        socket.emit('chat message button rule', name, stage);
+                        $('.checkbox:checked').attr('checked', false);
+                        $('.messaging-button').hide();
+                        $('.messaging-button-checkbox').hide();
+                      },
+                      error: function (e) {
+                        console.log(e);
+                      }
+                    }
+                    sendReq(info2);
+                  } else {
+                    if(loginValue!=='-1'){
+                      getPartLog(user_email, sessionStorage.getItem('stage'));
+                    }
+                    socket.emit('chat message button rule', name, stage);
+                    $('.checkbox:checked').attr('checked', false);
+                    $('.messaging-button').hide();
+                    $('.messaging-button-checkbox').hide();
                   }
-                  socket.emit('chat message button rule', name, stage);
-
-                  $('.checkbox:checked').attr('checked', false);
-                  $('.messaging-button').hide();
-                  $('.messaging-button-checkbox').hide();
                 }
             } else {
                 console.log("signUpReq: fail!");
