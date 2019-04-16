@@ -578,11 +578,8 @@ class Decide_menu {
             // },
           ],
         };
-        let taste_list = [];    // request 보낼 답변값 리스트
-        let valid_list = [];    // response에서 유효한 질문들 담을 리스트
-        for (let i = 0; i < taste.qnas.length; i++) {
-          taste_list.push([taste.qnas[i].option1, taste.qnas[i].option2]);
-        }
+        const taste_list = taste.qnas.map(item => [item.option1, item.option2]); // request 보낼 답변값 리스트
+        const valid_list = [];    // response에서 유효한 질문들 담을 리스트
 
         const result = await info_update.food.verify_result_exist(socket.id, user_data.subway, price_lun, price_din, user_data.hate_food, taste.qnas);
         if (result.success) {
