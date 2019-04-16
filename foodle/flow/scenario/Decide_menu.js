@@ -883,8 +883,7 @@ class Decide_menu {
                     [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
         if (value.includes('S11/')) {     // GPS 시나리오 일 경우 distance 이벤트
           event_type += ' distance';
-          const distance1 = value.split('/')[1].split(',')[0];
-          const distance2 = value.split('/')[1].split(',')[1];
+          const [distance1, distance2] = value.split('/')[1].split(',');
           params.push(distance1, distance2);
         }
         await index.sendSocketMessage(socket.id, event_type, ...params);
@@ -915,82 +914,20 @@ class Decide_menu {
           await index.sendSocketMessage(socket.id, 'chat message loader', 500);
           await index.sendSocketMessage(socket.id, 'chat message button', '2개 음식점중 더 가고싶은 곳을 골라줘!');
           console.log(result.num);
-          // 다른식당 결과 4개 이상일때
-          if (result.num >= 4) {
-            if (user_data.lat != null && user_data.lng != null) {
-              const distance1 = foods[0].distance;
-              const distance2 = foods[1].distance;
-              (image.res1 === 'no image') ? await index.sendSocketMessage(socket.id, 'chat message card no image distance',
-                                                                                    ['S12/1', foods[0].res_name],
-                                                                                    ['S12/2', foods[1].res_name],
-                                                                                    ['S12/3', '코기가 골라주기'],
-                                                                                    ['S11_1', '다른 식당 보기'],
-                                                                                    [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url],
-                                                                                    [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url],
-                                                                                    distance1, distance2)
-                                          : await index.sendSocketMessage(socket.id, 'chat message card distance',
-                                                                                    ['S12/1', foods[0].res_name],
-                                                                                    ['S12/2', foods[1].res_name],
-                                                                                    ['S12/3', '코기가 골라주기'],
-                                                                                    ['S11_1', '다른 식당 보기'],
-                                                                                    [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]],
-                                                                                    [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]],
-                                                                                    distance1, distance2);
-            } else {
-              (image.res1 === 'no image') ? await index.sendSocketMessage(socket.id, 'chat message card no image',
-                                                                                    ['S12/1', foods[0].res_name],
-                                                                                    ['S12/2', foods[1].res_name],
-                                                                                    ['S12/3', '코기가 골라주기'],
-                                                                                    ['S11_1', '다른 식당 보기'],
-                                                                                    [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url],
-                                                                                    [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url])
-                                          : await index.sendSocketMessage(socket.id, 'chat message card',
-                                                                                    ['S12/1', foods[0].res_name],
-                                                                                    ['S12/2', foods[1].res_name],
-                                                                                    ['S12/3', '코기가 골라주기'],
-                                                                                    ['S11_1', '다른 식당 보기'],
-                                                                                    [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]],
-                                                                                    [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
-            }
+
+          const params = [];
+          let event_type = (image.res1 === 'no image') ? 'chat message card no image' : 'chat message card';
+          params.push(['S12/1', foods[0].res_name], ['S12/2', foods[1].res_name], ['S12/3', '코기가 골라주기']);
+          (result.num >= 4) ? params.push(['S11_1', '다른 식당 보기']) : params.push([]);    // 다른 식당 있는 경우에만 버튼이 보임
+          params.push([foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]],
+                      [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
+          if (user_data.lat != null && user_data.lng != null) {     // GPS 시나리오 일 경우 distance 이벤트
+            event_type += ' distance';
+            const distance1 = foods[0].distance;
+            const distance2 = foods[1].distance;
+            params.push(distance1, distance2);
           }
-          // 결과 3개 이하일때
-          else {
-            if (user_data.lat != null && user_data.lng != null) {
-              const distance1 = foods[0].distance;
-              const distance2 = foods[1].distance;
-              (image.res1 === 'no image') ? await index.sendSocketMessage(socket.id, 'chat message card no image distance',
-                                                                                    ['S12/1', foods[0].res_name],
-                                                                                    ['S12/2', foods[1].res_name],
-                                                                                    ['S12/3', '코기가 골라주기'],
-                                                                                    [],
-                                                                                    [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url],
-                                                                                    [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url],
-                                                                                    distance1, distance2)
-                                          : await index.sendSocketMessage(socket.id, 'chat message card distance',
-                                                                                    ['S12/1', foods[0].res_name],
-                                                                                    ['S12/2', foods[1].res_name],
-                                                                                    ['S12/3', '코기가 골라주기'],
-                                                                                    [],
-                                                                                    [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]],
-                                                                                    [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]],
-                                                                                    distance1, distance2);
-            } else {
-              (image.res1 === 'no image') ? await index.sendSocketMessage(socket.id, 'chat message card no image',
-                                                                                    ['S12/1', foods[0].res_name],
-                                                                                    ['S12/2', foods[1].res_name],
-                                                                                    ['S12/3', '코기가 골라주기'],
-                                                                                    [],
-                                                                                    [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url],
-                                                                                    [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url])
-                                          : await index.sendSocketMessage(socket.id, 'chat message card',
-                                                                                    ['S12/1', foods[0].res_name],
-                                                                                    ['S12/2', foods[1].res_name],
-                                                                                    ['S12/3', '코기가 골라주기'],
-                                                                                    [],
-                                                                                    [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]],
-                                                                                    [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
-            }
-          }
+          await index.sendSocketMessage(socket.id, event_type, ...params);
         } else {
           index.sendSocketMessage(socket.id, 'chat message button image', '여긴 다른 식당이 없네 ㅠㅠ... 힝힝.', 'emoji/disappointed.png',get_started_button);
         }
@@ -1016,18 +953,14 @@ class Decide_menu {
           const image = await info_update.food.crawl_two_image(socket.id, foods[0].res_name, foods[1].res_name);
 
           const chlist = [`비슷한 식당 찾는중`, `까다로워 증말...`, `비슷한 식당 찾는중🐕🐕`, '아~~ 이번에는 맘에 들어씀 조케땅~~'];
-          if (image.res1 === 'no image') {
-            await index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist));
-            await index.sendSocketMessage(socket.id, 'chat message loader', 500);
-            await index.sendSocketMessage(socket.id, 'chat message button', '2개 음식점중 더 가고싶은 곳을 골라줘!');
-            await index.sendSocketMessage(socket.id, 'chat message card no image', ['S12/1/similar', foods[0].res_name], ['S12/2/similar', foods[1].res_name], ['S12/3/similar', '코기가 골라주기'], [], [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url], [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url]);
-          } else {
-            await index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist));
-            await index.sendSocketMessage(socket.id, 'chat message loader', 500);
-            await index.sendSocketMessage(socket.id, 'chat message button', '2개 음식점중 더 가고싶은 곳을 골라줘!');
-            await index.sendSocketMessage(socket.id, 'chat message card', ['S12/1/similar', foods[0].res_name], ['S12/2/similar', foods[1].res_name], ['S12/3/similar', '코기가 골라주기'], [],[foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
-          }//TODO: 전화번호 예약 연결(완료), 내비연결, 오픈-클로즈,휴무,라스트오더, 위시리스트
-        } else {
+          await index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist));
+          await index.sendSocketMessage(socket.id, 'chat message loader', 500);
+          await index.sendSocketMessage(socket.id, 'chat message button', '2개 음식점중 더 가고싶은 곳을 골라줘!');
+          (image.res1 === 'no image')
+            ? await index.sendSocketMessage(socket.id, 'chat message card no image', ['S12/1/similar', foods[0].res_name], ['S12/2/similar', foods[1].res_name], ['S12/3/similar', '코기가 골라주기'], [], [foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url], [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url])
+            : await index.sendSocketMessage(socket.id, 'chat message card', ['S12/1/similar', foods[0].res_name], ['S12/2/similar', foods[1].res_name], ['S12/3/similar', '코기가 골라주기'], [],[foods[0].res_name, foods[0].food_type, foods[0].food_name, first_url, first_map_url, image.res1[0], image.res1[1], image.res1[2]], [foods[1].res_name, foods[1].food_type, foods[1].food_name, second_url, second_map_url, image.res2[0], image.res2[1], image.res2[2]]);
+        }//TODO: 전화번호 예약 연결(완료), 내비연결, 오픈-클로즈,휴무,라스트오더, 위시리스트
+        else {
           index.sendSocketMessage(socket.id, 'chat message button image', '여긴 비슷한 식당이 없네 ㅠㅠ... 힝힝.', 'emoji/disappointed.png',get_started_button);
         }
       } catch (e) {
@@ -1064,41 +997,22 @@ class Decide_menu {
         const map_url = `https://map.naver.com/index.nhn?query=${food_value[0].subway} ${food_value[0].res_name}&tab=1`;
         const chooseimglist = ['emoji/choose.png','emoji/choose2.png','emoji/choose3.png','emoji/goodchoice.png'];
 
-        if(value.split('/')[2] === 'similar') {
-          if (user_data.price_dinner === 'x' && food_value[0].lunch_option === 1) {
-            index.sendSocketMessage(socket.id, 'chat message button image', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name} 전문 ${food_value[0].food_type}집이야!<br>(런치메뉴 있음)`
-              + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a><br><a class="card-link" target="_self" href="#" onclick="location.href='tel:${food_value[0].phone}';"><i class="fa fa-phone"></i> 전화 걸기</a>`,
-                random_pick(chooseimglist),  ['S12_1/similar', '사진 보기'], get_started_button);
-          } else {
-            index.sendSocketMessage(socket.id, 'chat message button image', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name} 전문 ${food_value[0].food_type}집이야!`
-              + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a><br><a target="_self" class="card-link" href="#" onclick="location.href='tel:${food_value[0].phone}';"><i class="fa fa-phone"></i> 전화 걸기</a>`,
-                random_pick(chooseimglist), ['S12_1/similar', '사진 보기'], get_started_button);
-          }
+        let msg = `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name} 전문 ${food_value[0].food_type}집이야!<br>`;
+        if (user_data.price_dinner === 'x' && food_value[0].lunch_option === 1) { msg += '(런치메뉴 있음)'; }
+        msg += `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a><br><a class="card-link" target="_self" href="#" onclick="location.href='tel:${food_value[0].phone}';"><i class="fa fa-phone"></i> 전화 걸기</a>`;
+
+        const params = [];
+        params.push(random_pick(chooseimglist));
+        if (value.split('/')[2] === 'similar') {
+          params.push(['S12_1/similar', '사진 보기'])
         } else {
+          params.push(['S12_1', '사진 보기'], ['S11', '뒤로가기']);
           // 비슷한 식당 있는지 사전 검사
           const result = await info_update.food.get_similar_restaurant(socket.id, final_value);
-          if (user_data.price_dinner === 'x' && food_value[0].lunch_option === 1) {
-            if (result.success) {
-              index.sendSocketMessage(socket.id, 'chat message button image', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name} 전문 ${food_value[0].food_type}집이야!<br>(런치메뉴 있음)`
-                + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a><br><a class="card-link" target="_self" href="#" onclick="location.href='tel:${food_value[0].phone}';"><i class="fa fa-phone"></i> 전화 걸기</a>`,
-                  random_pick(chooseimglist),['S12_1', '사진 보기'], ['S11', '뒤로가기'], ['S11_2', '비슷한 식당 보기'], get_started_button);
-            } else {
-              index.sendSocketMessage(socket.id, 'chat message button image', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name} 전문 ${food_value[0].food_type}집이야!<br>(런치메뉴 있음)`
-                + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a><br><a class="card-link" target="_self" href="#" onclick="location.href='tel:${food_value[0].phone}';"><i class="fa fa-phone"></i> 전화 걸기</a>`,
-                  random_pick(chooseimglist),['S12_1', '사진 보기'], ['S11', '뒤로가기'], get_started_button);
-            }
-          } else {
-            if (result.success) {
-              index.sendSocketMessage(socket.id, 'chat message button image', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name} 전문 ${food_value[0].food_type}집이야!`
-                + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a><br><a target="_self" class="card-link" href="#" onclick="location.href='tel:${food_value[0].phone}';"><i class="fa fa-phone"></i> 전화 걸기</a>`,
-                  random_pick(chooseimglist),['S12_1', '사진 보기'], ['S11', '뒤로가기'], ['S11_2', '비슷한 식당 보기'], get_started_button);
-            } else {
-              index.sendSocketMessage(socket.id, 'chat message button image', `오늘의 선택: ${food_value[0].res_name}<br>${food_value[0].subway}에 있는 ${food_value[0].food_name} 전문 ${food_value[0].food_type}집이야!`
-                + `<hr class="link-line"><a href="${map_url}" target="_blank" class="card-link" style="bottom:8%;"><i class="fas fa-map-marked-alt link-icon" style="margin-right: 4px;"></i>지도 보기</a><br><a href="${naver_url}" target="_blank" class="card-link"><i class="fas fa-link link-icon"></i>네이버 검색 결과</a><br><a target="_self" class="card-link" href="#" onclick="location.href='tel:${food_value[0].phone}';"><i class="fa fa-phone"></i> 전화 걸기</a>`,
-                  random_pick(chooseimglist),['S12_1', '사진 보기'], ['S11', '뒤로가기'], get_started_button);
-            }
-          }
+          if (result.success) { params.push(['S11_2', '비슷한 식당 보기']); }
         }
+        params.push(get_started_button);
+        await index.sendSocketMessage(socket.id, 'chat message button image', msg, ...params);
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
