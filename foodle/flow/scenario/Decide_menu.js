@@ -497,25 +497,20 @@ class Decide_menu {
                                 'button3_id': 'S3_3', 'button3_value': '식당 분위기 필터링',
                                 'button4_id': 'S3_4', 'button4_value': '음식 종류 검색',
                              };
+            const params = [];
+            if (subway in available_subway) { params.push([qna_list.button1_id, qna_list.button1_value]); }
+            params.push([qna_list.button2_id, qna_list.button2_value]);
+            params.push([qna_list.button3_id, qna_list.button3_value]);
+            params.push([qna_list.button4_id, qna_list.button4_value]);
 
             if (value.includes('middle')) {
               await info_update.profile.update_lat(socket.id, 'null');
               await info_update.profile.update_lng(socket.id, 'null');
-              (subway in available_subway) ? await index.sendSocketMessage(socket.id, 'chat message button image', random_pick(qna_list.question), random_pick(imglist),
-                                                                          [qna_list.button1_id, qna_list.button1_value], [qna_list.button2_id, qna_list.button2_value],
-                                                                          [qna_list.button3_id, qna_list.button3_value], [qna_list.button4_id, qna_list.button4_value])
-                                           : await index.sendSocketMessage(socket.id, 'chat message button image', random_pick(qna_list.question), random_pick(imglist),
-                                                                          [qna_list.button2_id, qna_list.button2_value], [qna_list.button3_id, qna_list.button3_value],
-                                                                          [qna_list.button4_id, qna_list.button4_value]);
             } else {
-              (subway in available_subway) ? await index.sendSocketMessage(socket.id, 'chat message button image', random_pick(qna_list.question), random_pick(imglist),
-                                                                          [qna_list.button1_id, qna_list.button1_value], [qna_list.button2_id, qna_list.button2_value],
-                                                                          [qna_list.button3_id, qna_list.button3_value], [qna_list.button4_id, qna_list.button4_value],
-                                                                          previous_button(user_data.stack))
-                                           : await index.sendSocketMessage(socket.id, 'chat message button image', random_pick(qna_list.question), random_pick(imglist),
-                                                                          [qna_list.button2_id, qna_list.button2_value], [qna_list.button3_id, qna_list.button3_value],
-                                                                          [qna_list.button4_id, qna_list.button4_value], previous_button(user_data.stack));
+              params.push(previous_button(user_data.stack));
             }
+            
+            await index.sendSocketMessage(socket.id, 'chat message button image', random_pick(qna_list.question), random_pick(imglist), ...params);
         } catch (e) {
           index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
           console.log(e);
