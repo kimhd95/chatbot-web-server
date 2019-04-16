@@ -66,24 +66,11 @@ const available_subway = {
                          };
 
 const error_msg = '오류가 발생했습니다.';
-
-const wrong_subway_input_msg = (value) => {
- return `${value}가 어딘지 모르겠어 ㅠㅠ 다른 곳으로 입력해줄래?`;
-}
-
-const previous_button = (stack) => {
-  return [`previous/${stack.replace(/"/gi,"@")}`, '이전으로 돌아가기'];
-}
-
+const wrong_subway_input_msg = (value) => `${value}가 어딘지 모르겠어 ㅠㅠ 다른 곳으로 입력해줄래?`;
 const get_started_button = ['get_started', '처음으로 돌아가기'];
-
-const random_pick = (arr) => {
- return arr[Math.floor(arr.length * Math.random())];
-}
-
-const stack_updateby = (stack, state, value) => {
-  return `${stack},{"state":"${state}","value":"${value}"}`;
-}
+const previous_button = (stack) => [`previous/${stack.replace(/"/gi,"@")}`, '이전으로 돌아가기'];
+const random_pick = (arr) => arr[Math.floor(arr.length * Math.random())];
+const stack_updateby = (stack, state, value) => `${stack},{"state":"${state}","value":"${value}"}`;
 
 const check_subway = (subway) => {
   switch (subway) {
@@ -499,9 +486,7 @@ class Decide_menu {
                              };
             const params = [];
             if (subway in available_subway) { params.push([qna_list.button1_id, qna_list.button1_value]); }
-            params.push([qna_list.button2_id, qna_list.button2_value]);
-            params.push([qna_list.button3_id, qna_list.button3_value]);
-            params.push([qna_list.button4_id, qna_list.button4_value]);
+            params.push([qna_list.button2_id, qna_list.button2_value], [qna_list.button3_id, qna_list.button3_value], [qna_list.button4_id, qna_list.button4_value]);
 
             if (value.includes('middle')) {
               await info_update.profile.update_lat(socket.id, 'null');
@@ -509,7 +494,6 @@ class Decide_menu {
             } else {
               params.push(previous_button(user_data.stack));
             }
-            
             await index.sendSocketMessage(socket.id, 'chat message button image', random_pick(qna_list.question), random_pick(imglist), ...params);
         } catch (e) {
           index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
@@ -752,8 +736,7 @@ class Decide_menu {
             apicall = await info_update.food.verify_search_food(socket.id, '매운', subway);
           } else if (search_food === '분식') {
             apicall = await info_update.food.verify_search_food(socket.id, ['김밥', '떡볶이'], subway);
-          } else if (user_data.food_name === '돈까스' || user_data.food_name === '돈가스' || user_data.food_name === '돈까츠' ||
-                     user_data.food_name === '돈가츠' || user_data.food_name === '돈카츠' || user_data.food_name === '돈까쓰') {
+          } else if (['돈까스','돈가스','돈까츠','돈가츠','돈카츠','돈까쓰'].indexOf(user_data.food_name) !== -1) {
             apicall = await info_update.food.verify_search_food(socket.id, ['돈까스','돈가스','돈까츠','돈가츠','돈카츠','돈까쓰'], subway);
           } else {
             apicall = await info_update.food.verify_search_food(socket.id, search_food, subway);
