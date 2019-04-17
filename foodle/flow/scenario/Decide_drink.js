@@ -416,7 +416,7 @@ class Decide_drink {
           const params = [];
           let event_type;
 
-          if (results.length === 2) {
+          if (response.num >= 2) {
             await info_update.profile.update_rest2(user_data.kakao_id, results[0].id, results[1].id);
             const first_url = `https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${results[0].subway} ${results[0].res_name}`;
             const second_url = `https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${results[1].subway} ${results[1].res_name}`;
@@ -430,10 +430,8 @@ class Decide_drink {
             await index.sendSocketMessage(socket.id, 'chat message loader', 300);
             await index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist2));
 
-            const result = await info_update.drink.get_other_drink_restaurant(socket.id, user_data.id, user_data.rest1, user_data.rest2);
-
-            params.push(['S1l/1', results[0].res_name], ['S11/2', results[1].res_name], ['S11/random', '코기가 골라주기']);
-            (result.num >= 4) ? params.push(['S10_1', '다른 술집 보기']) : params.push([]);    // 다른 식당 있는 경우에만 버튼이 보임
+            params.push(['S11/1', results[0].res_name], ['S11/2', results[1].res_name], ['S11/random', '코기가 골라주기']);
+            (response.num >= 4) ? params.push(['S10_1', '다른 술집 보기']) : params.push([]);    // 다른 식당 있는 경우에만 버튼이 보임
             if (image.res1 === 'no image') {
               event_type = 'chat message card no image';
               params.push([results[0].res_name, results[0].drink_type, results[0].food_name, first_url, first_map_url],
@@ -449,10 +447,11 @@ class Decide_drink {
               const distance2 = results[1].distance;
               params.push(distance1, distance2);
             }
+            console.log(params);
             await index.sendSocketMessage(socket.id, event_type, ...params);
           }
           // 1개만 있는 경우
-          else if (results.length === 1) {
+          else if (response.num === 1) {
             await info_update.profile.update_rest2(user_data.kakao_id, results[0].id, 'null');
             const first_url = `https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=${results[0].subway} ${results[0].res_name}`;
             const first_map_url = `https://map.naver.com/index.nhn?query=${results[0].subway} ${results[0].res_name}&tab=1`;
@@ -461,7 +460,7 @@ class Decide_drink {
             await index.sendSocketMessage(socket.id, 'chat message button', '조건에 맞는 술집이 1곳 뿐이네! 이거라도 보여줄게 기다료바!!');
             await index.sendSocketMessage(socket.id, 'chat message loader', 500);
 
-            params.push(['S1l/1', results[0].res_name], get_started_button);
+            params.push(['S11/1', results[0].res_name], get_started_button);
             if (image.res1 === 'no image') {
               event_type = 'chat message card no image single';
               params.push([results[0].res_name, results[0].drink_type, results[0].food_name, first_url, first_map_url]);
@@ -516,7 +515,7 @@ class Decide_drink {
             await index.sendSocketMessage(socket.id, 'chat message loader', 500);
             await index.sendSocketMessage(socket.id, 'chat message button', '2개 술집 중에 더 가고싶은 곳을 골라줘!');
 
-            params.push(['S1l/1', rests[0].res_name], ['S11/2', rests[1].res_name], ['S11/random', '코기가 골라주기']);
+            params.push(['S11/1', rests[0].res_name], ['S11/2', rests[1].res_name], ['S11/random', '코기가 골라주기']);
             (result.num >= 4) ? params.push(['S10_1', '다른 술집 보기']) : params.push([]);    // 다른 식당 있는 경우에만 버튼이 보임
 
             if (image.res1 === 'no image') {
@@ -549,7 +548,7 @@ class Decide_drink {
             await index.sendSocketMessage(socket.id, 'chat message loader', 500);
             await index.sendSocketMessage(socket.id, 'chat message button', '조건에 맞는 술집이 1곳 뿐이네! 이거라도 보여줄게 기다료바!!');
 
-            params.push(['S1l/1', rests[0].res_name], get_started_button);
+            params.push(['S11/1', rests[0].res_name], get_started_button);
             if (image.res1 === 'no image') {
               event_type = 'chat message card no image single';
               params.push([rests[0].res_name, rests[0].drink_type, rests[0].food_name, first_url, first_map_url]);
