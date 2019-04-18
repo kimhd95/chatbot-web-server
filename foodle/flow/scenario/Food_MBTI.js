@@ -103,64 +103,64 @@ class Food_MBTI {
     }());
   }
 
-  MBTI1_1(value, socket, user_data) {
-    (async function () {
-      try {
-        console.log("1_1 value >> ", value);
-        const choiceToDelete = value.split('back:')[1];  // 뒤로가기 로 왔을 경우
-        if (choiceToDelete) { stack.pop(); }
-        console.log(`Data in Stack: ${stack}`);
-
-        const msg = '[1/21] 어떤 게 더 쉬워?
-        밥 없이 1달 살기 vs 밀가루 없이 1달 살기';
-        index.sendSocketMessage(socket.id, 'chat message button', msg, ['MBTI1_2/1', '밥 없이 1달'], ['MBTI1_2/2', '밀가루 없이 1달']);
-      } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
-        console.log(e);
-      }
-    }());
-  }
-  MBTI1_2(value, socket, user_data) {
-    (async function () {
-      try {
-        console.log("1_2 value >> ", value);
-        const choiceToUpdate = value.split('/')[1];
-        const choiceToDelete = value.split('back:')[1];  // 뒤로가기 로 왔을 경우
-
-        if (choiceToDelete) {
-          stack.pop();
-        } else {
-          stack.push(choiceToUpdate);
-        }
-        console.log(`Data in Stack: ${stack}`);
-
-        const msg = '[2/21] 고수(향신료)를 잘 먹는다.';
-        index.sendSocketMessage(socket.id, 'chat message button', msg, back_button('1_1', choiceToUpdate), ['MBTI1_3/1', '그렇지 않다'], ['MBTI1_3/2', '보통'], ['MBTI1_3/3', '그렇다']);
-      } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
-        console.log(e);
-      }
-    }());
-  }
-
-  MBTI1_3(value, socket, user_data) {
-    (async function () {
-      try {
-        console.log("1_3 value >> ", value);
-        const choiceToUpdate = value.split('/')[1];
-        const choiceToDelete = value.split('back:')[1];  // 뒤로가기 로 왔을 경우
-        if (choiceToDelete) { stack.pop(); }
-        else { stack.push(choiceToUpdate); }
-        console.log(`Data in Stack: ${stack}`);
-
-        const msg = '[3/21] 라떼/프라푸치노 대신 아메리카노를 마시는 이유는 OOO이다.';
-        index.sendSocketMessage(socket.id, 'chat message button', msg, back_button('1_2', choiceToUpdate), ['MBTI1_4/1', '(아메리카노 안 마심)'], ['MBTI1_4/2', '가격이 싸서'], ['MBTI1_4/3', '맛있어서/단게 싫어서'], ['MBTI1_4/4', '고칼로리 식사에 대한 회개']);
-      } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
-        console.log(e);
-      }
-    }());
-  }
+  // MBTI1_1(value, socket, user_data) {
+  //   (async function () {
+  //     try {
+  //       console.log("1_1 value >> ", value);
+  //       const choiceToDelete = value.split('back:')[1];  // 뒤로가기 로 왔을 경우
+  //       if (choiceToDelete) { stack.pop(); }
+  //       console.log(`Data in Stack: ${stack}`);
+  //
+  //       const msg = '[1/21] 어떤 게 더 쉬워?
+  //       밥 없이 1달 살기 vs 밀가루 없이 1달 살기';
+  //       index.sendSocketMessage(socket.id, 'chat message button', msg, ['MBTI1_2/1', '밥 없이 1달'], ['MBTI1_2/2', '밀가루 없이 1달']);
+  //     } catch (e) {
+  //       index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
+  //       console.log(e);
+  //     }
+  //   }());
+  // }
+  // MBTI1_2(value, socket, user_data) {
+  //   (async function () {
+  //     try {
+  //       console.log("1_2 value >> ", value);
+  //       const choiceToUpdate = value.split('/')[1];
+  //       const choiceToDelete = value.split('back:')[1];  // 뒤로가기 로 왔을 경우
+  //
+  //       if (choiceToDelete) {
+  //         stack.pop();
+  //       } else {
+  //         stack.push(choiceToUpdate);
+  //       }
+  //       console.log(`Data in Stack: ${stack}`);
+  //
+  //       const msg = '[2/21] 고수(향신료)를 잘 먹는다.';
+  //       index.sendSocketMessage(socket.id, 'chat message button', msg, back_button('1_1', choiceToUpdate), ['MBTI1_3/1', '그렇지 않다'], ['MBTI1_3/2', '보통'], ['MBTI1_3/3', '그렇다']);
+  //     } catch (e) {
+  //       index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
+  //       console.log(e);
+  //     }
+  //   }());
+  // }
+  //
+  // MBTI1_3(value, socket, user_data) {
+  //   (async function () {
+  //     try {
+  //       console.log("1_3 value >> ", value);
+  //       const choiceToUpdate = value.split('/')[1];
+  //       const choiceToDelete = value.split('back:')[1];  // 뒤로가기 로 왔을 경우
+  //       if (choiceToDelete) { stack.pop(); }
+  //       else { stack.push(choiceToUpdate); }
+  //       console.log(`Data in Stack: ${stack}`);
+  //
+  //       const msg = '[3/21] 라떼/프라푸치노 대신 아메리카노를 마시는 이유는 OOO이다.';
+  //       index.sendSocketMessage(socket.id, 'chat message button', msg, back_button('1_2', choiceToUpdate), ['MBTI1_4/1', '(아메리카노 안 마심)'], ['MBTI1_4/2', '가격이 싸서'], ['MBTI1_4/3', '맛있어서/단게 싫어서'], ['MBTI1_4/4', '고칼로리 식사에 대한 회개']);
+  //     } catch (e) {
+  //       index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
+  //       console.log(e);
+  //     }
+  //   }());
+  // }
 
   MBTI1(value, socket, user_data) {
     (async function () {
