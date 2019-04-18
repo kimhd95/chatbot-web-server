@@ -46,6 +46,12 @@ function getChatRoomPage (req, res) {
 	});
 }
 
+function getFoodtestPage (req, res) {
+	res.render('pages/foodtest.ejs', {
+		url: config.api_url
+	});
+}
+
 function getUnsignedChatRoomPage (req, res) {
 	console.log('로그인없이 이용');
 	res.render('pages/chat_unsigned.ejs', {
@@ -77,5 +83,7 @@ module.exports = {
 	getChatRoomPage: getChatRoomPage,
 	getUnsignedChatRoomPage: getUnsignedChatRoomPage,
 	getLobbyPage: getLobbyPage,
-	getContentsPage: getContentsPage
+	getContentsPage: getContentsPage,
+	getFoodtestPage: getFoodtestPage
+
 }

@@ -131,23 +131,12 @@ module.exports = function(){
 			io.to(socket.id).emit('chat message_self', msg);
 			console.log('message: '+msg+', socket: '+socket);
 			scenario_rule.scenario_rule(msg, socket);
-			// let info = {
-			//     method: 'POST',
-			//     headers: {'content-type' : 'application/json'},
-			//     url: 'http://jellynlp2-dev.ap-northeast-2.elasticbeanstalk.com/nlp/',
-			//     json: {
-			//         "content" : msg
-			//     },
-			// };
-			// request(info, function (error, response, body) {
-			//     let botMessage = '몰라';
-			//     botMessage = body;
-			//     io.to(socket.id).emit('chat message', botMessage);
-			//     console.log('message: ' + botMessage);
-			// });
+		});
 
-			// io.emit('chat message', msg);
-			// console.log('message: ' + msg);
+		socket.on('chat message foodtest', function(msg){
+			io.to(socket.id).emit('chat message_self', msg);
+			console.log('message: '+msg+', socket: '+socket);
+			scenario_rule.Food_MBTI(msg, socket);
 		});
 
 		socket.on('chat message button', function(msg){

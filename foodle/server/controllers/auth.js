@@ -27,6 +27,8 @@ router.get('/chat', authService.getChatRoomPage);
 router.get('/contents', authService.getContentsPage);
 router.get('/lobby', authService.getLobbyPage);
 
+router.get('/foodtest', authService.getFoodtestPage);
+
 // router.get('/area', authService.getAreaPage);
 
 router.post('/sendEmail', function (req, res) {

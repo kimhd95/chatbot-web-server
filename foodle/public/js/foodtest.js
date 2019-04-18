@@ -1313,12 +1313,12 @@ $(function () {
   });
 
   $('body').on("submit", "form", function(){
-    console.log("hihi")
+    console.log('submit')
     if($('#m').val() === "버튼보여줘"){
       socket.emit('chat message button', $('#m').val());
       $("input").prop('disabled', true);
     } else {
-      socket.emit('chat message', $('#m').val());
+      socket.emit('chat message foodtest', $('#m').val());
     }
     $('#m').val('');
     return false;
@@ -1328,6 +1328,9 @@ $(function () {
     let user_email = sessionStorage.getItem('email');
     let stage = sessionStorage.getItem('stage');
     let name =sessionStorage.getItem('name');
+    console.log(user_email)
+    console.log(stage)
+    console.log(name)
 
     const info = {
         method: "POST",
@@ -1815,58 +1818,58 @@ $(document).ready(() => {
     $('.update-password')[0].style.display = 'none';
   }
   // if (loginValue === '0') {
-  const info = {
-    url: '/api/v1/users/verify_token',
-    method: 'POST',
-    data: null,
-    async: true,
-    crossDomain: true,
-    redirect: 'follow',
-    xhrFields: {
-        withCredentials: true
-    },
-    success: function (res) {
-        if (res.success) {
-            console.log(res);
-            console.log('verifyToken success');
-            if(sessionStorage.getItem('login') === '0' || sessionStorage.getItem('login') === null){
-              sessionStorage.setItem('login', '0');
-              sessionStorage.setItem('email', res.email);
-            }
-          } else {
-            console.log('verifyToken fail');
-            console.log(res);
-        }
-    },
-    error: function (e) {
-        console.log('ajax call error: login page - verifyToken');
-        if (e.status === 404 && e.responseText.includes("API call URL not found.")) {
-            console.log("check your URL, method(GET/POST)");
-        } else if (e.status === 403) {
-            if (e.responseText.includes("No token provided.")) {
-                console.log("No token, no problem.");
-                alert('로그인해주세요.');
-                location.href = '/';
-            }
-            else if (e.responseText.includes("jwt malformed"))
-                console.log("Malformed token");
-            else if (e.responseText.includes("invalid signature"))
-                console.log("Modified token");
-            else console.log(e);
-        } else if (e.status === 0) {
-            if (navigator.onLine) {
-                console.log('status : 0');
-            } else {
-                console.log('internet disconnected');
-                window.location.reload();
-            }
-        } else {
-            console.log('status: ' + e.status + ', message: ' + e.responseText);
-            console.log(e);
-        }
-    }
-  }
-  sendTokenReq(info);
+  // const info = {
+  //   url: '/api/v1/users/verify_token',
+  //   method: 'POST',
+  //   data: null,
+  //   async: true,
+  //   crossDomain: true,
+  //   redirect: 'follow',
+  //   xhrFields: {
+  //       withCredentials: true
+  //   },
+  //   success: function (res) {
+  //       if (res.success) {
+  //           console.log(res);
+  //           console.log('verifyToken success');
+  //           if(sessionStorage.getItem('login') === '0' || sessionStorage.getItem('login') === null){
+  //             sessionStorage.setItem('login', '0');
+  //             sessionStorage.setItem('email', res.email);
+  //           }
+  //         } else {
+  //           console.log('verifyToken fail');
+  //           console.log(res);
+  //       }
+  //   },
+  //   error: function (e) {
+  //       console.log('ajax call error: login page - verifyToken');
+  //       if (e.status === 404 && e.responseText.includes("API call URL not found.")) {
+  //           console.log("check your URL, method(GET/POST)");
+  //       } else if (e.status === 403) {
+  //           if (e.responseText.includes("No token provided.")) {
+  //               console.log("No token, no problem.");
+  //               alert('로그인해주세요.');
+  //               location.href = '/';
+  //           }
+  //           else if (e.responseText.includes("jwt malformed"))
+  //               console.log("Malformed token");
+  //           else if (e.responseText.includes("invalid signature"))
+  //               console.log("Modified token");
+  //           else console.log(e);
+  //       } else if (e.status === 0) {
+  //           if (navigator.onLine) {
+  //               console.log('status : 0');
+  //           } else {
+  //               console.log('internet disconnected');
+  //               window.location.reload();
+  //           }
+  //       } else {
+  //           console.log('status: ' + e.status + ', message: ' + e.responseText);
+  //           console.log(e);
+  //       }
+  //   }
+  // }
+  // sendTokenReq(info);
   // }
 
   let nowTime;
@@ -1895,26 +1898,26 @@ $(document).ready(() => {
       let user_email = sessionStorage.getItem('email');
       if (term === '') {
         // 운영 서버
-        // $.getJSON( "https://foodprod.jellylab.io:6001/api/v1/users/get_subway_list_history?email="+user_email, request, function( data, status, xhr ) {
-        //   cache[ term ] = data;
-        //   response( data );
-        // });
-        // 개발 서버
-        $.getJSON( "https://devapifood.jellylab.io:6001/api/v1/users/get_subway_list_history?email="+user_email, request, function( data, status, xhr ) {
+        $.getJSON( "https://foodprod.jellylab.io:6001/api/v1/users/get_subway_list_history?email="+user_email, request, function( data, status, xhr ) {
           cache[ term ] = data;
           response( data );
         });
+        // 개발 서버
+        // $.getJSON( "https://devapifood.jellylab.io:6001/api/v1/users/get_subway_list_history?email="+user_email, request, function( data, status, xhr ) {
+        //   cache[ term ] = data;
+        //   response( data );
+        // });
       } else {
         //운영 서버
-        // $.getJSON( "https://foodprod.jellylab.io:6001/api/v1/users/get_subway_list_history?email="+user_email, request, function( data, status, xhr ) {
-        //   cache[ term ] = data;
-        //   response( data );
-        // });
-        // 개발 서버
-        $.getJSON( "https://devapifood.jellylab.io:6001/api/v1/users/get_all_subway", request, function( data, status, xhr ) {
+        $.getJSON( "https://foodprod.jellylab.io:6001/api/v1/users/get_subway_list_history?email="+user_email, request, function( data, status, xhr ) {
           cache[ term ] = data;
           response( data );
         });
+        // 개발 서버
+        // $.getJSON( "https://devapifood.jellylab.io:6001/api/v1/users/get_all_subway", request, function( data, status, xhr ) {
+        //   cache[ term ] = data;
+        //   response( data );
+        // });
       }
     },
     select: function(event, ui) {
