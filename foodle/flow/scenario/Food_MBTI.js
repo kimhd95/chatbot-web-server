@@ -10,7 +10,167 @@ const get_started_button = ['get_started', '처음으로 돌아가기'];
 
 // let E = O = S = P;
 let name;
-const stack = [];
+let stack = [];
+
+var SumEOST = function(stack) {
+  console.log(stack)
+  let Eindex = Oindex = Sindex = Pindex = 0;
+  let result = [];
+  if(stack[1] == '1') {
+    console.log("1 hi")
+  } else if(stack[1] == '2') {
+    console.log("2 hi")
+    Eindex += 5;
+  }
+
+  if(stack[2] == '1') {
+    Oindex += 1;
+  } else if(stack[2] == '2') {
+    Oindex += 2;
+  } else if(stack[2] == '3') {
+    Oindex += 3;
+  }
+
+  if(stack[3] == '1') {
+    Oindex -= 2;
+    Sindex += 1;
+  } else if(stack[3] == '2') {
+    Sindex -= 1;
+  } else if(stack[3] == '3') {
+    Sindex += 3;
+  } else if(stack[3] == '4') {
+    Sindex += 3;
+  }
+
+  if(stack[4] == '1') {
+  } else if(stack[4] == '2') {
+    Oindex += 2;
+  } else if(stack[4] == '3') {
+    Oindex += 3;
+  }
+
+  if(stack[5] == '1') {
+  } else if(stack[5] == '2') {
+    Sindex += 2;
+  } else if(stack[5] == '3') {
+    Sindex += 5;
+  }
+
+  if(stack[6] == '1') {
+  } else if(stack[6] == '2') {
+    Sindex += 2;
+  } else if(stack[6] == '3') {
+    Sindex += 3;
+  }
+
+  if(stack[7] == '1') {
+  } else if(stack[7] == '2') {
+    Pindex += 2;
+  } else if(stack[7] == '3') {
+    Pindex += 3;
+  }
+
+  if(stack[9] == '1') {
+    Eindex += 3;
+    Sindex += 1;
+  } else if(stack[9] == '2') {
+  }
+
+  if(stack[10] == '1') {
+    Eindex += 2;
+    Oindex += 1;
+  } else if(stack[10] == '2') {
+  }
+
+  if(stack[11] == '1') {
+  } else if(stack[11] == '2') {
+    Pindex += 1;
+  } else if(stack[11] == '3') {
+    Pindex += 3;
+  }
+
+  if(stack[12] == '1') {
+  } else if(stack[12] == '2') {
+    Pindex += 3;
+  } else if(stack[12] == '3') {
+    Pindex += 5;
+  }
+
+  if(stack[13] == '1') {
+    Pindex += 3;
+  } else if(stack[13] == '2') {
+    Eindex += 1;
+    Pindex += 1;
+  } else if(stack[13] == '3') {
+    Eindex += 2;
+  }
+
+  if(stack[14] == '1') {
+  } else if(stack[14] == '2') {
+    Oindex += 2;
+  } else if(stack[14] == '3') {
+    Oindex += 3;
+  }
+
+  if(stack[15] == '1') {
+  } else if(stack[15] == '2') {
+    Pindex += 1;
+  } else if(stack[15] == '3') {
+    Pindex += 2;
+  }
+
+  if(stack[16] == '1') {
+  } else if(stack[16] == '2') {
+    Pindex += 2;
+  } else if(stack[16] == '3') {
+    Pindex += 3;
+  }
+
+  if(stack[17] == '1') {
+    Oindex += 3;
+  } else if(stack[17] == '2') {
+    Oindex += 2;
+  } else if(stack[17] == '3') {
+  }
+
+  if(stack[18] == '1') {
+  } else if(stack[18] == '2') {
+    Oindex += 3;
+    Eindex += 2;
+  } else if(stack[18] == '3') {
+    Oindex += 5;
+    Eindex += 4;
+  }
+
+  if(stack[19] == '1') {
+    Sindex += 3;
+  } else if(stack[19] == '2') {
+    Sindex += 1;
+  } else if(stack[19] == '3') {
+  }
+
+  if(stack[20] == '1') {
+    Eindex += 4;
+    Sindex += 2;
+  } else if(stack[20] == '2') {
+    Eindex += 1;
+    Sindex += 1;
+  } else if(stack[20] == '3') {
+  }
+
+  if(stack[21] == '1') {
+    Sindex += 2;
+  } else if(stack[21] == '2') {
+    Sindex += 1;
+  } else if(stack[21] == '3') {
+  }
+  result.push(Eindex);
+  result.push(Oindex);
+  result.push(Sindex);
+  result.push(Pindex);
+  console.log(result)
+  return result;
+};
 
 class Food_MBTI {
   constructor(value, socket, user_data) {
@@ -71,6 +231,7 @@ class Food_MBTI {
       try {
         console.log("0_1 value >> ", value);
         name = value;
+        stack = [];
         // E = O = S = P = 0;
         const chlist = [`반가워 ${name} ! 오늘은 21가지 질문을 통해 너의 미각유형검사, 일명 Food-MBTI(!!!)을 파악해볼게. 이걸 찾고 나면 너가 좋아할만한 식당도 몇 개 알려줄 수 있어~
                         어때 재밌겠지 궁금하지?? 어서 해보자!🐕🐕🐕`];
@@ -154,11 +315,15 @@ class Food_MBTI {
   MBTI2(value, socket, user_data) {
     (async function () {
       try {
+        let EOSPstack;
         console.log("value >> ", value);
         const choiceToUpdate = value.split('/')[1];
         stack.push(choiceToUpdate);
         console.log(`Data in Stack: ${stack}`);
-
+        // console.log(typeof stack)
+        // console.log(stack[1]);
+        EOSPstack = SumEOST(stack)
+        console.log(EOSPstack)
         const chlist = ['기 다 료 방', '두구두구두구...', '열씨미 계산중🐕🐕'];
         const emojilist = ['emoji/calculate.png', 'emoji/calculate2.png', 'emoji/letmesee.PNG'];
         await index.sendSocketMessage(socket.id, 'chat message button', `고생했어!!! 과연 ${name}의 미각 유형은?!`);
