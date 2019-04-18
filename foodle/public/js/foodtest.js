@@ -1331,85 +1331,85 @@ $(function () {
     console.log(user_email)
     console.log(stage)
     console.log(name)
-
-    const info = {
-        method: "POST",
-        url: '/api/v1/users/update_socket',
-        body: {
-            email: user_email,
-            socket_id: socket_id,
-        },
-        success: function (res) {
-            if (res.success){
-                console.log("signUpReq: success!");
-                if (stage!==null) {
-                  if(stage == 'decide_menu' || stage == 'decide_drink' || stage == 'decide_cafe') {
-                    let scenario;
-                    if(stage == 'decide_menu'){
-                      scenario = 1;
-                    } else if(stage == 'decide_drink'){
-                      scenario = 6;
-                    } else if(stage == 'decide_cafe'){
-                      scenario = 7;
-                    }
-                    console.log(`scenario = ${scenario}`)
-                    const info2 ={
-                      url: "/api/v1/users/update_user",
-                      method: 'POST',
-                      body: {
-                        kakao_id: socket.id,
-                        scenario: scenario,
-                      },
-                      success: function(res) {
-                        if(loginValue!=='-1'){
-                          getPartLog(user_email, sessionStorage.getItem('stage'));
-                        }
-                        socket.emit('chat message button rule', name, stage);
-                        $('.checkbox:checked').attr('checked', false);
-                        $('.messaging-button').hide();
-                        $('.messaging-button-checkbox').hide();
-                      },
-                      error: function (e) {
-                        console.log(e);
-                      }
-                    }
-                    sendReq(info2);
-                  } else {
-                    if(loginValue!=='-1'){
-                      getPartLog(user_email, sessionStorage.getItem('stage'));
-                    }
-                    socket.emit('chat message button rule', name, stage);
-                    $('.checkbox:checked').attr('checked', false);
-                    $('.messaging-button').hide();
-                    $('.messaging-button-checkbox').hide();
-                  }
-                }
-            } else {
-                console.log("signUpReq: fail!");
-                console.log(res);
-            }
-        },
-        error: function(e) {
-            console.log('ajax call error: signup page - singUpReq');
-            if (e.status === 404 && e.responseText.includes("API call URL not found."))
-                console.log("check your URL, method(GET/POST)");
-            else if ((e.status === 400 && e.responseText.includes("not provided"))
-                || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
-                console.log("check your parameters");
-            } else if(e.status === 0){
-                if(navigator.onLine){
-                    console.log('status : 0');
-                }else {
-                    console.log('internet disconnected');
-                    window.location.reload();
-                }
-            } else {
-                console.log('status: ' + e.status + ', message: ' + e.responseText);
-            }
-            alert("정보 업데이트가 실패했습니다.");
-        }
-    };
-    sendReq(info);
+    //
+    // const info = {
+    //     method: "POST",
+    //     url: '/api/v1/users/update_socket',
+    //     body: {
+    //         email: user_email,
+    //         socket_id: socket_id,
+    //     },
+    //     success: function (res) {
+    //         if (res.success){
+    //             console.log("signUpReq: success!");
+    //             if (stage!==null) {
+    //               if(stage == 'decide_menu' || stage == 'decide_drink' || stage == 'decide_cafe') {
+    //                 let scenario;
+    //                 if(stage == 'decide_menu'){
+    //                   scenario = 1;
+    //                 } else if(stage == 'decide_drink'){
+    //                   scenario = 6;
+    //                 } else if(stage == 'decide_cafe'){
+    //                   scenario = 7;
+    //                 }
+    //                 console.log(`scenario = ${scenario}`)
+    //                 const info2 ={
+    //                   url: "/api/v1/users/update_user",
+    //                   method: 'POST',
+    //                   body: {
+    //                     kakao_id: socket.id,
+    //                     scenario: scenario,
+    //                   },
+    //                   success: function(res) {
+    //                     if(loginValue!=='-1'){
+    //                       getPartLog(user_email, sessionStorage.getItem('stage'));
+    //                     }
+    //                     socket.emit('chat message button rule', name, stage);
+    //                     $('.checkbox:checked').attr('checked', false);
+    //                     $('.messaging-button').hide();
+    //                     $('.messaging-button-checkbox').hide();
+    //                   },
+    //                   error: function (e) {
+    //                     console.log(e);
+    //                   }
+    //                 }
+    //                 sendReq(info2);
+    //               } else {
+    //                 if(loginValue!=='-1'){
+    //                   getPartLog(user_email, sessionStorage.getItem('stage'));
+    //                 }
+    //                 socket.emit('chat message button rule', name, stage);
+    //                 $('.checkbox:checked').attr('checked', false);
+    //                 $('.messaging-button').hide();
+    //                 $('.messaging-button-checkbox').hide();
+    //               }
+    //             }
+    //         } else {
+    //             console.log("signUpReq: fail!");
+    //             console.log(res);
+    //         }
+    //     },
+    //     error: function(e) {
+    //         console.log('ajax call error: signup page - singUpReq');
+    //         if (e.status === 404 && e.responseText.includes("API call URL not found."))
+    //             console.log("check your URL, method(GET/POST)");
+    //         else if ((e.status === 400 && e.responseText.includes("not provided"))
+    //             || (e.status === 500 && e.responseText.includes("Cannot read property"))) {
+    //             console.log("check your parameters");
+    //         } else if(e.status === 0){
+    //             if(navigator.onLine){
+    //                 console.log('status : 0');
+    //             }else {
+    //                 console.log('internet disconnected');
+    //                 window.location.reload();
+    //             }
+    //         } else {
+    //             console.log('status: ' + e.status + ', message: ' + e.responseText);
+    //         }
+    //         alert("정보 업데이트가 실패했습니다.");
+    //     }
+    // };
+    // sendReq(info);
   });
 
   socket.on('chat message', (answer) => {
