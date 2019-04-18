@@ -12,6 +12,75 @@ const get_started_button = ['get_started', '처음으로 돌아가기'];
 let name;
 const stack = [];
 
+const get_MBTI_info = (type, name) => {
+  const MBTI_info = {
+    EOSP: {MBTI_type: 'EOSP', MBTI_name: '못 먹는게 없는 대륙의 입맛', MBTI_country: '중국', MBTI_age1: 38, MBTI_age2: 45,
+    MBTI_feature: '다리 4개 달린 건 책상과 의자 빼고 모두 먹는다는 대륙의 입맛을 가지고 계시네요!<br>동양적이면서도 자극적인 음식을 좋아하고 평소 맛집에 관심이 많아서 열심히 검색하기도 해요.',
+    MBTI_res: '신논현역 - 하이디라오 (마라탕, 훠궈)<br>압구정로데오역 - 갓포아키 (이자카야)'},
+    
+    EOMP: {MBTI_type: 'EOMP', MBTI_name: '금융권 비즈니스맨 입맛', MBTI_country: '홍콩', MBTI_age1: 42, MBTI_age2: 51,
+    MBTI_feature: `동양적이면서도 섬세한 입맛을 가진 ${name}님!<br>부드럽게 입안을 감싸는 식감을 가장 좋아하시는 듯 하네요.`,
+    MBTI_res: '압구정로데오역 - 골드피쉬딤섬 퀴진 (딤섬)<br>서울대입구역 - 스시려 (오마카세)'},
+
+    ELMP: {MBTI_type: 'ELMP', MBTI_name: '은수저 일본 유학생 입맛', MBTI_country: '일본', MBTI_age1: 24, MBTI_age2: 28,
+    MBTI_feature: `가리는 건 많지만 맛있는 건 기꺼이 찾아 나서는 ${name}님,<br>혹시 정갈하고 아기자기한 일본 가정식이 취향 아니세요?<br>제가 2개만 우선 가져와봤는데, 앞으로 코기와 함께한다면 외식메뉴결정에 머리 아플 필요가 없답니다!`,
+    MBTI_res: '압구정역 - 우마텐 (텐동)<br>강남구청역 - 136길육미 (메밀김밥, 일식)'},
+
+    ELSP: {MBTI_type: 'ELSP', MBTI_name: '먹기 위해 사는 사회초년생 입맛', MBTI_country: '한국', MBTI_age1: 26, MBTI_age2: 32,
+    MBTI_feature: `월급의 반 이상이 식비로 나가는게 뭐 어때서!!<br>어차피 먹으려고 사는 거지.<br>동양적이면서도 자극적인 음식을 좋아하고 평소 맛집에 관심이 많아서 열심히 검색하기도 해요.<br>코기가 조금은 까다로운 ${name}님 입맛에 맞는 식당을 맞춰줄 수 있는데, 앞으로 함께 메뉴결정장애 뿌셔보는 것 어때요?`,
+    MBTI_res: '증미역 - 유림 (닭볶음탕)<br>삼전역/잠실새내역 - 담은갈비 (돼지갈비)'},
+
+    EOSF: {MBTI_type: 'EOSF', MBTI_name: '땀흘려 일하는 젊은 가장 입맛', MBTI_country: '태국/중국', MBTI_age1: 31, MBTI_age2: 39,
+    MBTI_feature: `술 한잔과 짭쪼름한 저녁으로 하루의 피로를 덜어내는 게 행복 아니겠어요?<br>코기가 입맛에 맞는 식당을 3개 가져와봤어요. 외식코기 어플을 다운받으시면 앞으로 ${name}님의 입맛에 맞는 메뉴결정을 해드릴 수 있답니다!`,
+    MBTI_res: `논현역 - 반피차이 (태국현지식)<br>합정역 - 문차이나 (중식)서울대입구역 - 로향양꼬치 (양꼬치)`},
+
+    EOMF: {MBTI_type: 'EOMF', MBTI_name: '동네를 제패한 이장 할아버지', MBTI_country: '한국', MBTI_age1: 79, MBTI_age2: 100,
+    MBTI_feature: `밥과 뜨끈한 국물이면 속이 든든히 채워지는 당신.<br>한식 일품요리 중에서 혼밥도 가능하고, 몸을 따뜻하게 해주는 몇 군데를 뽑아봤어요.<br>외식코기 어플을 다운받으시면 앞으로 쭉 ${name}님의 입맛에 맞는 서울 내 식당을 대신 찾아드려요!`,
+    MBTI_res: `뚝섬역-밀본(칼국수)<br>남부터미널역-백년옥(두부요리)`},
+
+    ELMF: {MBTI_type: 'ELMF', MBTI_name: '대충 먹을게요 입맛', MBTI_country: '???', MBTI_age1: 21, MBTI_age2: 32,
+    MBTI_feature: `있으면 먹고, 없으면 안 먹고...<br>굳이 먹는 것에 많은 노력을 기울이지 않는 당신.<br>저로서는 있을 수 없는 일이지만, 먹는 것에서 행복감을 좀 더 느껴보는 건 어때요?<br>호불호 없이 입맛이 가볍게 도는 음식을 추천해 드릴게요. 외식코기 어플을 다운받으시면 앞으로 쭉 ${name}님의 입맛에 맞는 서울 내 식당을 찾아드려요!`,
+    MBTI_res: `상수역-도토리식당(치킨난반, 스키야키)<br>뚝섬역-토라식당(일식)<br>서울대입구역-텐동요츠야(텐동)`},
+
+    ELSF: {MBTI_type: 'ELSF', MBTI_name: '입사지옥 속 청소년 입맛', MBTI_country: '한국', MBTI_age1: 17, MBTI_age2: 19,
+    MBTI_feature: `유년 시절(?)의 입맛을 그대로 갖고 몸만 커버린 당신.<br>세상에 먹을 음식이 이렇게나 많은데, 조금 새로운 시도를 해 보는 건 어때요?<br>${name}님도 거부감 없이 먹어볼만한 식당을 가져왔어요. 외식코기 어플을 다운받으시면 앞으로도 쭈욱 입맛에 맞는 식당을 찾아드릴게요!`,
+    MBTI_res: `녹사평역-바오바(대만바오)<br>경복궁역-후라토식당(규카츠, 반숙오므라이스)<br>잠실역-멘야하나비(마제소바)`},
+
+    WOSF: {MBTI_type: 'WOSF', MBTI_name: '축구하고 와서 다 맛있는 입맛', MBTI_country: '남미 어딘가', MBTI_age1: 20, MBTI_age2: 28,
+    MBTI_feature: `가리는 게 거의 없으면서도 서구적인 음식 취향을 가진 ${name}님`,
+    MBTI_res: `이태원역-바토스(남미)<br>강남역-무차초(부리또, 타코)<br>서울대입구역-더멜팅팟(수제버거)`},
+
+    WOMF: {MBTI_type: 'WOMF', MBTI_name: '내가 바로 국적 불명의 막입', MBTI_country: '???', MBTI_age1: 21, MBTI_age2: 34,
+    MBTI_feature: `눈감고 콜라 사이다 구분 못할거 같은 타입`,
+    MBTI_res: `한티역-파이어벨(버거)<br>강남역-브라더후드키친(치킨와플)`},
+
+    WLMF: {MBTI_type: 'WLMF', MBTI_name: '미국초딩 입맛', MBTI_country: '미국', MBTI_age1: 5, MBTI_age2: 8,
+    MBTI_feature: `초딩 때 멈춘 입맛으로 몸만 커버린 당신.`,
+    MBTI_res: `홍대입구역-버터밀크(팬케이크)<br>석촌역-그리지하우스(함박스테이크)<br>종각역-후니도니(치즈돈까스)`},
+
+    WLSF: {MBTI_type: 'WLSF', MBTI_name: '샨티 샨티 카레카레야', MBTI_country: '세계음식', MBTI_age1: 33, MBTI_age2: 39,
+    MBTI_feature: `이국적인 음식 취향을 가진<br>까다로운 ${name}님의 취향을 고르고 골라 독특한 음식점을 몇 개 가져와봤어요!`,
+    MBTI_res: `이태원역-브라이리퍼블릭(남아공음식)<br>종로3가역- 포탈라(인도)`},
+
+    WOSP: {MBTI_type: 'WOSP', MBTI_name: '영국의 푸드 네비게이터', MBTI_country: '영국', MBTI_age1: 37, MBTI_age2: 43,
+    MBTI_feature: `맛집 불모지라는 영국에서도 꿋꿋하게 최고의 음식을 찾아내는 능력을 가진, 서구적인 입맛의 당신!<br>같은 피자 파스타라도 차원이 다른 곳을 원하는 당신을 위해 몇 군데 추천드려요!`,
+    MBTI_res: `녹사평역-매니멀스모크하우스(바비큐플래터)<br>강남역-브릭오븐(피자)<br>내방역-도우룸(파인다이닝)`},
+
+    WOMP: {MBTI_type: 'WOMP', MBTI_name: '프랑스 달팽이 수집가 입맛', MBTI_country: '프랑스', MBTI_age1: 37, MBTI_age2: 43,
+    MBTI_feature: ``,
+    MBTI_res: `홍대입구역-다엔조(뇨끼)<br>석촌역-엘리스리틀이태리(이탈리안)`},
+
+    WLMP: {MBTI_type: 'WLMP', MBTI_name: '신선한 초원의 소녀입맛', MBTI_country: '뉴질랜드', MBTI_age1: 36, MBTI_age2: 41,
+    MBTI_feature: `직접 짠 신선한 치즈와 산 속 이슬을 받은 채소의 프레쉬하다 못해 쌩쌩한 웰빙스러우면서도 너무너무 맛있는 맛집을 골라봤어요!`,
+    MBTI_res: `석촌역-뉴질랜드스토리(브런치)<br>이태원-썬댄스플레이스(오픈샌드위치, 카츠산도)<br>신사역-더닐크팩토리(비건케이크)`},
+
+    WLSP: {MBTI_type: 'WLSP', MBTI_name: '화끈한 투우사 입맛', MBTI_country: '스페인', MBTI_age1: 29, MBTI_age2: 35,
+    MBTI_feature: `자극적이면서도 꽤나 까다로운 ${name}님의 입맛을 저격하는 맛집을 찾아봤어요.`,
+    MBTI_res: `신논현역-3MK(스페인)<br>녹사평역-페트라(중동음식)<br>한강진역-티그레 세비체리아(페루)`},
+  }
+  return MBTI_info[type];
+};
+
 class Food_MBTI {
   constructor(value, socket, user_data) {
     let key = value;
