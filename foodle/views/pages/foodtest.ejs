@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- <meta name="google-signin-client_id" content="1070723419509-ig3u8aapsfjn9ge421rervobr8409qtf.apps.googleusercontent.com"> -->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+    <!-- <script src="http://developers.kakao.com/sdk/js/kakao.min.js"></script> -->
+    <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fab5c65c12944312e98ff54b74f623a1&libraries=services"></script> -->
+    <!-- <link rel="stylesheet" href="/css/chat_style.css"> -->
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/css/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="/css/chat.css">
+    <title>외식코기</title>
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '577461736068907',
+          cookie     : true,
+          xfbml      : true,
+          version    : 'v3.2'
+        });
+        FB.AppEvents.logPageView();
+
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "https://connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+
+    </script>
+
+</head>
+<body>
+    <div id="chat-room">
+      <script type='text/javascript'>
+        Kakao.init('25750dfff20e0fff39840db368e1236d');
+      </script>
+        <div class="card">
+            <div class="card-header">
+                <div class="info">
+                    <button class="back-btn"><i class="fas fa-chevron-left"></i></button>
+                    <img class="logo" src="/images/chat-logo.png" alt="logo">
+                    <span class="title">외식코기</span>
+                </div>
+
+                <div class= "card-share">
+                  <button id="share-btn" data-toggle="modal" data-target="#config-modal2"><i class="fas fa-share-square"></i></button>
+                  <div class="modal fade bd-example-modal-sm" id="config-modal2" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                          <button id="kakao-btn" class="btn">카카오톡으로 공유하기</button>
+                          <button id="facebook-btn" class="btn">페이스북으로 공유하기</button>
+                        </div>
+                      </div>
+                  </div>
+
+                  <button id="share-btn" data-toggle="modal" data-target="#config-modal"><i class="fa fa-user fa-fw"></i></button>
+                  <div class="modal fade bd-example-modal-sm" id="config-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                          <button id="logout-btn" class="btn">로그아웃</button>
+                          <button id="delete-log-btn" class="btn">채팅기록 지우기</button>
+                          <button id="update-password-btn" class="btn update-password" data-toggle="collapse" data-target="#update-password">비밀번호 변경</button>
+                          <button id="withdraw-btn" class="btn email-signed-in" data-toggle="collapse" data-target="#email-signed-in" >회원탈퇴</button>
+                          <div class="collapse" id="update-password">
+                              <div>
+                                  <input type="password" class="form-control cur-password" placeholder="현재 비밀번호">
+                                  <input type="password" class="form-control new-password" placeholder="새 비밀번호">
+                                  <input type="password" class="form-control verify-new-password" placeholder="새 비밀번호 확인">
+                                  <button class="btn decide-update-password">변경하기</button>
+                              </div>
+                          </div>
+                          <div class="collapse" id="email-signed-in">
+                              <div>
+                                  <input type="password" class="form-control password" placeholder="비밀번호">
+                                  <button class="btn decide-withdrawl" data-dismiss="modal">탈퇴하기</button>
+                              </div>
+                          </div>
+
+                        </div>
+                      </div>
+                  </div>
+                </div>
+            </div>
+
+            <div id="messages" class="card-body">
+              <div class="bot-message">
+
+                <div class="message-text">
+                    안녕안녕 반가워! 나는 사람들의 행복한 외식라이프를 도와주는 외식코기야🍜🍖
+                </div>
+                <br>
+                <img class="img-fluid rest-img" src="emoji/hello.png">
+                <br>
+                <div class="message-text">
+                    넌 이름이 뭐야??😆😆
+                </div>
+                <br>
+                <!-- <div class="message-button">
+                    <button type="button" class="messaging-button" id="decide_menu" name="메뉴 고르기">메뉴 고르기</button>
+                    <button type="button" class="messaging-button" id="decide_drink" name="술집 고르기">술집 고르기</button>
+                   <button type="button" class="messaging-button" id="decide_cafe" name="카페 고르기">카페 고르기</button>
+                    <button type="button" class="messaging-button" id="user_feedback" name="개발팀에게 피드백하기">개발팀에게 피드백하기</button>
+                    <button type="button" class="messaging-button" id="chitchat" name="외식코기랑 대화하기">코기랑 대화하기</button>
+                </div> -->
+              </div>
+            </div>
+
+
+            <!-- <div class="message-text">
+                안녕! 나는 결정장애를 치료해주는 음식 결정 챗봇 외식코기야!
+            </div>
+            <div class="message-button">
+                <button type="button" class="messaging-button" id="decide_menu" name="메뉴 고르기">메뉴 고르기</button>
+                <button type="button" class="messaging-button" id="decide_drink" name="술집 고르기">술집 고르기</button>
+               <button type="button" class="messaging-button" id="decide_cafe" name="카페 고르기">카페 고르기</button>
+                <button type="button" class="messaging-button" id="user_feedback" name="개발팀에게 피드백하기">개발팀에게 피드백하기</button>
+                <button type="button" class="messaging-button" id="chitchat" name="외식코기랑 대화하기">코기랑 대화하기</button>
+            </div> -->
+
+            <div class="card-footer">
+              <form class="input-form" action="">
+                  <input id="m" class="form-control myText ui-autocomplete-input" type="text" placeholder="메시지를 입력하세요." >
+                  <button class="input-button" id="input-button"><i class="fab fa-telegram-plane send"></i></button>
+              </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- <script src="https://code.jquery.com/jquery.js"></script> -->
+    <script>
+      var num = Math.floor(Math.random() * 4 + 1);
+        var randomimage = "emoji/hello" +num +".png";
+    </script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://superal.github.io/canvas2image/canvas2image.js"></script>
+    <!-- <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script> -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/base.js"></script>
+    <script src="/js/foodtest.js"></script>
+
+    <!-- <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script> -->
+
+</body>
+</html>
