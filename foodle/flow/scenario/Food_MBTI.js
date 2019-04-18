@@ -27,9 +27,9 @@ class Food_MBTI {
       'MBTI0': this.MBTI0__start,
       'MBTI0_1': this.MBTI0_1,
       'MBTI1': this.MBTI1,
-      'MBTI2_1': this.MBTI2_1,
-      'MBTI2_2': this.MBTI2_2,
-      'MBTI3': this.MBTI3,
+      'MBTI2': this.MBTI2,
+      // 'MBTI2_2': this.MBTI2_2,
+      // 'MBTI3': this.MBTI3,
     };
     this.execute(key, value, socket, user_data);
   }
@@ -139,11 +139,32 @@ class Food_MBTI {
             [['MBTI1_19/1', '그렇지 않다'], ['MBTI1_19/2', '보통'], ['MBTI1_19/3', '그렇다']],
             [['MBTI1_20/1', '그렇지 않다'], ['MBTI1_20/2', '가끔'], ['MBTI1_20/3', '자주']],
             [['MBTI1_21/1', '그렇지 않다'], ['MBTI1_21/2', '가끔'], ['MBTI1_21/3', '자주']],
-            [['MBTI2_1/1', '그렇지 않다'], ['MBTI2_1/2', '가끔'], ['MBTI2_1/3', '자주']],
+            [['MBTI2/1', '그렇지 않다'], ['MBTI2/2', '가끔'], ['MBTI2/3', '자주']],
           ]
         };
 
         index.sendSocketMessage(socket.id, 'chat message button', contents.question[idx], ...contents.button[idx]);
+      } catch (e) {
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
+        console.log(e);
+      }
+    }());
+  }
+
+  MBTI2(value, socket, user_data) {
+    (async function () {
+      try {
+        console.log("value >> ", value);
+        const choiceToUpdate = value.split('/')[1];
+        stack.push(choiceToUpdate);
+        console.log(`Data in Stack: ${stack}`);
+
+        const chlist = ['기 다 료 방', '두구두구두구...', '열씨미 계산중🐕🐕'];
+        const emojilist = ['emoji/calculate.png', 'emoji/calculate2.png', 'emoji/letmesee.PNG'];
+        await index.sendSocketMessage(socket.id, 'chat message button', `고생했어!!! 과연 ${name}의 미각 유형은?!`);
+        await index.sendSocketMessage(socket.id, 'chat message button image', random_pick(chlist)), random_pick(emojilist);
+        await index.sendSocketMessage(socket.id, 'chat message loader', 400);
+        await index.sendSocketMessage(socket.id, 'chat message button', `${name}님의 미각유형<br>`);
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
