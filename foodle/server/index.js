@@ -12,7 +12,9 @@ const
 	express = require('express'),
 	path = require('path'),
 	request = require('request'),
+	Food_MBTI = require('../flow/scenario/Food_MBTI')
 	scenario_rule = require('../flow/scenario_rule'),
+
 	info = require('../api/info_update'),
 	info_update = new info();
 
@@ -136,7 +138,7 @@ module.exports = function(){
 		socket.on('chat message foodtest', function(msg){
 			io.to(socket.id).emit('chat message_self', msg);
 			console.log('message: '+msg+', socket: '+socket);
-			scenario_rule.Food_MBTI(msg, socket);
+			new Food_MBTI(msg, socket);
 		});
 
 		socket.on('chat message button', function(msg){

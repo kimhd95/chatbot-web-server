@@ -8,7 +8,7 @@ const random_pick = (arr) => arr[Math.floor(arr.length * Math.random())];
 const back_button = (stage, choice) => [`MBTI${stage}/back:${choice}`, '뒤로가기'];
 const get_started_button = ['get_started', '처음으로 돌아가기'];
 
-let E = O = S = P;
+// let E = O = S = P;
 let name;
 const stack = [];
 
@@ -27,27 +27,6 @@ class Food_MBTI {
       'MBTI0': this.MBTI0__start,
       'MBTI0_1': this.MBTI0_1,
       'MBTI1': this.MBTI1,
-      'MBTI1_1': this.MBTI1_1,
-      'MBTI1_2': this.MBTI1_2,
-      'MBTI1_3': this.MBTI1_3,
-      'MBTI1_4': this.MBTI1_4,
-      'MBTI1_5': this.MBTI1_5,
-      'MBTI1_6': this.MBTI1_6,
-      'MBTI1_7': this.MBTI1_7,
-      'MBTI1_8': this.MBTI1_8,
-      'MBTI1_9': this.MBTI1_9,
-      'MBTI1_10': this.MBTI1_10,
-      'MBTI1_11': this.MBTI1_11,
-      'MBTI1_12': this.MBTI1_12,
-      'MBTI1_13': this.MBTI1_13,
-      'MBTI1_14': this.MBTI1_14,
-      'MBTI1_15': this.MBTI1_15,
-      'MBTI1_16': this.MBTI1_16,
-      'MBTI1_17': this.MBTI1_17,
-      'MBTI1_18': this.MBTI1_18,
-      'MBTI1_19': this.MBTI1_19,
-      'MBTI1_20': this.MBTI1_20,
-      'MBTI1_21': this.MBTI1_21,
       'MBTI2_1': this.MBTI2_1,
       'MBTI2_2': this.MBTI2_2,
       'MBTI3': this.MBTI3,
@@ -92,7 +71,7 @@ class Food_MBTI {
       try {
         console.log("0_1 value >> ", value);
         name = value;
-        E = O = S = P = 0;
+        // E = O = S = P = 0;
         const chlist = [`반가워 ${name} ! 오늘은 21가지 질문을 통해 너의 미각유형검사, 일명 Food-MBTI(!!!)을 파악해볼게. 이걸 찾고 나면 너가 좋아할만한 식당도 몇 개 알려줄 수 있어~
                         어때 재밌겠지 궁금하지?? 어서 해보자!🐕🐕🐕`];
         index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist), ['MBTI1_1', '고고고!!']);
@@ -103,75 +82,17 @@ class Food_MBTI {
     }());
   }
 
-  // MBTI1_1(value, socket, user_data) {
-  //   (async function () {
-  //     try {
-  //       console.log("1_1 value >> ", value);
-  //       const choiceToDelete = value.split('back:')[1];  // 뒤로가기 로 왔을 경우
-  //       if (choiceToDelete) { stack.pop(); }
-  //       console.log(`Data in Stack: ${stack}`);
-  //
-  //       const msg = '[1/21] 어떤 게 더 쉬워?
-  //       밥 없이 1달 살기 vs 밀가루 없이 1달 살기';
-  //       index.sendSocketMessage(socket.id, 'chat message button', msg, ['MBTI1_2/1', '밥 없이 1달'], ['MBTI1_2/2', '밀가루 없이 1달']);
-  //     } catch (e) {
-  //       index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
-  //       console.log(e);
-  //     }
-  //   }());
-  // }
-  // MBTI1_2(value, socket, user_data) {
-  //   (async function () {
-  //     try {
-  //       console.log("1_2 value >> ", value);
-  //       const choiceToUpdate = value.split('/')[1];
-  //       const choiceToDelete = value.split('back:')[1];  // 뒤로가기 로 왔을 경우
-  //
-  //       if (choiceToDelete) {
-  //         stack.pop();
-  //       } else {
-  //         stack.push(choiceToUpdate);
-  //       }
-  //       console.log(`Data in Stack: ${stack}`);
-  //
-  //       const msg = '[2/21] 고수(향신료)를 잘 먹는다.';
-  //       index.sendSocketMessage(socket.id, 'chat message button', msg, back_button('1_1', choiceToUpdate), ['MBTI1_3/1', '그렇지 않다'], ['MBTI1_3/2', '보통'], ['MBTI1_3/3', '그렇다']);
-  //     } catch (e) {
-  //       index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
-  //       console.log(e);
-  //     }
-  //   }());
-  // }
-  //
-  // MBTI1_3(value, socket, user_data) {
-  //   (async function () {
-  //     try {
-  //       console.log("1_3 value >> ", value);
-  //       const choiceToUpdate = value.split('/')[1];
-  //       const choiceToDelete = value.split('back:')[1];  // 뒤로가기 로 왔을 경우
-  //       if (choiceToDelete) { stack.pop(); }
-  //       else { stack.push(choiceToUpdate); }
-  //       console.log(`Data in Stack: ${stack}`);
-  //
-  //       const msg = '[3/21] 라떼/프라푸치노 대신 아메리카노를 마시는 이유는 OOO이다.';
-  //       index.sendSocketMessage(socket.id, 'chat message button', msg, back_button('1_2', choiceToUpdate), ['MBTI1_4/1', '(아메리카노 안 마심)'], ['MBTI1_4/2', '가격이 싸서'], ['MBTI1_4/3', '맛있어서/단게 싫어서'], ['MBTI1_4/4', '고칼로리 식사에 대한 회개']);
-  //     } catch (e) {
-  //       index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
-  //       console.log(e);
-  //     }
-  //   }());
-  // }
-
   MBTI1(value, socket, user_data) {
     (async function () {
       try {
         console.log("value >> ", value);
         const [stage, choiceToUpdate] = value.split('/');
-        const idx = stage.split('MBTI')[1];
+        const idx = parseInt(stage.split('MBTI1_')[1]);
         const choiceToDelete = value.split('back:')[1];  // 뒤로가기 로 왔을 경우
         if (choiceToDelete) { stack.pop(); }
         else { stack.push(choiceToUpdate); }
         console.log(`Data in Stack: ${stack}`);
+        console.log(`stage: ${stage}, idx: ${idx}`);
 
         const contents = {
           question: [,
@@ -232,4 +153,4 @@ class Food_MBTI {
 
 }
 
-module.exports = Decide_drink;
+module.exports = Food_MBTI;
