@@ -1484,8 +1484,6 @@ $(function () {
     $('#messages').append(bot_messaging(msg)).children(':last').hide()
       .fadeIn(150);
     for (let i = 0; i < args.length; i += 1) {
-      // console.log(window.navigator.userAgent);
-      // alert(window.navigator.userAgent);
       if(window.navigator.userAgent.includes('Android')) {
         $('#messages').append(bot_messaging_button_googlestore_link(args[i][0], args[i][1]));
       } else {
