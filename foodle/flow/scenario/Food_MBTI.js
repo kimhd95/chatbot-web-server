@@ -248,6 +248,8 @@ class Food_MBTI {
       key = 'MBTI1';
     } else if (key.includes('/')) {
       key = key.split('/')[0];
+    } else if (key === 'button_link') {
+      key = 'MBTI_link';
     } else if (!key.startsWith('MBTI')) {     // 이름 입력했을때
       key = 'MBTI0_1';
     }
@@ -257,6 +259,7 @@ class Food_MBTI {
       'MBTI0_1': this.MBTI0_1,
       'MBTI1': this.MBTI1,
       'MBTI2': this.MBTI2,
+      'MBTI_link': this.MBTI_link,
     };
     this.execute(key, value, socket, user_data);
   }
@@ -401,6 +404,18 @@ class Food_MBTI {
                                                                          <u>특징:</u> ${mbti_info.feature}<br>
                                                                          <u>서울 내 추천 식당:</u><br>${mbti_info.res}`,
                                                                         ['button_link', '외식코기로 메뉴결정장애 뿌시기']);
+      } catch (e) {
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
+        console.log(e);
+      }
+    }());
+  }
+
+  MBTI_link(value, socket, user_data) {
+    (async function () {
+      try {
+        const chlist = [`링크로 이동중 ...`];
+        index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist));
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
