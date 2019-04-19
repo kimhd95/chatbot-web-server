@@ -176,6 +176,16 @@
   font-weight: 600;
 }
 
+.messaging-button-colored {
+  border: 1px solid #175c8e;
+  color: white;
+  background-color: #175c8e;
+  border-radius: 25px;
+  padding: 7px 12.5px;
+  margin-right: 3px;
+  font-weight: 600;
+}
+
 .checkbox {
   display:none;
 }

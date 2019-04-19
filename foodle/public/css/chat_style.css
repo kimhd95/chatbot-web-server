@@ -136,6 +136,16 @@
   margin-right: 3px;
 }
 
+.messaging-button-colored {
+  border: 1px solid #175c8e;
+  color: white;
+  background-color: #175c8e;
+  border-radius: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 3px;
+}
+
 .checkbox {
   display:none;
 }
