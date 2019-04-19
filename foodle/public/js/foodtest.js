@@ -104,6 +104,21 @@ function bot_messaging_button(button_id, message) {
   return (message_info);
 }
 
+
+function bot_messaging_button_corgi_link(button_id, message) {
+  const message_info = `
+          <button type="button" onclick="location.href='https://corgi.jellylab.io'" class="messaging-button" id="${button_id}" name="${message}">${message}</button>
+  `;
+  return (message_info);
+}
+
+function bot_messaging_button_googlestore_link(button_id, message) {
+  const message_info = `
+          <button type="button" onclick="location.href='market://details?id=com.w_8616640'" class="messaging-button" id="${button_id}" name="${message}">${message}</button>
+  `;
+  return (message_info);
+}
+
 function bot_messaging_button_finish_checkbox(button_id, message) {
   const message_info = `
           <br><button type="button" class="messaging-button complete-button" id="${button_id}" name="${message}">${message}</button>
@@ -1440,14 +1455,44 @@ $(function () {
   socket.on('chat message button', (socket_id, msg, ...args) => {
     $('#messages').append(bot_messaging(msg)).children(':last').hide()
       .fadeIn(150);
+    console.log(window.navigator.platform);
+    alert(window.navigator.platform);
     for (let i = 0; i < args.length; i += 1) {
       $('#messages').append(bot_messaging_button(args[i][0], args[i][1]));
+    }
+
+    if (args.length === 0) {
+      $('#m').prop('disabled', false);
+      $('#input-button').attr('disabled', false);
+    } else if (args[0] === '-skip') {
+      socket.emit('skip');
+      return;
+      $('#m').prop('disabled', true);
+      $('#input-button').attr('disabled', true);
+    } else {
+      $('#m').prop('disabled', true);
+      $('#input-button').attr('disabled', true);
+    }
+    $('#messages').scrollTop(1E10);
+
+    if (loginValue!=='-1') {
+      if (msg.includes("오늘의 선택")) {
+        updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
+      }
+    }
+  });
+
+  socket.on('chat message button link', (socket_id, msg, ...args) => {
+    $('#messages').append(bot_messaging(msg)).children(':last').hide()
+      .fadeIn(150);
+    for (let i = 0; i < args.length; i += 1) {
+      // 안드로인드인지 확인
+      $('#messages').append(bot_messaging_button_corgi_link(args[i][0], args[i][1]));
     }
     if (args.length === 0) {
       $('#m').prop('disabled', false);
       $('#input-button').attr('disabled', false);
     } else if (args[0] === '-skip') {
-      console.log("skip ========= ", args[0]);
       socket.emit('skip');
       return;
       $('#m').prop('disabled', true);

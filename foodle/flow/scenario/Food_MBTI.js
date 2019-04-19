@@ -394,13 +394,13 @@ class Food_MBTI {
         await index.sendSocketMessage(socket.id, 'chat message button', `고생했어!!! 과연 ${name}의 미각 유형은?!`);
         await index.sendSocketMessage(socket.id, 'chat message button image', random_pick(chlist), random_pick(emojilist));
         await index.sendSocketMessage(socket.id, 'chat message loader', 400);
-        await index.sendSocketMessage(socket.id, 'chat message button', `<center>${name}님의 미각유형<br>
+        await index.sendSocketMessage(socket.id, 'chat message button link', `<center>${name}님의 미각유형<br>
                                                                          <i><u>${mbti_info.name}</u></i></center><hr>
                                                                          <u>입맛국적:</u> ${mbti_info.country}<br>
                                                                          <u>입맛나이:</u> ${random_num(mbti_info.age1, mbti_info.age2)}세<br>
                                                                          <u>특징:</u> ${mbti_info.feature}<br>
                                                                          <u>서울 내 추천 식당:</u><br>${mbti_info.res}`,
-                                                                       ['Sss', '외식코기로 메뉴결정장애 뿌시기']);
+                                                                        ['button_link', '외식코기로 메뉴결정장애 뿌시기']);
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
