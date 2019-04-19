@@ -5,8 +5,8 @@ const info_update = new Info();
 
 const error_msg = '오류가 발생했습니다.';
 const random_pick = (arr) => arr[Math.floor(arr.length * Math.random())];
-const random_num = (num1, num2) => (num1<num2 ? num1 : num2) + Math.floor((Math.abs(num1-num2)+1) * Math.random());
-const back_button = (stage, choice) => [`MBTI${stage}/back:${choice}`, '뒤로가기'];
+const random_num = (num1, num2) => (num1<num2 ? num1 : num2) + Math.floor((Math.abs(num1-num2)+1) * Math.random());   // num1~num2 사이의 랜덤정수 리턴
+const back_button = (stage) => [`MBTI1_${stage}/back`, '뒤로가기'];
 const get_started_button = ['get_started', '처음으로 돌아가기'];
 
 let name;
@@ -248,7 +248,7 @@ class Food_MBTI {
       key = 'MBTI1';
     } else if (key.includes('/')) {
       key = key.split('/')[0];
-    } else if (!key.startsWith('MBTI')) {
+    } else if (!key.startsWith('MBTI')) {     // 이름 입력했을때
       key = 'MBTI0_1';
     }
 
@@ -280,12 +280,10 @@ class Food_MBTI {
   MBTI0__start(value, socket, user_data) {
     (async function () {
       try {
-        // await info_update.profile.update_drink_start(socket.id);
-        // await info_update.profile.update_stack(socket.id, `{"state": "${user_data.state}", "value": "${value}"}`);
         const chlist = ['안녕안녕 반가워! 나는 사람들의 행복한 외식라이프를 도와주는 외식코기야🍜🍖'];
         const emojilist = ['emoji/hello.png', 'emoji/hello2.png', 'emoji/hello3.png', 'emoji/hello4.png'];
         await index.sendSocketMessage(socket.id, 'chat message button image', random_pick(chlist));
-        setTimeout(async () => { await index.sendSocketMessage(socket.id, 'chat message button', '넌 이름이 뭐야??😆😆') })
+        setTimeout(async () => { await index.sendSocketMessage(socket.id, 'chat message button', '넌 이름이 뭐야??😆😆'); })
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
@@ -315,9 +313,7 @@ class Food_MBTI {
         console.log("value >> ", value);
         const [stage, choiceToUpdate] = value.split('/');
         const idx = parseInt(stage.split('MBTI1_')[1]);
-        const choiceToDelete = value.split('back:')[1];  // 뒤로가기 로 왔을 경우
-        if (choiceToDelete) { stack.pop(); }
-        else { stack.push(choiceToUpdate); }
+        (choiceToUpdate === 'back') ? stack.pop(); : stack.push(choiceToUpdate);
         console.log(`Data in Stack: ${stack}`);
         console.log(`stage: ${stage}, idx: ${idx}`);
 
@@ -347,26 +343,26 @@ class Food_MBTI {
           ],
           button: [,
             [['MBTI1_2/1', '밥 없이 1달'], ['MBTI1_2/2', '밀가루 없이 1달']],
-            [['MBTI1_3/1', '그렇지 않다'], ['MBTI1_3/2', '보통'], ['MBTI1_3/3', '그렇다']],
-            [['MBTI1_4/1', '(아메리카노 안 마심)'], ['MBTI1_4/2', '가격이 싸서'], ['MBTI1_4/3', '맛있어서/단게 싫어서'], ['MBTI1_4/4', '고칼로리 식사에 대한 회개']],
-            [['MBTI1_5/1', '그렇지 않다'], ['MBTI1_5/2', '보통'], ['MBTI1_5/3', '그렇다']],
-            [['MBTI1_6/1', '그렇지 않다'], ['MBTI1_6/2', '보통'], ['MBTI1_6/3', '그렇다']],
-            [['MBTI1_7/1', '감소한다'], ['MBTI1_7/2', '변화 없음'], ['MBTI1_7/3', '증가한다']],
-            [['MBTI1_8/1', '없다'], ['MBTI1_8/2', '1~2개'], ['MBTI1_8/3', '3개 이상']],
-            [['MBTI1_9/1', '그렇지 않다'], ['MBTI1_9/2', '보통'], ['MBTI1_9/3', '그렇다']],
-            [['MBTI1_10/1', '라면'], ['MBTI1_10/2', '파스타']],
-            [['MBTI1_11/1', '뼈'], ['MBTI1_11/2', '순살']],
-            [['MBTI1_12/1', '그렇지 않다'], ['MBTI1_12/2', '보통'], ['MBTI1_12/3', '그렇다']],
-            [['MBTI1_13/1', '그렇지 않다'], ['MBTI1_13/2', '보통'], ['MBTI1_13/3', '그렇다']],
-            [['MBTI1_14/1', '그렇지 않다'], ['MBTI1_14/2', '보통'], ['MBTI1_14/3', '그렇다']],
-            [['MBTI1_15/1', '그렇지 않다'], ['MBTI1_15/2', '보통 (안 해봤지만 먹을 수 있을듯)'], ['MBTI1_15/3', '그렇다']],
-            [['MBTI1_16/1', '없다'], ['MBTI1_16/2', '1~4명'], ['MBTI1_16/3', '5명 이상']],
-            [['MBTI1_17/1', '그렇지 않다'], ['MBTI1_17/2', '보통'], ['MBTI1_17/3', '그렇다']],
-            [['MBTI1_18/1', '그렇지 않다'], ['MBTI1_18/2', '보통'], ['MBTI1_18/3', '그렇다']],
-            [['MBTI1_19/1', '그렇지 않다'], ['MBTI1_19/2', '보통'], ['MBTI1_19/3', '그렇다']],
-            [['MBTI1_20/1', '그렇지 않다'], ['MBTI1_20/2', '가끔'], ['MBTI1_20/3', '자주']],
-            [['MBTI1_21/1', '그렇지 않다'], ['MBTI1_21/2', '가끔'], ['MBTI1_21/3', '자주']],
-            [['MBTI2/1', '그렇지 않다'], ['MBTI2/2', '가끔'], ['MBTI2/3', '자주']],
+            [back_button(1), ['MBTI1_3/1', '그렇지 않다'], ['MBTI1_3/2', '보통'], ['MBTI1_3/3', '그렇다']],
+            [back_button(2), ['MBTI1_4/1', '(아메리카노 안 마심)'], ['MBTI1_4/2', '가격이 싸서'], ['MBTI1_4/3', '맛있어서/단게 싫어서'], ['MBTI1_4/4', '고칼로리 식사에 대한 회개']],
+            [back_button(3), ['MBTI1_5/1', '그렇지 않다'], ['MBTI1_5/2', '보통'], ['MBTI1_5/3', '그렇다']],
+            [back_button(4), ['MBTI1_6/1', '그렇지 않다'], ['MBTI1_6/2', '보통'], ['MBTI1_6/3', '그렇다']],
+            [back_button(5), ['MBTI1_7/1', '감소한다'], ['MBTI1_7/2', '변화 없음'], ['MBTI1_7/3', '증가한다']],
+            [back_button(6), ['MBTI1_8/1', '없다'], ['MBTI1_8/2', '1~2개'], ['MBTI1_8/3', '3개 이상']],
+            [back_button(7), ['MBTI1_9/1', '그렇지 않다'], ['MBTI1_9/2', '보통'], ['MBTI1_9/3', '그렇다']],
+            [back_button(8), ['MBTI1_10/1', '라면'], ['MBTI1_10/2', '파스타']],
+            [back_button(9), ['MBTI1_11/1', '뼈'], ['MBTI1_11/2', '순살']],
+            [back_button(10), ['MBTI1_12/1', '그렇지 않다'], ['MBTI1_12/2', '보통'], ['MBTI1_12/3', '그렇다']],
+            [back_button(11), ['MBTI1_13/1', '그렇지 않다'], ['MBTI1_13/2', '보통'], ['MBTI1_13/3', '그렇다']],
+            [back_button(12), ['MBTI1_14/1', '그렇지 않다'], ['MBTI1_14/2', '보통'], ['MBTI1_14/3', '그렇다']],
+            [back_button(13), ['MBTI1_15/1', '그렇지 않다'], ['MBTI1_15/2', '보통 (안 해봤지만 먹을 수 있을듯)'], ['MBTI1_15/3', '그렇다']],
+            [back_button(14), ['MBTI1_16/1', '없다'], ['MBTI1_16/2', '1~4명'], ['MBTI1_16/3', '5명 이상']],
+            [back_button(15), ['MBTI1_17/1', '그렇지 않다'], ['MBTI1_17/2', '보통'], ['MBTI1_17/3', '그렇다']],
+            [back_button(16), ['MBTI1_18/1', '그렇지 않다'], ['MBTI1_18/2', '보통'], ['MBTI1_18/3', '그렇다']],
+            [back_button(17), ['MBTI1_19/1', '그렇지 않다'], ['MBTI1_19/2', '보통'], ['MBTI1_19/3', '그렇다']],
+            [back_button(18), ['MBTI1_20/1', '그렇지 않다'], ['MBTI1_20/2', '가끔'], ['MBTI1_20/3', '자주']],
+            [back_button(19), ['MBTI1_21/1', '그렇지 않다'], ['MBTI1_21/2', '가끔'], ['MBTI1_21/3', '자주']],
+            [back_button(20), ['MBTI2/1', '그렇지 않다'], ['MBTI2/2', '가끔'], ['MBTI2/3', '자주']],
           ]
         };
 
