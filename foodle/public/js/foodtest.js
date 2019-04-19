@@ -1455,8 +1455,8 @@ $(function () {
   socket.on('chat message button', (socket_id, msg, ...args) => {
     $('#messages').append(bot_messaging(msg)).children(':last').hide()
       .fadeIn(150);
-    console.log(window.navigator.platform);
-    alert(window.navigator.platform);
+    console.log(window.navigator.userAgent);
+    alert(window.navigator.userAgent);
     for (let i = 0; i < args.length; i += 1) {
       $('#messages').append(bot_messaging_button(args[i][0], args[i][1]));
     }
