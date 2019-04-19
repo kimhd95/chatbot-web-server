@@ -313,7 +313,7 @@ class Food_MBTI {
         console.log("value >> ", value);
         const [stage, choiceToUpdate] = value.split('/');
         const idx = parseInt(stage.split('MBTI1_')[1]);
-        (choiceToUpdate === 'back') ? stack.pop(); : stack.push(choiceToUpdate);
+        (choiceToUpdate === 'back') ? stack.pop() : stack.push(choiceToUpdate);
         console.log(`Data in Stack: ${stack}`);
         console.log(`stage: ${stage}, idx: ${idx}`);
 
