@@ -22,7 +22,7 @@ const EOSPtoType = (E, O, S, P) => {
 };
 const SumEOSP = (stack) => {
   let Eindex = Oindex = Sindex = Pindex = 0;
-  let result = [];
+
   if(stack[1] == '1') {
   } else if(stack[1] == '2') {
     Eindex += 5;
@@ -386,11 +386,8 @@ class Food_MBTI {
         console.log(`Data in Stack: ${stack}`);
         // 점수 계산 -> mbti_type 계산
         const [E,O,S,P] = SumEOSP(stack);
-        console.log(E,O,S,P);
         const type = EOSPtoType(E, O, S, P);
-        console.log(type);
         const mbti_info = get_MBTI_info(type, name);
-        console.log(mbti_info);
 
         const chlist = ['기 다 료 방', '두구두구두구...', '열씨미 계산중🐕🐕'];
         const emojilist = ['emoji/calculate.png', 'emoji/calculate2.png', 'emoji/letmesee.PNG'];
