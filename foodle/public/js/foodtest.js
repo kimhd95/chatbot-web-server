@@ -1455,8 +1455,6 @@ $(function () {
   socket.on('chat message button', (socket_id, msg, ...args) => {
     $('#messages').append(bot_messaging(msg)).children(':last').hide()
       .fadeIn(150);
-    console.log(window.navigator.userAgent);
-    alert(window.navigator.userAgent);
     for (let i = 0; i < args.length; i += 1) {
       $('#messages').append(bot_messaging_button(args[i][0], args[i][1]));
     }
@@ -1486,8 +1484,13 @@ $(function () {
     $('#messages').append(bot_messaging(msg)).children(':last').hide()
       .fadeIn(150);
     for (let i = 0; i < args.length; i += 1) {
-      // 안드로인드인지 확인
-      $('#messages').append(bot_messaging_button_corgi_link(args[i][0], args[i][1]));
+      // console.log(window.navigator.userAgent);
+      // alert(window.navigator.userAgent);
+      if(window.navigator.userAgent.includes('Android')) {
+        $('#messages').append(bot_messaging_button_googlestore_link(args[i][0], args[i][1]));
+      } else {
+        $('#messages').append(bot_messaging_button_corgi_link(args[i][0], args[i][1]));
+      }
     }
     if (args.length === 0) {
       $('#m').prop('disabled', false);
