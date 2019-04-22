@@ -9,9 +9,6 @@ const random_num = (num1, num2) => (num1<num2 ? num1 : num2) + Math.floor((Math.
 const back_button = (stage) => [`MBTI1_${stage}/back`, '뒤로가기'];
 const get_started_button = ['get_started', '처음으로 돌아가기'];
 
-let name;
-let stack = [];
-
 const EOSPtoType = (E, O, S, P) => {
   let type = '';
   type += (E >= 10) ? 'E' : 'W';
@@ -242,7 +239,7 @@ const get_MBTI_info = (type, name) => {
 };
 
 class Food_MBTI {
-  constructor(value, socket, user_data) {
+  constructor(value, socket, sessionItem) {
     let key = value;
     if (key.startsWith('MBTI1_')) {
       key = 'MBTI1';
@@ -259,28 +256,18 @@ class Food_MBTI {
       'MBTI0_1': this.MBTI0_1,
       'MBTI1': this.MBTI1,
       'MBTI2': this.MBTI2,
+      'MBTI3': this.MBTI3,
       'MBTI_link': this.MBTI_link,
     };
-    this.execute(key, value, socket, user_data);
+    this.execute(key, value, socket, sessionItem);
   }
 
-  execute(key, value, socket, user_data) {
-    this.update_state(socket.id, '6', key);
+  execute(key, value, socket, sessionItems) {
     this.strategies[key] == null ? index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button)
-                                 : this.strategies[key](value, socket, user_data);
+                                 : this.strategies[key](value, socket, sessionItems);
   }
 
-  update_state(id, scenario, state) {
-    (async function (id, scenario, state) {
-      try {
-        await info_update.profile.update_state(id, scenario, state);
-      } catch (e) {
-        console.log(e);
-      }
-    }(id, scenario, state));
-  }
-
-  MBTI0__start(value, socket, user_data) {
+  MBTI0__start(value, socket, sessionItems) {
     (async function () {
       try {
         const chlist = ['안녕안녕 반가워! 나는 사람들의 행복한 외식라이프를 도와주는 외식코기야🍜🍖'];
@@ -294,15 +281,16 @@ class Food_MBTI {
     }());
   }
 
-  MBTI0_1(value, socket, user_data) {
+  MBTI0_1(value, socket, sessionItems) {
     (async function () {
       try {
         console.log("0_1 value >> ", value);
-        name = value;
-        stack = [];
-        const chlist = [`반가워 ${name} ! 오늘은 21가지 질문을 통해 너의 미각유형검사, 일명 Food-MBTI(!!!)을 파악해볼게. 이걸 찾고 나면 너가 좋아할만한 식당도 몇 개 알려줄 수 있어~
+        await index.sendSocketMessage(socket.id, 'set session item', 'name_MBTI', value);
+        await index.sendSocketMessage(socket.id, 'set session item', 'stack', '');
+
+        const chlist = [`반가워 ${value} ! 오늘은 21가지 질문을 통해 너의 미각유형검사, 일명 Food-MBTI(!!!)을 파악해볼게. 이걸 찾고 나면 너가 좋아할만한 식당도 몇 개 알려줄 수 있어~
                         어때 재밌겠지 궁금하지?? 어서 해보자!🐕🐕🐕`];
-        index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist), ['MBTI1_1', '고고고!!']);
+        await index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist), ['MBTI1_1', '고고고!!']);
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
@@ -310,14 +298,16 @@ class Food_MBTI {
     }());
   }
 
-  MBTI1(value, socket, user_data) {
+  MBTI1(value, socket, sessionItems) {
     (async function () {
       try {
         console.log("value >> ", value);
         const [stage, choiceToUpdate] = value.split('/');
         const idx = parseInt(stage.split('MBTI1_')[1]);
-        (choiceToUpdate === 'back') ? stack.pop() : stack.push(choiceToUpdate);
-        console.log(`Data in Stack: ${stack}`);
+        if (choiceToUpdate) {
+          (choiceToUpdate === 'back') ? await index.sendSocketMessage(socket.id, 'set session item stack pop')
+                                      : await index.sendSocketMessage(socket.id, 'set session item stack push', choiceToUpdate);
+        }
         console.log(`stage: ${stage}, idx: ${idx}`);
 
         const contents = {
@@ -377,13 +367,27 @@ class Food_MBTI {
     }());
   }
 
-  MBTI2(value, socket, user_data) {
+  MBTI2(value, socket, sessionItems) {
     (async function () {
       try {
         console.log("value >> ", value);
         const choiceToUpdate = value.split('/')[1];
-        stack.push(choiceToUpdate);
-        console.log(`Data in Stack: ${stack}`);
+        await index.sendSocketMessage(socket.id, 'set session item stack push', choiceToUpdate);
+        await index.sendSocketMessage(socket.id, 'get session items', 'MBTI3');
+      } catch (e) {
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
+        console.log(e);
+      }
+    }());
+  }
+
+  MBTI3(value, socket, sessionItems) {
+    (async function () {
+      try {
+        console.log("value >> ", value);
+        const name = sessionItems.name;
+        const stack = sessionItems.stack.split(',');
+        console.log(`Data : `, name, stack);
         // 점수 계산 -> mbti_type 계산
         const [E,O,S,P] = SumEOSP(stack);
         const type = EOSPtoType(E, O, S, P);
@@ -408,7 +412,7 @@ class Food_MBTI {
     }());
   }
 
-  MBTI_link(value, socket, user_data) {
+  MBTI_link(value, socket, sessionItems) {
     (async function () {
       try {
         const chlist = [`링크로 이동중 ...`];

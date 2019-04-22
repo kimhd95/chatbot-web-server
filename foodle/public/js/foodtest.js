@@ -1364,10 +1364,13 @@ $(function () {
     return false;
   });
 
-  socket.on('chat register', function(socket_id){
-    let user_email = sessionStorage.getItem('email');
-    let stage = sessionStorage.getItem('stage');
-    let name =sessionStorage.getItem('name');
+  socket.on('chat register', function(socket_id) {
+    // let user_email = sessionStorage.getItem('email');
+    // let stage = sessionStorage.getItem('stage');
+    // let name =sessionStorage.getItem('name');
+    // console.log(user_email)
+    // console.log(stage)
+    // console.log(name)
     //
     // const info = {
     //     method: "POST",
@@ -1488,9 +1491,6 @@ $(function () {
       $('#input-button').attr('disabled', false);
     } else if (args[0] === '-skip') {
       socket.emit('skip');
-      return;
-      $('#m').prop('disabled', true);
-      $('#input-button').attr('disabled', true);
     } else {
       $('#m').prop('disabled', true);
       $('#input-button').attr('disabled', true);
@@ -1873,6 +1873,27 @@ $(function () {
       $('#input-button').attr('disabled', true);
       $('#messages').scrollTop(1E10);
   });
+
+  socket.on('set session item', async (socket_id, item, value) => {
+    await sessionStorage.setItem(item, value);
+  });
+
+  socket.on('get session items', async (socket_id, value) => {
+    await socket.emit('get session items return', value, {name:sessionStorage.getItem('name_MBTI'), stack:sessionStorage.getItem('stack')});
+  });
+
+  socket.on('set session item stack push', async (socket_id, value) => {
+    const stack = await sessionStorage.getItem('stack');
+    await sessionStorage.setItem('stack', stack+`,${value}`);
+  });
+
+  socket.on('set session item stack pop', async (socket_id) => {
+    const stack = await sessionStorage.getItem('stack').split(',');
+    await stack.pop();
+    await sessionStorage.setItem('stack', stack);
+  });
+
+
 });
 
 
