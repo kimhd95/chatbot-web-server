@@ -141,6 +141,11 @@ module.exports = function(){
 			new Food_MBTI(msg, socket);
 		});
 
+		socket.on('get session items return', function(value, items) {
+			console.log('get session item:', items);
+			new Food_MBTI(value, socket, items);
+		});
+
 		socket.on('chat message button', function(msg){
 			io.to(socket.id).emit('chat message_self', msg);
 			let info = {
