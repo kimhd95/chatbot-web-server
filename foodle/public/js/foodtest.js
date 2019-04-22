@@ -113,14 +113,14 @@ function bot_messaging_button_colored(button_id, message) {
 
 function bot_messaging_button_corgi_link(button_id, message) {
   const message_info = `
-          <button type="button" onclick="window.open('https://corgi.jellylab.io')" class="messaging-button" id="${button_id}" name="${message}">${message}</button>
+          <button type="button" class="messaging-button-link" onclick="window.open('https://corgi.jellylab.io')" id="${button_id}" name="${message}">${message}</button>
   `;
   return (message_info);
 }
 
 function bot_messaging_button_googlestore_link(button_id, message) {
   const message_info = `
-          <button type="button" onclick="location.href='market://details?id=com.w_8616640'" class="messaging-button" id="${button_id}" name="${message}">${message}</button>
+          <button type="button" class="messaging-button-link" onclick="location.href='market://details?id=com.w_8616640'" id="${button_id}" name="${message}">${message}</button>
   `;
   return (message_info);
 }
