@@ -1209,7 +1209,7 @@ $(function () {
   });
 
   $('body').on('click', '.messaging-button-colored', (e) => {
-    $('#m').autocomplete('disable');
+    // $('#m').autocomplete('disable');
     socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id'));
     $('.checkbox:checked').attr('checked', false);
     $('.messaging-button').hide();
