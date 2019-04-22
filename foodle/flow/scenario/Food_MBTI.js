@@ -263,19 +263,8 @@ class Food_MBTI {
   }
 
   execute(key, value, socket, sessionItems) {
-    this.update_state(socket.id, '6', key);
     this.strategies[key] == null ? index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button)
                                  : this.strategies[key](value, socket, sessionItems);
-  }
-
-  update_state(id, scenario, state) {
-    (async function (id, scenario, state) {
-      try {
-        await info_update.profile.update_state(id, scenario, state);
-      } catch (e) {
-        console.log(e);
-      }
-    }(id, scenario, state));
   }
 
   MBTI0__start(value, socket, sessionItems) {
