@@ -113,7 +113,7 @@ function bot_messaging_button_colored(button_id, message) {
 
 function bot_messaging_button_corgi_link(button_id, message) {
   const message_info = `
-          <button type="button" onclick="location.href='https://corgi.jellylab.io'" class="messaging-button" id="${button_id}" name="${message}">${message}</button>
+          <button type="button" onclick="window.open('https://corgi.jellylab.io')" class="messaging-button" id="${button_id}" name="${message}">${message}</button>
   `;
   return (message_info);
 }
@@ -1527,12 +1527,6 @@ $(function () {
       $('#input-button').attr('disabled', true);
     }
     $('#messages').scrollTop(1E10);
-
-    if (loginValue!=='-1') {
-      if (msg.includes("오늘의 선택")) {
-        updatePartLog(sessionStorage.getItem('email'), sessionStorage.getItem('stage'));
-      }
-    }
   });
 
   socket.on('chat message no button', (socket_id, msg, ...args) => {
