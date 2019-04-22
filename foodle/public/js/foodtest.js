@@ -1054,7 +1054,7 @@ $(function () {
 
       $('#m').autocomplete('enable');
     } else {
-      $('#m').autocomplete('disable');
+      // $('#m').autocomplete('disable');
     }
     if ($(e.target).attr('id') === ('mood2/') || $(e.target).attr('id') === ('exit/') || $(e.target).attr('id') === ('S4/') ||
         $(e.target).attr('id') === ('price/') ||  $(e.target).attr('id') === ('hobulho_hate/') || $(e.target).attr('id') === ('S0_2/') ||

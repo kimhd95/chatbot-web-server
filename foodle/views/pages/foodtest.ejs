@@ -72,7 +72,7 @@
                       </div>
                   </div>
 
-                  <button id="share-btn" data-toggle="modal" data-target="#config-modal"><i class="fa fa-user fa-fw"></i></button>
+                  <!-- <button id="share-btn" data-toggle="modal" data-target="#config-modal"><i class="fa fa-user fa-fw"></i></button>
                   <div class="modal fade bd-example-modal-sm" id="config-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                       <div class="modal-dialog modal-sm">
                         <div class="modal-content">
@@ -97,7 +97,7 @@
 
                         </div>
                       </div>
-                  </div>
+                  </div> -->
                 </div>
             </div>
 
@@ -108,7 +108,7 @@
                     안녕안녕 반가워! 나는 사람들의 행복한 외식라이프를 도와주는 외식코기야🍜🍖
                 </div>
                 <br>
-                <img class="img-fluid rest-img" src="emoji/hello.png">
+                <img class="img-fluid rest-img" id="randomimage">
                 <br>
                 <div class="message-text">
                     넌 이름이 뭐야??😆😆
@@ -123,7 +123,6 @@
                 </div> -->
               </div>
             </div>
-
 
             <!-- <div class="message-text">
                 안녕! 나는 결정장애를 치료해주는 음식 결정 챗봇 외식코기야!
@@ -149,8 +148,14 @@
     <!-- <script src="https://code.jquery.com/jquery.js"></script> -->
     <script>
       var num = Math.floor(Math.random() * 4 + 1);
+      if (num == 1) {
+        var randomimage = "emoji/hello.png";
+      } else {
         var randomimage = "emoji/hello" +num +".png";
+      }
+      document.getElementById('randomimage').src = randomimage;
     </script>
+
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
