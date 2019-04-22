@@ -7,7 +7,7 @@ const error_msg = '오류가 발생했습니다.';
 const random_pick = (arr) => arr[Math.floor(arr.length * Math.random())];
 const random_num = (num1, num2) => (num1<num2 ? num1 : num2) + Math.floor((Math.abs(num1-num2)+1) * Math.random());   // num1~num2 사이의 랜덤정수 리턴
 const back_button = (stage) => [`MBTI1_${stage}/back`, '뒤로가기'];
-const get_started_button = ['get_started', '처음으로 돌아가기'];
+const retest_button = ['MBTI0', '다시 테스트하기'];
 
 const EOSPtoType = (E, O, S, P) => {
   let type = '';
@@ -263,7 +263,7 @@ class Food_MBTI {
   }
 
   execute(key, value, socket, sessionItems) {
-    this.strategies[key] == null ? index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button)
+    this.strategies[key] == null ? index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button)
                                  : this.strategies[key](value, socket, sessionItems);
   }
 
@@ -272,10 +272,10 @@ class Food_MBTI {
       try {
         const chlist = ['안녕안녕 반가워! 나는 사람들의 행복한 외식라이프를 도와주는 외식코기야🍜🍖'];
         const emojilist = ['emoji/hello.png', 'emoji/hello2.png', 'emoji/hello3.png', 'emoji/hello4.png'];
-        await index.sendSocketMessage(socket.id, 'chat message button image', random_pick(chlist));
+        await index.sendSocketMessage(socket.id, 'chat message button image', random_pick(chlist), random_pick(emojilist));
         setTimeout(async () => { await index.sendSocketMessage(socket.id, 'chat message button', '넌 이름이 뭐야??😆😆'); })
       } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
         console.log(e);
       }
     }());
@@ -292,7 +292,7 @@ class Food_MBTI {
                         어때 재밌겠지 궁금하지?? 어서 해보자!🐕🐕🐕`];
         await index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist), ['MBTI1_1', '고고고!!']);
       } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
         console.log(e);
       }
     }());
@@ -361,7 +361,7 @@ class Food_MBTI {
 
         index.sendSocketMessage(socket.id, 'chat message button', contents.question[idx], ...contents.button[idx]);
       } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
         console.log(e);
       }
     }());
@@ -375,7 +375,7 @@ class Food_MBTI {
         await index.sendSocketMessage(socket.id, 'set session item stack push', choiceToUpdate);
         await index.sendSocketMessage(socket.id, 'get session items', 'MBTI3');
       } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
         console.log(e);
       }
     }());
@@ -404,9 +404,9 @@ class Food_MBTI {
                                                                          <u>입맛나이:</u> ${random_num(mbti_info.age1, mbti_info.age2)}세<br>
                                                                          <u>특징:</u> ${mbti_info.feature}<br>
                                                                          <u>서울 내 추천 식당:</u><br>${mbti_info.res}`,
-                                                                        ['button_link', '외식코기로 메뉴결정장애 뿌시기']);
+                                                                        ['button_link', '외식코기로 메뉴결정장애 뿌시기'], retest_button);
       } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
         console.log(e);
       }
     }());
@@ -418,7 +418,7 @@ class Food_MBTI {
         const chlist = [`링크로 이동중 ...`];
         index.sendSocketMessage(socket.id, 'chat message button', random_pick(chlist));
       } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
         console.log(e);
       }
     }());

@@ -1508,20 +1508,19 @@ $(function () {
     $('#messages').append(bot_messaging(msg)).children(':last').hide()
       .fadeIn(150);
     for (let i = 0; i < args.length; i += 1) {
-      if(window.navigator.userAgent.includes('Android')) {
-        $('#messages').append(bot_messaging_button_googlestore_link(args[i][0], args[i][1]));
+      if (args[i][0] === 'button_link') {   // 링크 버튼일 경우
+        if(window.navigator.userAgent.includes('Android')) {
+          $('#messages').append(bot_messaging_button_googlestore_link(args[i][0], args[i][1]));
+        } else {
+          $('#messages').append(bot_messaging_button_corgi_link(args[i][0], args[i][1]));
+        }
       } else {
-        $('#messages').append(bot_messaging_button_corgi_link(args[i][0], args[i][1]));
+        $('#messages').append(bot_messaging_button(args[i][0], args[i][1]));
       }
     }
     if (args.length === 0) {
       $('#m').prop('disabled', false);
       $('#input-button').attr('disabled', false);
-    } else if (args[0] === '-skip') {
-      socket.emit('skip');
-      return;
-      $('#m').prop('disabled', true);
-      $('#input-button').attr('disabled', true);
     } else {
       $('#m').prop('disabled', true);
       $('#input-button').attr('disabled', true);
