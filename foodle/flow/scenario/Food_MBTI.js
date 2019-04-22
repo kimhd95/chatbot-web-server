@@ -390,7 +390,7 @@ class Food_MBTI {
         const mbti_info = get_MBTI_info(type, name);
 
         const chlist = ['기 다 료 방', '두구두구두구...', '열씨미 계산중🐕🐕'];
-        const emojilist = ['emoji/calculate.png', 'emoji/calculate2.png', 'emoji/letmesee.PNG'];
+        const emojilist = ['emoji/calculate.png', 'emoji/calculate2.png', 'emoji/letmesee.png'];
         await index.sendSocketMessage(socket.id, 'chat message button', `고생했어!!! 과연 ${name}의 미각 유형은?!`);
         await index.sendSocketMessage(socket.id, 'chat message button image', random_pick(chlist), random_pick(emojilist));
         await index.sendSocketMessage(socket.id, 'chat message loader', 400);
