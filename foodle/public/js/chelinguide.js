@@ -5,9 +5,6 @@
 $(document).ready(() => {
   var socket = io();
   var swiper = new Swiper('.swiper-container');
-  console.log(sessionStorage);
-  // document.getElementsByClassName("avail-bar").innerHTML = "효진 슐랭 가이드";
-  // console.log(document.getElementById('contents-bar'))
   document.getElementById('contents-bar').textContent = `${sessionStorage.getItem('name')}슐랭 가이드`;
 
   $("#back-to-lobby").click(function(){

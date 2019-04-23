@@ -167,14 +167,27 @@ body {
   background: #1C2833;
 }
 
-.back-button{
+.place-button{
   display: flex;
   position: absolute;
   top: 0;
-  left: 0;
-  width: 4vh;
-  height: 4vh;
-  background-image: url('/images/back.png');
+  left: 30vh;
+  width: 80vh;
+  height: 8vh;
+  background-image: url('/images/main-02.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin:1vh 0 1vh 5vw;
+}
+
+.order-button{
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 70vh;
+  width: 80vh;
+  height: 8vh;
+  background-image: url('/images/main-03.png');
   background-size: contain;
   background-repeat: no-repeat;
   margin:1vh 0 1vh 5vw;
