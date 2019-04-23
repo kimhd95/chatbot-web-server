@@ -5,7 +5,8 @@ let list  = [
     'profile',
     'food',
     'drink',
-    'cafe'
+    'cafe',
+    'mbti'
 ];
 
 let List = function() {

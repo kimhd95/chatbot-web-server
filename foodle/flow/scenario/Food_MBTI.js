@@ -393,6 +393,8 @@ class Food_MBTI {
         const type = EOSPtoType(E, O, S, P);
         const mbti_info = get_MBTI_info(type, name);
 
+        await info_update.mbti.update_MBTI_logs(socket.id, name, type, E, O, S, P, stack.toString());
+
         const chlist = ['기 다 료 방', '두구두구두구...', '열씨미 계산중🐕🐕'];
         const emojilist = ['emoji/calculate.png', 'emoji/calculate2.png', 'emoji/letmesee.png'];
         await index.sendSocketMessage(socket.id, 'chat message button', `고생했어!!! 과연 ${name}의 미각 유형은?!`);
