@@ -73,6 +73,13 @@ function getContentsPage (req, res) {
 	})
 }
 
+function getChelinGuidePage (req, res) {
+	console.log('컨텐츠 화면으로 이동');
+	res.render('pages/chelinguide.ejs', {
+		url: config.api_url
+	})
+}
+
 module.exports = {
 	getMainPage: getMainPage,
 	getLoginPage: getLoginPage,
@@ -84,6 +91,6 @@ module.exports = {
 	getUnsignedChatRoomPage: getUnsignedChatRoomPage,
 	getLobbyPage: getLobbyPage,
 	getContentsPage: getContentsPage,
-	getFoodtestPage: getFoodtestPage
-
+	getFoodtestPage: getFoodtestPage,
+	getChelinGuidePage: getChelinGuidePage
 }
