@@ -184,6 +184,7 @@ $(document).ready(function(){
               if(sessionStorage.getItem('login')==='0' || sessionStorage.getItem('login')===null){
                 sessionStorage.setItem('login', '0');
                 sessionStorage.setItem('email', res.email);
+                sessionStorage.setItem('name', res.name);
                 $('#profile-name').addClass('.a');
                 $('#profile-name').append(res.name + " 님");
                 $('#profile-email').addClass('.a');
