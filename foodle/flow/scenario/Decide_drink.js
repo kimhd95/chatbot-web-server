@@ -10,49 +10,42 @@ const previous_button = (stack) => [`previous/${stack.replace(/"/gi,"@")}`, '이
 const get_started_button = ['get_started', '처음으로 돌아가기'];
 const check_subway = (subway) => {
   switch (subway) {
-    case '건대역':
-    case '건국대역':
-    case '건국대입구역':
-    case '건국대학교역':
-    case '건국대학교입구역':
-    case '건입역':
+    case '건대역': case '건국대역': case '건국대입구역': case '건국대학교역': case '건국대학교입구역': case '건입역':
       return '건대입구역';
-    case '고대역':
-    case '고려대학교역':
+    case '경병역':
+      return '경찰병원역';
+    case '고대역': case '고려대학교역':
       return '고려대역';
     case '고터역':
       return '고속터미널역';
-    case '교육대역':
-    case '교육대학교역':
+    case '교육대역': case '교육대학교역':
       return '교대역';
     case '남터역':
       return '남부터미널역';
-    case '서울대역':
-    case '서울대학교역':
-    case '서울대학교입구역':
-    case '설입역':
+    case '동묘':
+      return '동묘앞역';
+    case '동역문역':
+      return '동대문역사문화공원역';
+    case '미사': case '미삼': case '미아삼거리':
+      return '미아사거리역';
+    case '서울대역': case '서울대학교역': case '서울대학교입구역': case '설입역':
       return '서울대입구역';
-    case '성대역':
-    case '성대입구역':
-    case '성신여대역':
-    case '성신여자대학교역':
-    case '성신여자대학교입구역':
+    case '성대역': case '성대입구역': case '성신여대역': case '성신여자대학교역': case '성신여자대학교입구역':
       return '성신여대입구역';
     case '센텀역':
       return '센텀시티역';
+    case '숙대역': case '숙입역': case '숙명대역': case '숙명여대역': case '숙명대입구역': case '숙명여대입구역':
+      return '숙대입구역';
+    case '외대역':
+      return '외대앞역';
     case '을입역':
       return '을지로입구역';
-    case '이화여대역':
-    case '이화여자대학교역':
+    case '이화여대역': case '이화여자대학교역':
       return '이대역';
-    case '홍대역':
-    case '홍익대역':
-    case '홍익대입구역':
-    case '홍익대학교역':
-    case '홍익대학교입구역':
-    case '홍입역':
+    case '신천역':
+      return '잠실새내역';
+    case '홍대역': case '홍익대역': case '홍익대입구역': case '홍익대학교역': case '홍익대학교입구역': case '홍입역':
       return '홍대입구역';
-
     default:
       return subway;
   }
