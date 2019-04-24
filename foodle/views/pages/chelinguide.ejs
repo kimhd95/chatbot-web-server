@@ -50,6 +50,19 @@
             </div>
             <img src="/images/main-05.png" class="function-icon" id="add-function-icon">
           </div>
+
+          <div class="modal fade bd-example-modal-sm" id="order-list" tabindex="-1" role="dialog" aria-labelledby="orderList" aria-hidden="true">
+              <div class="modal-dialog modal-sm">
+                  <div class="modal-content btn-group-vertical">
+                      <div class="modal-body">
+                          <button class="order-btn" onclick="selectSortBy(0)" data-dismiss="modal">별점순</button>
+                          <button class="order-btn" onclick="selectSortBy(1)" data-dismiss="modal">최신순</button>
+                          <button class="order-btn" onclick="selectSortBy(2)" data-dismiss="modal">이름순</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
           <div id="contents-list" class="contentlist">
             <div id="content-1" class="food-content">
               <div class="food-title">1. 바비레드</div>
@@ -97,14 +110,16 @@
 
         <!-- jQuery library (served from Google) -->
         <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> -->
-        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+
         <!-- touchSwipe library -->
         <!-- <script src="http://labs.rampinteractive.co.uk/touchSwipe/jquery.touchSwipe.min.js"></script> -->
         <!-- Slider Javascript file -->
 				<script src="/js/swiper.js"></script>
-        <!-- <script src="/js/bootstrap-toggle.min.js"></script> -->
-        <!-- <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> -->
+        <!-- <script src="/js/bootstrap-toggle.min.js"></script>
+        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> -->
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
         <!-- <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script> -->
         <script src="/js/base.js"></script>
         <script src="/js/chelinguide.js"></script>

@@ -31,14 +31,14 @@ $(document).ready(() => {
     }
   });
 
-
+  $('#order-list').hide();
   $('#place-list-button').click(function() {
     console.log('지역선택 버튼 클릭');
 
   });
   $('#order-list-button').click(function() {
     console.log('정렬기준선택 버튼 클릭');
-
+    // $('#order-list').modal('show');
   });
 
   $('#share-function-button, #share-function-icon').click(function() {

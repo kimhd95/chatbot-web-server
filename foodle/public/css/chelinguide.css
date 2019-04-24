@@ -380,6 +380,11 @@ body {
     height: 3vh;
 }
 
+.modal-body {
+    overflow: scroll;
+    padding: 0;
+}
+
 input[type=checkbox] {
     display: none;
 }
