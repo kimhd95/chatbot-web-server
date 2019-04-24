@@ -164,6 +164,22 @@ nav .bg .profile-space .email-space .email{
   /* color: #000; */
 }
 
+nav .bg .profile-space .mypage-space{
+  display: flex;
+  height:20%;
+  width:100%;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+nav .bg .profile-space .mypage-space .mypage{
+  display: flex;
+  width:70%;
+  /* height:60%; */
+  margin: 0 0 0 5vw;
+  font-size: 2vh;
+}
+
 nav .bg .profile-space .change-space{
   display: flex;
   align-items: center;
