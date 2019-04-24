@@ -289,15 +289,12 @@ body {
   width:100%;
   height:6vh;
   font-size: 3vh;
-  margin-top: 6vh;
-  /* background-image: url('/images/area_bar.png');
-  background-position: center;
-  background-size: cover; */
+  margin-top: 3vh;
 }
 
 .place {
     width: 12%;
-    height: 5vh;
+    height: 3.5vh;
     border: 2px solid #61451b;
     border-right: transparent;
     text-align: center;
@@ -306,7 +303,7 @@ body {
 }
 .place-detail {
     width: 27%;
-    height: 5vh;
+    height: 3.5vh;
     border: 2px solid #61451b;
     border-right: transparent;
     text-align: center;
@@ -314,7 +311,7 @@ body {
 }
 .place-list-button {
     width: 6%;
-    height: 5vh;
+    height: 3.5vh;
     border: 2px solid #61451b;
     border-left: transparent;
     text-align: center;
@@ -327,8 +324,8 @@ body {
 }
 
 .order {
-    width: 24%;
-    height: 5vh;
+    width: 20%;
+    height: 3.5vh;
     border: 2px solid #61451b;
     border-right: transparent;
     text-align: center;
@@ -337,7 +334,7 @@ body {
 }
 .order-list-button {
     width: 6%;
-    height: 5vh;
+    height: 3.5vh;
     border: 2px solid #61451b;
     border-left: transparent;
     text-align: center;
@@ -354,9 +351,9 @@ body {
   align-items: center;
   width:100%;
   height:5vh;
-  font-size: 3vh;
-  margin-top: 3vh;
-  margin-right: 15vh;
+  font-size: 2vh;
+  margin-top: 1vh;
+  margin-right: 9vh;
 }
 .add-function-button {
     display: flex;
@@ -366,7 +363,7 @@ body {
 }
 .null-function-button {
     display: flex;
-    width: 3%;
+    width: 4%;
     height: 5vh;
     text-align: center;
 }
@@ -379,8 +376,8 @@ body {
 
 .function-icon {
     display: flex;
-    width: 6vh;
-    height: 5vh;
+    width: 3vh;
+    height: 3vh;
 }
 
 input[type=checkbox] {
