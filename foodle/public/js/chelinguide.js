@@ -31,31 +31,23 @@ $(document).ready(() => {
     }
   });
 
-  $('#content-1').click(function(){
-    $('.swiper-container').toggleClass('close');
-    var i;
-    var img_flag = 'contents  vegan _페이지_';
-    socket.emit('give file number', img_flag, '1');
-  })
 
-  $('#content-2').click(function(){
-    $('.swiper-container').toggleClass('close');
-    var i;
-    var img_flag = 'pork cutlet_페이지_';
-    socket.emit('give file number', img_flag, '2');
+  $('#place-list-button').click(function() {
+    console.log('지역선택 버튼 클릭');
+
+  });
+  $('#order-list-button').click(function() {
+    console.log('정렬기준선택 버튼 클릭');
+
   });
 
-  $("#back-button").click(function(){
-    $('.swiper-container').toggleClass('close');
-    $('.upperbar, .lowerbar').css("display", "none");
-    swiper.removeAllSlides();
-  })
+  $('#share-function-button, #share-function-icon').click(function() {
+    console.log('공유하기 버튼 클릭');
 
-  $(".swiper-wrapper").click(function(){
-    if($('.upperbar').css('display')==='none'){
-      $('.upperbar, .lowerbar').css("display", 'flex');
-    } else{
-      $('.upperbar, .lowerbar').css("display", "none");
-    }
-  })
+  });
+
+  $('#add-function-button, #add-function-icon').click(function() {
+    console.log('추가하기 버튼 클릭');
+
+  });
 });
