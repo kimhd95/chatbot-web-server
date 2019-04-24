@@ -256,7 +256,7 @@ body {
 .back-button{
   display: flex;
   position: absolute;
-  top: 0;
+  top: 1vh;
   left: 31vw;
   width: 4vh;
   height: 4vh;
