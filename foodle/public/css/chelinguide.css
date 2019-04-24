@@ -28,8 +28,8 @@ body {
   background-image: url('/images/area_bar.png');
   background-position: center;
   background-size: cover;
-
 }
+
 
 .content-date{
 
@@ -167,10 +167,23 @@ body {
   background: #1C2833;
 }
 
-.place-button{
+.back-button{
   display: flex;
   position: absolute;
   top: 0;
+  left: 0;
+  width: 4vh;
+  height: 4vh;
+  background-image: url('/images/back.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin:1vh 0 1vh 5vw;
+}
+
+.place-button{
+  display: flex;
+  position: absolute;
+  top: 6vh;
   left: 30vh;
   width: 80vh;
   height: 8vh;
@@ -183,7 +196,7 @@ body {
 .order-button{
   display: flex;
   position: absolute;
-  top: 0;
+  top: 6vh;
   left: 70vh;
   width: 80vh;
   height: 8vh;
@@ -193,7 +206,163 @@ body {
   margin:1vh 0 1vh 5vw;
 }
 
+.select-bar {
+  display: flex;
+  text-align: center;
+  justify-content: left;
+  align-items: center;
+  width:100%;
+  height:6vh;
+  font-size: 3vh;
+  margin-top: 6vh;
+  /* background-image: url('/images/area_bar.png');
+  background-position: center;
+  background-size: cover; */
+}
 
+.place {
+    width: 12%;
+    height: 5vh;
+    border: 2px solid #61451b;
+    border-right: transparent;
+    text-align: center;
+    margin-left: 5%;
+    /* margin-top: 4vh; */
+}
+.place-detail {
+    width: 27%;
+    height: 5vh;
+    border: 2px solid #61451b;
+    border-right: transparent;
+    text-align: center;
+    /* margin-top: 4vh; */
+}
+.place-list-button {
+    width: 6%;
+    height: 5vh;
+    border: 2px solid #61451b;
+    border-left: transparent;
+    text-align: center;
+    /* margin-top: 4vh; */
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+.place-list-button b {
+    color: #61451b;
+}
+
+.order {
+    width: 24%;
+    height: 5vh;
+    border: 2px solid #61451b;
+    border-right: transparent;
+    text-align: center;
+    margin-left: 15%;
+    /* margin-top: 4vh; */
+}
+.order-list-button {
+    width: 6%;
+    height: 5vh;
+    border: 2px solid #61451b;
+    border-left: transparent;
+    text-align: center;
+    /* margin-top: 4vh; */
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.function-bar {
+  display: flex;
+  flex-direction: row-reverse;
+  text-align: center;
+  justify-content: left;
+  align-items: center;
+  width:100%;
+  height:5vh;
+  font-size: 3vh;
+  margin-top: 3vh;
+  margin-right: 15vh;
+}
+.add-function-button {
+    display: flex;
+    width: 24%;
+    height: 5vh;
+    text-align: center;
+}
+.null-function-button {
+    display: flex;
+    width: 3%;
+    height: 5vh;
+    text-align: center;
+}
+.share-function-button {
+    display: flex;
+    width: 24%;
+    height: 5vh;
+    text-align: center;
+}
+
+.function-icon {
+    display: flex;
+    width: 6vh;
+    height: 5vh;
+}
+
+input[type=checkbox] {
+    display: none;
+}
+
+input[type=checkbox] + label {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    padding-left: 30px;
+    line-height: 20px;
+    margin-right: 25%;
+}
+
+input[type=checkbox] + label:before {
+    content: "";
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    left: 0;
+    top: 0px;
+    background-color: #ffffff;
+    background-size: cover;
+    border: 2px solid #61451b;
+    line-height: 13px;
+}
+
+input[type=checkbox]:checked + label:before {
+    content: "";
+    background-image: url("./../images/check.png");
+}
+
+.modal-body {
+    overflow: scroll;
+    padding: 0;
+}
+#place-list .modal-content button {
+    width: 100%;
+    padding: 10px 0;
+    background-color: #ffffff;
+    border: 0.5px solid #61451b;
+    color: #61451b;
+    font-weight: 500;
+    text-align: left;
+    padding-left: 20px;
+}
+#order-list .modal-content button {
+    width: 100%;
+    padding: 10px 0;
+    background-color: #ffffff;
+    border: 0.5px solid #61451b;
+    color: #61451b;
+    font-weight: 500;
+    text-align: left;
+    padding-left: 20px;
+}
 
 .swiper-container {
   /* width: 100%;
