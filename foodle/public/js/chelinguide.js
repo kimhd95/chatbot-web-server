@@ -5,7 +5,13 @@
 $(document).ready(() => {
   var socket = io();
   var swiper = new Swiper('.swiper-container');
-  document.getElementById('contents-bar').textContent = `${sessionStorage.getItem('name')}슐랭 가이드`;
+  let name;
+  if (sessionStorage.getItem('name') == '비회원' || sessionStorage.getItem('name') == null) {
+    name = '';
+  } else {
+    name = sessionStorage.getItem('name').substr(1);
+  }
+  document.getElementById('contents-bar').textContent = `${name}슐랭 가이드`;
 
   $("#back-to-lobby").click(function(){
     location.href='/lobby';

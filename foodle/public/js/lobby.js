@@ -189,6 +189,8 @@ $(document).ready(function(){
                 $('#profile-name').append(res.name + " 님");
                 $('#profile-email').addClass('.a');
                 $('#profile-email').append(res.email);
+                $('#profile-mypage').addClass('.a');
+                $('#profile-mypage').append("마이페이지");
                 $('#question-email').val(res.email);
               }
               // $('#question-content').attr("placeholder", "Type here to search");
@@ -359,6 +361,10 @@ $(document).ready(function(){
   for (let i = 0; i < list.length; i++) {
     $('#station-list').append('<div class="stationname">' + list[i] + '</div>');
   }
+});
+
+$('#profile-mypage').click(function(){
+  location.href='/chelinguide';
 });
 
 $('.service-btn, #back-to-lobby-service').click(function(){
