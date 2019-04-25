@@ -321,6 +321,7 @@ body {
     border-right: transparent;
     text-align: center;
     margin-left: 5%;
+    font-size: 2vh;
     /* margin-top: 4vh; */
 }
 .place-detail {
@@ -329,6 +330,7 @@ body {
     border: 2px solid #61451b;
     border-right: transparent;
     text-align: center;
+    font-size: 2vh;
     /* margin-top: 4vh; */
 }
 .place-list-button {
@@ -340,6 +342,7 @@ body {
     /* margin-top: 4vh; */
     padding-top: 1px;
     padding-bottom: 1px;
+    font-size: 2vh;
 }
 .place-list-button b {
     color: #61451b;
@@ -352,6 +355,7 @@ body {
     border-right: transparent;
     text-align: center;
     margin-left: 15%;
+    font-size: 2vh;
     /* margin-top: 4vh; */
 }
 .order-list-button {
@@ -363,6 +367,7 @@ body {
     /* margin-top: 4vh; */
     padding-top: 1px;
     padding-bottom: 1px;
+    font-size: 2vh;
 }
 
 .function-bar {
@@ -461,6 +466,7 @@ input[type=checkbox]:checked + label:before {
     font-weight: 500;
     text-align: left;
     padding-left: 20px;
+    /* font-size: 8px; */
 }
 
 .swiper-container {
