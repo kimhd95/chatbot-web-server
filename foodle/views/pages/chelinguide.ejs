@@ -15,6 +15,9 @@
         <!-- CSS stylesheet for sliding-swipe-menu -->
         <!-- <link rel="stylesheet" href="/css/slide-and-swipe-menu.css"> -->
         <!-- <link rel="stylesheet" href="/css/bootstrap-toggle.min.css"> -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"> -->
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"> -->
         <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     </head>
     <body>
@@ -25,16 +28,28 @@
           <div id="category-bar" class="select-bar">
             <input id="place" class="place" type="text" placeholder="서울" disabled>
             <input id="place-detail" class="place-detail" type="text" placeholder="강남역" disabled>
-            <div class="place-list-button" id="place-list-button" data-toggle="modal" data-target="#place-list">
+            <span class="place-list-button" id="place-list-button" data-toggle="modal" data-target="#place-list" >
               <b class="fas fa-chevron-down">
-                ▼
+                <!-- ▼ -->
               </b>
-            </div>
+            </span>
+
             <input id="order" class="order" type="text" placeholder="별점순" disabled>
-            <div class="order-list-button" id="order-list-button" data-toggle="modal" data-target="#order-list">
+            <span class="order-list-button" id="order-list-button" data-toggle="modal" data-target="#order-list">
               <b class="fas fa-chevron-down">
-                ▼
+                <!-- ▼ -->
               </b>
+            </span>
+            <div class="modal fade bd-example-modal-sm" id="order-list" tabindex="-1" role="dialog" aria-labelledby="orderList" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content btn-group-vertical">
+                        <div class="modal-body">
+                            <button class="order-btn" onclick="selectSortBy(0)" data-dismiss="modal" aria-label="Close">별점순 </button>
+                            <button class="order-btn" onclick="selectSortBy(1)" data-dismiss="modal" aria-label="Close">최신순</button>
+                            <button class="order-btn" onclick="selectSortBy(2)" data-dismiss="modal" aria-label="Close">이름순</button>
+                        </div>
+                    </div>
+                </div>
             </div>
           </div>
           <div id="function-bar" class="function-bar">
@@ -48,18 +63,6 @@
               추가하기
             </div>
             <img src="/images/main-05.png" class="function-icon" id="add-function-icon">
-          </div>
-
-          <div class="modal fade bd-example-modal-sm" id="order-list" tabindex="-1" role="dialog" aria-labelledby="orderList" aria-hidden="true">
-              <div class="modal-dialog modal-sm">
-                  <div class="modal-content btn-group-vertical">
-                      <div class="modal-body">
-                          <button class="order-btn" onclick="selectSortBy(0)" data-dismiss="modal">별점순</button>
-                          <button class="order-btn" onclick="selectSortBy(1)" data-dismiss="modal">최신순</button>
-                          <button class="order-btn" onclick="selectSortBy(2)" data-dismiss="modal">이름순</button>
-                      </div>
-                  </div>
-              </div>
           </div>
 
           <div id="contents-list" class="contentlist">
@@ -106,7 +109,7 @@
                   </div>
                   <div class="food-sentence">
                     <div class="food-eval">한줄평</div>
-                    <div class="food-text">괜찮은데 너무 비싼 감이 없지 않아 있는 것 같기도 하네요.</div>
+                    <div class="food-text">괜찮은데 너무 비싼 감이 없지 않아 있따</div>
                   </div>
                 </div>
               </div>
@@ -121,6 +124,14 @@
         <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> -->
         <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+        <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> -->
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script> -->
+        <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script> -->
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
         <!-- <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script> -->
         <script src="/js/base.js"></script>

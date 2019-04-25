@@ -186,7 +186,9 @@ body {
   justify-content:flex-end;
   width: 20%;
   height: 4vh;
+  font-size: 1.5vh;
   margin-left: 5%;
+  line-height: 125%;
 }
 
 .food-content .food-info .food-summary .food-sentence .food-text{
@@ -194,6 +196,8 @@ body {
   flex-direction: column;
   justify-content:flex-end;
   width: 60%;
+  font-size: 1.5vh;
+  line-height: 125%;
   height: 4vh;
 }
 
