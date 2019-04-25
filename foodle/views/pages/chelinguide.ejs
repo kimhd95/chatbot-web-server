@@ -76,17 +76,36 @@
               추가하기
             </div>
             <img src="/images/main-05.png" class="function-icon" id="add-function-icon">
+
+            <!-- <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">비밀번호 재발급</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>가입하신 이메일 주소를 입력해주세요.</p>
+                        <input class="form-control" type="email" id="signedup-email" placeholder="가입한 이메일">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="reissue-pw">임시 비밀번호 발급</button>
+                    </div>
+                </div>
+            </div> -->
+
             <div class="modal fade" id="plus-list" tabindex="-1" role="dialog" aria-labelledby="plusList" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalLabel">슐랭 가이드 추가하기</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                      </button>
+                      </button> -->
                     </div>
                     <div class="modal-body">
-                      <form>
+                      <!-- <form>
                         <div class="form-group">
                           <label for="recipient-name" class="col-form-label">Recipient:</label>
                           <input type="text" class="form-control" id="recipient-name">
@@ -95,11 +114,30 @@
                           <label for="message-text" class="col-form-label">Message:</label>
                           <textarea class="form-control" id="message-text"></textarea>
                         </div>
-                      </form>
+                      </form> -->
+                      <div class="modal-subway">
+                        <div class="modal-subway-left">서울</div>
+                        <div class="modal-subway-right">강남역</div>
+                      </div>
+                      <div class="modal-resname">
+                        <div class="modal-resname-left">상호</div>
+                        <input id="res-name" class="modal-resname-right" type="text">
+                      </div>
+                      <div class="modal-score">
+                        <div class="modal-score-left">평점</div>
+                        <div class="modal-score-right">
+                          <img src="/images/0점.png">
+                        </div>
+                      </div>
+                      <div class="modal-comment">
+                        <div class="modal-comment-left">한줄평</div>
+                        <input id="res-name" class="modal-comment-right" type="text">
+                      </div>
+                      <div class="modal-comment-detail">더 자세히 평가할래요!</div>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">등록</button>
-                      <button type="button" class="btn btn-primary">취소</button>
+                      <button type="button" class="upload-btn" data-dismiss="modal">등록</button>
+                      <button type="button" class="cancel-btn" data-dismiss="modal">취소</button>
                     </div>
                 </div>
               </div>

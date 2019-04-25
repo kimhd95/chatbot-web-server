@@ -407,11 +407,6 @@ body {
     height: 3vh;
 }
 
-.modal-body {
-    overflow: scroll;
-    padding: 0;
-}
-
 input[type=checkbox] {
     display: none;
 }
@@ -443,10 +438,162 @@ input[type=checkbox]:checked + label:before {
     background-image: url("./../images/check.png");
 }
 
-.modal-body {
-    overflow: scroll;
-    padding: 0;
+.modal-title {
+  margin: 0 auto;
 }
+
+.modal-body {
+  padding: 0;
+}
+
+.modal-body .modal-subway {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 4vh;
+  align-items: flex-start;
+  /* justify-content: left; */
+  margin-bottom: 1vh;
+}
+
+.modal-body .modal-subway .modal-subway-left {
+  display: flex;
+  flex-direction: row;
+  /* align-items: center; */
+  width: 30%;
+  height: 4vh;
+  margin-left: 5%;
+}
+
+.modal-body .modal-subway .modal-subway-right {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: flex-start; */
+  /* align-items: center; */
+  height: 4vh;
+  width: 70%;
+}
+
+.modal-body .modal-resname {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 4vh;
+  align-items: flex-start;
+  justify-content: left;
+  margin-bottom: 1vh;
+}
+
+.modal-body .modal-resname .modal-resname-left {
+  display: flex;
+  flex-direction: row;
+  width: 30%;
+  height: 4vh;
+  margin-left: 5%;
+  align-items: center;
+}
+
+.modal-body .modal-resname .modal-resname-right {
+  display: flex;
+  flex-direction: row;
+  height: 4vh;
+  width: 70%;
+  border: none;
+  border-bottom: 2px solid #61451b;
+}
+
+.modal-body .modal-score {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 4vh;
+  align-items: flex-start;
+  justify-content: left;
+  margin-bottom: 1vh;
+}
+
+.modal-body .modal-score .modal-score-left {
+  display: flex;
+  flex-direction: row;
+  width: 30%;
+  height: 4vh;
+  margin-left: 5%;
+  align-items: center;
+}
+
+.modal-body .modal-score .modal-score-right {
+  display: flex;
+  flex-direction: row;
+  height: 4vh;
+  width: 70%;
+  align-items: center;
+}
+
+.modal-body .modal-score .modal-score-right img {
+  width: 113px;
+  height: 23px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-end; */
+  /* align-items: flex-end; */
+}
+
+.modal-body .modal-comment {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 10vh;
+  /* align-items: flex-start; */
+  /* justify-content: left; */
+  margin-bottom: 1vh;
+}
+
+.modal-body .modal-comment .modal-comment-left {
+  display: flex;
+  flex-direction: row;
+  width: 30%;
+  height: 10vh;
+  margin-left: 5%;
+  align-items: center;
+}
+
+.modal-body .modal-comment .modal-comment-right {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  height: 10vh;
+  font-size: 2vh;
+}
+
+.modal-body .modal-comment-detail {
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  height: 10vh;
+  align-items: center;
+  justify-content: center;
+  font-size: 2vh;
+  margin-bottom: 1vh;
+  /* border: none; */
+  /* border-bottom: 2px solid #61451b; */
+}
+
+.modal-footer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.modal-footer .upload-btn{
+  display: flex;
+  flex-direction: row;
+}
+
+.modal-footer .cancel-btn{
+  display: flex;
+  flex-direction: row;
+}
+
 #place-list .modal-content button {
     width: 100%;
     padding: 10px 0;
