@@ -28,7 +28,8 @@ body {
 #chelinguide-room .avail-screen {
   height: 100vh;
   border-radius: 10px;
-  width: 40vw;
+  /* width: 40vw; */
+  width: 400px;
   box-shadow: 0 5px 35px 9px #ccc;
 
   display:flex;
@@ -256,14 +257,14 @@ body {
 .back-button{
   display: flex;
   position: absolute;
+  justify-content: center;
   top: 1vh;
-  left: 31vw;
+  left: calc(50vw - 180px);
   width: 4vh;
   height: 4vh;
   background-image: url('/images/back.png');
   background-size: contain;
   background-repeat: no-repeat;
-  /* margin:1vh 0 1vh 5vw; */
 }
 
 .place-button{
