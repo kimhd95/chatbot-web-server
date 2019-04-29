@@ -77,24 +77,6 @@
             </div>
             <img src="/images/main-05.png" class="function-icon" id="add-function-icon">
 
-            <!-- <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">비밀번호 재발급</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>가입하신 이메일 주소를 입력해주세요.</p>
-                        <input class="form-control" type="email" id="signedup-email" placeholder="가입한 이메일">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" id="reissue-pw">임시 비밀번호 발급</button>
-                    </div>
-                </div>
-            </div> -->
-
             <div class="modal fade" id="plus-list" tabindex="-1" role="dialog" aria-labelledby="plusList" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -133,16 +115,18 @@
                         <div class="modal-comment-left">한줄평</div>
                         <input id="res-name" class="modal-comment-right" type="text">
                       </div>
-                      <div class="modal-comment-detail">더 자세히 평가할래요!</div>
+                      <div class="modal-comment-detail"><span>더 자세히 평가할래요!</span></div>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="upload-btn" data-dismiss="modal">등록</button>
-                      <button type="button" class="cancel-btn" data-dismiss="modal">취소</button>
+                      <div class="final-btn">
+                        <div id="upload-btn" class="upload-btn" data-dismiss="modal">등록</div>
+                      <!-- <button type="button" class="upload-btn" data-dismiss="modal">등록</button> -->
+                        <div id="cancel-btn" class="cancel-btn" data-dismiss="modal">취소</div>
+                      </div>
                     </div>
                 </div>
               </div>
             </div>
-
           </div>
 
           <div id="contents-list" class="contentlist">

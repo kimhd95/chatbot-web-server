@@ -545,7 +545,7 @@ input[type=checkbox]:checked + label:before {
   height: 10vh;
   /* align-items: flex-start; */
   /* justify-content: left; */
-  margin-bottom: 1vh;
+  margin-bottom: 3vh;
 }
 
 .modal-body .modal-comment .modal-comment-left {
@@ -569,29 +569,73 @@ input[type=checkbox]:checked + label:before {
   display: flex;
   flex-direction: row;
   width: auto;
-  height: 10vh;
+  height: 7vh;
   align-items: center;
   justify-content: center;
-  font-size: 2vh;
-  margin-bottom: 1vh;
+  font-size: 2.3vh;
+  /* border:none; */
+}
+
+.modal-body .modal-comment-detail span{
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* width: auto; */
+  /* height: 10vh; */
+  align-items: center;
+  justify-content: center;
+  /* font-size: 2.3vh; */
+  /* margin-bottom: 1vh; */
+  border-bottom: 2px solid #FFFF00;
+  padding-bottom: 3px;
+  /* text-decoration: underline; */
   /* border: none; */
   /* border-bottom: 2px solid #61451b; */
 }
 
 .modal-footer{
+  padding: 0;
+}
+
+.modal-footer .final-btn{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  height:8vh;
+  width:100%;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .modal-footer .upload-btn{
-  display: flex;
-  flex-direction: row;
+  /* display: flex; */
+  /* flex-direction: column; */
+  text-align: center;
+  /* justify-content: space-between; */
+  /* align-self: center; */
+  /* align-items:  */
+  margin-left: 4.5vw;
+  align-items:flex-start;
+  width: 30%;
+  height: auto;
+  font-size: 2.5vh;
+  background-image: url('/images/add6.png');
+  background-position: center;
+  background-size: cover;
 }
 
 .modal-footer .cancel-btn{
-  display: flex;
-  flex-direction: row;
+  /* display: flex; */
+  /* flex-direction: row; */
+  text-align: center;
+  /* justify-content: space-between; */
+  /* align-items: center; */
+
+  margin-right: 4.5vw;
+  width: 30%;
+  height: auto;
+  font-size: 2.5vh;
+  background-image: url('/images/add6.png');
+  background-position: center;
+  background-size: cover;
 }
 
 #place-list .modal-content button {
