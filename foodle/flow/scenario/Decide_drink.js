@@ -67,6 +67,12 @@ class Decide_drink {
     } else if (key.startsWith('S11/')) {
       key = 'S11';
     }
+    // 다시 입력하기 관련 처리
+    else if (user_data.state === 'S2_1') {
+      key = 'S2_1';
+    } else if (user_data.state === 'S2_2') {
+      key = 'S2_2';
+    }
 
     this.strategies = {
       'decide_drink': this.decide_drink,
@@ -193,7 +199,8 @@ class Decide_drink {
               await info_update.profile.update_subway(socket.id, subway);
           }
           else {
-            await index.sendSocketMessage(socket.id, 'chat message button', wrong_subway_input_msg(value), ['S1', '다시 입력하기']);
+            // await index.sendSocketMessage(socket.id, 'chat message button', wrong_subway_input_msg(value), ['S1', '다시 입력하기']);
+            await index.sendSocketMessage(socket.id, 'chat message button', wrong_subway_input_msg(value));
             return;
           }
         }
@@ -243,7 +250,8 @@ class Decide_drink {
               await info_update.profile.update_subway(socket.id, subway);
           }
           else {
-            await index.sendSocketMessage(socket.id, 'chat message button', wrong_subway_input_msg(value), ['S1', '다시 입력하기']);
+            // await index.sendSocketMessage(socket.id, 'chat message button', wrong_subway_input_msg(value), ['S1', '다시 입력하기']);
+            await index.sendSocketMessage(socket.id, 'chat message button', wrong_subway_input_msg(value));
             return;
           }
         }

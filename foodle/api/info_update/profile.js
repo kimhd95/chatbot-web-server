@@ -1103,7 +1103,7 @@ Profile.chitchat = function (kakaoid, message) {
   const self = this;
   return new Promise(((resolve, reject) => {
     const method = 'POST';
-    const url = 'http://54.180.114.150:8888/engine/predict';
+    const url = 'http://13.125.185.63:8888/engine/predict';
     const json = {
       content: message,
     };
