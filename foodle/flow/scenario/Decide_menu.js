@@ -635,9 +635,12 @@ class Decide_menu {
           let subway = user_data.subway;
           let apicall;
 
+          console.log(`search_food : ${search_food}`);
           // 예외처리 하는부분
           if (search_food === '고기') {
             apicall = await info_update.food.verify_search_food(socket.id, '바비큐', subway);
+          } else if (search_food === '돈가스' || search_food === '돈까스') {
+            apicall = await info_update.food.verify_search_food(socket.id, ['가스', '가츠', '까스', '까츠', '카츠'], subway);
           } else if (search_food === '초밥') {
             apicall = await info_update.food.verify_search_food(socket.id, ['초밥', '스시', '오마카세'], subway);
           } else if (search_food === '매운 음식') {
@@ -720,7 +723,7 @@ class Decide_menu {
               } else if (user_data.food_name === '분식') {
                 foods = info_update.food.verify_search_food(socket.id, ['김밥', '떡볶이'], user_data.subway);
               } else if (['돈까스','돈가스','돈까츠','돈가츠','돈카츠','돈까쓰'].indexOf(user_data.food_name) !== -1) {
-                foods = info_update.food.verify_search_food(socket.id, ['돈까스','돈가스','돈까츠','돈가츠','돈카츠','돈까쓰'], user_data.subway);
+                foods = info_update.food.verify_search_food(socket.id, ['까스','가스','까츠','가츠','카츠','까쓰'], user_data.subway);
               } else {
                 foods = info_update.food.verify_search_food(socket.id, user_data.food_name, user_data.subway);
               }
