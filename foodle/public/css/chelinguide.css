@@ -444,6 +444,8 @@ input[type=checkbox]:checked + label:before {
 
 .modal-body {
   padding: 0;
+  overflow-y: scroll;
+  height: 70vh;
 }
 .modal-body .modal-res-image-layout {
   display: flex;

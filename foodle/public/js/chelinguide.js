@@ -24,6 +24,9 @@ $(document).ready(() => {
   }
   document.getElementById('contents-bar').textContent = `${name}슐랭 가이드`;
 
+  // getChelinguideList API 호출 후 content-list 채우기
+
+
   $("#back-to-lobby").click(function(){
     location.href='/lobby';
   });
@@ -56,7 +59,6 @@ $(document).ready(() => {
       msg = tar.parent().parent().parent().parent().attr('id');
     }
     console.log(msg);
-    console.log($('#content-detail-res-name'));
   });
 
   $('#place-list-button').click(function() {
