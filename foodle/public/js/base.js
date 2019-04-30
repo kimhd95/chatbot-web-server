@@ -36,8 +36,8 @@ let spinner;
 
 
 function sendReq(info) {
-    if(!info.error){
-        info.error = function(e){
+    if (!info.error) {
+        info.error = function(e) {
             console.log('ajax call error');
             console.log(e);
             console.log(e.responseText);
@@ -53,8 +53,8 @@ function sendReq(info) {
 }
 
 function sendTokenReq(info) {
-    if(!info.error){
-        info.error = function(e){
+    if (!info.error) {
+        info.error = function(e) {
             console.log('ajax call error');
             console.log(e);
         }

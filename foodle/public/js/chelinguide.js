@@ -85,32 +85,35 @@ $(document).ready(() => {
   $('#upload-btn').click(function() {
     console.log('등록하기 버튼 클릭');
 
-    let subway, res_name, score, comment;
-    subway = $('#modal-subway-right')[0].value;
-    res_name = $('#res-name')[0].value;
-    score = $('#modal-score-select')[0].value;
-    comment = $('#comment')[0].value;
+    const user_id = sessionStorage.getItem('name');
+    const subway = $('#modal-subway-right')[0].value;
+    const res_name = $('#res-name')[0].value;
+    const rating = $('#modal-score-select')[0].value;
+    const comment = $('#comment')[0].value;
+    const region = '서울';
+    console.log(user_id, subway, res_name, rating, comment, region);
 
     // api call필요
-    // const info ={
-    //   url: "/api/v1/users/update_user",
-    //   method: 'POST',
-    //   body: {
-    //     kakao_id: socket.id,
-    //     scenario: scenario,
-    //   },
-    //   success: function(res) {
-    //     console.log("success");
-    //     // socket.emit('chat message button rule', name, stage);
-    //     // $('.checkbox:checked').attr('checked', false);
-    //     // $('.messaging-button').hide();
-    //     // $('.messaging-button-checkbox').hide();
-    //   },
-    //   error: function (e) {
-    //     console.log("fail");
-    //     console.log(e);
-    //   }
-    // }
-    // sendReq(info);
+    const info = {
+      url: "/api/v1/users/add_chelinguide_item",
+      method: 'POST',
+      body: {
+        user_id,
+        res_name,
+        region,
+        subway,
+        rating,
+        comment,
+      },
+      success: function(res) {
+        console.log("success");
+      },
+      error: function (e) {
+        console.log("fail");
+        console.log(e);
+      }
+    };
+
+    sendReq(info);
   });
 });
