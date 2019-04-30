@@ -468,10 +468,10 @@ input[type=checkbox]:checked + label:before {
 .modal-body .modal-subway .modal-subway-right {
   display: flex;
   flex-direction: row;
-  /* justify-content: flex-start; */
-  /* align-items: center; */
+  justify-content: flex-end;
+  align-items: center;
   height: 4vh;
-  width: 70%;
+  width: 20%;
 }
 
 .modal-body .modal-resname {
@@ -536,6 +536,16 @@ input[type=checkbox]:checked + label:before {
   flex-direction: column;
   /* justify-content: flex-end; */
   /* align-items: flex-end; */
+}
+
+.modal-body .modal-score .modal-score-right .modal-score-select {
+  /* width: 20%; */
+  /* height: 23px; */
+  display: flex;
+  flex-direction:row;
+  margin-left: 10px;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .modal-body .modal-comment {
