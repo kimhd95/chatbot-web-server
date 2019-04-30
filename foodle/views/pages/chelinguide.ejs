@@ -100,7 +100,7 @@
                       <div class="modal-subway">
                         <div class="modal-subway-left">서울</div>
                         <!-- <div class="modal-subway-right">강남역</div> -->
-                        <select name="modal-subway-right" class="modal-subway-right">
+                        <select id="modal-subway-right" name="modal-subway-right" class="modal-subway-right">
                           <option value="">역 선택</option>
                           <option value="강남역">강남역</option>
                           <option value="선릉역">선릉역</option>
@@ -114,8 +114,8 @@
                       <div class="modal-score">
                         <div class="modal-score-left">평점</div>
                         <div class="modal-score-right">
-                          <img src="/images/0점.png">
-                          <select name="modal-score-select" class="modal-score-select">
+                          <img id="score-image" src="/images/0점.png">
+                          <select onchange="scoreFunction()" id="modal-score-select" name="modal-score-select" class="modal-score-select">
                             <option value="">평점</option>
                             <option value="1">1</option>
                             <option value="1.5">1.5</option>
@@ -131,7 +131,7 @@
                       </div>
                       <div class="modal-comment">
                         <div class="modal-comment-left">한줄평</div>
-                        <input id="res-name" class="modal-comment-right" type="text">
+                        <input id="comment" class="modal-comment-right" type="text">
                       </div>
                       <div class="modal-comment-detail"><span>더 자세히 평가할래요!</span></div>
                     </div>
