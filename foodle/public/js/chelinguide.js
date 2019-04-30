@@ -13,6 +13,12 @@ function sortBySubway(i) {
     // 정렬해주는 api 필요
 }
 
+function scoreFunction() {
+  let score;
+  score = $('#modal-score-select')[0].value;
+  document.getElementById("score-image").src = `/images/${score}점.png`
+}
+
 $(document).ready(() => {
   var socket = io();
   var swiper = new Swiper('.swiper-container');
@@ -45,7 +51,33 @@ $(document).ready(() => {
 
   $('#upload-btn').click(function() {
     console.log('등록하기 버튼 클릭');
+
+    let subway, res_name, score, comment;
+    subway = $('#modal-subway-right')[0].value;
+    res_name = $('#res-name')[0].value;
+    score = $('#modal-score-select')[0].value;
+    comment = $('#comment')[0].value;
+
     // api call필요
-    
+    // const info ={
+    //   url: "/api/v1/users/update_user",
+    //   method: 'POST',
+    //   body: {
+    //     kakao_id: socket.id,
+    //     scenario: scenario,
+    //   },
+    //   success: function(res) {
+    //     console.log("success");
+    //     // socket.emit('chat message button rule', name, stage);
+    //     // $('.checkbox:checked').attr('checked', false);
+    //     // $('.messaging-button').hide();
+    //     // $('.messaging-button-checkbox').hide();
+    //   },
+    //   error: function (e) {
+    //     console.log("fail");
+    //     console.log(e);
+    //   }
+    // }
+    // sendReq(info);
   });
 });
