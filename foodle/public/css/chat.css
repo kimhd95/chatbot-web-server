@@ -281,8 +281,8 @@
 
 .card-footer {
   /* 추가 */
-  overflow: auto;
-  position: absolute;
+  /* overflow: auto; */
+  /* position: absolute; */
 
   background-color: #ffffff;
   border: none;
