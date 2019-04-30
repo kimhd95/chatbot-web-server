@@ -26,7 +26,37 @@ $(document).ready(() => {
 
   $("#back-to-lobby").click(function(){
     location.href='/lobby';
-  })
+  });
+
+  $('.food-content').click(function(e) {
+    const tar = $(e.target);
+    let msg;
+    switch(tar.attr('class')) {
+      case 'food-title':
+      case 'food-info':
+        msg = tar.parent().attr('id');
+        break;
+      case 'food-thumbnail':
+      case 'food-summary':
+        msg = tar.parent().parent().attr('id');
+        break;
+      case 'food-score':
+      case 'food-sentence':
+        msg = tar.parent().parent().parent().attr('id');
+        break;
+      case 'food-eval':
+      case 'food-text':
+        msg = tar.parent().parent().parent().parent().attr('id');
+        break;
+      default:
+        msg = '';
+        break;
+    }
+    if (tar.attr('src')) {
+      msg = tar.parent().parent().parent().parent().attr('id');
+    }
+    console.log(msg);
+  });
 
   $('#place-list-button').click(function() {
     console.log('지역선택 버튼 클릭');
