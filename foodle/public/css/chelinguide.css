@@ -502,6 +502,10 @@ input[type=checkbox]:checked + label:before {
   text-align: center;
   justify-content: center; */
 }
+.gray-btn {
+  display: flex;
+  color: gray;
+}
 
 .modal-body .modal-res-score-layout {
   display: flex;
