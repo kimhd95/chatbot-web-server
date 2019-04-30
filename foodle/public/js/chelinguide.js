@@ -56,6 +56,7 @@ $(document).ready(() => {
       msg = tar.parent().parent().parent().parent().attr('id');
     }
     console.log(msg);
+    console.log($('#content-detail-res-name'));
   });
 
   $('#place-list-button').click(function() {
@@ -76,6 +77,6 @@ $(document).ready(() => {
   $('#upload-btn').click(function() {
     console.log('등록하기 버튼 클릭');
     // api call필요
-    
+
   });
 });

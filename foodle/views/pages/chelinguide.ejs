@@ -149,7 +149,7 @@
 
           <div id="contents-list" class="contentlist">
 
-            <div id="content-1" class="food-content">
+            <div id="content-1" class="food-content" data-toggle="modal" data-target="#content-detail">
               <div class="food-title">1. 바비레드</div>
               <div class="food-info">
                 <div class="food-thumbnail" style="background-image: url('/contents/pork cutlet_페이지_1.jpg');"></div>
@@ -161,6 +161,61 @@
                     <div class="food-eval">한줄평</div>
                     <div class="food-text">홍대점보다 훨씬 나은듯!</div>
                   </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="content-detail" tabindex="-1" role="dialog" aria-labelledby="contentDetail" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="content-detail-res-name">바비레드</h5>
+                    </div>
+                    <div class="modal-body">
+                      <div class="modal-res-image-layout">
+                        <div class="modal-res-image-layout-left">
+                          <img src="images/inf-swipe-left.png" class='swiper-btn'>
+                        </div>
+                        <div class="modal-res-image-layout-center">
+                          <img src="images/건대입구역.png" class="res-img">
+                        </div>
+                        <div class="modal-res-image-layout-right">
+                          <img src="images/inf-swipe-right.png" class='swiper-btn'>
+                        </div>
+                      </div>
+
+                      <div class="modal-res-score-layout">
+                        <img src="/images/3.5점.png" class="score-icon">
+                      </div>
+
+                      <div class="modal-res-foodtype-layout">양식 / 스테이크, 파스타</div>
+
+                      <div class="modal-res-detail-info-wide">
+                        <img src="/images/inf-comment.png" class="function-icon">
+                        <div class="modal-comment-left">한줄평</div>
+                        <div class="modal-comment-right">홍대점보다 훨씬 나은듯! 웨이팅이 좀 길긴함</div>
+                      </div>
+
+                      <div class="modal-res-detail-info">
+                        <img src="/images/inf-mood.png" class="function-icon">
+                        <div class="modal-comment-left">분위기</div>
+                        <div class="modal-comment-right">데이트, 친절한</div>
+                      </div>
+
+                      <div class="modal-res-detail-info">
+                        <img src="/images/inf-price.png" class="function-icon">
+                        <div class="modal-comment-left">1인가격</div>
+                        <div class="modal-comment-right">1~2만원</div>
+                      </div>
+                      <div class="modal-res-detail-info">
+                        <img src="/images/inf-map.png" class="function-icon">
+                        <div class="modal-comment-left">지도보기</div>
+                      </div>
+                      <div class="modal-res-detail-info">
+                        <img src="/images/inf-sns.png" class="function-icon">
+                        <div class="modal-comment-left">SNS 공유하기</div>
+                      </div>
+                      <div class="modal-detail-footer-btn"><span>수정하기</span></div>
+                    </div>
                 </div>
               </div>
             </div>
