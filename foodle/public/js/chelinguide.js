@@ -30,7 +30,6 @@ $(document).ready(() => {
 
   $('#place-list-button').click(function() {
     console.log('지역선택 버튼 클릭');
-
   });
   $('#order-list-button').click(function() {
     console.log('정렬기준선택 버튼 클릭');
@@ -38,11 +37,15 @@ $(document).ready(() => {
 
   $('#share-function-button, #share-function-icon').click(function() {
     console.log('공유하기 버튼 클릭');
-
   });
 
   $('#add-function-button, #add-function-icon').click(function() {
     console.log('추가하기 버튼 클릭');
+  });
 
+  $('#upload-btn').click(function() {
+    console.log('등록하기 버튼 클릭');
+    // api call필요
+    
   });
 });

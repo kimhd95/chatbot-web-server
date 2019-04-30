@@ -99,7 +99,13 @@
                       </form> -->
                       <div class="modal-subway">
                         <div class="modal-subway-left">서울</div>
-                        <div class="modal-subway-right">강남역</div>
+                        <!-- <div class="modal-subway-right">강남역</div> -->
+                        <select name="modal-subway-right" class="modal-subway-right">
+                          <option value="">역 선택</option>
+                          <option value="강남역">강남역</option>
+                          <option value="선릉역">선릉역</option>
+                          <option value="삼성역">삼성역</option>
+                        </select>
                       </div>
                       <div class="modal-resname">
                         <div class="modal-resname-left">상호</div>
@@ -109,6 +115,18 @@
                         <div class="modal-score-left">평점</div>
                         <div class="modal-score-right">
                           <img src="/images/0점.png">
+                          <select name="modal-score-select" class="modal-score-select">
+                            <option value="">평점</option>
+                            <option value="1">1</option>
+                            <option value="1.5">1.5</option>
+                            <option value="2">2</option>
+                            <option value="2.5">2.5</option>
+                            <option value="3">3</option>
+                            <option value="3.5">3.5</option>
+                            <option value="4">4</option>
+                            <option value="4.5">4.5</option>
+                            <option value="5">5</option>
+                          </select>
                         </div>
                       </div>
                       <div class="modal-comment">
