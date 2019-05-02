@@ -1,4 +1,7 @@
 let sort, subway;
+
+
+
 function selectSortBy(i) {
     const user_id = sessionStorage.getItem('name');
     const region = '서울';
@@ -20,11 +23,11 @@ function selectSortBy(i) {
         $('#contents-list').children().remove();
         console.log(res.message);
         for (let i = 0; i < res.num; i++) {
-          ({id, res_name, rating, comment, res_id, res_mood, res_region, res_subway, res_food_name, res_food_type, res_price, created_at, updated_at} = res.message[i]);
+          ({id, res_name, rating, comment, res_id, res_mood, res_region, res_subway, res_food_name, res_food_type, res_price, res_image, created_at, updated_at} = res.message[i]);
           $('#contents-list').append(`<div id="content-${id}" class="food-content" data-toggle="modal" data-target="#content-detail-${id}">
             <div class="food-title">${i+1}. ${res_name}</div>
             <div class="food-info">
-              <div class="food-thumbnail" style="background-image: url('/images/main-09.png');"></div>
+              <div class="food-thumbnail" style="background-image: url('${(res_image)?res_image:'/images/main-09.png'}');"></div>
               <div class="food-summary">
                 <div class="food-score">
                   <img src="/images/${rating}점.png" id="content-${id}-score">
@@ -75,11 +78,11 @@ function selectSortBy(i) {
                     </div>
                     <div class="modal-res-detail-info">
                       <img src="/images/inf-map.png" class="function-icon">
-                      <div class="modal-comment-left">지도보기</div>
+                      <div class="modal-comment-left" id="show-map">지도보기</div>
                     </div>
                     <div class="modal-res-detail-info">
                       <img src="/images/inf-sns.png" class="function-icon">
-                      <div class="modal-comment-left">SNS 공유하기</div>
+                      <div class="modal-comment-left" id="sns-share">SNS 공유하기</div>
                     </div>
                   </div>
                   <div class="modal-footer">
@@ -118,11 +121,11 @@ function sortBySubway(i) {
         $('#contents-list').children().remove();
         console.log(res.message);
         for (let i = 0; i < res.num; i++) {
-          ({id, res_name, rating, comment, res_id, res_mood, res_region, res_subway, res_food_name, res_food_type, res_price, created_at, updated_at} = res.message[i]);
+          ({id, res_name, rating, comment, res_id, res_mood, res_region, res_subway, res_food_name, res_food_type, res_price, res_image, created_at, updated_at} = res.message[i]);
           $('#contents-list').append(`<div id="content-${id}" class="food-content" data-toggle="modal" data-target="#content-detail-${id}">
             <div class="food-title">${i+1}. ${res_name}</div>
             <div class="food-info">
-              <div class="food-thumbnail" style="background-image: url('/images/main-09.png');"></div>
+              <div class="food-thumbnail" style="background-image: url('${(res_image)?res_image:'/images/main-09.png'}');"></div>
               <div class="food-summary">
                 <div class="food-score">
                   <img src="/images/${rating}점.png" id="content-${id}-score">
@@ -173,11 +176,11 @@ function sortBySubway(i) {
                     </div>
                     <div class="modal-res-detail-info">
                       <img src="/images/inf-map.png" class="function-icon">
-                      <div class="modal-comment-left">지도보기</div>
+                      <div class="modal-comment-left" id="show-map">지도보기</div>
                     </div>
                     <div class="modal-res-detail-info">
                       <img src="/images/inf-sns.png" class="function-icon">
-                      <div class="modal-comment-left">SNS 공유하기</div>
+                      <div class="modal-comment-left" id="sns-share">SNS 공유하기</div>
                     </div>
                   </div>
                   <div class="modal-footer">
@@ -225,12 +228,18 @@ $(document).ready(() => {
     },
     success: function (res) {
       console.log(res.message);
+      console.log("ImageArray");
+      console.log(res.image);
+
+
+
+
       for (let i = 0; i < res.num; i++) {
-        const {id, res_name, rating, comment, res_id, res_mood, res_region, res_subway, res_food_name, res_food_type, res_price, created_at, updated_at} = res.message[i]
+        const {id, res_name, rating, comment, res_id, res_mood, res_region, res_subway, res_food_name, res_food_type, res_price, res_image, created_at, updated_at} = res.message[i]
         $('#contents-list').append(`<div id="content-${id}" class="food-content" data-toggle="modal" data-target="#content-detail-${id}">
           <div class="food-title">${i+1}. ${res_name}</div>
           <div class="food-info">
-            <div class="food-thumbnail" style="background-image: url('/images/main-09.png');"></div>
+            <div class="food-thumbnail" style="background-image: url('${(res_image)?res_image:'/images/main-09.png'}');"></div>
             <div class="food-summary">
               <div class="food-score">
                 <img src="/images/${rating}점.png" id="content-${id}-score">
@@ -260,13 +269,10 @@ $(document).ready(() => {
                       <img src="images/inf-swipe-right.png" class='swiper-btn'>
                     </div>
                   </div>
-
                   <div class="modal-res-score-layout">
                     <img src="/images/${rating}점.png" class="score-icon">
                   </div>
-
                   <div class="modal-res-foodtype-layout">${res_food_type} / ${res_food_name}</div>
-
                   <div class="modal-res-detail-info-wide">
                     <img src="/images/inf-comment.png" class="function-icon">
                     <div class="modal-comment-left">한줄평</div>
@@ -284,11 +290,11 @@ $(document).ready(() => {
                   </div>
                   <div class="modal-res-detail-info">
                     <img src="/images/inf-map.png" class="function-icon">
-                    <div class="modal-comment-left">지도보기</div>
+                    <div class="modal-comment-left" id="show-map">지도보기</div>
                   </div>
                   <div class="modal-res-detail-info">
                     <img src="/images/inf-sns.png" class="function-icon">
-                    <div class="modal-comment-left">SNS 공유하기</div>
+                    <div class="modal-comment-left" id="sns-share">SNS 공유하기</div>
                   </div>
                 </div>
                 <div class="modal-footer">
@@ -354,6 +360,12 @@ $(document).ready(() => {
   $('#add-function-button, #add-function-icon').click(function() {
     console.log('추가하기 버튼 클릭');
   });
+  $('#sns-share').click(function() {
+    console.log('SNS 공유하기 클릭');
+  });
+  $('#show-map').click(function() {
+    console.log('지도보기 클릭');
+  });
 
   $('#upload-btn').click(function() {
     console.log('등록하기 버튼 클릭');
@@ -390,11 +402,11 @@ $(document).ready(() => {
           success: function (res) {
             $('#contents-list').children().remove();
             for (let i = 0; i < res.num; i++) {
-              ({id, res_name, rating, comment, res_id, res_mood, res_region, res_subway, res_food_name, res_food_type, res_price, created_at, updated_at} = res.message[i]);
+              ({id, res_name, rating, comment, res_id, res_mood, res_region, res_subway, res_food_name, res_food_type, res_price, res_image, created_at, updated_at} = res.message[i]);
               $('#contents-list').append(`<div id="content-${id}" class="food-content" data-toggle="modal" data-target="#content-detail-${id}">
                 <div class="food-title">${i+1}. ${res_name}</div>
                 <div class="food-info">
-                  <div class="food-thumbnail" style="background-image: url('/images/main-09.png');"></div>
+                  <div class="food-thumbnail" style="background-image: url('${(res_image)?res_image:'/images/main-09.png'}');"></div>
                   <div class="food-summary">
                     <div class="food-score">
                       <img src="/images/${rating}점.png" id="content-${id}-score">
@@ -445,7 +457,7 @@ $(document).ready(() => {
                         </div>
                         <div class="modal-res-detail-info">
                           <img src="/images/inf-map.png" class="function-icon">
-                          <div class="modal-comment-left">지도보기</div>
+                          <div class="modal-comment-left" id="show-map">지도보기</div>
                         </div>
                         <div class="modal-res-detail-info">
                           <img src="/images/inf-sns.png" class="function-icon">
