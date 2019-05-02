@@ -3,7 +3,7 @@ function selectSortBy(i) {
     const user_id = sessionStorage.getItem('name');
     const region = '서울';
     const subway = $('.place-detail')[0].placeholder;
-    const sortby = $('#order-list button')[i].innerHTML;
+    const sortby = $('#order-list button')[i].innerHTML.replace(/ /gi, '');
 
     $('.order')[0].placeholder = sortby;
     console.log(sortby, subway);
