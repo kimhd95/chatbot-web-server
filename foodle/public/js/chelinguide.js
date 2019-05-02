@@ -23,11 +23,11 @@ function selectSortBy(i) {
         $('#contents-list').children().remove();
         console.log(res.message);
         for (let i = 0; i < res.num; i++) {
-          ({id, res_name, rating, comment, res_id, res_mood, res_region, res_subway, res_food_name, res_food_type, res_price, res_image, created_at, updated_at} = res.message[i]);
+          ({id, res_name, rating, comment, res_id, res_mood, res_region, res_subway, res_food_name, res_food_type, res_price, res_image1, res_image2, res_image3, res_image4, res_image5, created_at, updated_at} = res.message[i]);
           $('#contents-list').append(`<div id="content-${id}" class="food-content" data-toggle="modal" data-target="#content-detail-${id}">
             <div class="food-title">${i+1}. ${res_name}</div>
             <div class="food-info">
-              <div class="food-thumbnail" style="background-image: url('${(res_image)?res_image:'/images/main-09.png'}');"></div>
+              <div class="food-thumbnail" style="background-image: url('${(res_image1)?res_image1:'/images/main-09.png'}');"></div>
               <div class="food-summary">
                 <div class="food-score">
                   <img src="/images/${rating}점.png" id="content-${id}-score">
@@ -121,11 +121,11 @@ function sortBySubway(i) {
         $('#contents-list').children().remove();
         console.log(res.message);
         for (let i = 0; i < res.num; i++) {
-          ({id, res_name, rating, comment, res_id, res_mood, res_region, res_subway, res_food_name, res_food_type, res_price, res_image, created_at, updated_at} = res.message[i]);
+          ({id, res_name, rating, comment, res_id, res_mood, res_region, res_subway, res_food_name, res_food_type, res_price, res_image1, res_image2, res_image3, res_image4, res_image5, created_at, updated_at} = res.message[i]);
           $('#contents-list').append(`<div id="content-${id}" class="food-content" data-toggle="modal" data-target="#content-detail-${id}">
             <div class="food-title">${i+1}. ${res_name}</div>
             <div class="food-info">
-              <div class="food-thumbnail" style="background-image: url('${(res_image)?res_image:'/images/main-09.png'}');"></div>
+              <div class="food-thumbnail" style="background-image: url('${(res_image1)?res_image1:'/images/main-09.png'}');"></div>
               <div class="food-summary">
                 <div class="food-score">
                   <img src="/images/${rating}점.png" id="content-${id}-score">
@@ -235,11 +235,11 @@ $(document).ready(() => {
 
 
       for (let i = 0; i < res.num; i++) {
-        const {id, res_name, rating, comment, res_id, res_mood, res_region, res_subway, res_food_name, res_food_type, res_price, res_image, created_at, updated_at} = res.message[i]
+        const {id, res_name, rating, comment, res_id, res_mood, res_region, res_subway, res_food_name, res_food_type, res_price, res_image1, res_image2, res_image3, res_image4, res_image5, created_at, updated_at} = res.message[i]
         $('#contents-list').append(`<div id="content-${id}" class="food-content" data-toggle="modal" data-target="#content-detail-${id}">
           <div class="food-title">${i+1}. ${res_name}</div>
           <div class="food-info">
-            <div class="food-thumbnail" style="background-image: url('${(res_image)?res_image:'/images/main-09.png'}');"></div>
+            <div class="food-thumbnail" style="background-image: url('${(res_image1)?res_image1:'/images/main-09.png'}');"></div>
             <div class="food-summary">
               <div class="food-score">
                 <img src="/images/${rating}점.png" id="content-${id}-score">
@@ -402,11 +402,11 @@ $(document).ready(() => {
           success: function (res) {
             $('#contents-list').children().remove();
             for (let i = 0; i < res.num; i++) {
-              ({id, res_name, rating, comment, res_id, res_mood, res_region, res_subway, res_food_name, res_food_type, res_price, res_image, created_at, updated_at} = res.message[i]);
+              ({id, res_name, rating, comment, res_id, res_mood, res_region, res_subway, res_food_name, res_food_type, res_price, res_image1, res_image2, res_image3, res_image4, res_image5, created_at, updated_at} = res.message[i]);
               $('#contents-list').append(`<div id="content-${id}" class="food-content" data-toggle="modal" data-target="#content-detail-${id}">
                 <div class="food-title">${i+1}. ${res_name}</div>
                 <div class="food-info">
-                  <div class="food-thumbnail" style="background-image: url('${(res_image)?res_image:'/images/main-09.png'}');"></div>
+                  <div class="food-thumbnail" style="background-image: url('${(res_image1)?res_image1:'/images/main-09.png'}');"></div>
                   <div class="food-summary">
                     <div class="food-score">
                       <img src="/images/${rating}점.png" id="content-${id}-score">
