@@ -22,14 +22,34 @@ function scoreFunction() {
 $(document).ready(() => {
   var socket = io();
   var swiper = new Swiper('.swiper-container');
+  const user_id = sessionStorage.getItem('name');
   let name;
-  if (sessionStorage.getItem('name') == '비회원' || sessionStorage.getItem('name') == null) {
+  if (!user_id || user_id === '비회원') {
     name = '';
   } else {
     name = sessionStorage.getItem('name').substr(1);
   }
   document.getElementById('contents-bar').textContent = `${name}슐랭 가이드`;
 
+  // 기록 불러옴
+  const info = {
+    url: "/api/v1/users/get_chelinguide_list",
+    method: 'POST',
+    body: {
+      user_id,
+      region: '서울',
+      subway: '강남역',
+      sortby: 'rating',
+    },
+    success: function (res) {
+      console.log(res.num, res.message);
+    },
+    error: function (e) {
+      console.log(e);
+    }
+  };
+
+  sendReq(info);
   // getChelinguideList API 호출 후 content-list 채우기
 
 
@@ -85,7 +105,7 @@ $(document).ready(() => {
   $('#upload-btn').click(function() {
     console.log('등록하기 버튼 클릭');
 
-    const user_id = sessionStorage.getItem('name');
+
     const subway = $('#modal-subway-right')[0].value;
     const res_name = $('#res-name')[0].value;
     const rating = $('#modal-score-select')[0].value;
@@ -105,12 +125,11 @@ $(document).ready(() => {
         rating,
         comment,
       },
-      success: function(res) {
+      success: function (res) {
         console.log("success");
       },
       error: function (e) {
-        console.log("fail");
-        console.log(e);
+        alert("해당 식당 없음.");
       }
     };
 
