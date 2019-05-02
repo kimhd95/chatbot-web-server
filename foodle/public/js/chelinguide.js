@@ -1,16 +1,198 @@
 let sort, subway;
 function selectSortBy(i) {
-    var order = $('.order input').val();
-    sort = $('#order-list button')[i].innerHTML;
-    $('.order')[0].value = sort;
-    // 정렬해주는 api 필요
+    const user_id = sessionStorage.getItem('name');
+    const region = '서울';
+    const subway = $('.place-detail')[0].placeholder;
+    const sortby = $('#order-list button')[i].innerHTML;
+
+    $('.order')[0].placeholder = sortby;
+    console.log(sortby, subway);
+    const info = {
+      url: "/api/v1/users/get_chelinguide_list",
+      method: 'POST',
+      body: {
+        user_id,
+        region,
+        subway,
+        sortby,
+      },
+      success: function (res) {
+        $('#contents-list').children().remove();
+        console.log(res.message);
+        for (let i = 0; i < res.num; i++) {
+          ({id, res_name, rating, comment, res_id, res_mood, res_region, res_subway, res_food_name, res_food_type, res_price, created_at, updated_at} = res.message[i]);
+          $('#contents-list').append(`<div id="content-${id}" class="food-content" data-toggle="modal" data-target="#content-detail-${id}">
+            <div class="food-title">${i+1}. ${res_name}</div>
+            <div class="food-info">
+              <div class="food-thumbnail" style="background-image: url('/images/main-09.png');"></div>
+              <div class="food-summary">
+                <div class="food-score">
+                  <img src="/images/${rating}점.png" id="content-${id}-score">
+                </div>
+                <div class="food-sentence">
+                  <div class="food-eval">한줄평</div>
+                  <div class="food-text">${comment}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="content-detail-${id}" tabindex="-1" role="dialog" aria-labelledby="contentDetail" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="content-detail-res-name">${res_name}</h5>
+                  </div>
+                  <div class="modal-body">
+                    <div class="modal-res-image-layout">
+                      <div class="modal-res-image-layout-left">
+                        <img src="images/inf-swipe-left.png" class='swiper-btn'>
+                      </div>
+                      <div class="modal-res-image-layout-center">
+                        <img src="images/main-09.png" class="res-img">
+                      </div>
+                      <div class="modal-res-image-layout-right">
+                        <img src="images/inf-swipe-right.png" class='swiper-btn'>
+                      </div>
+                    </div>
+                    <div class="modal-res-score-layout">
+                      <img src="/images/${rating}점.png" class="score-icon">
+                    </div>
+                    <div class="modal-res-foodtype-layout">${res_food_type} / ${res_food_name}</div>
+                    <div class="modal-res-detail-info-wide">
+                      <img src="/images/inf-comment.png" class="function-icon">
+                      <div class="modal-comment-left">한줄평</div>
+                      <div class="modal-comment-right">${comment}</div>
+                    </div>
+                    <div class="modal-res-detail-info">
+                      <img src="/images/inf-mood.png" class="function-icon">
+                      <div class="modal-comment-left">분위기</div>
+                      <div class="modal-comment-right">${res_mood}</div>
+                    </div>
+                    <div class="modal-res-detail-info">
+                      <img src="/images/inf-price.png" class="function-icon">
+                      <div class="modal-comment-left">1인가격</div>
+                      <div class="modal-comment-right">${res_price.replace(/,/gi, '~')}만원</div>
+                    </div>
+                    <div class="modal-res-detail-info">
+                      <img src="/images/inf-map.png" class="function-icon">
+                      <div class="modal-comment-left">지도보기</div>
+                    </div>
+                    <div class="modal-res-detail-info">
+                      <img src="/images/inf-sns.png" class="function-icon">
+                      <div class="modal-comment-left">SNS 공유하기</div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <div class="modal-detail-footer-btn"><span class="gray-btn">수정하기</span></div>
+                  </div>
+              </div>
+            </div>
+          </div>`)
+        }
+      },
+      error: function (e) {
+        console.log(e);
+      }
+    };
+    sendReq(info);
 }
 
 function sortBySubway(i) {
-    var order = $('.place-detail input').val();
-    subway = $('#place-list button')[i].innerHTML;
-    $('.place-detail')[0].value = subway;
-    // 정렬해주는 api 필요
+    const user_id = sessionStorage.getItem('name');
+    const region = '서울';
+    const subway = $('#place-list button')[i].innerHTML.replace(/ /gi, '');
+    const sortby = $('.order')[0].placeholder;
+
+    $('.place-detail')[0].placeholder = subway;
+    console.log(sortby, subway);
+    const info = {
+      url: "/api/v1/users/get_chelinguide_list",
+      method: 'POST',
+      body: {
+        user_id,
+        region,
+        subway,
+        sortby,
+      },
+      success: function (res) {
+        $('#contents-list').children().remove();
+        console.log(res.message);
+        for (let i = 0; i < res.num; i++) {
+          ({id, res_name, rating, comment, res_id, res_mood, res_region, res_subway, res_food_name, res_food_type, res_price, created_at, updated_at} = res.message[i]);
+          $('#contents-list').append(`<div id="content-${id}" class="food-content" data-toggle="modal" data-target="#content-detail-${id}">
+            <div class="food-title">${i+1}. ${res_name}</div>
+            <div class="food-info">
+              <div class="food-thumbnail" style="background-image: url('/images/main-09.png');"></div>
+              <div class="food-summary">
+                <div class="food-score">
+                  <img src="/images/${rating}점.png" id="content-${id}-score">
+                </div>
+                <div class="food-sentence">
+                  <div class="food-eval">한줄평</div>
+                  <div class="food-text">${comment}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="content-detail-${id}" tabindex="-1" role="dialog" aria-labelledby="contentDetail" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="content-detail-res-name">${res_name}</h5>
+                  </div>
+                  <div class="modal-body">
+                    <div class="modal-res-image-layout">
+                      <div class="modal-res-image-layout-left">
+                        <img src="images/inf-swipe-left.png" class='swiper-btn'>
+                      </div>
+                      <div class="modal-res-image-layout-center">
+                        <img src="images/main-09.png" class="res-img">
+                      </div>
+                      <div class="modal-res-image-layout-right">
+                        <img src="images/inf-swipe-right.png" class='swiper-btn'>
+                      </div>
+                    </div>
+                    <div class="modal-res-score-layout">
+                      <img src="/images/${rating}점.png" class="score-icon">
+                    </div>
+                    <div class="modal-res-foodtype-layout">${res_food_type} / ${res_food_name}</div>
+                    <div class="modal-res-detail-info-wide">
+                      <img src="/images/inf-comment.png" class="function-icon">
+                      <div class="modal-comment-left">한줄평</div>
+                      <div class="modal-comment-right">${comment}</div>
+                    </div>
+                    <div class="modal-res-detail-info">
+                      <img src="/images/inf-mood.png" class="function-icon">
+                      <div class="modal-comment-left">분위기</div>
+                      <div class="modal-comment-right">${res_mood}</div>
+                    </div>
+                    <div class="modal-res-detail-info">
+                      <img src="/images/inf-price.png" class="function-icon">
+                      <div class="modal-comment-left">1인가격</div>
+                      <div class="modal-comment-right">${res_price.replace(/,/gi, '~')}만원</div>
+                    </div>
+                    <div class="modal-res-detail-info">
+                      <img src="/images/inf-map.png" class="function-icon">
+                      <div class="modal-comment-left">지도보기</div>
+                    </div>
+                    <div class="modal-res-detail-info">
+                      <img src="/images/inf-sns.png" class="function-icon">
+                      <div class="modal-comment-left">SNS 공유하기</div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <div class="modal-detail-footer-btn"><span class="gray-btn">수정하기</span></div>
+                  </div>
+              </div>
+            </div>
+          </div>`)
+        }
+      },
+      error: function (e) {
+        console.log(e);
+      }
+    };
+    sendReq(info);
 }
 
 function scoreFunction() {
@@ -32,7 +214,7 @@ $(document).ready(() => {
   document.getElementById('contents-bar').textContent = `${name}슐랭 가이드`;
 
   // 기록 불러옴
-  const info = {
+  let info = {
     url: "/api/v1/users/get_chelinguide_list",
     method: 'POST',
     body: {
@@ -42,15 +224,86 @@ $(document).ready(() => {
       sortby: 'rating',
     },
     success: function (res) {
-      console.log(res.num, res.message);
+      console.log(res.message);
+      for (let i = 0; i < res.num; i++) {
+        const {id, res_name, rating, comment, res_id, res_mood, res_region, res_subway, res_food_name, res_food_type, res_price, created_at, updated_at} = res.message[i]
+        $('#contents-list').append(`<div id="content-${id}" class="food-content" data-toggle="modal" data-target="#content-detail-${id}">
+          <div class="food-title">${i+1}. ${res_name}</div>
+          <div class="food-info">
+            <div class="food-thumbnail" style="background-image: url('/images/main-09.png');"></div>
+            <div class="food-summary">
+              <div class="food-score">
+                <img src="/images/${rating}점.png" id="content-${id}-score">
+              </div>
+              <div class="food-sentence">
+                <div class="food-eval">한줄평</div>
+                <div class="food-text">${comment}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="content-detail-${id}" tabindex="-1" role="dialog" aria-labelledby="contentDetail" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="content-detail-res-name">${res_name}</h5>
+                </div>
+                <div class="modal-body">
+                  <div class="modal-res-image-layout">
+                    <div class="modal-res-image-layout-left">
+                      <img src="images/inf-swipe-left.png" class='swiper-btn'>
+                    </div>
+                    <div class="modal-res-image-layout-center">
+                      <img src="images/main-09.png" class="res-img">
+                    </div>
+                    <div class="modal-res-image-layout-right">
+                      <img src="images/inf-swipe-right.png" class='swiper-btn'>
+                    </div>
+                  </div>
+
+                  <div class="modal-res-score-layout">
+                    <img src="/images/${rating}점.png" class="score-icon">
+                  </div>
+
+                  <div class="modal-res-foodtype-layout">${res_food_type} / ${res_food_name}</div>
+
+                  <div class="modal-res-detail-info-wide">
+                    <img src="/images/inf-comment.png" class="function-icon">
+                    <div class="modal-comment-left">한줄평</div>
+                    <div class="modal-comment-right">${comment}</div>
+                  </div>
+                  <div class="modal-res-detail-info">
+                    <img src="/images/inf-mood.png" class="function-icon">
+                    <div class="modal-comment-left">분위기</div>
+                    <div class="modal-comment-right">${res_mood}</div>
+                  </div>
+                  <div class="modal-res-detail-info">
+                    <img src="/images/inf-price.png" class="function-icon">
+                    <div class="modal-comment-left">1인가격</div>
+                    <div class="modal-comment-right">${res_price.replace(/,/gi, '~')}만원</div>
+                  </div>
+                  <div class="modal-res-detail-info">
+                    <img src="/images/inf-map.png" class="function-icon">
+                    <div class="modal-comment-left">지도보기</div>
+                  </div>
+                  <div class="modal-res-detail-info">
+                    <img src="/images/inf-sns.png" class="function-icon">
+                    <div class="modal-comment-left">SNS 공유하기</div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <div class="modal-detail-footer-btn"><span class="gray-btn">수정하기</span></div>
+                </div>
+            </div>
+          </div>
+        </div>`)
+      }
     },
     error: function (e) {
       console.log(e);
     }
   };
-
   sendReq(info);
-  // getChelinguideList API 호출 후 content-list 채우기
 
 
   $("#back-to-lobby").click(function(){
@@ -114,7 +367,7 @@ $(document).ready(() => {
     console.log(user_id, subway, res_name, rating, comment, region);
 
     // api call필요
-    const info = {
+    info = {
       url: "/api/v1/users/add_chelinguide_item",
       method: 'POST',
       body: {
