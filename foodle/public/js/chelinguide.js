@@ -54,17 +54,11 @@ function appendContent(i, id, res_name, rating, comment, res_mood, res_food_name
                 <img src="images/inf-swipe-left.png" class="swiper-btn" onclick="swipePrev($(this));">
               </div>
               <div class="modal-res-image-layout-center">
-              ${(res_images[1]&&res_images[4])
-                ? `<img src="${(res_images[0]) ? res_images[0] : NO_IMAGE_SRC}" class="res-img" style="display: inline;">
-                <img src="${(res_images[1]) ? res_images[1] : NO_IMAGE_SRC}" class="res-img" style="display: none;">
-                <img src="${(res_images[2]) ? res_images[2] : NO_IMAGE_SRC}" class="res-img" style="display: none;">
-                <img src="${(res_images[3]) ? res_images[3] : NO_IMAGE_SRC}" class="res-img" style="display: none;">
-                <img src="${(res_images[4]) ? res_images[4] : NO_IMAGE_SRC}" class="res-img" style="display: none;">`
-                : `<img src="${(res_images[0]) ? res_images[0] : NO_IMAGE_SRC}" class="res-img" style="display: inline;">
-                <img src="${(res_images[0]) ? res_images[0] : NO_IMAGE_SRC}" class="res-img" style="display: none;">
-                <img src="${(res_images[0]) ? res_images[0] : NO_IMAGE_SRC}" class="res-img" style="display: none;">
-                <img src="${(res_images[0]) ? res_images[0] : NO_IMAGE_SRC}" class="res-img" style="display: none;">
-                <img src="${(res_images[0]) ? res_images[0] : NO_IMAGE_SRC}" class="res-img" style="display: none;">`}
+                <img src="${(res_images[0]) ? res_images[0] : NO_IMAGE_SRC}" class="res-img" style="display: inline;">
+                ${res_images[1] ? `<img src="${res_images[1]}" class="res-img" style="display: none;">` : `<img src="${(res_images[0]) ? res_images[0] : NO_IMAGE_SRC}" class="res-img" style="display: none;">`}
+                ${res_images[2] ? `<img src="${res_images[2]}" class="res-img" style="display: none;">` : ``}
+                ${res_images[3] ? `<img src="${res_images[3]}" class="res-img" style="display: none;">` : ``}
+                ${res_images[4] ? `<img src="${res_images[4]}" class="res-img" style="display: none;">` : ``}
               </div>
               <div class="modal-res-image-layout-right">
                 <img src="images/inf-swipe-right.png" class='swiper-btn' onclick="swipeNext($(this));">
