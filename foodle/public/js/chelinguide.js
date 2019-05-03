@@ -4,22 +4,30 @@ const DEFAULT_SORTBY = '별점순';
 const NO_IMAGE_SRC = '/images/main-09.png';
 
 function swipePrev(selector) {
-  if (selector.parent().next().children('.res-img[style*=inline]:first').prev().attr('style')) {
-    selector.parent().next().children('.res-img[style*=inline]:first').prev().attr('style', 'display: inline;');
-    selector.parent().next().children('.res-img[style*=inline]:last').attr('style', 'display: none;');
+  const imgParent = selector.parent().next();
+  const uiText = selector.parent().parent().next('.modal-res-img-swiper-ui').text();
+  if (imgParent.children('.res-img[style*=inline]:first').prev().attr('style')) {
+    imgParent.children('.res-img[style*=inline]:first').prev().attr('style', 'display: inline;');
+    imgParent.children('.res-img[style*=inline]:last').attr('style', 'display: none;');
   } else {
-    selector.parent().next().children('.res-img:last').attr('style', 'display: inline;');
-    selector.parent().next().children('.res-img[style*=inline]:first').attr('style', 'display: none;');
+    imgParent.children('.res-img:last').attr('style', 'display: inline;');
+    imgParent.children('.res-img[style*=inline]:first').attr('style', 'display: none;');
   }
+  const idx = imgParent.children('.res-img[style*=inline]:first').index() + 1;
+  selector.parent().parent().next('.modal-res-img-swiper-ui').text(idx + uiText.slice(1));
 }
 function swipeNext(selector) {
-  if (selector.parent().prev().children('.res-img[style*=inline]:first').next().attr('style')) {
-    selector.parent().prev().children('.res-img[style*=inline]:first').next().attr('style', 'display: inline;');
-    selector.parent().prev().children('.res-img[style*=inline]:first').attr('style', 'display: none;');
+  const imgParent = selector.parent().prev();
+  const uiText = selector.parent().parent().next('.modal-res-img-swiper-ui').text();
+  if (imgParent.children('.res-img[style*=inline]:first').next().attr('style')) {
+    imgParent.children('.res-img[style*=inline]:first').next().attr('style', 'display: inline;');
+    imgParent.children('.res-img[style*=inline]:first').attr('style', 'display: none;');
   } else {
-    selector.parent().prev().children('.res-img:first').attr('style', 'display: inline;');
-    selector.parent().prev().children('.res-img[style*=inline]:last').attr('style', 'display: none;');
+    imgParent.children('.res-img:first').attr('style', 'display: inline;');
+    imgParent.children('.res-img[style*=inline]:last').attr('style', 'display: none;');
   }
+  const idx = imgParent.children('.res-img[style*=inline]:last').index() + 1;
+  selector.parent().parent().next('.modal-res-img-swiper-ui').text(idx + uiText.slice(1));
 }
 
 function appendContent(i, id, res_name, rating, comment, res_mood, res_food_name, res_food_type, res_price, ...res_images) {
@@ -64,6 +72,7 @@ function appendContent(i, id, res_name, rating, comment, res_mood, res_food_name
                 <img src="images/inf-swipe-right.png" class='swiper-btn' onclick="swipeNext($(this));">
               </div>
             </div>
+            <div class="modal-res-img-swiper-ui">1/${res_images.length}</div>
             <div class="modal-res-score-layout">
               <img src="/images/${rating}점.png" class="score-icon">
             </div>

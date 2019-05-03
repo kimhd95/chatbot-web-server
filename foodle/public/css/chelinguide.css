@@ -531,6 +531,15 @@ input[type=checkbox]:checked + label:before {
   margin-top: 3vh;
   margin-bottom: 3vh;
 }
+.modal-body .modal-res-img-swiper-ui {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 3vh;
+  justify-content: center;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+}
 .modal-body .modal-res-foodtype-layout {
   display: flex;
   flex-direction: row;
