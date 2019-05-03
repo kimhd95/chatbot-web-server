@@ -1,8 +1,28 @@
 const DEFAULT_REGION = '서울';
 const DEFAULT_SUBWAY = '강남역';
 const DEFAULT_SORTBY = '별점순';
+const NO_IMAGE_SRC = '/images/main-09.png';
 
-function appendContent(i, id, res_name, rating, comment, res_mood, res_food_name, res_food_type, res_price, res_image1, res_image2, res_image3, res_image4, res_image5) {
+function swipePrev(selector) {
+  if (selector.parent().next().children('.res-img[style*=inline]:first').prev().attr('style')) {
+    selector.parent().next().children('.res-img[style*=inline]:first').prev().attr('style', 'display: inline;');
+    selector.parent().next().children('.res-img[style*=inline]:last').attr('style', 'display: none;');
+  } else {
+    selector.parent().next().children('.res-img:last').attr('style', 'display: inline;');
+    selector.parent().next().children('.res-img[style*=inline]:first').attr('style', 'display: none;');
+  }
+}
+function swipeNext(selector) {
+  if (selector.parent().prev().children('.res-img[style*=inline]:first').next().attr('style')) {
+    selector.parent().prev().children('.res-img[style*=inline]:first').next().attr('style', 'display: inline;');
+    selector.parent().prev().children('.res-img[style*=inline]:first').attr('style', 'display: none;');
+  } else {
+    selector.parent().prev().children('.res-img:first').attr('style', 'display: inline;');
+    selector.parent().prev().children('.res-img[style*=inline]:last').attr('style', 'display: none;');
+  }
+}
+
+function appendContent(i, id, res_name, rating, comment, res_mood, res_food_name, res_food_type, res_price, ...res_images) {
   if (res_price && res_price.includes(',')) {
     res_price = res_price.replace(/ /gi, '');
     res_price = res_price[0] + '~' + res_price[res_price.length-1];
@@ -10,7 +30,7 @@ function appendContent(i, id, res_name, rating, comment, res_mood, res_food_name
   $('#contents-list').append(`<div id="content-${id}" class="food-content" data-toggle="modal" data-target="#content-detail-${id}">
     <div class="food-title">${i+1}. ${res_name}</div>
     <div class="food-info">
-      <div class="food-thumbnail" style="background-image: url('${(res_image1)?res_image1:'/images/main-09.png'}');"></div>
+      <div class="food-thumbnail" style="background-image: url('${(res_images[0]) ? res_images[0] : NO_IMAGE_SRC}');"></div>
       <div class="food-summary">
         <div class="food-score">
           <img src="/images/${rating}점.png" id="content-${id}-score">
@@ -31,13 +51,17 @@ function appendContent(i, id, res_name, rating, comment, res_mood, res_food_name
           <div class="modal-body">
             <div class="modal-res-image-layout">
               <div class="modal-res-image-layout-left">
-                <img src="images/inf-swipe-left.png" class='swiper-btn'>
+                <img src="images/inf-swipe-left.png" class="swiper-btn" onclick="swipePrev($(this));">
               </div>
               <div class="modal-res-image-layout-center">
-                <img src="images/main-09.png" class="res-img">
+                <img src="${(res_images[0]) ? res_images[0] : NO_IMAGE_SRC}" class="res-img" style="display: inline;">
+                <img src="${(res_images[1]) ? res_images[1] : NO_IMAGE_SRC}" class="res-img" style="display: none;">
+                <img src="${(res_images[2]) ? res_images[2] : NO_IMAGE_SRC}" class="res-img" style="display: none;">
+                <img src="${(res_images[3]) ? res_images[3] : NO_IMAGE_SRC}" class="res-img" style="display: none;">
+                <img src="${(res_images[4]) ? res_images[4] : NO_IMAGE_SRC}" class="res-img" style="display: none;">
               </div>
               <div class="modal-res-image-layout-right">
-                <img src="images/inf-swipe-right.png" class='swiper-btn'>
+                <img src="images/inf-swipe-right.png" class='swiper-btn' onclick="swipeNext($(this));">
               </div>
             </div>
             <div class="modal-res-score-layout">
