@@ -849,6 +849,7 @@ input[type=checkbox]:checked + label:before {
   flex-direction: row;
   margin-left: 6%;
   margin-bottom: 3vh;
+  font-size: 20px;
 }
 
 .modal-body .modal-mood .modal-mood-item3 {
@@ -891,6 +892,41 @@ input[type=checkbox]:checked + label:before {
   /* align-content: space-evenly; */
   align-content: flex-start;
   font-size: 20px;
+}
+
+.modal-body .modal-price {
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+  height: 50vh;
+}
+
+.modal-body .modal-price .modal-price-title {
+  display: flex;
+  flex-direction: row;
+  margin-left: 6%;
+  margin-bottom: 3vh;
+  font-size: 20px;
+  width: 25%;
+  height: 100%;
+}
+
+.modal-body .modal-price .modal-price-content {
+  display: flex;
+  flex-direction: column;
+  margin-left: 6%;
+  margin-bottom: 3vh;
+  font-size: 20px;
+  width: 75%;
+  height: 100%;
+}
+
+.modal-body .modal-price .modal-price-content .price-row {
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+  /* width: 75%;
+  height: 100%; */
 }
 
 
