@@ -77,6 +77,8 @@
             </div>
             <img src="/images/main-05.png" class="function-icon" id="add-function-icon">
 
+
+            <!-- 일반 추가하기 -->
             <div class="modal fade" id="plus-list" tabindex="-1" role="dialog" aria-labelledby="plusList" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -87,19 +89,8 @@
                       </button> -->
                     </div>
                     <div class="modal-body">
-                      <!-- <form>
-                        <div class="form-group">
-                          <label for="recipient-name" class="col-form-label">Recipient:</label>
-                          <input type="text" class="form-control" id="recipient-name">
-                        </div>
-                        <div class="form-group">
-                          <label for="message-text" class="col-form-label">Message:</label>
-                          <textarea class="form-control" id="message-text"></textarea>
-                        </div>
-                      </form> -->
                       <div class="modal-subway">
                         <div class="modal-subway-left">서울</div>
-                        <!-- <div class="modal-subway-right">강남역</div> -->
                         <select id="modal-subway-right" name="modal-subway-right" class="modal-subway-right">
                           <option value="">역 선택</option>
                           <option value="강남역">강남역</option>
@@ -157,6 +148,49 @@
                 </div>
               </div>
             </div>
+
+            <!-- 더 자세히 추가하기 -->
+            <div class="modal fade" id="detail-plus-list" tabindex="-1" role="dialog" aria-labelledby="detailPlusList" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">자세히 추가하기</h5>
+                    </div>
+                    <div class="modal-body">
+                      <div class="modal-picture">
+                        <div class="modal-picture-left">
+                          <img id="picture-image" src="/images/add8.png">
+                        </div>
+                        <div class="modal-picture-right">직접 찍은 사진을 등록해주세요!</div>
+                      </div>
+                      <div class="modal-mood">
+                        <div class="modal-mood-title">분위기</div>
+                        <div class="modal-mood-item">
+                          <div class="item a">데이트</div>
+                          <div class="item b">직장인</div>
+                          <div class="item c">친구</div>
+                          <div class="item d">고급진</div>
+                          <div class="item e">허름한</div>
+                          <div class="item f">깔끔한</div>
+                          <div class="item g">인테리어가 독특한</div>
+                          <!-- <div class="item h">조용한</div> -->
+                          <!-- <div class="item i">시끄러운</div> -->
+                          <!-- <div class="item j">친절한</div> -->
+                          <!-- <div class="item k">불친절한</div> -->
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <div class="final-btn">
+                        <div id="upload-btn" class="upload-btn" data-dismiss="modal">등록</div>
+                        <div id="cancel-btn" class="cancel-btn" data-dismiss="modal">취소</div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+
           </div>
 
           <div id="contents-list" class="contentlist">

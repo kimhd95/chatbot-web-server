@@ -215,6 +215,14 @@ $(document).ready(() => {
 
   $('#add-function-button, #add-function-icon').click(function() {
     console.log('추가하기 버튼 클릭');
+    $('#plus-list').modal('show')
+  });
+
+  $('.modal-comment-detail').click(function() {
+    console.log('자세히 추가하기 버튼 클릭');
+    $('#plus-list').modal('hide')
+    $('#detail-plus-list').modal('show')
+
   });
 
   $('#sns-share').click(function() {

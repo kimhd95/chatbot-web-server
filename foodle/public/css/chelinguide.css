@@ -439,7 +439,13 @@ input[type=checkbox]:checked + label:before {
 }
 
 .modal-title {
+  /* display: flex; */
+  /* flex-direction: row; */
   margin: 0 auto;
+  padding-bottom: 2vh;
+  font-size: 3vh;
+  /* justify-content: center;
+  align-items: center; */
 }
 
 .modal-body {
@@ -447,6 +453,14 @@ input[type=checkbox]:checked + label:before {
   overflow-y: scroll;
   height: 70vh;
 }
+
+/* ::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: url('http://cdn.css-tricks.com/wp-content/themes/CSS-Tricks-10/images/header-demos.jpg');
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+} */
+
 .modal-body .modal-res-image-layout {
   display: flex;
   flex-direction: row;
@@ -612,7 +626,7 @@ input[type=checkbox]:checked + label:before {
   height: 4vh;
   align-items: flex-start;
   /* justify-content: left; */
-  margin-bottom: 1vh;
+  margin-bottom: 5vh;
 }
 
 .modal-body .modal-subway .modal-subway-left {
@@ -640,7 +654,7 @@ input[type=checkbox]:checked + label:before {
   height: 4vh;
   align-items: flex-start;
   justify-content: left;
-  margin-bottom: 1vh;
+  margin-bottom: 5vh;
 }
 
 .modal-body .modal-resname .modal-resname-left {
@@ -668,7 +682,7 @@ input[type=checkbox]:checked + label:before {
   height: 4vh;
   align-items: flex-start;
   justify-content: left;
-  margin-bottom: 1vh;
+  margin-bottom: 5vh;
 }
 
 .starR1{
@@ -735,7 +749,7 @@ input[type=checkbox]:checked + label:before {
   height: 10vh;
   /* align-items: flex-start; */
   /* justify-content: left; */
-  margin-bottom: 3vh;
+  margin-bottom: 8vh;
 }
 
 .modal-body .modal-comment .modal-comment-left {
@@ -762,7 +776,7 @@ input[type=checkbox]:checked + label:before {
   height: 7vh;
   align-items: center;
   justify-content: center;
-  font-size: 2.3vh;
+  font-size: 3vh;
   /* border:none; */
 }
 
@@ -781,6 +795,103 @@ input[type=checkbox]:checked + label:before {
   /* border: none; */
   /* border-bottom: 2px solid #61451b; */
 }
+
+.modal-body .modal-picture {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 30vh;
+  align-items: flex-start;
+  /* justify-content: left; */
+  margin-bottom: 5vh;
+}
+
+.modal-body .modal-picture .modal-picture-left {
+  display: flex;
+  flex-direction: row;
+  /* align-items: center; */
+  /* width: 50%; */
+  height: 30vh;
+  width: 50%;
+  margin-left: 5%;
+  margin-right: 3vw;
+}
+
+.modal-body .modal-picture .modal-picture-left img {
+  width: 100%;
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-end; */
+  /* align-items: flex-end; */
+}
+
+.modal-body .modal-picture .modal-picture-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 30vh;
+  width: 50%;
+  font-size: 2.7vh;
+  /* justify-content: flex-start; */
+  text-align: left;
+  color: #7f5607;
+}
+
+.modal-body .modal-mood {
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+}
+
+.modal-body .modal-mood .modal-mood-title {
+  display: flex;
+  flex-direction: row;
+  margin-left: 6%;
+  margin-bottom: 3vh;
+}
+
+.modal-body .modal-mood .modal-mood-item {
+  display: grid;
+  /* height: 50vh; */
+  /* grid-gap: 20px; */
+  grid-template-columns: 120px 120px 120px;
+  text-align: center;
+  justify-content: space-around;
+  /* justify-content: flex-start; */
+  /* align-content: space-evenly; */
+  align-content: flex-start;
+  font-size: 20px;
+}
+
+.a,
+.b,
+.c,
+.d,
+.e,
+.f {
+  display:flex;
+  flex-direction: column;
+  background-image: url('/images/add11.png');
+  background-size: 120px;
+  justify-content: space-around;
+  text-align: center;
+  width: 120px;
+  height: 60px;
+}
+
+
+.g {
+  display:flex;
+  flex-direction: column;
+  background-image: url('/images/add11.png');
+  background-size: 360px;
+  justify-content: space-around;
+  text-align: center;
+  width: 100%;
+  height: 60px;
+}
+
 
 .modal-footer{
   padding: 0;
