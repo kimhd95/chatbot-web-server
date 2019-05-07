@@ -228,11 +228,15 @@ $(document).ready(() => {
 
   $('#upload-btn').click(function() {
     console.log('등록하기 버튼 클릭');
-    let subway = $('#modal-subway-right')[0].value;
-    let res_name = $('#res-name')[0].value;
-    let rating = $('#modal-score-select')[0].value;
-    let comment = $('#comment')[0].value;
-    let region = DEFAULT_REGION;
+    const subway = $('#modal-subway-right')[0].value;
+    const res_name = $('#res-name')[0].value;
+    // let rating = $('#modal-score-select')[0].value;
+    const comment = $('#comment')[0].value;
+    const region = DEFAULT_REGION;
+
+    const rating = $(".starRev").children(".starR1.on, .starR2.on").length * 0.5;
+    console.log(rating);
+
     const addContentReq = {
       url: "/api/v1/users/add_chelinguide_item",
       method: 'POST',
@@ -256,6 +260,12 @@ $(document).ready(() => {
       }
     };
     sendReq(addContentReq);
+  });
+
+  $('.starRev span').click(function(){
+    $(this).parent().children('span').removeClass('on');
+    $(this).addClass('on').prevAll('span').addClass('on');
+    return false;
   });
 
 });
