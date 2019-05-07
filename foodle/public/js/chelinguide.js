@@ -72,7 +72,7 @@ function appendContent(i, id, res_name, rating, comment, res_mood, res_food_name
                 <img src="images/inf-swipe-right.png" class='swiper-btn' onclick="swipeNext($(this));">
               </div>
             </div>
-            <div class="modal-res-img-swiper-ui">1/${res_images.length}</div>
+            <div class="modal-res-img-swiper-ui">1/${res_images.filter(n => n).length}</div>
             <div class="modal-res-score-layout">
               <img src="/images/${rating}점.png" class="score-icon">
             </div>
