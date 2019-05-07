@@ -270,10 +270,14 @@ $(document).ready(() => {
     sendReq(addContentReq);
   });
 
-  $('.starRev span').click(function(){
+  $('.starRev span').click(function() {
     $(this).parent().children('span').removeClass('on');
     $(this).addClass('on').prevAll('span').addClass('on');
     return false;
   });
+  $(".messaging-button-checkbox").click(function() {
+    $(this).attr('class') === 'messaging-button-checkbox checked' ? $(this).removeClass('checked') : $(this).addClass('checked');
+  });
+
 
 });
