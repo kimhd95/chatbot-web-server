@@ -242,12 +242,9 @@ $(document).ready(() => {
     console.log('등록하기 버튼 클릭');
     const subway = $('#modal-subway-right')[0].value;
     const res_name = $('#res-name')[0].value;
-    // let rating = $('#modal-score-select')[0].value;
     const comment = $('#comment')[0].value;
     const region = DEFAULT_REGION;
-
     const rating = $(".starRev").children(".starR1.on, .starR2.on").length * 0.5;
-    console.log(rating);
 
     const addContentReq = {
       url: "/api/v1/users/add_chelinguide_item",
@@ -305,6 +302,12 @@ $(document).ready(() => {
     let res_name = $('#res-name')[0].value;
     let comment = $('#comment')[0].value;
     const rating = $(".starRev").children(".starR1.on, .starR2.on").length * 0.5;
+    const mood = $.map($("button.messaging-button-checkbox.checked"), function(item) {
+      return $(item).attr('value');
+    }).toString();
+    const price = $.map($("img.checkbox-img.checked"), function(item) {
+      return $(item).attr('value');
+    }).toString();
 
     let file = document.querySelector('#file');
     var fileList = file.files;
