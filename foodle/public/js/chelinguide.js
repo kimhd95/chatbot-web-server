@@ -337,6 +337,8 @@ $(document).ready(() => {
           subway,
           rating,
           comment,
+          mood,
+          price,
         },
         success: function (res) {
           const _user_id = sessionStorage.getItem('name');
@@ -346,7 +348,7 @@ $(document).ready(() => {
           sendGetListReq(_user_id, _region, _subway, _sortby);
         },
         error: function (e) {
-          alert("해당 식당 없음.");
+          alert(e.message);
         }
       };
       sendReq(addContentReq);
