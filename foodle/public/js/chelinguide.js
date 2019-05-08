@@ -219,15 +219,14 @@ $(document).ready(() => {
   });
 
   $("#back-to-modal").click(function(){
-    $('#plus-list').modal('show')
     $('#detail-plus-list').modal('hide')
+    setTimeout(function(){$('#plus-list').modal('show')}, 200);
   });
 
   $('.modal-comment-detail').click(function() {
     console.log('자세히 추가하기 버튼 클릭');
     $('#plus-list').modal('hide')
-    $('#detail-plus-list').modal('show')
-
+    setTimeout(function(){$('#detail-plus-list').modal('show')}, 200);
   });
 
   $('#sns-share').click(function() {
@@ -288,32 +287,52 @@ $(document).ready(() => {
     console.log('자세히 등록하기 버튼 클릭');
     let subway = $('#modal-subway-right')[0].value;
     let res_name = $('#res-name')[0].value;
-    let rating = $('#modal-score-select')[0].value;
     let comment = $('#comment')[0].value;
-    let region = DEFAULT_REGION;
-    const addContentReq = {
-      url: "/api/v1/users/add_chelinguide_item",
-      method: 'POST',
-      body: {
-        user_id,
-        res_name,
-        region,
-        subway,
-        rating,
-        comment,
-      },
-      success: function (res) {
-        const _user_id = sessionStorage.getItem('name');
-        const _region = $('.place')[0].placeholder;
-        const _subway = $('.place-detail')[0].placeholder;
-        const _sortby = $('.order')[0].placeholder;
-        sendGetListReq(_user_id, _region, _subway, _sortby);
-      },
-      error: function (e) {
-        alert("해당 식당 없음.");
-      }
-    };
-    sendReq(addContentReq);
+    const rating = $(".starRev").children(".starR1.on, .starR2.on").length * 0.5;
+
+    let file = document.querySelector('#file');
+    var fileList = file.files;
+
+    let imageUrls = [];
+    Object.keys(fileList).map(function(key) {
+      var reader = new FileReader();
+      reader.addEventListener("load", function () {
+        var result = reader.result;
+        imageUrls.push(result);
+      }, false);
+      reader.readAsDataURL(fileList[key]);
+    })
+
+    //fileReader가 base64 url들을 얻은 후 시행
+    setTimeout(function(){
+      console.log(imageUrls)
+      console.log(`subway:${subway}, res_name:${res_name}, rating:${rating}, comment:${comment}, file:${file}`);
+      let region = DEFAULT_REGION;
+      const addContentReq = {
+        url: "/api/v1/users/add_chelinguide_item",
+        method: 'POST',
+        body: {
+          user_id,
+          res_name,
+          region,
+          subway,
+          rating,
+          comment,
+        },
+        success: function (res) {
+          const _user_id = sessionStorage.getItem('name');
+          const _region = $('.place')[0].placeholder;
+          const _subway = $('.place-detail')[0].placeholder;
+          const _sortby = $('.order')[0].placeholder;
+          sendGetListReq(_user_id, _region, _subway, _sortby);
+        },
+        error: function (e) {
+          alert("해당 식당 없음.");
+        }
+      };
+      sendReq(addContentReq);
+    }, 500);
+
   });
 
 });
