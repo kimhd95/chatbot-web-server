@@ -23,7 +23,7 @@
     <body>
       <div id="chelinguide-room">
         <div class="avail-screen">
-          <div id="back-to-lobby" class="back-button"></div>
+          <div id="back-to-lobby" class="back-button-lobby"></div>
           <div id="contents-bar" class="avail-bar">슐랭 가이드</div>
           <div id="category-bar" class="select-bar">
             <input id="place" class="place" type="text" placeholder="서울" disabled>
@@ -142,6 +142,7 @@
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
+                      <div id="back-to-modal" class="back-button-modal"></div>
                       <h5 class="modal-title" id="exampleModalLabel">자세히 추가하기</h5>
                     </div>
                     <div class="modal-body">
@@ -149,7 +150,11 @@
                         <div class="modal-picture-left">
                           <img id="picture-image" src="/images/add8.png">
                         </div>
-                        <div class="modal-picture-right">직접 찍은 사진을 등록해주세요!</div>
+                        <div class="modal-picture-right">
+                          <div class="modal-picture-right-text">직접 찍은 사진을 등록해주세요!</div>
+                          <input type="file" class="modal-picture-right-file" multiple name="file" id="file" />
+                          <!-- <input type="file" class="modal-picture-right-file" id"getfile"></input> -->
+                        </div>
                       </div>
                       <div class="modal-mood">
                         <div class="modal-mood-title">분위기</div>
@@ -170,8 +175,8 @@
                     </div>
                     <div class="modal-footer">
                       <div class="final-btn">
-                        <div id="upload-btn" class="upload-btn" data-dismiss="modal">등록</div>
-                        <div id="cancel-btn" class="cancel-btn" data-dismiss="modal">취소</div>
+                        <div id="upload-detail-btn" class="upload-btn" data-dismiss="modal">등록</div>
+                        <div id="cancel-detail-btn" class="cancel-btn" data-dismiss="modal">취소</div>
                       </div>
                     </div>
                 </div>

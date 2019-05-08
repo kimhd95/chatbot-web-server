@@ -448,6 +448,30 @@ input[type=checkbox]:checked + label:before {
   align-items: center; */
 }
 
+.back-button-modal {
+  display: flex;
+  position: absolute;
+  top: 2vh;
+  left: 4vw;
+  width: 4vh;
+  height: 4vh;
+  background-image: url('/images/add7.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.back-button-lobby {
+  display: flex;
+  position: absolute;
+  top: 2vh;
+  left: 4vw;
+  width: 4vh;
+  height: 4vh;
+  background-image: url('/images/back.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
 .modal-body {
   padding: 0;
   overflow-y: scroll;
@@ -791,9 +815,9 @@ input[type=checkbox]:checked + label:before {
   /* align-items: center; */
   /* width: 50%; */
   height: 30vh;
-  width: 50%;
+  width: 55%;
   margin-left: 5%;
-  margin-right: 3vw;
+  margin-right: 4vw;
 }
 
 .modal-body .modal-picture .modal-picture-left img {
@@ -807,14 +831,38 @@ input[type=checkbox]:checked + label:before {
 
 .modal-body .modal-picture .modal-picture-right {
   display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  height: 30vh;
+  width: 45%;
+
+  /* font-size: 2.7vh;
+  text-align: left;
+  color: #7f5607; */
+}
+
+.modal-body .modal-picture .modal-picture-right .modal-picture-right-text {
+  display: flex;
   flex-direction: row;
   align-items: center;
-  height: 30vh;
-  width: 50%;
+  height: 25vh;
+  width: 80%;
+
   font-size: 2.7vh;
-  /* justify-content: flex-start; */
   text-align: left;
   color: #7f5607;
+}
+
+.modal-body .modal-picture .modal-picture-right .modal-picture-right-file {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 5vh;
+  width: 100%;
+
+  font-size: 0.5vh;
+  /* text-align: left; */
+  /* color: #7f5607; */
 }
 
 .modal-body .modal-mood {
