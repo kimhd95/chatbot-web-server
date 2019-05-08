@@ -278,6 +278,22 @@ $(document).ready(() => {
   $(".messaging-button-checkbox").click(function() {
     $(this).attr('class') === 'messaging-button-checkbox checked' ? $(this).removeClass('checked') : $(this).addClass('checked');
   });
+  $(".checkbox-img").click(function() {
+    if($(this).attr('class') === 'checkbox-img checked') {
+      $(this).removeClass('checked');
+      $(this).attr('src', '/images/cb.png');
+    } else {
+      $(this).addClass('checked');
+      $(this).attr('src', '/images/cb-checked.png');
+    }
+
+    // $(this).attr('src', '/images/cb-checked.png');
+    // $(this).attr('class', 'checkbox-img-checked');
+  });
+  $(".checkbox-img-checked").click(function() {
+    $(this).attr('src', '/images/cb.png');
+    $(this).attr('class', 'checkbox-img');
+  });
 
 
 });
