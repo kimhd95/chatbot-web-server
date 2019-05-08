@@ -105,19 +105,19 @@
                       <div class="modal-score">
                         <div class="modal-score-left">평점</div>
                         <div class="modal-score-right">
-                          <img id="score-image" src="/images/0점.png">
-                          <select onchange="scoreFunction()" id="modal-score-select" name="modal-score-select" class="modal-score-select">
-                            <option value="">평점</option>
-                            <option value="1">1</option>
-                            <option value="1.5">1.5</option>
-                            <option value="2">2</option>
-                            <option value="2.5">2.5</option>
-                            <option value="3">3</option>
-                            <option value="3.5">3.5</option>
-                            <option value="4">4</option>
-                            <option value="4.5">4.5</option>
-                            <option value="5">5</option>
-                          </select>
+                          <!-- <img id="score-image" src="/images/0점.png"> -->
+                          <div class="starRev">
+                            <span class="starR1">별1_왼쪽</span>
+                            <span class="starR2">별1_오른쪽</span>
+                            <span class="starR1">별2_왼쪽</span>
+                            <span class="starR2">별2_오른쪽</span>
+                            <span class="starR1">별3_왼쪽</span>
+                            <span class="starR2">별3_오른쪽</span>
+                            <span class="starR1">별4_왼쪽</span>
+                            <span class="starR2">별4_오른쪽</span>
+                            <span class="starR1">별5_왼쪽</span>
+                            <span class="starR2">별5_오른쪽</span>
+                          </div>
                         </div>
                       </div>
                       <div class="modal-comment">
@@ -146,6 +146,7 @@
                       <h5 class="modal-title" id="exampleModalLabel">자세히 추가하기</h5>
                     </div>
                     <div class="modal-body">
+
                       <div class="modal-picture">
                         <div class="modal-picture-left">
                           <img id="picture-image" src="/images/add8.png">
@@ -156,23 +157,52 @@
                           <!-- <input type="file" class="modal-picture-right-file" id"getfile"></input> -->
                         </div>
                       </div>
+
                       <div class="modal-mood">
                         <div class="modal-mood-title">분위기</div>
-                        <div class="modal-mood-item">
-                          <div class="item a">데이트</div>
-                          <div class="item b">직장인</div>
-                          <div class="item c">친구</div>
-                          <div class="item d">고급진</div>
-                          <div class="item e">허름한</div>
-                          <div class="item f">깔끔한</div>
-                          <div class="item g">인테리어가 독특한</div>
-                          <!-- <div class="item h">조용한</div> -->
-                          <!-- <div class="item i">시끄러운</div> -->
-                          <!-- <div class="item j">친절한</div> -->
-                          <!-- <div class="item k">불친절한</div> -->
+                        <div class="modal-mood-item3">
+                          <button type="button" class="messaging-button-checkbox">데이트</button>
+                          <button type="button" class="messaging-button-checkbox">직장인</button>
+                          <button type="button" class="messaging-button-checkbox">친구</button>
+                        </div>
+                        <div class="modal-mood-item3">
+                          <button type="button" class="messaging-button-checkbox">고급진</button>
+                          <button type="button" class="messaging-button-checkbox">허름한</button>
+                          <button type="button" class="messaging-button-checkbox">깔끔한</button>
+                        </div>
+                        <div class="modal-mood-item1">
+                          <button type="button" class="messaging-button-checkbox">인테리어가 독특한</button>
+                        </div>
+                        <div class="modal-mood-item2">
+                          <button type="button" class="messaging-button-checkbox">조용한</button>
+                          <button type="button" class="messaging-button-checkbox">시끄러운</button>
+                        </div>
+                        <div class="modal-mood-item2">
+                          <button type="button" class="messaging-button-checkbox">친절한</button>
+                          <button type="button" class="messaging-button-checkbox">불친절한</button>
                         </div>
                       </div>
+
+                      <div class="modal-price">
+                        <div class="modal-price-title">1인가격</div>
+                        <div class="modal-price-content">
+                          <div class=".price-row">
+                            <img src="/images/cb.png"> 1만원 미만
+                          </div>
+                          <div class=".price-row">
+                            <img src="/images/cb.png"> 1만원 대<br>
+                          </div>
+                          <div class=".price-row">
+                            <img src="/images/cb.png"> 2~3만원 대<br>
+                          </div>
+                          <div class=".price-row">
+                            <img src="/images/cb.png"> 4만원 이상</div>
+                          </div>
+                      </div>
                     </div>
+
+
+
                     <div class="modal-footer">
                       <div class="final-btn">
                         <div id="upload-detail-btn" class="upload-btn" data-dismiss="modal">등록</div>

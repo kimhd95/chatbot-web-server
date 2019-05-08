@@ -72,25 +72,25 @@ function appendContent(i, id, res_name, rating, comment, res_mood, res_food_name
                 <img src="images/inf-swipe-right.png" class='swiper-btn' onclick="swipeNext($(this));">
               </div>
             </div>
-            <div class="modal-res-img-swiper-ui">1/${res_images.length}</div>
+            <div class="modal-res-img-swiper-ui">1/${res_images.filter(n => n).length}</div>
             <div class="modal-res-score-layout">
               <img src="/images/${rating}점.png" class="score-icon">
             </div>
-            <div class="modal-res-foodtype-layout">${res_food_type} / ${res_food_name}</div>
+            <div class="modal-res-foodtype-layout">${res_food_type?res_food_type:'-'} / ${res_food_name?res_food_name:'-'}</div>
             <div class="modal-res-detail-info-wide">
               <img src="/images/inf-comment.png" class="function-icon">
               <div class="modal-comment-left">한줄평</div>
-              <div class="modal-comment-right">${comment}</div>
+              <div class="modal-comment-right">${comment?comment:'-'}</div>
             </div>
             <div class="modal-res-detail-info">
               <img src="/images/inf-mood.png" class="function-icon">
               <div class="modal-comment-left">분위기</div>
-              <div class="modal-comment-right">${res_mood}</div>
+              <div class="modal-comment-right">${res_mood?res_mood:'-'}</div>
             </div>
             <div class="modal-res-detail-info">
               <img src="/images/inf-price.png" class="function-icon">
               <div class="modal-comment-left">1인가격</div>
-              <div class="modal-comment-right">${res_price}만원</div>
+              <div class="modal-comment-right">${res_price?res_price+'만원':'-'}</div>
             </div>
             <div class="modal-res-detail-info">
               <img src="/images/inf-map.png" class="function-icon">
@@ -241,11 +241,15 @@ $(document).ready(() => {
 
   $('#upload-btn').click(function() {
     console.log('등록하기 버튼 클릭');
-    let subway = $('#modal-subway-right')[0].value;
-    let res_name = $('#res-name')[0].value;
-    let rating = $('#modal-score-select')[0].value;
-    let comment = $('#comment')[0].value;
-    let region = DEFAULT_REGION;
+    const subway = $('#modal-subway-right')[0].value;
+    const res_name = $('#res-name')[0].value;
+    // let rating = $('#modal-score-select')[0].value;
+    const comment = $('#comment')[0].value;
+    const region = DEFAULT_REGION;
+
+    const rating = $(".starRev").children(".starR1.on, .starR2.on").length * 0.5;
+    console.log(rating);
+
     const addContentReq = {
       url: "/api/v1/users/add_chelinguide_item",
       method: 'POST',
@@ -269,6 +273,15 @@ $(document).ready(() => {
       }
     };
     sendReq(addContentReq);
+  });
+
+  $('.starRev span').click(function() {
+    $(this).parent().children('span').removeClass('on');
+    $(this).addClass('on').prevAll('span').addClass('on');
+    return false;
+  });
+  $(".messaging-button-checkbox").click(function() {
+    $(this).attr('class') === 'messaging-button-checkbox checked' ? $(this).removeClass('checked') : $(this).addClass('checked');
   });
 
   $('#upload-detail-btn').click(function() {
