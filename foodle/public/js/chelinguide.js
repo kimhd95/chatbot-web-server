@@ -31,10 +31,10 @@ function swipeNext(selector) {
 }
 
 function appendContent(i, id, res_name, rating, comment, res_mood, res_food_name, res_food_type, res_price, ...res_images) {
-  if (res_price && res_price.includes(',')) {
-    res_price = res_price.replace(/ /gi, '');
-    res_price = res_price[0] + '~' + res_price[res_price.length-1];
-  }
+  // if (res_price && res_price.includes(',')) {
+  //   res_price = res_price.replace(/ /gi, '');
+  //   res_price = res_price[0] + '~' + res_price[res_price.length-1];
+  // }
   $('#contents-list').append(`<div id="content-${id}" class="food-content" data-toggle="modal" data-target="#content-detail-${id}">
     <div class="food-title">${i+1}. ${res_name}</div>
     <div class="food-info">
@@ -90,7 +90,7 @@ function appendContent(i, id, res_name, rating, comment, res_mood, res_food_name
             <div class="modal-res-detail-info">
               <img src="/images/inf-price.png" class="function-icon">
               <div class="modal-comment-left">1인가격</div>
-              <div class="modal-comment-right">${res_price?res_price+'만원':'-'}</div>
+              <div class="modal-comment-right">${res_price?res_price:'-'}</div>
             </div>
             <div class="modal-res-detail-info">
               <img src="/images/inf-map.png" class="function-icon">
@@ -265,7 +265,7 @@ $(document).ready(() => {
         sendGetListReq(_user_id, _region, _subway, _sortby);
       },
       error: function (e) {
-        alert("해당 식당 없음.");
+        alert(e.message);
       }
     };
     sendReq(addContentReq);
@@ -316,19 +316,19 @@ $(document).ready(() => {
     let file = document.querySelector('#file');
     var fileList = file.files;
 
-    let imageUrls = [];
+    let img_urls = [];
     Object.keys(fileList).map(function(key) {
       var reader = new FileReader();
       reader.addEventListener("load", function () {
         var result = reader.result;
-        imageUrls.push(result);
+        img_urls.push(result);
       }, false);
       reader.readAsDataURL(fileList[key]);
     })
 
     //fileReader가 base64 url들을 얻은 후 시행
     setTimeout(function(){
-      console.log(imageUrls)
+      console.log(img_urls)
       console.log(`subway:${subway}, res_name:${res_name}, rating:${rating}, comment:${comment}, file:${file}`);
       let region = DEFAULT_REGION;
       const addContentReq = {
@@ -343,6 +343,7 @@ $(document).ready(() => {
           comment,
           mood,
           price,
+          img_urls,
         },
         success: function (res) {
           const _user_id = sessionStorage.getItem('name');
