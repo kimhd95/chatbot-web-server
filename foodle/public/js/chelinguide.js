@@ -34,6 +34,7 @@ function modifyButtonClick(selector) {
 }
 function showMapButtonClick(selector) {
   console.log("지도보기 클릭");
+  window.open("http://www.naver.com");
 }
 function shareButtonClick(selector) {
   console.log("공유하기 클릭");
