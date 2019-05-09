@@ -29,6 +29,15 @@ function swipeNext(selector) {
   const idx = imgParent.children('.res-img[style*=inline]:last').index() + 1;
   selector.parent().parent().next('.modal-res-img-swiper-ui').text(idx + uiText.slice(1));
 }
+function modifyButtonClick(selector) {
+  console.log("수정하기 클릭");
+}
+function showMapButtonClick(selector) {
+  console.log("지도보기 클릭");
+}
+function shareButtonClick(selector) {
+  console.log("공유하기 클릭");
+}
 
 function appendContent(i, id, res_name, rating, comment, res_mood, res_food_name, res_food_type, res_price, ...res_images) {
   $('#contents-list').append(`<div id="content-${id}" class="food-content" data-toggle="modal" data-target="#content-detail-${id}">
@@ -75,30 +84,30 @@ function appendContent(i, id, res_name, rating, comment, res_mood, res_food_name
             <div class="modal-res-foodtype-layout">${res_food_type?res_food_type.replace(/,/gi, ', '):'-'} / ${res_food_name?res_food_name.replace(/,/gi, ', '):'-'}</div>
             <div class="modal-res-detail-info-wide">
               <img src="/images/inf-comment.png" class="function-icon">
-              <div class="modal-comment-left">한줄평</div>
+              <div class="modal-comment-left">&nbsp;한줄평</div>
               <div class="modal-comment-right">${comment?comment:'-'}</div>
             </div>
             <div class="modal-res-detail-info">
               <img src="/images/inf-mood.png" class="function-icon">
-              <div class="modal-comment-left">분위기</div>
+              <div class="modal-comment-left">&nbsp;분위기</div>
               <div class="modal-comment-right">${res_mood?res_mood.replace(/,/gi, ', '):'-'}</div>
             </div>
             <div class="modal-res-detail-info">
               <img src="/images/inf-price.png" class="function-icon">
-              <div class="modal-comment-left">1인가격</div>
+              <div class="modal-comment-left">&nbsp;1인가격</div>
               <div class="modal-comment-right">${res_price?res_price.replace(/,/gi, ', '):'-'}</div>
             </div>
             <div class="modal-res-detail-info">
               <img src="/images/inf-map.png" class="function-icon">
-              <div class="modal-comment-left" id="show-map">지도보기</div>
+              <button class="modal-comment-left" id="show-map" onclick="showMapButtonClick($(this));">지도보기</button>
             </div>
             <div class="modal-res-detail-info">
               <img src="/images/inf-sns.png" class="function-icon">
-              <div class="modal-comment-left" id="sns-share">SNS 공유하기</div>
+              <button class="modal-comment-left" id="sns-share" onclick="shareButtonClick($(this));">SNS 공유하기</button>
             </div>
           </div>
           <div class="modal-footer">
-            <div class="modal-detail-footer-btn"><button class="modify-button">수정하기</button></div>
+            <div class="modal-detail-footer-btn"><button class="modify-button" onclick="modifyButtonClick($(this));">수정하기</button></div>
           </div>
       </div>
     </div>
@@ -223,18 +232,6 @@ $(document).ready(() => {
     console.log('자세히 추가하기 버튼 클릭');
     $('#plus-list').modal('hide')
     setTimeout(function(){$('#detail-plus-list').modal('show')}, 200);
-  });
-
-  $('#sns-share').click(function() {
-    console.log('SNS 공유하기 클릭');
-  });
-
-  $('#show-map').click(function() {
-    console.log('지도보기 클릭');
-  });
-
-  $(".modify-button").click(function() {
-    console.log("수정하기 버튼 클릭");
   });
 
   $('#upload-btn').click(function() {

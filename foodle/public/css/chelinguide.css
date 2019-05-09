@@ -616,6 +616,8 @@ input[type=checkbox]:checked + label:before {
   flex-direction: row;
   width: 30%;
   height: 100%;
+  border: transparent;
+  background: transparent;
 }
 .modal-body .modal-res-detail-info .modal-resname-right {
   display: flex;
