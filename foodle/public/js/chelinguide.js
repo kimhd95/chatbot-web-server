@@ -298,9 +298,9 @@ $(document).ready(() => {
 
   $('#upload-detail-btn').click(function() {
     console.log('자세히 등록하기 버튼 클릭');
-    let subway = $('#modal-subway-right')[0].value;
-    let res_name = $('#res-name')[0].value;
-    let comment = $('#comment')[0].value;
+    const subway = $('#modal-subway-right')[0].value;
+    const res_name = $('#res-name')[0].value;
+    const comment = $('#comment')[0].value;
     const rating = $(".starRev").children(".starR1.on, .starR2.on").length * 0.5;
     const mood = $.map($("button.messaging-button-checkbox.checked"), function(item) {
       return $(item).attr('value');
@@ -308,6 +308,10 @@ $(document).ready(() => {
     const price = $.map($("img.checkbox-img.checked"), function(item) {
       return $(item).attr('value');
     }).toString();
+
+    if (!subway) { alert("지하철역을 입력해주세요."); return;}
+    else if (!res_name) { alert("상호를 입력해주세요."); return;}
+    else if (!rating) { alert("평점을 입력해주세요."); return;}
 
     let file = document.querySelector('#file');
     var fileList = file.files;
