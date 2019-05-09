@@ -994,6 +994,11 @@ input[type=checkbox]:checked + label:before {
   padding-top: 1.3vh;
 }
 
+.modify-button {
+  border: transparent;
+  background-color: transparent;
+  color: gray;
+}
 
 .messaging-button-checkbox {
   border: 2px solid #ffc764;

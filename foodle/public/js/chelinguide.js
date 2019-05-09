@@ -31,10 +31,6 @@ function swipeNext(selector) {
 }
 
 function appendContent(i, id, res_name, rating, comment, res_mood, res_food_name, res_food_type, res_price, ...res_images) {
-  // if (res_price && res_price.includes(',')) {
-  //   res_price = res_price.replace(/ /gi, '');
-  //   res_price = res_price[0] + '~' + res_price[res_price.length-1];
-  // }
   $('#contents-list').append(`<div id="content-${id}" class="food-content" data-toggle="modal" data-target="#content-detail-${id}">
     <div class="food-title">${i+1}. ${res_name}</div>
     <div class="food-info">
@@ -102,7 +98,7 @@ function appendContent(i, id, res_name, rating, comment, res_mood, res_food_name
             </div>
           </div>
           <div class="modal-footer">
-            <div class="modal-detail-footer-btn"><span class="gray-btn">수정하기</span></div>
+            <div class="modal-detail-footer-btn"><button class="modify-button">수정하기</button></div>
           </div>
       </div>
     </div>
@@ -234,8 +230,11 @@ $(document).ready(() => {
   });
 
   $('#show-map').click(function() {
-    // 동작x
     console.log('지도보기 클릭');
+  });
+
+  $(".modify-button").click(function() {
+    console.log("수정하기 버튼 클릭");
   });
 
   $('#upload-btn').click(function() {
@@ -276,9 +275,11 @@ $(document).ready(() => {
     $(this).addClass('on').prevAll('span').addClass('on');
     return false;
   });
+
   $(".messaging-button-checkbox").click(function() {
     $(this).attr('class') === 'messaging-button-checkbox checked' ? $(this).removeClass('checked') : $(this).addClass('checked');
   });
+
   $(".checkbox-img").click(function() {
     if($(this).attr('class') === 'checkbox-img checked') {
       $(this).removeClass('checked');
@@ -287,14 +288,14 @@ $(document).ready(() => {
       $(this).addClass('checked');
       $(this).attr('src', '/images/cb-checked.png');
     }
-
-    // $(this).attr('src', '/images/cb-checked.png');
-    // $(this).attr('class', 'checkbox-img-checked');
   });
+
   $(".checkbox-img-checked").click(function() {
     $(this).attr('src', '/images/cb.png');
     $(this).attr('class', 'checkbox-img');
   });
+
+
 
   $('#upload-detail-btn').click(function() {
     console.log('자세히 등록하기 버튼 클릭');
