@@ -2,6 +2,8 @@ const DEFAULT_REGION = '서울';
 const DEFAULT_SUBWAY = '강남역';
 const DEFAULT_SORTBY = '별점순';
 const NO_IMAGE_SRC = '/images/main-09.png';
+const moodList = ['데이트', '직장인', '친구', '고급진', '허름한', '깔끔한', '인테리어가 독특한', '조용한', '시끄러운', '친절한', '불친절한'];
+const priceList = ['1만원 미만', '1만원 대', '2만원 대', '3만원 대', '4만원 이상'];
 
 function swipePrev(selector) {
   const imgParent = selector.parent().next();
@@ -31,9 +33,53 @@ function swipeNext(selector) {
 }
 function modifyButtonClick(selector) {
   console.log("수정하기 클릭");
+  const modal_header = selector.parent().parent().prev().prev(".modal-header");
+  const modal_body = selector.parent().parent().prev(".modal-body");
   const id = selector.parent().parent().parent().parent().parent().attr('id');
-  const res_name = selector.parent().parent().prev().prev(".modal-header").children(".modal-title").text();
-  const comment = selector.parent().parent().prev(".modal-body").children(".modal-res-detail-info-wide").children(".modal-comment-right").text();
+  const res_name = modal_header.children(".modal-title").text();
+  const comment = modal_body.children(".modal-res-detail-info-wide").children(".modal-comment-right").text();
+  let rating = modal_body.children(".modal-res-score-layout").children().attr('src');
+  rating = rating.slice(rating.lastIndexOf('/')+1, rating.lastIndexOf('점'));
+  const mood = modal_body.children(".modal-res-detail-info:first").children(".modal-comment-right").text();
+  const price = modal_body.children(".modal-res-detail-info:first").next().children(".modal-comment-right").text();
+  console.log(rating, mood, price);
+
+  // 별점 set
+  const idx = parseFloat(rating)*2;
+  const starRev = $(".modal-rating-starRev").children(".starRev");
+    // 평점 초기화
+  starRev.children().removeClass("on");
+  starRev.children().each(function(index) {
+    if (index < idx) {
+      $(this).addClass("on");
+    }
+  });
+
+  // 분위기 set
+  const modal_mood = $("#modal-modify").children().children().children(".modal-body").children(".modal-mood");
+  console.log(mood);
+    // modal의 mood 초기화
+  $("#modal-modify > div > div > .modal-body > .modal-mood button.messaging-button-checkbox.checked").removeClass("checked");
+  if (mood && mood!=='-') {
+    moodList.forEach(m => {
+      if (mood.includes(m)) {
+        // modal_mood.children().eq(moodIndex[m]).children(`button[value=${m}]`).addClass("checked");
+        $(`#modal-modify .modal-mood button[value="${m}"]`).addClass("checked");
+      }
+    });
+  }
+  // } else if (mood === '-') {
+  //   console.log("htt");
+  //   console.log($("#modal-modify > div > div > .modal-body > .modal-mood button").length);
+  //   $("#modal-modify > div > div > .modal-body > .modal-mood button.messaging-button-checkbox.checked").removeClass("checked");
+  // }
+
+
+
+
+
+
+
   $(`#${id}`).modal('hide');
 
   $("input.res-name-input").attr('value', res_name);
