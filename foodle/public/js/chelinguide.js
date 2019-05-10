@@ -207,13 +207,13 @@ $(document).ready(() => {
     console.log(msg);
   });
 
-  $('#place-list-button').click(function() {
-    console.log('지역선택 버튼 클릭');
-  });
-
-  $('#order-list-button').click(function() {
-    console.log('정렬기준선택 버튼 클릭');
-  });
+  // $('#place-list-button').click(function() {
+  //   console.log('지역선택 버튼 클릭');
+  // });
+  //
+  // $('#order-list-button').click(function() {
+  //   console.log('정렬기준선택 버튼 클릭');
+  // });
 
   $('#share-function-button, #share-function-icon').click(function() {
     console.log('공유하기 버튼 클릭');
