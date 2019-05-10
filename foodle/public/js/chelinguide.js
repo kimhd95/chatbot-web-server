@@ -34,7 +34,9 @@ function modifyButtonClick(selector) {
 }
 function showMapButtonClick(selector) {
   console.log("지도보기 클릭");
-  window.open("http://www.naver.com");
+  const subway = $("input.place-detail").attr('placeholder');
+  const res_name = selector.parent().parent().prev().children("#content-detail-res-name").text();
+  window.open(`https://map.naver.com/index.nhn?query=${subway} ${res_name}&tab=1`);
 }
 function shareButtonClick(selector) {
   console.log("공유하기 클릭");
