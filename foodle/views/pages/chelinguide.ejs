@@ -220,6 +220,101 @@
 
 
           </div>
+          <!-- 수정하기 -->
+          <div class="modal fade" id="modal-modify" tabindex="-1" role="dialog" aria-labelledby="modalModify" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                    <div id="back-to-modal" class="back-button-modal"></div>
+                    <h5 class="modal-title" id="exampleModalLabel">수정하기</h5>
+                  </div>
+                  <div class="modal-body">
+
+                    <div class="modal-picture">
+                      <div class="modal-picture-left">
+                        <img id="picture-image" src="/images/add8.png">
+                      </div>
+                      <div class="modal-picture-right">
+                        <div class="modal-picture-right-text">직접 찍은 사진을 등록해주세요!</div>
+                        <input type="file" class="modal-picture-right-file" multiple name="file" id="file" />
+                        <!-- <input type="file" class="modal-picture-right-file" id"getfile"></input> -->
+                      </div>
+                    </div>
+                    <div class="modal-rating">
+                      <div class="modal-rating-title">평점</div>
+                      <div class="modal-rating-starRev">
+                        <div class="starRev">
+                          <span class="starR1-big">별1_왼쪽</span>
+                          <span class="starR2-big">별1_오른쪽</span>
+                          <span class="starR1-big">별2_왼쪽</span>
+                          <span class="starR2-big">별2_오른쪽</span>
+                          <span class="starR1-big">별3_왼쪽</span>
+                          <span class="starR2-big">별3_오른쪽</span>
+                          <span class="starR1-big">별4_왼쪽</span>
+                          <span class="starR2-big">별4_오른쪽</span>
+                          <span class="starR1-big">별5_왼쪽</span>
+                          <span class="starR2-big">별5_오른쪽</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="modal-mood">
+                      <div class="modal-mood-title">분위기</div>
+                      <div class="modal-mood-item3">
+                        <button type="button" class="messaging-button-checkbox" value="데이트">데이트</button>
+                        <button type="button" class="messaging-button-checkbox" value="직장인">직장인</button>
+                        <button type="button" class="messaging-button-checkbox" value="친구">친구</button>
+                      </div>
+                      <div class="modal-mood-item3">
+                        <button type="button" class="messaging-button-checkbox" value="고급진">고급진</button>
+                        <button type="button" class="messaging-button-checkbox" value="허름한">허름한</button>
+                        <button type="button" class="messaging-button-checkbox" value="깔끔한">깔끔한</button>
+                      </div>
+                      <div class="modal-mood-item1">
+                        <button type="button" class="messaging-button-checkbox" value="인테리어가 독특한">인테리어가 독특한</button>
+                      </div>
+                      <div class="modal-mood-item2">
+                        <button type="button" class="messaging-button-checkbox" value="조용한">조용한</button>
+                        <button type="button" class="messaging-button-checkbox" value="시끄러운">시끄러운</button>
+                      </div>
+                      <div class="modal-mood-item2">
+                        <button type="button" class="messaging-button-checkbox" value="친절한">친절한</button>
+                        <button type="button" class="messaging-button-checkbox" value="불친절한">불친절한</button>
+                      </div>
+                    </div>
+
+                    <div class="modal-price">
+                      <div class="modal-price-title">1인가격</div>
+                      <div class="modal-price-content">
+                        <div class="price-row">
+                          <img class="checkbox-img" value="1만원 미만" src="/images/cb.png">
+                          <div>1만원 미만</div>
+                        </div>
+                        <div class="price-row">
+                          <img class="checkbox-img" value="1만원 대" src="/images/cb.png">
+                          <div>1만원 대</div>
+                        </div>
+                        <div class="price-row">
+                          <img class="checkbox-img" value="2~3만원 대" src="/images/cb.png">
+                          <div>2~3만원 대</div>
+                        </div>
+                        <div class="price-row">
+                          <img class="checkbox-img" value="4만원 이상" src="/images/cb.png">
+                          <div>4만원 이상</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <div class="final-btn">
+                      <div id="upload-detail-btn" class="upload-btn" data-dismiss="modal">등록</div>
+                      <div id="cancel-detail-btn" class="cancel-btn" data-dismiss="modal">취소</div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+
+          </div>
 
           <div id="contents-list" class="contentlist">
 

@@ -31,6 +31,10 @@ function swipeNext(selector) {
 }
 function modifyButtonClick(selector) {
   console.log("수정하기 클릭");
+  const id = selector.parent().parent().parent().parent().parent().attr('id');
+  console.log(id);
+  $(`#${id}`).modal('hide');
+  setTimeout(function(){$('#modal-modify').modal('show')}, 200);
 }
 function showMapButtonClick(selector) {
   console.log("지도보기 클릭");
