@@ -32,8 +32,12 @@ function swipeNext(selector) {
 function modifyButtonClick(selector) {
   console.log("수정하기 클릭");
   const id = selector.parent().parent().parent().parent().parent().attr('id');
-  console.log(id);
+  const res_name = selector.parent().parent().prev().prev(".modal-header").children(".modal-title").text();
+  const comment = selector.parent().parent().prev(".modal-body").children(".modal-res-detail-info-wide").children(".modal-comment-right").text();
   $(`#${id}`).modal('hide');
+
+  $("input.res-name-input").attr('value', res_name);
+  $("textarea.comment-input").text(comment);
   setTimeout(function(){$('#modal-modify').modal('show')}, 200);
 }
 function showMapButtonClick(selector) {
