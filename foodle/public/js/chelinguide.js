@@ -68,15 +68,8 @@ function modifyButtonClick(selector) {
       }
     });
   }
-  // } else if (mood === '-') {
-  //   console.log("htt");
-  //   console.log($("#modal-modify > div > div > .modal-body > .modal-mood button").length);
-  //   $("#modal-modify > div > div > .modal-body > .modal-mood button.messaging-button-checkbox.checked").removeClass("checked");
-  // }
 
-
-
-
+  // 가격 set 구현필요
 
 
 
