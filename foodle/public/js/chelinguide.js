@@ -52,10 +52,14 @@ function modifyButtonClick(selector) {
       const {res_name, res_subway, rating, comment, res_mood, res_price} = res.message[0];
       console.log(res_name, rating, comment, res_mood, res_price);
 
+      // 이미지 선택창 초기화
+      $("#modal-modify #modify-file").val('');
+
       // 지하철역, 상호, 한줄평 set
-      $("#modal-modify select.subway-input").children(`option[value="${res_subway}"]`).attr('selected', true);
-      $("input.res-name-input").attr('value', res_name);
-      $("textarea.comment-input").text(comment);
+      // $("#modal-modify select.subway-input").children(`option[selected="true"]`).attr('selected', false);
+      $("#modal-modify select.subway-input").val(res_subway);
+      $("input.res-name-input").val(res_name);
+      $("textarea.comment-input").val(comment);
 
       // 별점 set
       const idx = parseFloat(rating)*2;
@@ -89,6 +93,7 @@ function modifyButtonClick(selector) {
           }
         });
       }
+      $("#modal-modify .modal-footer #modify-complete-btn").attr('value', id);
 
       $(`#content-detail-${id}`).modal('hide');
       setTimeout(() => { $('#modal-modify').modal('show'); }, 200);
@@ -383,13 +388,13 @@ $(document).ready(() => {
     else if (!rating) { alert("평점을 입력해주세요."); return;}
 
     let file = document.querySelector('#file');
-    var fileList = file.files;
+    let fileList = file.files;
 
     let img_urls = [];
     Object.keys(fileList).map(function(key) {
-      var reader = new FileReader();
+      let reader = new FileReader();
       reader.addEventListener("load", function () {
-        var result = reader.result;
+        let result = reader.result;
         img_urls.push(result);
       }, false);
       reader.readAsDataURL(fileList[key]);
@@ -432,14 +437,15 @@ $(document).ready(() => {
 
   $('.modal-footer #modify-complete-btn').click(function() {
     console.log('수정완료 버튼 클릭');
-    const subway = $('#modal-subway-right')[0].value;
-    const res_name = $("#modal-modify .res-name-input").attr('value');
-    const comment = $("#modal-modify textarea.comment-input").text();
-    const rating = $("#modal-modify .starRev").children(".starR1.on, .starR2.on").length * 0.5;
+    const id = $(this).attr('value');
+    const subway = $('#modal-modify select.subway-input').val();
+    const res_name = $("#modal-modify .res-name-input").val();
+    const comment = $("#modal-modify textarea.comment-input").val();
+    const rating = $("#modal-modify .starRev").children(".on").length * 0.5;
     const mood = $.map($("#modal-modify button.messaging-button-checkbox.checked"), function(item) {
       return $(item).attr('value');
     }).toString();
-    const price = $.map($("img.checkbox-img.checked"), function(item) {
+    const price = $.map($("#modal-modify img.checkbox-img.checked"), function(item) {
       return $(item).attr('value');
     }).toString();
 
@@ -447,14 +453,14 @@ $(document).ready(() => {
     if (!res_name) { alert("상호를 입력해주세요."); return;}
     else if (!rating) { alert("평점을 입력해주세요."); return;}
 
-    let file = document.querySelector('#file');
-    var fileList = file.files;
+    let file = document.querySelector('#modify-file');
+    let fileList = file.files;
 
     let img_urls = [];
     Object.keys(fileList).map(function(key) {
-      var reader = new FileReader();
+      let reader = new FileReader();
       reader.addEventListener("load", function () {
-        var result = reader.result;
+        let result = reader.result;
         img_urls.push(result);
       }, false);
       reader.readAsDataURL(fileList[key]);
@@ -462,13 +468,13 @@ $(document).ready(() => {
 
     //fileReader가 base64 url들을 얻은 후 시행
     setTimeout(function(){
-      console.log(img_urls)
-      console.log(`subway:${subway}, res_name:${res_name}, rating:${rating}, comment:${comment}, file:${file}`);
       let region = DEFAULT_REGION;
-      const addContentReq = {
-        url: "/api/v1/users/add_chelinguide_item",
+      console.log(id, user_id, res_name, region, subway, rating, comment, price, mood);
+      const modifyItemReq = {
+        url: "/api/v1/users/modify_chelinguide_item",
         method: 'POST',
         body: {
+          id,
           user_id,
           res_name,
           region,
@@ -485,12 +491,13 @@ $(document).ready(() => {
           const _subway = $('.place-detail')[0].placeholder;
           const _sortby = $('.order')[0].placeholder;
           sendGetListReq(_user_id, _region, _subway, _sortby);
+          alert("수정 완료");
         },
         error: function (e) {
           alert(e.message);
         }
       };
-      sendReq(addContentReq);
+      sendReq(modifyItemReq);
     }, 500);
 
   });
