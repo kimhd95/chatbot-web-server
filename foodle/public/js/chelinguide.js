@@ -33,61 +33,72 @@ function swipeNext(selector) {
   const idx = imgParent.children('.res-img[style*=inline]:last').index() + 1;
   selector.parent().parent().next('.modal-res-img-swiper-ui').text(idx + uiText.slice(1));
 }
+
 function modifyButtonClick(selector) {
   console.log("수정하기 클릭");
-  const modal_header = selector.parent().parent().prev().prev(".modal-header");
-  const modal_body = selector.parent().parent().prev(".modal-body");
-  const id = selector.parent().parent().parent().parent().parent().attr('id');
-  const res_name = modal_header.children(".modal-title").text();
-  const comment = modal_body.children(".modal-res-detail-info-wide").children(".modal-comment-right").text();
-  let rating = modal_body.children(".modal-res-score-layout").children().attr('src');
-  rating = rating.slice(rating.lastIndexOf('/')+1, rating.lastIndexOf('점'));
-  const mood = modal_body.children(".modal-res-detail-info:first").children(".modal-comment-right").text();
-  const price = modal_body.children(".modal-res-detail-info:first").next().children(".modal-comment-right").text();
+  const id = selector.parents(".modal.fade.show").attr('id').replace('content-detail-', '');
+  const user_id = sessionStorage.getItem('name');
+  console.log(id, user_id);
 
-  // 상호, 한줄평 set
-  $("input.res-name-input").attr('value', res_name);
-  $("textarea.comment-input").text(comment);
+  const getItemInfoReq = {
+    url: "/api/v1/users/get_chelinguide_item_info",
+    method: 'POST',
+    body: {
+      user_id,
+      id,
+    },
+    success: function (res) {
+      console.log(res.message[0]);
+      const {res_name, rating, comment, res_mood, res_price} = res.message[0];
+      console.log(res_name, rating, comment, res_mood, res_price);
 
-  // 별점 set
-  const idx = parseFloat(rating)*2;
-  const starRev = $(".modal-rating-starRev").children(".starRev");
-    // 평점 초기화
-  starRev.children().removeClass("on");
-  starRev.children().each(function(index) {
-    if (index < idx) {
-      $(this).addClass("on");
+      // 상호, 한줄평 set
+      $("input.res-name-input").attr('value', res_name);
+      $("textarea.comment-input").text(comment);
+
+      // 별점 set
+      const idx = parseFloat(rating)*2;
+      const starRev = $(".modal-rating-starRev").children(".starRev");
+        // 평점 초기화
+      starRev.children().removeClass("on");
+      starRev.children().each(function(index) {
+        if (index < idx) {
+          $(this).addClass("on");
+        }
+      });
+
+      // 분위기 set
+      $("#modal-modify > div > div > .modal-body > .modal-mood button.messaging-button-checkbox.checked").removeClass("checked");
+      if (res_mood) {
+        moodList.forEach(m => {
+          if (res_mood.includes(m)) {
+            $(`#modal-modify .modal-mood button[value="${m}"]`).addClass("checked");
+          }
+        });
+      }
+
+      // 가격 set
+      $(".price-row > .checkbox-img").removeClass("checked");
+      $(".price-row > .checkbox-img").attr('src', CHECKBOX_IMAGE_SRC);
+      if (res_price) {
+        priceList.forEach(m => {
+          if (res_price.includes(m)) {
+            $(`.price-row > .checkbox-img[value="${m}"]`).addClass("checked");
+            $(`.price-row > .checkbox-img[value="${m}"]`).attr('src', CHECKBOX_CHECKED_IMAGE_SRC);
+          }
+        });
+      }
+
+      $(`#content-detail-${id}`).modal('hide');
+      setTimeout(() => { $('#modal-modify').modal('show'); }, 200);
+    },
+    error: function (e) {
+      console.log(e);
+      return;
     }
-  });
+  };
 
-  // 분위기 set
-  const modal_mood = $("#modal-modify").children().children().children(".modal-body").children(".modal-mood");
-  console.log(mood);
-    // modal의 mood 초기화
-  $("#modal-modify > div > div > .modal-body > .modal-mood button.messaging-button-checkbox.checked").removeClass("checked");
-  if (mood && mood!=='-') {
-    moodList.forEach(m => {
-      if (mood.includes(m)) {
-        // modal_mood.children().eq(moodIndex[m]).children(`button[value=${m}]`).addClass("checked");
-        $(`#modal-modify .modal-mood button[value="${m}"]`).addClass("checked");
-      }
-    });
-  }
-
-  // 가격 set
-  $(".price-row > .checkbox-img").removeClass("checked");
-  $(".price-row > .checkbox-img").attr('src', CHECKBOX_IMAGE_SRC);
-  if (price && price !== '-') {
-    priceList.forEach(m => {
-      if (price.includes(m)) {
-        $(`.price-row > .checkbox-img[value="${m}"]`).addClass("checked");
-        $(`.price-row > .checkbox-img[value="${m}"]`).attr('src', CHECKBOX_CHECKED_IMAGE_SRC);
-      }
-    });
-  }
-
-  $(`#${id}`).modal('hide');
-  setTimeout(() => { $('#modal-modify').modal('show'); }, 200);
+  sendReq(getItemInfoReq);
 }
 function showMapButtonClick(selector) {
   console.log("지도보기 클릭");
