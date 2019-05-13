@@ -37,7 +37,7 @@ function swipeNext(selector) {
 function modifyButtonClick(selector) {
   console.log("수정하기 클릭");
   const id = selector.parents(".modal.fade.show").attr('id').replace('content-detail-', '');
-  const user_id = sessionStorage.getItem('name');
+  const user_id = sessionStorage.getItem('email');
   console.log(id, user_id);
 
   const getItemInfoReq = {
@@ -216,7 +216,7 @@ function sendGetListReq(user_id, region, subway, sortby) {
 }
 
 function selectSortBy(i) {
-    const user_id = sessionStorage.getItem('name');
+    const user_id = sessionStorage.getItem('email');
     const region = '서울';
     const subway = $('.place-detail')[0].placeholder;
     const sortby = $('#order-list button')[i].innerHTML.replace(/ /gi, '');
@@ -225,7 +225,7 @@ function selectSortBy(i) {
 }
 
 function sortBySubway(i) {
-    const user_id = sessionStorage.getItem('name');
+    const user_id = sessionStorage.getItem('email');
     const region = '서울';
     const subway = $('#place-list button')[i].innerHTML.replace(/ /gi, '');
     const sortby = $('.order')[0].placeholder;
@@ -242,8 +242,8 @@ function scoreFunction() {
 $(document).ready(() => {
   var socket = io();
   var swiper = new Swiper('.swiper-container');
-  const user_id = sessionStorage.getItem('name');
-  let name = (!user_id || user_id === '비회원') ? '' : sessionStorage.getItem('name').substr(1);
+  const user_id = sessionStorage.getItem('email');
+  let name = (!sessionStorage.getItem('name') || sessionStorage.getItem('name') === '비회원') ? '' : sessionStorage.getItem('name').substr(1);
   document.getElementById('contents-bar').textContent = `${name}슐랭 가이드`;
 
   sendGetListReq(user_id, DEFAULT_REGION, DEFAULT_SUBWAY, DEFAULT_SORTBY);
@@ -331,7 +331,7 @@ $(document).ready(() => {
         comment,
       },
       success: function (res) {
-        const _user_id = sessionStorage.getItem('name');
+        const _user_id = sessionStorage.getItem('email');
         const _region = $('.place')[0].placeholder;
         const _subway = $('.place-detail')[0].placeholder;
         const _sortby = $('.order')[0].placeholder;
@@ -375,7 +375,7 @@ $(document).ready(() => {
     const subway = $('#modal-subway-right')[0].value;
     const res_name = $('#res-name')[0].value;
     const comment = $('#comment')[0].value;
-    const rating = $("#detail-plus-list .starRev").children(".starR1.on, .starR2.on").length * 0.5;
+    const rating = $("#plus-list .starRev").children(".starR1.on, .starR2.on").length * 0.5;
     const mood = $.map($("#detail-plus-list button.messaging-button-checkbox.checked"), function(item) {
       return $(item).attr('value');
     }).toString();
@@ -420,7 +420,7 @@ $(document).ready(() => {
           img_urls,
         },
         success: function (res) {
-          const _user_id = sessionStorage.getItem('name');
+          const _user_id = sessionStorage.getItem('email');
           const _region = $('.place')[0].placeholder;
           const _subway = $('.place-detail')[0].placeholder;
           const _sortby = $('.order')[0].placeholder;
@@ -486,7 +486,7 @@ $(document).ready(() => {
           img_urls,
         },
         success: function (res) {
-          const _user_id = sessionStorage.getItem('name');
+          const _user_id = sessionStorage.getItem('email');
           const _region = $('.place')[0].placeholder;
           const _subway = $('.place-detail')[0].placeholder;
           const _sortby = $('.order')[0].placeholder;
