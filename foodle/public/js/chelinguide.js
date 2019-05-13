@@ -49,10 +49,11 @@ function modifyButtonClick(selector) {
     },
     success: function (res) {
       console.log(res.message[0]);
-      const {res_name, rating, comment, res_mood, res_price} = res.message[0];
+      const {res_name, res_subway, rating, comment, res_mood, res_price} = res.message[0];
       console.log(res_name, rating, comment, res_mood, res_price);
 
-      // 상호, 한줄평 set
+      // 지하철역, 상호, 한줄평 set
+      $("#modal-modify select.subway-input").children(`option[value="${res_subway}"]`).attr('selected', true);
       $("input.res-name-input").attr('value', res_name);
       $("textarea.comment-input").text(comment);
 

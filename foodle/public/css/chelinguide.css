@@ -323,6 +323,15 @@ body {
   border-top: transparent;
   font-size: 18px;
 }
+.subway-input {
+  width: 40%;
+  height: 30px;
+  border: 2px solid #61451b;
+  border-left: transparent;
+  border-right: transparent;
+  border-top: transparent;
+  font-size: 18px;
+}
 .comment-input {
   width: 90%;
   height: 90%;
@@ -940,7 +949,7 @@ input[type=checkbox]:checked + label:before {
   flex-direction: row;
   height: 20vh;
 }
-.modal-body .modal-res-name {
+.modal-body .modal-res-name, .modal-location {
   display: flex;
   flex-direction: row;
   height: 8vh;
@@ -960,7 +969,7 @@ input[type=checkbox]:checked + label:before {
   margin-bottom: 1vh;
   font-size: 20px;
 }
-.modal-res-name-title, .modal-comment-title {
+.modal-res-name-title, .modal-location-title, .modal-comment-title {
   display: flex;
   flex-direction: row;
   margin-left: 6%;
@@ -969,7 +978,7 @@ input[type=checkbox]:checked + label:before {
   width: 25%;
   height: 100%;
 }
-.modal-res-name-content, .modal-comment-modify .modal-comment-content {
+.modal-res-name-content, .modal-location-content, .modal-comment-modify .modal-comment-content {
   display: flex;
   /* margin-left: 15%;
   margin-bottom: 3vh;
