@@ -2,8 +2,10 @@ const DEFAULT_REGION = '서울';
 const DEFAULT_SUBWAY = '강남역';
 const DEFAULT_SORTBY = '별점순';
 const NO_IMAGE_SRC = '/images/main-09.png';
+const CHECKBOX_IMAGE_SRC = '/images/cb.png';
+const CHECKBOX_CHECKED_IMAGE_SRC = '/images/cb-checked.png';
 const moodList = ['데이트', '직장인', '친구', '고급진', '허름한', '깔끔한', '인테리어가 독특한', '조용한', '시끄러운', '친절한', '불친절한'];
-const priceList = ['1만원 미만', '1만원 대', '2만원 대', '3만원 대', '4만원 이상'];
+const priceList = ['1만원 미만', '1만원 대', '2~3만원 대', '4만원 이상'];
 
 function swipePrev(selector) {
   const imgParent = selector.parent().next();
@@ -42,7 +44,10 @@ function modifyButtonClick(selector) {
   rating = rating.slice(rating.lastIndexOf('/')+1, rating.lastIndexOf('점'));
   const mood = modal_body.children(".modal-res-detail-info:first").children(".modal-comment-right").text();
   const price = modal_body.children(".modal-res-detail-info:first").next().children(".modal-comment-right").text();
-  console.log(rating, mood, price);
+
+  // 상호, 한줄평 set
+  $("input.res-name-input").attr('value', res_name);
+  $("textarea.comment-input").text(comment);
 
   // 별점 set
   const idx = parseFloat(rating)*2;
@@ -69,15 +74,20 @@ function modifyButtonClick(selector) {
     });
   }
 
-  // 가격 set 구현필요
-
-
+  // 가격 set
+  $(".price-row > .checkbox-img").removeClass("checked");
+  $(".price-row > .checkbox-img").attr('src', CHECKBOX_IMAGE_SRC);
+  if (price && price !== '-') {
+    priceList.forEach(m => {
+      if (price.includes(m)) {
+        $(`.price-row > .checkbox-img[value="${m}"]`).addClass("checked");
+        $(`.price-row > .checkbox-img[value="${m}"]`).attr('src', CHECKBOX_CHECKED_IMAGE_SRC);
+      }
+    });
+  }
 
   $(`#${id}`).modal('hide');
-
-  $("input.res-name-input").attr('value', res_name);
-  $("textarea.comment-input").text(comment);
-  setTimeout(function(){$('#modal-modify').modal('show')}, 200);
+  setTimeout(() => { $('#modal-modify').modal('show'); }, 200);
 }
 function showMapButtonClick(selector) {
   console.log("지도보기 클릭");
