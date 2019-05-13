@@ -1146,6 +1146,18 @@ input[type=checkbox]:checked + label:before {
   justify-content: space-around;
 }
 
+.modal-footer .modal-footer-btn {
+  text-align: center;
+  margin-left: 4.5vw;
+  align-items:flex-start;
+  width: 30%;
+  height: auto;
+  font-size: 2.5vh;
+  background-image: url('/images/add6.png');
+  background-position: center;
+  background-size: cover;
+}
+
 .modal-footer .upload-btn{
   /* display: flex; */
   /* flex-direction: column; */

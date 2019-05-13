@@ -358,8 +358,73 @@ $(document).ready(() => {
     const subway = $('#modal-subway-right')[0].value;
     const res_name = $('#res-name')[0].value;
     const comment = $('#comment')[0].value;
-    const rating = $(".starRev").children(".starR1.on, .starR2.on").length * 0.5;
-    const mood = $.map($("button.messaging-button-checkbox.checked"), function(item) {
+    const rating = $("#detail-plus-list .starRev").children(".starR1.on, .starR2.on").length * 0.5;
+    const mood = $.map($("#detail-plus-list button.messaging-button-checkbox.checked"), function(item) {
+      return $(item).attr('value');
+    }).toString();
+    const price = $.map($("#detail-plus-list img.checkbox-img.checked"), function(item) {
+      return $(item).attr('value');
+    }).toString();
+
+    if (!subway) { alert("지하철역을 입력해주세요."); return;}
+    else if (!res_name) { alert("상호를 입력해주세요."); return;}
+    else if (!rating) { alert("평점을 입력해주세요."); return;}
+
+    let file = document.querySelector('#file');
+    var fileList = file.files;
+
+    let img_urls = [];
+    Object.keys(fileList).map(function(key) {
+      var reader = new FileReader();
+      reader.addEventListener("load", function () {
+        var result = reader.result;
+        img_urls.push(result);
+      }, false);
+      reader.readAsDataURL(fileList[key]);
+    })
+
+    //fileReader가 base64 url들을 얻은 후 시행
+    setTimeout(function(){
+      console.log(img_urls)
+      console.log(`subway:${subway}, res_name:${res_name}, rating:${rating}, comment:${comment}, file:${file}`);
+      let region = DEFAULT_REGION;
+      const addContentReq = {
+        url: "/api/v1/users/add_chelinguide_item",
+        method: 'POST',
+        body: {
+          user_id,
+          res_name,
+          region,
+          subway,
+          rating,
+          comment,
+          mood,
+          price,
+          img_urls,
+        },
+        success: function (res) {
+          const _user_id = sessionStorage.getItem('name');
+          const _region = $('.place')[0].placeholder;
+          const _subway = $('.place-detail')[0].placeholder;
+          const _sortby = $('.order')[0].placeholder;
+          sendGetListReq(_user_id, _region, _subway, _sortby);
+        },
+        error: function (e) {
+          alert(e.message);
+        }
+      };
+      sendReq(addContentReq);
+    }, 500);
+  });
+
+
+  $('.modal-footer #modify-complete-btn').click(function() {
+    console.log('수정완료 버튼 클릭');
+    const subway = $('#modal-subway-right')[0].value;
+    const res_name = $("#modal-modify .res-name-input").attr('value');
+    const comment = $("#modal-modify textarea.comment-input").text();
+    const rating = $("#modal-modify .starRev").children(".starR1.on, .starR2.on").length * 0.5;
+    const mood = $.map($("#modal-modify button.messaging-button-checkbox.checked"), function(item) {
       return $(item).attr('value');
     }).toString();
     const price = $.map($("img.checkbox-img.checked"), function(item) {
@@ -367,7 +432,7 @@ $(document).ready(() => {
     }).toString();
 
     if (!subway) { alert("지하철역을 입력해주세요."); return;}
-    else if (!res_name) { alert("상호를 입력해주세요."); return;}
+    if (!res_name) { alert("상호를 입력해주세요."); return;}
     else if (!rating) { alert("평점을 입력해주세요."); return;}
 
     let file = document.querySelector('#file');
