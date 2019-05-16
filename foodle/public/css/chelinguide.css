@@ -1226,6 +1226,14 @@ input[type=checkbox]:checked + label:before {
     padding-left: 20px;
     /* font-size: 8px; */
 }
+#share-modal button {
+  background: #ffffff;
+  border: transparent;
+  border-radius: 0;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  font-size: 18px;
+}
 
 .swiper-container {
   /* width: 100%;

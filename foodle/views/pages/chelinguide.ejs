@@ -65,16 +65,20 @@
           </div>
 
           <div id="function-bar" class="function-bar">
-            <span class="function-button" id="share-function-button">
-              공유하기
-            </span>
+            <span class="function-button" id="share-function-button">공유하기</span>
             <img src="/images/main-06.png" class="function-icon" id="share-function-icon">
+            <div class="modal fade bd-example-modal-sm" id="share-modal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                    <button id="share-kakao-btn" class="share-modal-btn">카카오톡으로 공유하기</button>
+                    <button id="sharefacebook-btn" class="share-modal-btn">페이스북으로 공유하기</button>
+                  </div>
+                </div>
+            </div>
 
             <div class="null-function-button"></div>
 
-            <div class="function-button" id="add-function-button" data-toggle="modal" data-target="#plus-list">
-              추가하기
-            </div>
+            <div class="function-button" id="add-function-button" data-toggle="modal" data-target="#plus-list">추가하기</div>
             <img src="/images/main-05.png" class="function-icon" id="add-function-icon">
 
 

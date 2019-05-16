@@ -329,6 +329,7 @@ $(document).ready(() => {
 
   $('#share-function-button, #share-function-icon').click(function() {
     console.log('공유하기 버튼 클릭');
+    setTimeout(() => {$("#share-modal").modal('show')}, 200);
   });
 
   $('#add-function-button, #add-function-icon').click(function() {
