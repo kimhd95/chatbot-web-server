@@ -78,7 +78,6 @@ function modifyButtonClick(selector) {
       $("#modal-modify select.subway-input").val(res_subway);
       $("input.res-name-input").val(res_name);
       $("textarea.comment-input").val(comment);
-
       // 별점 set
       const idx = parseFloat(rating)*2;
       $("#modal-modify .starRev").children().each(function(index) {
@@ -86,7 +85,6 @@ function modifyButtonClick(selector) {
           $(this).addClass("on");
         }
       });
-
       // 분위기 set
       if (res_mood) {
         moodList.forEach(m => {
@@ -95,7 +93,6 @@ function modifyButtonClick(selector) {
           }
         });
       }
-
       // 가격 set
       if (res_price) {
         priceList.forEach(m => {
@@ -118,6 +115,38 @@ function modifyButtonClick(selector) {
 
   sendReq(getItemInfoReq);
 }
+// 삭제
+function deleteButtonClick(selector) {
+  console.log("삭제하기 클릭");
+  
+  if (confirm("정말 삭제하시겠습니까?") == false) {return;}
+
+  const id = selector.parents(".modal.fade.show").attr('id').replace('content-detail-', '');
+  const user_id = sessionStorage.getItem('email');
+  console.log(id, user_id);
+
+  const deleteItemReq = {
+    url: "/api/v1/users/delete_chelinguide_item",
+    method: 'POST',
+    body: {
+      user_id,
+      id,
+    },
+    success: function (res) {
+      alert("삭제되었습니다.");
+      const subway = $('.place-detail')[0].placeholder;
+      const sortby = $('#order-list button')[i].innerHTML.replace(/ /gi, '');
+      sendGetListReq(user_id, region, subway, sortby);
+    },
+    error: function (e) {
+      console.log(e);
+      return;
+    }
+  };
+
+  sendReq(deleteItemReq);
+}
+
 function showMapButtonClick(selector) {
   console.log("지도보기 클릭");
   const subway = $("input.place-detail").attr('placeholder');
@@ -196,7 +225,10 @@ function appendContent(i, id, res_name, rating, comment, res_mood, res_food_name
             </div>
           </div>
           <div class="modal-footer">
-            <div class="modal-detail-footer-btn"><button class="modify-button" onclick="modifyButtonClick($(this));">수정하기</button></div>
+            <div class="modal-detail-footer-btn">
+              <button class="delete-button" onclick="deleteButtonClick($(this));">삭제하기</button>
+              <button class="modify-button" onclick="modifyButtonClick($(this));">수정하기</button>
+            </div>
           </div>
       </div>
     </div>
@@ -246,9 +278,8 @@ function sortBySubway(i) {
 }
 
 function scoreFunction() {
-  let score;
-  score = $('#modal-score-select')[0].value;
-  document.getElementById("score-image").src = `/images/${score}점.png`
+  const score = $('#modal-score-select')[0].value;
+  $("#score-image").attr('src', `/images/${score}점.png`);
 }
 
 $(document).ready(() => {
@@ -256,7 +287,7 @@ $(document).ready(() => {
   var swiper = new Swiper('.swiper-container');
   const user_id = sessionStorage.getItem('email');
   let name = (!sessionStorage.getItem('name') || sessionStorage.getItem('name') === '비회원') ? '' : sessionStorage.getItem('name').substr(1);
-  document.getElementById('contents-bar').textContent = `${name}슐랭 가이드`;
+  $('#contents-bar').text(`${name}슐랭 가이드`);
 
   sendGetListReq(user_id, DEFAULT_REGION, DEFAULT_SUBWAY, DEFAULT_SORTBY);
 
@@ -295,14 +326,6 @@ $(document).ready(() => {
     console.log(msg);
   });
 
-  // $('#place-list-button').click(function() {
-  //   console.log('지역선택 버튼 클릭');
-  // });
-  //
-  // $('#order-list-button').click(function() {
-  //   console.log('정렬기준선택 버튼 클릭');
-  // });
-
   $('#share-function-button, #share-function-icon').click(function() {
     console.log('공유하기 버튼 클릭');
   });
@@ -322,8 +345,6 @@ $(document).ready(() => {
     $('#plus-list').modal('hide')
     setTimeout(function(){$('#detail-plus-list').modal('show')}, 200);
   });
-
-
 
   $('.starRev span').click(function() {
     $(this).parent().children('span').removeClass('on');
@@ -467,7 +488,7 @@ $(document).ready(() => {
           img_urls,
         },
         success: function (res) {
-          resetPlusModal();
+          resetModifyModal();
           const _user_id = sessionStorage.getItem('email');
           const _region = $('.place')[0].placeholder;
           const _subway = $('.place-detail')[0].placeholder;

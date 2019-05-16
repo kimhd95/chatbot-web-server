@@ -1124,7 +1124,7 @@ input[type=checkbox]:checked + label:before {
   padding-top: 1.3vh;
 }
 
-.modify-button {
+.modify-button, .delete-button {
   border: transparent;
   background-color: transparent;
   color: gray;
