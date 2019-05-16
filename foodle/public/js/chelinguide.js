@@ -33,6 +33,18 @@ function swipeNext(selector) {
   const idx = imgParent.children('.res-img[style*=inline]:last').index() + 1;
   selector.parent().parent().next('.modal-res-img-swiper-ui').text(idx + uiText.slice(1));
 }
+function resetPlusModal() {
+  $("#plus-list select.modal-subway-right").val($("#plus-list select.modal-subway-right").children(":first").val());
+  $("#plus-list input.modal-resname-right, #plus-list input.modal-comment-right").val('');
+  $("#plus-list .starRev").children().removeClass("on");
+  //파일
+  $("#detail-plus-list .modal-picture input#file").val('');
+  //분위기
+  $("#detail-plus-list .modal-mood button.messaging-button-checkbox.checked").removeClass("checked");
+  //가격
+  $("#detail-plus-list .modal-price img.checkbox-img").removeClass("checked");
+  $("#detail-plus-list .modal-price img.checkbox-img").attr('src', CHECKBOX_IMAGE_SRC);
+}
 
 function modifyButtonClick(selector) {
   console.log("수정하기 클릭");
@@ -311,38 +323,7 @@ $(document).ready(() => {
     setTimeout(function(){$('#detail-plus-list').modal('show')}, 200);
   });
 
-  $('#upload-btn').click(function() {
-    console.log('등록하기 버튼 클릭');
-    const subway = $('#modal-subway-right')[0].value;
-    const res_name = $('#res-name')[0].value;
-    const comment = $('#comment')[0].value;
-    const region = DEFAULT_REGION;
-    const rating = $(".starRev").children(".starR1.on, .starR2.on").length * 0.5;
 
-    const addContentReq = {
-      url: "/api/v1/users/add_chelinguide_item",
-      method: 'POST',
-      body: {
-        user_id,
-        res_name,
-        region,
-        subway,
-        rating,
-        comment,
-      },
-      success: function (res) {
-        const _user_id = sessionStorage.getItem('email');
-        const _region = $('.place')[0].placeholder;
-        const _subway = $('.place-detail')[0].placeholder;
-        const _sortby = $('.order')[0].placeholder;
-        sendGetListReq(_user_id, _region, _subway, _sortby);
-      },
-      error: function (e) {
-        alert(e.message);
-      }
-    };
-    sendReq(addContentReq);
-  });
 
   $('.starRev span').click(function() {
     $(this).parent().children('span').removeClass('on');
@@ -370,11 +351,12 @@ $(document).ready(() => {
   });
 
 
-  $('#upload-detail-btn').click(function() {
+  $('#upload-btn, #upload-detail-btn').click(function() {
     console.log('자세히 등록하기 버튼 클릭');
-    const subway = $('#modal-subway-right')[0].value;
-    const res_name = $('#res-name')[0].value;
-    const comment = $('#comment')[0].value;
+    const region = DEFAULT_REGION;
+    const subway = $('#plus-list #modal-subway-right')[0].value;
+    const res_name = $('#plus-list #res-name')[0].value;
+    const comment = $('#plus-list #comment')[0].value;
     const rating = $("#plus-list .starRev").children(".starR1.on, .starR2.on").length * 0.5;
     const mood = $.map($("#detail-plus-list button.messaging-button-checkbox.checked"), function(item) {
       return $(item).attr('value');
@@ -387,24 +369,22 @@ $(document).ready(() => {
     else if (!res_name) { alert("상호를 입력해주세요."); return;}
     else if (!rating) { alert("평점을 입력해주세요."); return;}
 
-    let file = document.querySelector('#file');
-    let fileList = file.files;
-
     let img_urls = [];
-    Object.keys(fileList).map(function(key) {
-      let reader = new FileReader();
-      reader.addEventListener("load", function () {
-        let result = reader.result;
-        img_urls.push(result);
-      }, false);
-      reader.readAsDataURL(fileList[key]);
-    })
 
-    //fileReader가 base64 url들을 얻은 후 시행
-    setTimeout(function(){
-      console.log(img_urls)
-      console.log(`subway:${subway}, res_name:${res_name}, rating:${rating}, comment:${comment}, file:${file}`);
-      let region = DEFAULT_REGION;
+    new Promise((resolve, reject) => {
+      let file = document.querySelector('#file');
+      let fileList = file.files;
+      Object.keys(fileList).map(key => {
+        let reader = new FileReader();
+        reader.addEventListener("load", function () {
+          let result = reader.result;
+          img_urls.push(result);
+        }, false);
+        reader.readAsDataURL(fileList[key]);
+      });
+      resolve();
+    }).then(() => {
+      console.log(`mood:${mood}\n price:${price}, img_urls:${img_urls}`);
       const addContentReq = {
         url: "/api/v1/users/add_chelinguide_item",
         method: 'POST',
@@ -431,7 +411,10 @@ $(document).ready(() => {
         }
       };
       sendReq(addContentReq);
-    }, 500);
+      resetPlusModal();
+    }).catch(err => {
+      console.log("Promise Error.");
+    });
   });
 
 
