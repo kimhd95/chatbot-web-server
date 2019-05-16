@@ -102,7 +102,7 @@ function modifyButtonClick(selector) {
           }
         });
       }
-      $("#modal-modify .modal-footer #modify-complete-btn").attr('value', id);
+      $("#modal-modify").attr('value', id);
 
       $(`#content-detail-${id}`).modal('hide');
       setTimeout(() => { $('#modal-modify').modal('show'); }, 200);
@@ -337,8 +337,14 @@ $(document).ready(() => {
   });
 
   $("#back-to-modal").click(function(){
-    $('#detail-plus-list').modal('hide')
+    $('#detail-plus-list').modal('hide');
     setTimeout(function(){$('#plus-list').modal('show')}, 200);
+  });
+
+  $("#back-to-content-detail").click(function(){
+    const id = $("#modal-modify").attr('value');
+    $('#modal-modify').modal('hide');
+    setTimeout(function(){$(`#content-detail-${id}`).modal('show')}, 200);
   });
 
   $('.modal-comment-detail').click(function() {
