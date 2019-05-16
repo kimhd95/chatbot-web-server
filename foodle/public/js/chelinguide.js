@@ -141,7 +141,7 @@ function appendContent(i, id, res_name, rating, comment, res_mood, res_food_name
           <div class="modal-body">
             <div class="modal-res-image-layout">
               <div class="modal-res-image-layout-left">
-                <img src="images/inf-swipe-left.png" class="swiper-btn" onclick="swipePrev($(this));">
+                <img src="images/inf-swipe-left.png" class="swiper-btn" ${res_images.filter(n => n).length > 1 ? `onclick="swipePrev($(this));"` : ''}>
               </div>
               <div class="modal-res-image-layout-center">
                 <img src="${(res_images[0]) ? res_images[0] : NO_IMAGE_SRC}" class="res-img" style="display: inline;">
@@ -151,7 +151,7 @@ function appendContent(i, id, res_name, rating, comment, res_mood, res_food_name
                 ${res_images[4] ? `<img src="${res_images[4]}" class="res-img" style="display: none;">` : ``}
               </div>
               <div class="modal-res-image-layout-right">
-                <img src="images/inf-swipe-right.png" class='swiper-btn' onclick="swipeNext($(this));">
+                <img src="images/inf-swipe-right.png" class='swiper-btn' ${res_images.filter(n => n).length > 1 ? `onclick="swipeNext($(this));"` : ''}>
               </div>
             </div>
             <div class="modal-res-img-swiper-ui">${res_images.filter(n => n).length > 0?1:0}/${res_images.filter(n => n).length}</div>
