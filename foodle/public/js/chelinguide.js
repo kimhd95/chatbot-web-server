@@ -118,7 +118,7 @@ function modifyButtonClick(selector) {
 // 삭제
 function deleteButtonClick(selector) {
   console.log("삭제하기 클릭");
-  
+
   if (confirm("정말 삭제하시겠습니까?") == false) {return;}
 
   const id = selector.parents(".modal.fade.show").attr('id').replace('content-detail-', '');
@@ -134,8 +134,9 @@ function deleteButtonClick(selector) {
     },
     success: function (res) {
       alert("삭제되었습니다.");
-      const subway = $('.place-detail')[0].placeholder;
-      const sortby = $('#order-list button')[i].innerHTML.replace(/ /gi, '');
+      const region = $('#category-bar .place').attr('placeholder');
+      const subway = $('#category-bar .place-detail').attr('placeholder');
+      const sortby = $('#category-bar .order').attr('placeholder');
       sendGetListReq(user_id, region, subway, sortby);
     },
     error: function (e) {
@@ -143,7 +144,7 @@ function deleteButtonClick(selector) {
       return;
     }
   };
-
+  $(`#content-detail-${id}`).modal('hide');
   sendReq(deleteItemReq);
 }
 
