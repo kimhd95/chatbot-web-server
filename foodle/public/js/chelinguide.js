@@ -421,6 +421,7 @@ $(document).ready(() => {
   $('.modal-footer #modify-complete-btn').click(function() {
     console.log('수정완료 버튼 클릭');
     const id = $(this).attr('value');
+    const region = DEFAULT_REGION;
     const subway = $('#modal-modify select.subway-input').val();
     const res_name = $("#modal-modify .res-name-input").val();
     const comment = $("#modal-modify textarea.comment-input").val();
@@ -436,22 +437,21 @@ $(document).ready(() => {
     if (!res_name) { alert("상호를 입력해주세요."); return;}
     else if (!rating) { alert("평점을 입력해주세요."); return;}
 
-    let file = document.querySelector('#modify-file');
-    let fileList = file.files;
-
     let img_urls = [];
-    Object.keys(fileList).map(function(key) {
-      let reader = new FileReader();
-      reader.addEventListener("load", function () {
-        let result = reader.result;
-        img_urls.push(result);
-      }, false);
-      reader.readAsDataURL(fileList[key]);
-    })
 
-    //fileReader가 base64 url들을 얻은 후 시행
-    setTimeout(function(){
-      let region = DEFAULT_REGION;
+    new Promise((resolve, reject) => {
+      let file = document.querySelector('#file');
+      let fileList = file.files;
+      Object.keys(fileList).map(key => {
+        let reader = new FileReader();
+        reader.addEventListener("load", function () {
+          let result = reader.result;
+          img_urls.push(result);
+        }, false);
+        reader.readAsDataURL(fileList[key]);
+      });
+      resolve();
+    }).then(() => {
       console.log(id, user_id, res_name, region, subway, rating, comment, price, mood);
       const modifyItemReq = {
         url: "/api/v1/users/modify_chelinguide_item",
@@ -481,8 +481,10 @@ $(document).ready(() => {
         }
       };
       sendReq(modifyItemReq);
-    }, 500);
-
+      resetPlusModal();
+    }).catch(err => {
+      console.log("Promise Error.");
+    });
   });
 
 });
