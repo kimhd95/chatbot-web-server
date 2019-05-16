@@ -45,6 +45,17 @@ function resetPlusModal() {
   $("#detail-plus-list .modal-price img.checkbox-img").removeClass("checked");
   $("#detail-plus-list .modal-price img.checkbox-img").attr('src', CHECKBOX_IMAGE_SRC);
 }
+function resetModifyModal() {
+  // 이미지 선택창 초기화
+  $("#modal-modify #modify-file").val('');
+  // 평점
+  $("#modal-modify .starRev").children().removeClass("on");
+  // 분위기
+  $("#modal-modify .modal-mood button.messaging-button-checkbox.checked").removeClass("checked");
+  // 가격
+  $("#modal-modify .modal-price .checkbox-img").removeClass("checked");
+  $("#modal-modify .modal-price .checkbox-img").attr('src', CHECKBOX_IMAGE_SRC);
+}
 
 function modifyButtonClick(selector) {
   console.log("수정하기 클릭");
@@ -60,32 +71,23 @@ function modifyButtonClick(selector) {
       id,
     },
     success: function (res) {
-      console.log(res.message[0]);
+      resetModifyModal();
       const {res_name, res_subway, rating, comment, res_mood, res_price} = res.message[0];
-      console.log(res_name, rating, comment, res_mood, res_price);
-
-      // 이미지 선택창 초기화
-      $("#modal-modify #modify-file").val('');
 
       // 지하철역, 상호, 한줄평 set
-      // $("#modal-modify select.subway-input").children(`option[selected="true"]`).attr('selected', false);
       $("#modal-modify select.subway-input").val(res_subway);
       $("input.res-name-input").val(res_name);
       $("textarea.comment-input").val(comment);
 
       // 별점 set
       const idx = parseFloat(rating)*2;
-      const starRev = $(".modal-rating-starRev").children(".starRev");
-        // 평점 초기화
-      starRev.children().removeClass("on");
-      starRev.children().each(function(index) {
+      $("#modal-modify .starRev").children().each(function(index) {
         if (index < idx) {
           $(this).addClass("on");
         }
       });
 
       // 분위기 set
-      $("#modal-modify > div > div > .modal-body > .modal-mood button.messaging-button-checkbox.checked").removeClass("checked");
       if (res_mood) {
         moodList.forEach(m => {
           if (res_mood.includes(m)) {
@@ -95,13 +97,11 @@ function modifyButtonClick(selector) {
       }
 
       // 가격 set
-      $(".price-row > .checkbox-img").removeClass("checked");
-      $(".price-row > .checkbox-img").attr('src', CHECKBOX_IMAGE_SRC);
       if (res_price) {
         priceList.forEach(m => {
           if (res_price.includes(m)) {
-            $(`.price-row > .checkbox-img[value="${m}"]`).addClass("checked");
-            $(`.price-row > .checkbox-img[value="${m}"]`).attr('src', CHECKBOX_CHECKED_IMAGE_SRC);
+            $(`#modal-modify .modal-price .checkbox-img[value="${m}"]`).addClass("checked");
+            $(`#modal-modify .modal-price .checkbox-img[value="${m}"]`).attr('src', CHECKBOX_CHECKED_IMAGE_SRC);
           }
         });
       }
@@ -352,7 +352,7 @@ $(document).ready(() => {
 
 
   $('#upload-btn, #upload-detail-btn').click(function() {
-    console.log('자세히 등록하기 버튼 클릭');
+    console.log('등록 버튼 클릭');
     const region = DEFAULT_REGION;
     const subway = $('#plus-list #modal-subway-right')[0].value;
     const res_name = $('#plus-list #res-name')[0].value;
@@ -364,25 +364,24 @@ $(document).ready(() => {
     const price = $.map($("#detail-plus-list img.checkbox-img.checked"), function(item) {
       return $(item).attr('value');
     }).toString();
+    const img_urls = [];
 
     if (!subway) { alert("지하철역을 입력해주세요."); return;}
     else if (!res_name) { alert("상호를 입력해주세요."); return;}
     else if (!rating) { alert("평점을 입력해주세요."); return;}
 
-    let img_urls = [];
-
     new Promise((resolve, reject) => {
-      let file = document.querySelector('#file');
-      let fileList = file.files;
+      const file = document.querySelector('#file');
+      const fileList = file.files;
       Object.keys(fileList).map(key => {
-        let reader = new FileReader();
+        const reader = new FileReader();
         reader.addEventListener("load", function () {
-          let result = reader.result;
+          const result = reader.result;
           img_urls.push(result);
         }, false);
         reader.readAsDataURL(fileList[key]);
       });
-      resolve();
+      setTimeout(() => {resolve();}, 500);
     }).then(() => {
       console.log(`mood:${mood}\n price:${price}, img_urls:${img_urls}`);
       const addContentReq = {
@@ -400,6 +399,7 @@ $(document).ready(() => {
           img_urls,
         },
         success: function (res) {
+          resetPlusModal();
           const _user_id = sessionStorage.getItem('email');
           const _region = $('.place')[0].placeholder;
           const _subway = $('.place-detail')[0].placeholder;
@@ -411,7 +411,6 @@ $(document).ready(() => {
         }
       };
       sendReq(addContentReq);
-      resetPlusModal();
     }).catch(err => {
       console.log("Promise Error.");
     });
@@ -432,25 +431,24 @@ $(document).ready(() => {
     const price = $.map($("#modal-modify img.checkbox-img.checked"), function(item) {
       return $(item).attr('value');
     }).toString();
+    const img_urls = [];
 
     if (!subway) { alert("지하철역을 입력해주세요."); return;}
     if (!res_name) { alert("상호를 입력해주세요."); return;}
     else if (!rating) { alert("평점을 입력해주세요."); return;}
 
-    let img_urls = [];
-
     new Promise((resolve, reject) => {
-      let file = document.querySelector('#file');
-      let fileList = file.files;
+      const file = document.querySelector('#modify-file');
+      const fileList = file.files;
       Object.keys(fileList).map(key => {
-        let reader = new FileReader();
+        const reader = new FileReader();
         reader.addEventListener("load", function () {
-          let result = reader.result;
+          const result = reader.result;
           img_urls.push(result);
         }, false);
         reader.readAsDataURL(fileList[key]);
       });
-      resolve();
+      setTimeout(() => {resolve();}, 500);
     }).then(() => {
       console.log(id, user_id, res_name, region, subway, rating, comment, price, mood);
       const modifyItemReq = {
@@ -469,6 +467,7 @@ $(document).ready(() => {
           img_urls,
         },
         success: function (res) {
+          resetPlusModal();
           const _user_id = sessionStorage.getItem('email');
           const _region = $('.place')[0].placeholder;
           const _subway = $('.place-detail')[0].placeholder;
@@ -481,7 +480,6 @@ $(document).ready(() => {
         }
       };
       sendReq(modifyItemReq);
-      resetPlusModal();
     }).catch(err => {
       console.log("Promise Error.");
     });
