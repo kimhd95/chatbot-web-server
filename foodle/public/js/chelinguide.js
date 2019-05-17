@@ -81,7 +81,7 @@ function modifyButtonClick(selector) {
       $("textarea.comment-input").val(comment);
       // 별점 set
       const idx = parseFloat(rating)*2;
-      $("#modal-modify .starRev").children().each(index => {
+      $("#modal-modify .starRev").children().each(function (index) {
         if (index < idx) { $(this).addClass("on"); }
       });
       // 분위기 set
