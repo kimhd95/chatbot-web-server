@@ -371,7 +371,31 @@
         <script src="/js/base.js"></script>
         <script src="/js/chelinguide.js"></script>
         <script src="/socket.io/socket.io.js"></script>
+        <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
         <!-- <script src="/js/event.js"></script> -->
         <!-- <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script> -->
+        <script type="text/javascript">
+          Kakao.init('25750dfff20e0fff39840db368e1236d');
+          window.fbAsyncInit = function() {
+            FB.init({
+              appId      : '577461736068907',
+              cookie     : true,
+              xfbml      : true,
+              version    : 'v3.2'
+            });
+            FB.AppEvents.logPageView();
+
+          };
+
+          (function(d, s, id){
+             var js, fjs = d.getElementsByTagName(s)[0];
+             if (d.getElementById(id)) {return;}
+             js = d.createElement(s); js.id = id;
+             js.src = "https://connect.facebook.net/en_US/sdk.js";
+             fjs.parentNode.insertBefore(js, fjs);
+           }(document, 'script', 'facebook-jssdk'));
+
+        </script>
+
     </body>
 </html>
