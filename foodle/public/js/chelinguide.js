@@ -327,15 +327,105 @@ $(document).ready(() => {
     console.log(msg);
   });
 
+  $('#add-function-button, #add-function-icon').click(function() {
+    console.log('추가하기 버튼 클릭');
+    $('#plus-list').modal('show')
+  });
+
   $('#share-function-button, #share-function-icon').click(function() {
     console.log('공유하기 버튼 클릭');
     setTimeout(() => {$("#share-modal").modal('show')}, 200);
   });
 
-  $('#add-function-button, #add-function-icon').click(function() {
-    console.log('추가하기 버튼 클릭');
-    $('#plus-list').modal('show')
+  $("#share-kakao-btn").click(() => {
+    $('#share-kakao-btn').attr({
+      "data-dismiss": 'modal',
+      "aria-hidden": true
+    });
+    setTimeout(function() {
+      html2canvas($('#chelinguide-room'), {
+         onrendered: function(canvas) {
+           var imgData = canvas.toDataURL('image/png');
+           socket.emit('save screenshot', imgData, 'kakao');
+         }
+       });
+    }, 300);
+  })
+
+  $('#share-facebook-btn').click(function() {
+    $('#share-facebook-btn').attr({
+      "data-dismiss": 'modal',
+      "aria-hidden": true
+    });
+    setTimeout(function() {
+      html2canvas($('#chelinguide-room'), {
+         onrendered: function(canvas) {
+           var imgData = canvas.toDataURL('image/png');
+           socket.emit('save screenshot', imgData, 'facebook');
+         }
+       });
+    }, 300);
   });
+
+  // socket.on('saved screenshot', function(url, msg) {
+  //   if(msg == 'kakao') {
+  //       Kakao.Link.scrapImage({
+  //         imageUrl: url
+  //       }).then(function(res){
+  //         console.log(res.infos.original.url);
+  //         socket.emit('delete screenshot')
+  //         Kakao.Link.sendDefault({
+  //           objectType: 'feed',
+  //           content: {
+  //             title: '외식코기 베리베리굳',
+  //             description: '#어플 #추천 #선택장애 #맛집추천 #술집추천 #카페추천',
+  //             imageUrl: res.infos.original.url,
+  //             link: {
+  //               mobileWebUrl: res.infos.original.url,
+  //               webUrl: res.infos.original.url
+  //             }
+  //           },
+  //           buttons: [
+  //             {
+  //               title: '외식코기에게 추천 받으러 가기',
+  //               link: {
+  //                 mobileWebUrl: 'https://corgi.jellylab.io',
+  //                 webUrl: 'https://corgi.jellylab.io'
+  //               }
+  //             },
+  //           ]
+  //         });
+  //       }).catch(function(err) {
+  //         console.log("카카오톡 scrap api catch");
+  //         console.log(err);
+  //         socket.emit('delete screenshot')
+  //       })
+  //   } else if(msg == 'facebook') {
+  //     Kakao.Link.scrapImage({
+  //       imageUrl: url
+  //     }).then(function(res){
+  //       socket.emit('delete screenshot')
+  //       console.log(res.infos.original.url)
+  //       FB.ui({
+  //         method: 'share_open_graph',
+  //         hashtag: '#외식코기',
+  //         action_type: 'og.likes',
+  //         action_properties: JSON.stringify({
+  //           object: {
+  //             'og:url': 'https://corgi.jellylab.io',
+  //             'og:title': '외식코기 베리베리굳',
+  //             'og:description': '#어플 #추천 #선택장애 #맛집추천 #술집추천 #카페추천',
+  //             'og:image': res.infos.original.url,
+  //           }
+  //         })
+  //       });
+  //     }).catch(function(err) {
+  //       console.log("카카오톡 scrap api catch");
+  //       console.log(err);
+  //       socket.emit('delete screenshot')
+  //     })
+  //   }
+  // });
 
   $("#back-to-modal").click(function(){
     $('#detail-plus-list').modal('hide');
