@@ -293,7 +293,7 @@ $(document).ready(() => {
   sendGetListReq(user_id, DEFAULT_REGION, DEFAULT_SUBWAY, DEFAULT_SORTBY);
 
 
-  $("#back-to-lobby").click(() => {
+  $("#back-to-lobby").click(function () {
     location.href='/lobby';
   });
 
@@ -327,17 +327,17 @@ $(document).ready(() => {
     console.log(msg);
   });
 
-  $('#add-function-button, #add-function-icon').click(() => {
+  $('#add-function-button, #add-function-icon').click(function () {
     console.log('추가하기 버튼 클릭');
     $('#plus-list').modal('show');
   });
 
-  $('#share-function-button, #share-function-icon').click(() => {
+  $('#share-function-button, #share-function-icon').click(function () {
     console.log('공유하기 버튼 클릭');
     setTimeout(() => {$("#share-modal").modal('show')}, 200);
   });
 
-  $("#share-kakao-btn").click(() => {
+  $("#share-kakao-btn").click(function () {
     $('#share-kakao-btn').attr({
       "data-dismiss": 'modal',
       "aria-hidden": true
@@ -352,7 +352,7 @@ $(document).ready(() => {
     }, 300);
   })
 
-  $('#share-facebook-btn').click(() => {
+  $('#share-facebook-btn').click(function () {
     $('#share-facebook-btn').attr({
       "data-dismiss": 'modal',
       "aria-hidden": true
@@ -419,34 +419,37 @@ $(document).ready(() => {
 
   });
 
-  $("#back-to-modal").click(() => {
+  $("#back-to-modal").click(function () {
     $('#detail-plus-list').modal('hide');
     setTimeout(() => { $('#plus-list').modal('show'); }, 200);
   });
 
-  $("#back-to-content-detail").click(() => {
+  $("#back-to-content-detail").click(function () {
     const id = $("#modal-modify").attr('value');
     $('#modal-modify').modal('hide');
     setTimeout(() => { $(`#content-detail-${id}`).modal('show'); }, 200);
   });
 
-  $('.modal-comment-detail').click(() => {
+  $('.modal-comment-detail').click(function () {
     console.log('자세히 추가하기 버튼 클릭');
     $('#plus-list').modal('hide');
     setTimeout(() => { $('#detail-plus-list').modal('show'); }, 200);
   });
 
-  $('.starRev span').click(() => {
-    $(this).parent().children('span').removeClass('on');
+  $('.starRev span').click(function () {
+    console.log("click");
+    console.log($(this).attr('class'));
+    $(this).siblings('span').removeClass('on');
     $(this).addClass('on').prevAll('span').addClass('on');
+    // $("#modal-modify .starRev").children().addClass("on");
     return false;
   });
 
-  $(".messaging-button-checkbox").click(() => {
+  $(".messaging-button-checkbox").click(function () {
     $(this).attr('class') === 'messaging-button-checkbox checked' ? $(this).removeClass('checked') : $(this).addClass('checked');
   });
 
-  $(".checkbox-img").click(() => {
+  $(".checkbox-img").click(function () {
     if ($(this).attr('class') === 'checkbox-img checked') {
       $(this).removeClass('checked');
       $(this).attr('src', '/images/cb.png');
@@ -456,13 +459,13 @@ $(document).ready(() => {
     }
   });
 
-  $(".checkbox-img-checked").click(() => {
+  $(".checkbox-img-checked").click(function () {
     $(this).attr('src', '/images/cb.png');
     $(this).attr('class', 'checkbox-img');
   });
 
 
-  $('#upload-btn, #upload-detail-btn').click(() => {
+  $('#upload-btn, #upload-detail-btn').click(function () {
     console.log('등록 버튼 클릭');
     const region = DEFAULT_REGION;
     const subway = $('#plus-list #modal-subway-right')[0].value;
@@ -526,7 +529,7 @@ $(document).ready(() => {
   });
 
 
-  $('.modal-footer #modify-complete-btn').click(() => {
+  $('.modal-footer #modify-complete-btn').click(function () {
     console.log('수정완료 버튼 클릭');
     const id = $(this).attr('value');
     const region = DEFAULT_REGION;

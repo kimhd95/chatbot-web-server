@@ -742,7 +742,7 @@ input[type=checkbox]:checked + label:before {
 }
 
 .starR1{
-    background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat -52px 0;
+    background: url('../images/star.png') no-repeat -52px 0;
     background-size: auto 100%;
     width: 15px;
     height: 30px;
@@ -751,7 +751,7 @@ input[type=checkbox]:checked + label:before {
     cursor: pointer;
 }
 .starR2{
-    background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
+    background: url('../images/star.png') no-repeat right 0;
     background-size: auto 100%;
     width: 15px;
     height: 30px;
@@ -763,7 +763,7 @@ input[type=checkbox]:checked + label:before {
 .starR2.on{background-position:-15px 0;}
 
 .starR1-big{
-    background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat -83.2px 0;
+    background: url('../images/star.png') no-repeat -83.2px 0;
     background-size: auto 100%;
     width: 24px;
     height: 48px;
@@ -772,7 +772,7 @@ input[type=checkbox]:checked + label:before {
     cursor: pointer;
 }
 .starR2-big{
-    background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
+    background: url('../images/star.png') no-repeat right 0;
     background-size: auto 100%;
     width: 24px;
     height: 48px;
