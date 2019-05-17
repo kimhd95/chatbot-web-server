@@ -9,6 +9,8 @@ const priceList = ['1만원 미만', '1만원 대', '2~3만원 대', '4만원 �
 
 function swipePrev(selector) {
   const imgParent = selector.parent().next();
+  // const id = selector.closest(".modal.fade.show").attr('id').replace('content-detail-', '');
+  // console.log(id);
   const uiText = selector.parent().parent().next('.modal-res-img-swiper-ui').text();
   if (imgParent.children('.res-img[style*=inline]:first').prev().attr('style')) {
     imgParent.children('.res-img[style*=inline]:first').prev().attr('style', 'display: inline;');
@@ -61,7 +63,6 @@ function modifyButtonClick(selector) {
   console.log("수정하기 클릭");
   const id = selector.parents(".modal.fade.show").attr('id').replace('content-detail-', '');
   const user_id = sessionStorage.getItem('email');
-  console.log(id, user_id);
 
   const getItemInfoReq = {
     url: "/api/v1/users/get_chelinguide_item_info",
@@ -80,10 +81,8 @@ function modifyButtonClick(selector) {
       $("textarea.comment-input").val(comment);
       // 별점 set
       const idx = parseFloat(rating)*2;
-      $("#modal-modify .starRev").children().each(function(index) {
-        if (index < idx) {
-          $(this).addClass("on");
-        }
+      $("#modal-modify .starRev").children().each(index => {
+        if (index < idx) { $(this).addClass("on"); }
       });
       // 분위기 set
       if (res_mood) {
@@ -112,9 +111,9 @@ function modifyButtonClick(selector) {
       return;
     }
   };
-
   sendReq(getItemInfoReq);
 }
+
 // 삭제
 function deleteButtonClick(selector) {
   console.log("삭제하기 클릭");
@@ -262,7 +261,7 @@ function sendGetListReq(user_id, region, subway, sortby) {
 
 function selectSortBy(i) {
     const user_id = sessionStorage.getItem('email');
-    const region = '서울';
+    const region = DEFAULT_REGION;
     const subway = $('.place-detail')[0].placeholder;
     const sortby = $('#order-list button')[i].innerHTML.replace(/ /gi, '');
     $('.order')[0].placeholder = sortby;
@@ -271,7 +270,7 @@ function selectSortBy(i) {
 
 function sortBySubway(i) {
     const user_id = sessionStorage.getItem('email');
-    const region = '서울';
+    const region = DEFAULT_REGION;
     const subway = $('#place-list button')[i].innerHTML.replace(/ /gi, '');
     const sortby = $('.order')[0].placeholder;
     $('.place-detail')[0].placeholder = subway;
@@ -287,17 +286,18 @@ $(document).ready(() => {
   var socket = io();
   var swiper = new Swiper('.swiper-container');
   const user_id = sessionStorage.getItem('email');
-  let name = (!sessionStorage.getItem('name') || sessionStorage.getItem('name') === '비회원') ? '' : sessionStorage.getItem('name').substr(1);
+  let name = sessionStorage.getItem('name');
+  name = (!name || name === '비회원') ? '' : name.substr(1);
   $('#contents-bar').text(`${name}슐랭 가이드`);
 
   sendGetListReq(user_id, DEFAULT_REGION, DEFAULT_SUBWAY, DEFAULT_SORTBY);
 
 
-  $("#back-to-lobby").click(function(){
+  $("#back-to-lobby").click(() => {
     location.href='/lobby';
   });
 
-  $('.food-content').click(function(e) {
+  $('.food-content').click(e => {
     const tar = $(e.target);
     let msg;
     switch(tar.attr('class')) {
@@ -327,12 +327,12 @@ $(document).ready(() => {
     console.log(msg);
   });
 
-  $('#add-function-button, #add-function-icon').click(function() {
+  $('#add-function-button, #add-function-icon').click(() => {
     console.log('추가하기 버튼 클릭');
-    $('#plus-list').modal('show')
+    $('#plus-list').modal('show');
   });
 
-  $('#share-function-button, #share-function-icon').click(function() {
+  $('#share-function-button, #share-function-icon').click(() => {
     console.log('공유하기 버튼 클릭');
     setTimeout(() => {$("#share-modal").modal('show')}, 200);
   });
@@ -342,7 +342,7 @@ $(document).ready(() => {
       "data-dismiss": 'modal',
       "aria-hidden": true
     });
-    setTimeout(function() {
+    setTimeout(() => {
       html2canvas($('#chelinguide-room'), {
          onrendered: function(canvas) {
            var imgData = canvas.toDataURL('image/png');
@@ -352,12 +352,12 @@ $(document).ready(() => {
     }, 300);
   })
 
-  $('#share-facebook-btn').click(function() {
+  $('#share-facebook-btn').click(() => {
     $('#share-facebook-btn').attr({
       "data-dismiss": 'modal',
       "aria-hidden": true
     });
-    setTimeout(function() {
+    setTimeout(() => {
       html2canvas($('#chelinguide-room'), {
          onrendered: function(canvas) {
            var imgData = canvas.toDataURL('image/png');
@@ -427,35 +427,35 @@ $(document).ready(() => {
   //   }
   // });
 
-  $("#back-to-modal").click(function(){
+  $("#back-to-modal").click(() => {
     $('#detail-plus-list').modal('hide');
-    setTimeout(function(){$('#plus-list').modal('show')}, 200);
+    setTimeout(() => { $('#plus-list').modal('show'); }, 200);
   });
 
-  $("#back-to-content-detail").click(function(){
+  $("#back-to-content-detail").click(() => {
     const id = $("#modal-modify").attr('value');
     $('#modal-modify').modal('hide');
-    setTimeout(function(){$(`#content-detail-${id}`).modal('show')}, 200);
+    setTimeout(() => { $(`#content-detail-${id}`).modal('show'); }, 200);
   });
 
-  $('.modal-comment-detail').click(function() {
+  $('.modal-comment-detail').click(() => {
     console.log('자세히 추가하기 버튼 클릭');
-    $('#plus-list').modal('hide')
-    setTimeout(function(){$('#detail-plus-list').modal('show')}, 200);
+    $('#plus-list').modal('hide');
+    setTimeout(() => { $('#detail-plus-list').modal('show'); }, 200);
   });
 
-  $('.starRev span').click(function() {
+  $('.starRev span').click(() => {
     $(this).parent().children('span').removeClass('on');
     $(this).addClass('on').prevAll('span').addClass('on');
     return false;
   });
 
-  $(".messaging-button-checkbox").click(function() {
+  $(".messaging-button-checkbox").click(() => {
     $(this).attr('class') === 'messaging-button-checkbox checked' ? $(this).removeClass('checked') : $(this).addClass('checked');
   });
 
-  $(".checkbox-img").click(function() {
-    if($(this).attr('class') === 'checkbox-img checked') {
+  $(".checkbox-img").click(() => {
+    if ($(this).attr('class') === 'checkbox-img checked') {
       $(this).removeClass('checked');
       $(this).attr('src', '/images/cb.png');
     } else {
@@ -464,13 +464,13 @@ $(document).ready(() => {
     }
   });
 
-  $(".checkbox-img-checked").click(function() {
+  $(".checkbox-img-checked").click(() => {
     $(this).attr('src', '/images/cb.png');
     $(this).attr('class', 'checkbox-img');
   });
 
 
-  $('#upload-btn, #upload-detail-btn').click(function() {
+  $('#upload-btn, #upload-detail-btn').click(() => {
     console.log('등록 버튼 클릭');
     const region = DEFAULT_REGION;
     const subway = $('#plus-list #modal-subway-right')[0].value;
@@ -494,15 +494,14 @@ $(document).ready(() => {
       const fileList = file.files;
       Object.keys(fileList).map(key => {
         const reader = new FileReader();
-        reader.addEventListener("load", function () {
+        reader.addEventListener("load", () => {
           const result = reader.result;
           img_urls.push(result);
         }, false);
         reader.readAsDataURL(fileList[key]);
       });
-      setTimeout(() => {resolve();}, 500);
+      setTimeout(() => { resolve(); }, 500);
     }).then(() => {
-      console.log(`mood:${mood}\n price:${price}, img_urls:${img_urls}`);
       const addContentReq = {
         url: "/api/v1/users/add_chelinguide_item",
         method: 'POST',
@@ -519,11 +518,10 @@ $(document).ready(() => {
         },
         success: function (res) {
           resetPlusModal();
-          const _user_id = sessionStorage.getItem('email');
           const _region = $('.place')[0].placeholder;
           const _subway = $('.place-detail')[0].placeholder;
           const _sortby = $('.order')[0].placeholder;
-          sendGetListReq(_user_id, _region, _subway, _sortby);
+          sendGetListReq(user_id, _region, _subway, _sortby);
         },
         error: function (e) {
           alert(e.message);
@@ -536,7 +534,7 @@ $(document).ready(() => {
   });
 
 
-  $('.modal-footer #modify-complete-btn').click(function() {
+  $('.modal-footer #modify-complete-btn').click(() => {
     console.log('수정완료 버튼 클릭');
     const id = $(this).attr('value');
     const region = DEFAULT_REGION;
@@ -561,7 +559,7 @@ $(document).ready(() => {
       const fileList = file.files;
       Object.keys(fileList).map(key => {
         const reader = new FileReader();
-        reader.addEventListener("load", function () {
+        reader.addEventListener("load", () => {
           const result = reader.result;
           img_urls.push(result);
         }, false);
@@ -587,11 +585,10 @@ $(document).ready(() => {
         },
         success: function (res) {
           resetModifyModal();
-          const _user_id = sessionStorage.getItem('email');
           const _region = $('.place')[0].placeholder;
           const _subway = $('.place-detail')[0].placeholder;
           const _sortby = $('.order')[0].placeholder;
-          sendGetListReq(_user_id, _region, _subway, _sortby);
+          sendGetListReq(user_id, _region, _subway, _sortby);
           alert("수정 완료");
         },
         error: function (e) {
