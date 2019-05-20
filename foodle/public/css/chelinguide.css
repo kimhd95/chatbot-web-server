@@ -354,6 +354,11 @@ body {
     font-size: 2vh;
     /* margin-top: 4vh; */
 }
+.under-button {
+  width: 2.3vh;
+  height: 3vh;
+  padding-bottom: 1vh;
+}
 .place-detail {
     width: 27%;
     height: 3.5vh;
