@@ -417,23 +417,22 @@ body {
   margin-top: 1vh;
   margin-right: 9vh;
 }
-.add-function-button {
+#add-function-button {
     display: flex;
-    width: 24%;
-    height: 5vh;
+    width: 16%;
+    height: 4vh;
     text-align: center;
+    border: transparent;
+    background-color: transparent;
+    margin-right: 3%;
 }
-.null-function-button {
+#share-function-button {
     display: flex;
-    width: 4%;
-    height: 5vh;
+    width: 16%;
+    height: 4vh;
     text-align: center;
-}
-.share-function-button {
-    display: flex;
-    width: 24%;
-    height: 5vh;
-    text-align: center;
+    border: transparent;
+    background-color: transparent;
 }
 
 .function-icon {
