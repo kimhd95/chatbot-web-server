@@ -336,9 +336,9 @@ $(document).ready(function() {
    // })
    //
    // // 구글 로그인 버튼 클릭
-   // $('.google-login').click(() => {
-   //     $('.abcRioButton').trigger('click');
-   // });
+   $('.google-login').click(function() {
+       $('.abcRioButton').trigger('click');
+   });
 
    $('#find-info').click(function(){
      $('#find-pw').modal('show');
