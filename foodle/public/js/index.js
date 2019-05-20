@@ -7,52 +7,52 @@ var pwEng;
 var pwSpe;
 
 // // 구글 로그인
-// function onSignIn(googleUser) {
-//     let profile = googleUser.getBasicProfile();
-//     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-//     console.log('Name: ' + profile.getName());
-//     console.log('Image URL: ' + profile.getImageUrl());
-//     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-//     if (googleUser.getAuthResponse().id_token) {
-//         const info = {
-//             url: '/api/v1/users/social_login',
-//             method: 'POST',
-//             body: {
-//                 email: profile.getEmail(),
-//                 name: profile.getName(),
-//                 token: googleUser.getAuthResponse().id_token
-//             },
-//             success: function (res) {
-//                 if (res.success) {
-//                     sessionStorage.setItem('email', profile.getEmail());
-//                     sessionStorage.setItem('login', '3');
-//                     window.location.replace(res.redirect)
-//                 } else {
-//                     console.log(res);
-//                 }
-//             },
-//             error: function (e) {
-//                 if (e.responseJSON.message === 'This email is Already signed up.') {
-//                     signOut();
-//                     localStorage.clear();
-//                     sessionStorage.clear();
-//                     alert('이미 가입된 이메일입니다.');
-//                 } else {
-//                     signOut();
-//                     alert('접근 불가능합니다.');
-//                 }
-//             }
-//         }
-//         sendTokenReq(info);
-//     }
-// }
+function onSignIn(googleUser) {
+    let profile = googleUser.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    if (googleUser.getAuthResponse().id_token) {
+        const info = {
+            url: '/api/v1/users/social_login',
+            method: 'POST',
+            body: {
+                email: profile.getEmail(),
+                name: profile.getName(),
+                token: googleUser.getAuthResponse().id_token
+            },
+            success: function (res) {
+                if (res.success) {
+                    sessionStorage.setItem('email', profile.getEmail());
+                    sessionStorage.setItem('login', '3');
+                    window.location.replace(res.redirect)
+                } else {
+                    console.log(res);
+                }
+            },
+            error: function (e) {
+                if (e.responseJSON.message === 'This email is Already signed up.') {
+                    signOut();
+                    localStorage.clear();
+                    sessionStorage.clear();
+                    alert('이미 가입된 이메일입니다.');
+                } else {
+                    signOut();
+                    alert('접근 불가능합니다.');
+                }
+            }
+        }
+        sendTokenReq(info);
+    }
+}
 // // 구글 로그아웃
-// function signOut() {
-//     var auth2 = gapi.auth2.getAuthInstance();
-//       auth2.signOut().then(function () {
-//         console.log('User signed out.');
-//     });
-// }
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+    });
+}
 // 이메일 로그인 validation check
 function loginValidationCheck() {
     email = $('.email').val();
@@ -214,19 +214,19 @@ $(document).ready(function() {
  // alert('Chrome');
  // window.location.replace('/error');
    // 네이버 로그인 설정
- //   let naverLogin = new naver.LoginWithNaverId(
- // 	{
- // 		clientId: "DnnpK9bi2MdliAiFZZUQ",
- //           // callbackUrl: "http://localhost:8001/",
- //           callbackUrl: location.href,
- //           callbackHandle: true,
- // 		isPopup: false, /* 팝업을 통한 연동처리 여부 */
- // 		loginButton: {color: "green", type: 3, height: 70} /* 로그인 버튼의 타입을 지정 */
- // 	}
- //   );
+   let naverLogin = new naver.LoginWithNaverId(
+ 	{
+ 		clientId: "DnnpK9bi2MdliAiFZZUQ",
+           // callbackUrl: "http://localhost:8001/",
+           callbackUrl: location.href,
+           callbackHandle: true,
+ 		isPopup: false, /* 팝업을 통한 연동처리 여부 */
+ 		loginButton: {color: "green", type: 3, height: 70} /* 로그인 버튼의 타입을 지정 */
+ 	}
+   );
  // /* 설정정보를 초기화하고 연동을 준비 */
- //   naverLogin.init();
- //   $('#naverIdLogin_loginButton img')[0].src = '/images/naver.png';
+   naverLogin.init();
+   $('#naverIdLogin_loginButton img')[0].src = '/images/naver.png';
    var loginValue = sessionStorage.getItem('login');
    // let emailValue = sessionStorage.getItem('email');
    // console.log(`LoginValue : ${loginValue}, emailValue : ${emailValue}`);
@@ -287,49 +287,49 @@ $(document).ready(function() {
        location.href='/lobby';
    }
 
-   // window.addEventListener('load', () => {
-   //     naverLogin.getLoginStatus((status) => {
-   //         if (status) {
-   //           let email = naverLogin.user.getEmail();
-   //           let name = naverLogin.user.getName();
-   //           let nickname = naverLogin.user.getNickName();
-   //           let birthday = naverLogin.user.getBirthday();
-   //           let age = naverLogin.user.getAge();
-   //           console.log(birthday);
-   //           const info = {
-   //             url: '/api/v1/users/social_login',
-   //             method: 'POST',
-   //             body: {
-   //                 email: email,
-   //                 name: name,
-   //                 token: naverLogin.accessToken.accessToken
-   //             },
-   //             success: function (res) {
-   //                 if (res.success) {
-   //                     sessionStorage.setItem('login', '1');
-   //                     sessionStorage.setItem('email', email);
-   //                     window.location.replace(res.redirect)
-   //                 } else {
-   //                     console.log(res);
-   //                 }
-   //             },
-   //             error: function (e) {
-   //                 console.log(e.responseJSON);
-   //                 if (e.responseJSON.message === 'This email is Already signed up.') {
-   //                     window.location.replace(res.redirect)
-   //                     localStorage.clear();
-   //                     sessionStorage.clear();
-   //                     alert('이미 가입된 이메일입니다.');
-   //                 } else {
-   //                     alert('접근 불가능합니다.');
-   //                 }
-   //             }
-   //           }
-   //           sendTokenReq(info);
-   //         }
-   //     });
-   //
-   // })
+   window.addEventListener('load', () => {
+       naverLogin.getLoginStatus((status) => {
+           if (status) {
+             let email = naverLogin.user.getEmail();
+             let name = naverLogin.user.getName();
+             let nickname = naverLogin.user.getNickName();
+             let birthday = naverLogin.user.getBirthday();
+             let age = naverLogin.user.getAge();
+             console.log(birthday);
+             const info = {
+               url: '/api/v1/users/social_login',
+               method: 'POST',
+               body: {
+                   email: email,
+                   name: name,
+                   token: naverLogin.accessToken.accessToken
+               },
+               success: function (res) {
+                   if (res.success) {
+                       sessionStorage.setItem('login', '1');
+                       sessionStorage.setItem('email', email);
+                       window.location.replace(res.redirect)
+                   } else {
+                       console.log(res);
+                   }
+               },
+               error: function (e) {
+                   console.log(e.responseJSON);
+                   if (e.responseJSON.message === 'This email is Already signed up.') {
+                       window.location.replace(res.redirect)
+                       localStorage.clear();
+                       sessionStorage.clear();
+                       alert('이미 가입된 이메일입니다.');
+                   } else {
+                       alert('접근 불가능합니다.');
+                   }
+               }
+             }
+             sendTokenReq(info);
+           }
+       });
+
+   })
    //
    // // 네이버 로그인 버튼 클릭
    // $('#naverIdLogin').click(() => {
