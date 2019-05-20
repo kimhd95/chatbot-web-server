@@ -531,7 +531,7 @@ $(document).ready(() => {
 
   $('.modal-footer #modify-complete-btn').click(function () {
     console.log('수정완료 버튼 클릭');
-    const id = $(this).attr('value');
+    const id = $("#modal-modify").attr('value');
     const region = DEFAULT_REGION;
     const subway = $('#modal-modify select.subway-input').val();
     const res_name = $("#modal-modify .res-name-input").val();
