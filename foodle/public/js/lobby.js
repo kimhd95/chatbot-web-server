@@ -105,15 +105,21 @@ function logout(loginValue) {
   //   sessionStorage.clear();
   //   localStorage.clear();
   //   location.href = '/';
-  // } else if (loginValue === '3') {
-  //   console.log('google logout');
-  //   googleSignOut();
-  //   sessionStorage.clear();
-  //   localStorage.clear();
-  //   location.href = '/';
-  // }
+  else if (loginValue === '3') {
+    // console.log('google logout');
+    // googleSignOut();
+    sessionStorage.clear();
+    localStorage.clear();
+    // sessionStorage.setItem('fromLogout', true);
+    // location.href = '/';
+    // localStorage.clear();
+    // sessionStorage.clear();
+    alert('로그아웃 되었습니다.');
+    window.location.replace(window.location.origin);
+  }
 
 }
+
 
 window.onpageshow = function(event) {
   if (event.persisted) {
@@ -232,7 +238,7 @@ $(document).ready(function(){
           }
       }
     }
-    if(loginValue !== '3') {
+    if (loginValue != '3') {
       sendTokenReq(info);
     } else {
       $('#profile-name').addClass('.a');

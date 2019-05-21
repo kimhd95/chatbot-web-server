@@ -8,6 +8,14 @@ var pwSpe;
 
 // // 구글 로그인
 function onSignIn(googleUser) {
+
+    // 구글로그인 눌렀을 때만 실행되도록 (googleLoginReq은 버튼클릭이벤트에서 초기화)
+    if (!sessionStorage.getItem('googleLoginReq')) {
+      console.log("IF");
+      // sessionStorage.setItem('fromLogout', false);
+      return;
+    }
+    console.log("ELSE");
     let profile = googleUser.getBasicProfile();
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
     console.log('Name: ' + profile.getName());
@@ -24,8 +32,10 @@ function onSignIn(googleUser) {
             },
             success: function (res) {
                 if (res.success) {
+                    sessionStorage.setItem('name', profile.getName());
                     sessionStorage.setItem('email', profile.getEmail());
                     sessionStorage.setItem('login', '3');
+                    // sessionStorage.setItem('fromLogout', false);
                     window.location.replace(res.redirect)
                 } else {
                     console.log(res);
@@ -45,6 +55,7 @@ function onSignIn(googleUser) {
         }
         sendTokenReq(info);
     }
+
 }
 // // 구글 로그아웃
 function signOut() {
@@ -287,9 +298,10 @@ $(document).ready(function() {
    } else if (loginValue === '-1') {
      console.log("비회원 로그인");
    } else if (loginValue === '3') {
-     console.log("소셜 로그인");
-   } else {
-     location.href='/lobby';
+     console.log("소셜");
+   }
+   else {
+       location.href='/lobby';
    }
 
    // // 네이버 로그인 버튼 클릭
@@ -343,8 +355,10 @@ $(document).ready(function() {
    })
    //
    // // 구글 로그인 버튼 클릭
-   $('.google-login').click(function() {
-       $('.abcRioButton').trigger('click');
+   $('.g-signin2').click(function() {
+       // $('.abcRioButton').trigger('click');
+       console.log("구글로그인");
+       sessionStorage.setItem('googleLoginReq', true);
    });
 
    $('#find-info').click(function(){
