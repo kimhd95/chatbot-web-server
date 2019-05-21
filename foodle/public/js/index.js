@@ -32,7 +32,7 @@ function onSignIn(googleUser) {
                     sessionStorage.setItem('name', profile.getName());
                     sessionStorage.setItem('email', profile.getEmail());
                     sessionStorage.setItem('login', '3');
-                    window.location.replace(res.redirect)
+                    window.location.replace(res.redirect);
                 } else {
                     console.log(res);
                 }
@@ -52,13 +52,6 @@ function onSignIn(googleUser) {
         sendTokenReq(info);
     }
 
-}
-// // 구글 로그아웃
-function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-      auth2.signOut().then(function () {
-        console.log('User signed out.');
-    });
 }
 // 이메일 로그인 validation check
 function loginValidationCheck() {
@@ -242,7 +235,23 @@ $(document).ready(function() {
     Kakao.Auth.createLoginButton({
       container: '#kakao-login-btn',
       success: function(authObj) {
-        alert(JSON.stringify(authObj));
+        Kakao.API.request({
+          url: '/v2/user/me',
+          success: function(res) {
+            // alert(JSON.stringify(res));
+            if (res.kakao_account.email) {
+              sessionStorage.setItem('email', res.kakao_account.email);
+              sessionStorage.setItem('name', res.properties.nickname);
+              sessionStorage.setItem('login', '3');
+              window.location.replace('/lobby');
+            } else {
+              alert("이메일이 등록되지 않은 카카오계정으로는 로그인이 불가능합니다.");
+            }
+          },
+          fail: function(error) {
+            alert(JSON.stringify(error));
+          }
+        });
       },
       fail: function(err) {
          alert(JSON.stringify(err));
