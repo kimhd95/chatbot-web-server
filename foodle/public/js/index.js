@@ -8,11 +8,19 @@ var pwSpe;
 
 // // 구글 로그인
 function onSignIn(googleUser) {
+    console.log(sessionStorage.getItem('fromLogout'));
+    if (sessionStorage.getItem('fromLogout')=='true') {
+      console.log("IF");
+      sessionStorage.setItem('fromLogout', false);
+      return;
+    }
+    console.log("ELSE");
     let profile = googleUser.getBasicProfile();
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
     console.log('Name: ' + profile.getName());
     console.log('Image URL: ' + profile.getImageUrl());
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    alert();
     if (googleUser.getAuthResponse().id_token) {
         const info = {
             url: '/api/v1/users/social_login',
@@ -24,8 +32,10 @@ function onSignIn(googleUser) {
             },
             success: function (res) {
                 if (res.success) {
+                    sessionStorage.setItem('name', profile.getName());
                     sessionStorage.setItem('email', profile.getEmail());
                     sessionStorage.setItem('login', '3');
+                    sessionStorage.setItem('fromLogout', false);
                     window.location.replace(res.redirect)
                 } else {
                     console.log(res);
@@ -45,6 +55,7 @@ function onSignIn(googleUser) {
         }
         sendTokenReq(info);
     }
+  
 }
 // // 구글 로그아웃
 function signOut() {
@@ -282,6 +293,8 @@ $(document).ready(function() {
        sendTokenReq(info);
    } else if (loginValue === '-1'){
      console.log("비회원 로그인");
+   } else if (loginValue === '3') {
+     console.log("소셜");
    }
    else {
        location.href='/lobby';

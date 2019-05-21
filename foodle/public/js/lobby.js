@@ -100,15 +100,21 @@ function logout(loginValue) {
   //   sessionStorage.clear();
   //   localStorage.clear();
   //   location.href = '/';
-  // } else if (loginValue === '3') {
-  //   console.log('google logout');
-  //   googleSignOut();
-  //   sessionStorage.clear();
-  //   localStorage.clear();
-  //   location.href = '/';
-  // }
+  else if (loginValue === '3') {
+    // console.log('google logout');
+    // googleSignOut();
+    sessionStorage.clear();
+    localStorage.clear();
+    sessionStorage.setItem('fromLogout', true);
+    // location.href = '/';
+    // localStorage.clear();
+    // sessionStorage.clear();
+    alert('로그아웃 되었습니다.');
+    window.location.replace(window.location.origin);
+  }
 
 }
+
 
 window.onpageshow = function(event) {
   if (event.persisted) {
@@ -227,7 +233,17 @@ $(document).ready(function(){
           }
       }
     }
-    sendTokenReq(info);
+    if (loginValue != '3') {
+      sendTokenReq(info);
+    } else {
+      $('#profile-name').addClass('.a');
+      $('#profile-name').append(sessionStorage.getItem('name') + " 님");
+      $('#profile-email').addClass('.a');
+      $('#profile-email').append(sessionStorage.getItem('email'));
+      $('#profile-mypage').addClass('.a');
+      $('#profile-mypage').append("마이페이지");
+      $('#question-email').val(sessionStorage.getItem('email'));
+    }
 
   if(loginValue==='-1'){
     $('#profile').remove();
