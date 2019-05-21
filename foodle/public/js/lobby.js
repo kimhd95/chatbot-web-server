@@ -88,24 +88,7 @@ function logout(loginValue) {
       }
     };
     sendTokenReq(info);
-  } else if(loginValue == '3') {
-    // let accessToken = sessionStorage.getItem('accessToken');
-    // console.log(accessToken);
-    // 'https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=oa97eilrCWdA425VvtdT&client_secret=vHvlpq13YK&access_token=' + accessToken + '&service_provider=NAVER'
-    location.href = '/'
-  }
-  // else if (loginValue === '1') {
-  //   console.log('naver logout');
-  //   alert('로그아웃 되었습니다.');
-  //   sessionStorage.clear();
-  //   localStorage.clear();
-  //   location.href = '/';
-  // } else if (loginValue === '2') {
-  //   console.log('facebook logout');
-  //   sessionStorage.clear();
-  //   localStorage.clear();
-  //   location.href = '/';
-  else if (loginValue === '3') {
+  } else if (loginValue === '3') {
     // console.log('google logout');
     // googleSignOut();
     sessionStorage.clear();
