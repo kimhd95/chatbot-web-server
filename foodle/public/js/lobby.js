@@ -105,7 +105,7 @@ function logout(loginValue) {
     // googleSignOut();
     sessionStorage.clear();
     localStorage.clear();
-    sessionStorage.setItem('fromLogout', true);
+    // sessionStorage.setItem('fromLogout', true);
     // location.href = '/';
     // localStorage.clear();
     // sessionStorage.clear();

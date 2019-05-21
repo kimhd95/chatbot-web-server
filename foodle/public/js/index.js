@@ -8,10 +8,11 @@ var pwSpe;
 
 // // 구글 로그인
 function onSignIn(googleUser) {
-    console.log(sessionStorage.getItem('fromLogout'));
-    if (sessionStorage.getItem('fromLogout')=='true') {
+
+    // 구글로그인 눌렀을 때만 실행되도록 (googleLoginReq은 버튼클릭이벤트에서 초기화)
+    if (!sessionStorage.getItem('googleLoginReq')) {
       console.log("IF");
-      sessionStorage.setItem('fromLogout', false);
+      // sessionStorage.setItem('fromLogout', false);
       return;
     }
     console.log("ELSE");
@@ -20,7 +21,6 @@ function onSignIn(googleUser) {
     console.log('Name: ' + profile.getName());
     console.log('Image URL: ' + profile.getImageUrl());
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    alert();
     if (googleUser.getAuthResponse().id_token) {
         const info = {
             url: '/api/v1/users/social_login',
@@ -35,7 +35,7 @@ function onSignIn(googleUser) {
                     sessionStorage.setItem('name', profile.getName());
                     sessionStorage.setItem('email', profile.getEmail());
                     sessionStorage.setItem('login', '3');
-                    sessionStorage.setItem('fromLogout', false);
+                    // sessionStorage.setItem('fromLogout', false);
                     window.location.replace(res.redirect)
                 } else {
                     console.log(res);
@@ -55,7 +55,7 @@ function onSignIn(googleUser) {
         }
         sendTokenReq(info);
     }
-  
+
 }
 // // 구글 로그아웃
 function signOut() {
@@ -349,8 +349,10 @@ $(document).ready(function() {
    // })
    //
    // // 구글 로그인 버튼 클릭
-   $('.google-login').click(function() {
-       $('.abcRioButton').trigger('click');
+   $('.g-signin2').click(function() {
+       // $('.abcRioButton').trigger('click');
+       console.log("구글로그인");
+       sessionStorage.setItem('googleLoginReq', true);
    });
 
    $('#find-info').click(function(){
