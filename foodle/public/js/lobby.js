@@ -300,39 +300,37 @@ $(document).ready(function(){
   })
 
   $('#withdraw-btn').click(function() {
-    var password = prompt("비밀번호를 입력하세요", "");
-
-    if(password === null) {
-      console.log("취소");
-    } else {
-      if (confirm('정말 탈퇴하시겠습니까? 탈퇴하시면 모든 데이터가 소멸됩니다.')) {
-        const info = {
-          url: '/api/v1/users/member_withdraw',
-          method: 'POST',
-          body: {
-            email: sessionStorage.getItem('email'),
-            password: password
-          },
-          success: function(res) {
-            if (res.success) {
-              // if (sessionStorage.getItem('login') === '3') {
-              //   googleSignOut();
-              // }
-              sessionStorage.clear();
-              localStorage.clear();
-              alert('탈퇴했습니다.');
-              window.location.replace(res.redirect);
-            }
-          },
-          error: function (e) {
-            console.log(e.responseJSON);
-            if(e.responseJSON.message.indexOf('not match') !== -1) {
-              alert('비밀번호가 틀렸습니다.');
-            }
+    var password;
+    if (sessionStorage.getItem('login') != '3') {
+      password = prompt("비밀번호를 입력하세요", "");
+    }
+    if (confirm('정말 탈퇴하시겠습니까? 탈퇴하시면 모든 데이터가 소멸됩니다.')) {
+      const info = {
+        url: '/api/v1/users/member_withdraw',
+        method: 'POST',
+        body: {
+          email: sessionStorage.getItem('email'),
+          password: password
+        },
+        success: function(res) {
+          if (res.success) {
+            // if (sessionStorage.getItem('login') === '3') {
+            //   googleSignOut();
+            // }
+            sessionStorage.clear();
+            localStorage.clear();
+            alert('탈퇴했습니다.');
+            window.location.replace(res.redirect);
+          }
+        },
+        error: function (e) {
+          console.log(e.responseJSON);
+          if(e.responseJSON.message.indexOf('not match') !== -1) {
+            alert('비밀번호가 틀렸습니다.');
           }
         }
-        sendTokenReq(info);
       }
+      sendTokenReq(info);
     }
   });
 
