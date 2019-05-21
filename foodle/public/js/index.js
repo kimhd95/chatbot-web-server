@@ -8,14 +8,11 @@ var pwSpe;
 
 // // 구글 로그인
 function onSignIn(googleUser) {
-
     // 구글로그인 눌렀을 때만 실행되도록 (googleLoginReq은 버튼클릭이벤트에서 초기화)
     if (!sessionStorage.getItem('googleLoginReq')) {
-      console.log("IF");
-      // sessionStorage.setItem('fromLogout', false);
+      console.log("구글 자동로그인 방지");
       return;
     }
-    console.log("ELSE");
     let profile = googleUser.getBasicProfile();
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
     console.log('Name: ' + profile.getName());
@@ -35,7 +32,6 @@ function onSignIn(googleUser) {
                     sessionStorage.setItem('name', profile.getName());
                     sessionStorage.setItem('email', profile.getEmail());
                     sessionStorage.setItem('login', '3');
-                    // sessionStorage.setItem('fromLogout', false);
                     window.location.replace(res.redirect)
                 } else {
                     console.log(res);
@@ -238,6 +234,22 @@ $(document).ready(function() {
  // /* 설정정보를 초기화하고 연동을 준비 */
    naverLogin.init();
    $('#naverIdLogin_loginButton img')[0].src = '/images/naver.png';
+
+   // 카카오 로그인 설정
+   // 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init('a311e350b5b4ffd8e4525b72782ddc38');
+    // 카카오 로그인 버튼을 생성합니다.
+    Kakao.Auth.createLoginButton({
+      container: '#kakao-login-btn',
+      success: function(authObj) {
+        alert(JSON.stringify(authObj));
+      },
+      fail: function(err) {
+         alert(JSON.stringify(err));
+      }
+    });
+
+
    var loginValue = sessionStorage.getItem('login');
    // let emailValue = sessionStorage.getItem('email');
    // console.log(`LoginValue : ${loginValue}, emailValue : ${emailValue}`);
@@ -351,7 +363,7 @@ $(document).ready(function() {
    // // 구글 로그인 버튼 클릭
    $('.g-signin2').click(function() {
        // $('.abcRioButton').trigger('click');
-       console.log("구글로그인");
+       console.log("구글로그인 클릭");
        sessionStorage.setItem('googleLoginReq', true);
    });
 
