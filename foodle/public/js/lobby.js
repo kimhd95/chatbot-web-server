@@ -88,6 +88,11 @@ function logout(loginValue) {
       }
     };
     sendTokenReq(info);
+  } else if(loginValue == '3') {
+    // let accessToken = sessionStorage.getItem('accessToken');
+    // console.log(accessToken);
+    // 'https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=oa97eilrCWdA425VvtdT&client_secret=vHvlpq13YK&access_token=' + accessToken + '&service_provider=NAVER'
+    location.href = '/'
   }
   // else if (loginValue === '1') {
   //   console.log('naver logout');
@@ -227,7 +232,17 @@ $(document).ready(function(){
           }
       }
     }
-    sendTokenReq(info);
+    if(loginValue !== '3') {
+      sendTokenReq(info);
+    } else {
+      $('#profile-name').addClass('.a');
+      $('#profile-name').append(sessionStorage.getItem('name') + " 님");
+      $('#profile-email').addClass('.a');
+      $('#profile-email').append(sessionStorage.getItem('email'));
+      $('#profile-mypage').addClass('.a');
+      $('#profile-mypage').append("마이페이지");
+      $('#question-email').val(sessionStorage.getItem('email'));
+    }
 
   if(loginValue==='-1'){
     $('#profile').remove();
