@@ -1866,8 +1866,9 @@ $(document).ready(() => {
         }
     }
   }
-  sendTokenReq(info);
-  // }
+  if(loginValue !== '3') {
+    sendTokenReq(info);
+  }
 
   let nowTime;
   $('.card-body').on('click', '.arrow-right', function(){
