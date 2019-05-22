@@ -203,6 +203,11 @@ function reIssueValidationCheck() {
 }
 
 $(document).ready(function() {
+  setTimeout(() => {
+    $(".abcRioButton.abcRioButtonLightBlue").attr('style', 'width:157px;');
+    $(".abcRioButtonContents").attr('style', 'font-weight:bold;font-size:11px;line-height:34px;')
+    $(".abcRioButtonContents").children("span:last").text("구글계정으로 로그인");
+  }, 100);
 // var isIE = /*@cc_on!@*/false || !!document.documentMode;
 // var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification) || !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
 // console.log(isIE);
