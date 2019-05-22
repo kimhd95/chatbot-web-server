@@ -117,12 +117,6 @@
             }
         }
         sendTokenReq(info);
-        // window.location.replace('/lobby');
-
-
-        console.log('Successful login for: ' + response.name);
-        document.getElementById('status').innerHTML =
-          'Thanks for logging in, ' + response.name + '!';
       });
     }
   </script>
@@ -188,7 +182,6 @@
                   <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v3.3&appId=577461736068907&autoLogAppEvents=1"></script>
                   <div class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="false"></div> -->
                   <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
-                  <div id="status"></div>
               </div>
 
                 <div class="signup">
