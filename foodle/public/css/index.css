@@ -101,6 +101,8 @@
   width: 157px;
   align-items: flex-start;
   justify-content: flex-start;
+}
+.social-login div#kakao-login-btn {
   margin-bottom: 1vh;
 }
 .social-login .g-signin2 {

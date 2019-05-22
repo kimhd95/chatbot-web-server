@@ -22,7 +22,6 @@
     // This is called with the results from from FB.getLoginStatus().
     function statusChangeCallback(response) {
       console.log('statusChangeCallback');
-      console.log(response);
       // The response object is returned with a status field that lets the
       // app know the current login status of the person.
       // Full docs on the response object can be found in the documentation
@@ -86,7 +85,41 @@
     // successful.  See statusChangeCallback() for when this call is made.
     function testAPI() {
       console.log('Welcome!  Fetching your information.... ');
-      FB.api('/me', function(response) {
+      FB.api('/me', {fields: ['email', 'name']}, function(response) {
+        console.log(JSON.stringify(response));
+
+        const info = {
+            url: '/api/v1/users/social_login',
+            method: 'POST',
+            body: {
+                email: response.email,
+                name: response.name,
+                token: 'facebook'
+            },
+            success: function (res) {
+                if (res.success) {
+                  sessionStorage.setItem('email', response.email);
+                  sessionStorage.setItem('name', response.name);
+                  sessionStorage.setItem('login', '3');
+                  window.location.replace(res.redirect);
+                } else {
+                  console.log(res);
+                }
+            },
+            error: function (e) {
+                if (e.responseJSON.message === 'This email is Already signed up.') {
+                    localStorage.clear();
+                    sessionStorage.clear();
+                    alert('이미 가입된 이메일입니다.');
+                } else {
+                    alert('접근 불가능합니다.');
+                }
+            }
+        }
+        sendTokenReq(info);
+        // window.location.replace('/lobby');
+
+
         console.log('Successful login for: ' + response.name);
         document.getElementById('status').innerHTML =
           'Thanks for logging in, ' + response.name + '!';
@@ -151,6 +184,9 @@
                   <div id="kakao-login-btn" class="kakao-login-btn"></div>
                   <!-- <img class="google-login" src="/images/google.png" alt="google-login"> -->
                   <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                  <!-- <div id="fb-root"></div>
+                  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v3.3&appId=577461736068907&autoLogAppEvents=1"></script>
+                  <div class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="false"></div> -->
                   <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
                   <div id="status"></div>
               </div>

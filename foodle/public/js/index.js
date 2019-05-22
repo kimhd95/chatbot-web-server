@@ -250,10 +250,42 @@ $(document).ready(function() {
           success: function(res) {
             // alert(JSON.stringify(res));
             if (res.kakao_account.email) {
-              sessionStorage.setItem('email', res.kakao_account.email);
-              sessionStorage.setItem('name', res.properties.nickname);
-              sessionStorage.setItem('login', '3');
-              window.location.replace('/lobby');
+              const email = res.kakao_account.email;
+              const name = res.properties.nickname;
+              const token = 'kakao';
+              const info = {
+                url: '/api/v1/users/social_login',
+                method: 'POST',
+                body: {
+                    email: email,
+                    name: name,
+                    token: token
+                },
+                success: function (res) {
+                    if (res.success) {
+                        console.log("카카오 로그인 성공")
+                        sessionStorage.setItem('login', '3');
+                        sessionStorage.setItem('email', email);
+                        sessionStorage.setItem('name', name);
+                        window.location.replace(res.redirect)
+                    } else {
+                        console.log(res);
+                    }
+                },
+                error: function (e) {
+                    console.log("카카오 로그인 실패");
+                    console.log(e.responseJSON);
+                    if (e.responseJSON.message === 'This email is Already signed up.') {
+                        window.location.replace(res.redirect);
+                        localStorage.clear();
+                        sessionStorage.clear();
+                        alert('이미 가입된 이메일입니다.');
+                    } else {
+                        alert('접근 불가능합니다.');
+                    }
+                }
+              }
+              sendTokenReq(info);
             } else {
               alert("이메일이 등록되지 않은 카카오계정으로는 로그인이 불가능합니다.");
             }

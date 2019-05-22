@@ -302,9 +302,6 @@ $(document).ready(function(){
         },
         success: function(res) {
           if (res.success) {
-            // if (sessionStorage.getItem('login') === '3') {
-            //   googleSignOut();
-            // }
             sessionStorage.clear();
             localStorage.clear();
             alert('탈퇴했습니다.');
