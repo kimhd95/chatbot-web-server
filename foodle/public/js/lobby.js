@@ -89,20 +89,11 @@ function logout(loginValue) {
     };
     sendTokenReq(info);
   } else if (loginValue === '3') {
-
-    // console.log('google logout');
-    // googleSignOut();
     sessionStorage.clear();
     localStorage.clear();
-    // sessionStorage.setItem('fromLogout', true);
-    // location.href = '/';
-    // localStorage.clear();
-    // sessionStorage.clear();
-    // 페이스북일 경우
     alert('로그아웃 되었습니다.');
     window.location.replace(window.location.origin);
   }
-
 }
 
 
@@ -147,9 +138,7 @@ window.onpageshow = function(event) {
   }
 }
 
-$(document).ready(function(){
-// $(document).ready(() => {
-
+$(document).ready(function() {
   let loginValue = sessionStorage.getItem('login');
   let emailValue = sessionStorage.getItem('email');
 

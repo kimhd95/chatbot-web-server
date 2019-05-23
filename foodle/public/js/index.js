@@ -13,7 +13,10 @@ function onSignIn(googleUser) {
       console.log("구글 자동로그인 방지");
       return;
     }
+
     let profile = googleUser.getBasicProfile();
+    const name = profile.getName();
+    const email = profile.getEmail();
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
     console.log('Name: ' + profile.getName());
     console.log('Image URL: ' + profile.getImageUrl());
@@ -23,14 +26,14 @@ function onSignIn(googleUser) {
             url: '/api/v1/users/social_login',
             method: 'POST',
             body: {
-                email: profile.getEmail(),
-                name: profile.getName(),
-                token: googleUser.getAuthResponse().id_token
+              name: name,
+              email: email,
+              token: googleUser.getAuthResponse().id_token
             },
             success: function (res) {
                 if (res.success) {
-                    sessionStorage.setItem('name', profile.getName());
-                    sessionStorage.setItem('email', profile.getEmail());
+                    sessionStorage.setItem('name', name);
+                    sessionStorage.setItem('email', email);
                     sessionStorage.setItem('login', '3');
                     window.location.replace(res.redirect);
                 } else {
@@ -39,12 +42,10 @@ function onSignIn(googleUser) {
             },
             error: function (e) {
                 if (e.responseJSON.message === 'This email is Already signed up.') {
-                    signOut();
                     localStorage.clear();
                     sessionStorage.clear();
                     alert('이미 가입된 이메일입니다.');
                 } else {
-                    signOut();
                     alert('접근 불가능합니다.');
                 }
             }
@@ -153,8 +154,6 @@ function facebookLoginAPI() {
     sendTokenReq(info);
   });
 }
-
-
 
 
 // 이메일 로그인 validation check
