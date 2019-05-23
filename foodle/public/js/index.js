@@ -63,7 +63,9 @@ function statusChangeCallback(response) {
   // for FB.getLoginStatus().
   if (response.status === 'connected' && sessionStorage.getItem('loginPlatform') == 'facebook') {
     // Logged into your app and Facebook.
-    testAPI();
+    facebookLoginAPI();
+  } else if (response.status === 'connected') {
+    console.log("페이스북 자동로그인 방지");
   }
 }
 
@@ -98,10 +100,9 @@ window.fbAsyncInit = function() {
   //
   // These three cases are handled in the callback function.
 
-  // FB.getLoginStatus(function(response) {
-  //   console.log("aaa");
-  //   statusChangeCallback(response);
-  // });
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
 
 };
 
@@ -116,7 +117,7 @@ window.fbAsyncInit = function() {
 
 // Here we run a very simple test of the Graph API after login is
 // successful.  See statusChangeCallback() for when this call is made.
-function testAPI() {
+function facebookLoginAPI() {
   console.log('Welcome!  Fetching your information.... ');
   FB.api('/me', {fields: ['email', 'name']}, function(response) {
     console.log(JSON.stringify(response));
