@@ -26,13 +26,9 @@
       // app know the current login status of the person.
       // Full docs on the response object can be found in the documentation
       // for FB.getLoginStatus().
-      if (response.status === 'connected') {
+      if (response.status === 'connected' && sessionStorage.getItem('loginPlatform') == 'facebook') {
         // Logged into your app and Facebook.
         testAPI();
-      } else {
-        // The person is not logged into your app or we are unable to tell.
-        document.getElementById('status').innerHTML = 'Please log ' +
-          'into this app.';
       }
     }
 
@@ -40,6 +36,7 @@
     // Button.  See the onlogin handler attached to it in the sample
     // code below.
     function checkLoginState() {
+      sessionStorage.setItem('loginPlatform', 'facebook');
       FB.getLoginStatus(function(response) {
         statusChangeCallback(response);
       });
@@ -66,9 +63,10 @@
       //
       // These three cases are handled in the callback function.
 
-      FB.getLoginStatus(function(response) {
-        statusChangeCallback(response);
-      });
+      // FB.getLoginStatus(function(response) {
+      //   console.log("aaa");
+      //   statusChangeCallback(response);
+      // });
 
     };
 
@@ -178,10 +176,10 @@
                   <div id="kakao-login-btn" class="kakao-login-btn"></div>
                   <!-- <img class="google-login" src="/images/google.png" alt="google-login"> -->
                   <div class="g-signin2" data-onsuccess="onSignIn"></div>
-                  <!-- <div id="fb-root"></div>
-                  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v3.3&appId=577461736068907&autoLogAppEvents=1"></script>
-                  <div class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="false"></div> -->
-                  <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
+                  <!-- <div id="fb-root"></div> -->
+                  <!-- <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v3.3&appId=577461736068907&autoLogAppEvents=1"></script> -->
+                  <div class="fb-login-button" onlogin="checkLoginState();" data-width="" data-size="medium" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="false"></div>
+                  <!-- <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button> -->
               </div>
 
                 <div class="signup">
@@ -220,6 +218,9 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <!-- Kakao Login -->
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <!-- Facebook Login -->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v3.3&appId=577461736068907&autoLogAppEvents=1"></script>
     <!-- Custom JS -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/base.js"></script>

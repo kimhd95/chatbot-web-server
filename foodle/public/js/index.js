@@ -9,7 +9,7 @@ var pwSpe;
 // // 구글 로그인
 function onSignIn(googleUser) {
     // 구글로그인 눌렀을 때만 실행되도록 (googleLoginReq은 버튼클릭이벤트에서 초기화)
-    if (!sessionStorage.getItem('googleLoginReq')) {
+    if (!sessionStorage.getItem('loginPlatform') == 'google') {
       console.log("구글 자동로그인 방지");
       return;
     }
@@ -347,6 +347,11 @@ $(document).ready(function() {
            sendTokenReq(info);
          }
      });
+
+     // FB.getLoginStatus(function(response) {
+     //   console.log("aaa");
+     //   statusChangeCallback(response);
+     // });
    })
 
    var loginValue = sessionStorage.getItem('login');
@@ -482,7 +487,7 @@ $(document).ready(function() {
    $('.g-signin2').click(function() {
        // $('.abcRioButton').trigger('click');
        console.log("구글로그인 클릭");
-       sessionStorage.setItem('googleLoginReq', true);
+       sessionStorage.setItem('loginPlatform', 'google');
    });
 
    $('#find-info').click(function(){
