@@ -308,9 +308,9 @@ function reIssueValidationCheck() {
 
 $(document).ready(function() {
   setTimeout(() => {
-    $(".abcRioButton.abcRioButtonLightBlue").attr('style', 'width:157px;');
-    $(".abcRioButtonContents").attr('style', 'font-weight:bold;font-size:11px;line-height:34px;')
-    $(".abcRioButtonContents").children("span:last").text("구글계정으로 로그인");
+    $(".abcRioButton.abcRioButtonLightBlue").attr('style', 'width:166px;');
+    $(".abcRioButtonContents").children("span:first").text("구글계정으로 로그인");
+    $(".abcRioButtonContents").attr('style', 'font-weight:bold;font-size:12px;line-height:36px;');
   }, 100);
 // var isIE = /*@cc_on!@*/false || !!document.documentMode;
 // var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification) || !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
@@ -335,7 +335,7 @@ $(document).ready(function() {
            // callbackUrl: 'https://localhost:8001/',
            callbackHandle: true,
             isPopup: false, /* 팝업을 통한 연동처리 여부 */
-            loginButton: {color: "green", type: 3, height: 34} /* 로그인 버튼의 타입을 지정 */
+            loginButton: {color: "green", type: 3, height: 36} /* 로그인 버튼의 타입을 지정 */
    }
    );
   // /* 설정정보를 초기화하고 연동을 준비 */
