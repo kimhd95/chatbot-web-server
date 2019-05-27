@@ -1896,26 +1896,26 @@ $(document).ready(() => {
       let user_email = sessionStorage.getItem('email');
       if (term === '') {
         // 운영 서버
-        // $.getJSON( "https://foodprod.jellylab.io:6001/api/v1/users/get_subway_list_history?email="+user_email, request, function( data, status, xhr ) {
-        //   cache[ term ] = data;
-        //   response( data );
-        // });
-        // 개발 서버
-        $.getJSON( "https://devapifood.jellylab.io:6001/api/v1/users/get_subway_list_history?email="+user_email, request, function( data, status, xhr ) {
+        $.getJSON( "https://foodprod.jellylab.io:6001/api/v1/users/get_subway_list_history?email="+user_email, request, function( data, status, xhr ) {
           cache[ term ] = data;
           response( data );
         });
+        // 개발 서버
+        // $.getJSON( "https://devapifood.jellylab.io:6001/api/v1/users/get_subway_list_history?email="+user_email, request, function( data, status, xhr ) {
+        //   cache[ term ] = data;
+        //   response( data );
+        // });
       } else {
         //운영 서버
-        // $.getJSON( "https://foodprod.jellylab.io:6001/api/v1/users/get_subway_list_history?email="+user_email, request, function( data, status, xhr ) {
-        //   cache[ term ] = data;
-        //   response( data );
-        // });
-        // 개발 서버
-        $.getJSON( "https://devapifood.jellylab.io:6001/api/v1/users/get_all_subway", request, function( data, status, xhr ) {
+        $.getJSON( "https://foodprod.jellylab.io:6001/api/v1/users/get_subway_list_history?email="+user_email, request, function( data, status, xhr ) {
           cache[ term ] = data;
           response( data );
         });
+        // 개발 서버
+        // $.getJSON( "https://devapifood.jellylab.io:6001/api/v1/users/get_all_subway", request, function( data, status, xhr ) {
+        //   cache[ term ] = data;
+        //   response( data );
+        // });
       }
     },
     select: function(event, ui) {
