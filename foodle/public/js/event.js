@@ -1725,15 +1725,19 @@ $(function () {
       var img = document.getElementById(`myImg ${img} ${result}`);
       var modalImg = document.getElementById("img01");
       var captionText = document.getElementById("caption");
+
       img.onclick = function(){
         console.log("img onclick 이벤트 발생")
         modal.style.display = "block";
         modalImg.src = this.src;
         captionText.innerHTML = this.alt;
+        $('.card-footer').hide();
       }
+
       var span = document.getElementsByClassName("close")[0];
       span.onclick = function() {
         modal.style.display = "none";
+        $('.card-footer').show();
       }
 
       $('#messages').append(bot_messaging(msg)).children(':last').hide()
