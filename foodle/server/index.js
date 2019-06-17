@@ -12,7 +12,8 @@ const
 	express = require('express'),
 	path = require('path'),
 	request = require('request'),
-	Food_MBTI = require('../flow/scenario/Food_MBTI')
+	Food_MBTI = require('../flow/scenario/Food_MBTI'),
+	Tour = require('../flow/scenario/Tour'),
 	scenario_rule = require('../flow/scenario_rule'),
 
 	info = require('../api/info_update'),
@@ -144,6 +145,12 @@ module.exports = function(){
 		socket.on('get session items return', function(value, items) {
 			console.log('get session item:', items);
 			new Food_MBTI(value, socket, items);
+		});
+
+		socket.on('chat message tour', function(value, items){
+			io.to(socket.id).emit('chat message_self', value);
+			console.log('value: '+value+', socket: '+socket);
+			new Tour(value, socket, items);
 		});
 
 		socket.on('chat message button', function(msg){

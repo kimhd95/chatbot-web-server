@@ -28,6 +28,7 @@ router.get('/contents', authService.getContentsPage);
 router.get('/lobby', authService.getLobbyPage);
 
 router.get('/foodtest', authService.getFoodtestPage);
+router.get('/tour', authService.getTourPage);
 router.get('/chelinguide', authService.getChelinGuidePage);
 
 // router.get('/area', authService.getAreaPage);

@@ -83,7 +83,8 @@ exports.scenario_rule = function (val, socket, msg) {
           }
         }
       } else {
-        return new scenario_flow.Food_MBTI(val, socket, user_data);
+        return new scenario_flow.Tour(val, socket, user_data);
+        // return new scenario_flow.Food_MBTI(val, socket, user_data);
       }
     } catch (e) {
       index.sendSocketMessage(socket.id, 'chat message button', '오류가 발생했습니다.', ['get_started', '처음으로 돌아가기']);
