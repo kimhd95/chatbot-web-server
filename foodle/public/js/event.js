@@ -57,9 +57,41 @@ function bot_messaging(message) {
   return (message_info);
 }
 
-function bot_messaging_image(image) {
+// function bot_messaging_image(image) {
+//   let message_info = `<div class="bot-message">
+//           <img class="img-fluid rest-img" onclick="expand('${image}');" src="${image}"></img>
+//       </div>
+//   `;
+//   return (message_info);
+// }
+
+// function expand(image) {
+//   console.log(image);
+//   console.log("expand 함수 안");
+//
+//   // let message_info = `<div data-toggle="modal" data-target="#config-modal"
+//   // <div class="modal fade bd-example-modal-sm" id="config-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+//   //     <div class="modal-dialog modal-sm">
+//   //       <div class="modal-content">
+//   //         <button id="logout-btn" class="btn">로그아웃</button>
+//   //       </div>
+//   //     </div>
+//   // </div>
+//   // </div>
+//   // `;
+//   // $('#config-modal').modal('show');
+//   return (message_info);
+// }
+
+function bot_messaging_image(image, result) {
+  console.log("bot_messaging_image 함수에 들어옴");
   let message_info = `<div class="bot-message">
-          <img class="img-fluid rest-img" src="${image}"></img>
+          <img id="myImg ${image} ${result}" class="img-fluid rest-img" src="${image}"></img>
+          <div id="myModal" class="modal">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="img01">
+            <div id="caption"></div>
+          </div>
       </div>
   `;
   return (message_info);
@@ -1684,7 +1716,30 @@ $(function () {
         $('#m').prop('disabled', true);
         $('#input-button').attr('disabled', true);
       }
-      $('#messages').append(bot_messaging_image(img));
+
+      var result = Math.floor(Math.random() * 10) + 1;
+
+      $('#messages').append(bot_messaging_image(img, result));
+
+      var modal = document.getElementById("myModal");
+      var img = document.getElementById(`myImg ${img} ${result}`);
+      var modalImg = document.getElementById("img01");
+      var captionText = document.getElementById("caption");
+
+      img.onclick = function(){
+        console.log("img onclick 이벤트 발생")
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+        $('.card-footer').hide();
+      }
+
+      var span = document.getElementsByClassName("close")[0];
+      span.onclick = function() {
+        modal.style.display = "none";
+        $('.card-footer').show();
+      }
+
       $('#messages').append(bot_messaging(msg)).children(':last').hide()
         .fadeIn(150);
       const args_length = args.length;
