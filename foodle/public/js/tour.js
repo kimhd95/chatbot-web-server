@@ -141,182 +141,8 @@ $(function () {
   var socket = io();
 
   $('body').on('click', '.messaging-button', (e) => {
-    clickNum=0;
-
-    if($(e.target).attr('id')==='get_started'){
-      sessionStorage.removeItem('stage');
-    }
-    if($(e.target).attr('id') === 'decide_place'){
-      sessionStorage.setItem('stage', 'decide_place');
-      sessionStorage.setItem('name', '중간지점 찾기(서울)')
-    }
-    if ($(e.target).attr('id') === 'decide_menu' || $(e.target).attr('id') === 'decide_drink') {
-      sessionStorage.setItem('stage',$(e.target).attr('id'));
-      if($(e.target).attr('id')==='decide_menu'){
-        sessionStorage.setItem('name','메뉴 고르기');
-      } else if($(e.target).attr('id')==='decide_drink'){
-        sessionStorage.setItem('name','술집 고르기');
-      }
-
-      $('#m').autocomplete('enable');
-    } else {
-      // $('#m').autocomplete('disable');
-    }
-    if ($(e.target).attr('id') === ('mood2/') || $(e.target).attr('id') === ('exit/') || $(e.target).attr('id') === ('S4/') ||
-        $(e.target).attr('id') === ('price/') ||  $(e.target).attr('id') === ('hobulho_hate/') || $(e.target).attr('id') === ('S0_2/') ||
-        $(e.target).attr('id') === ('S4_1/mood2/') || $(e.target).attr('id') === ('S4_1/exit/') || $(e.target).attr('id') === ('S10/price/')) {
-      console.log($(e.target).attr('id'));
-      const checked_array = [];
-      const checked_name_array = [];
-      $('.checkbox:checked').each(function () {
-        // 이전으로 돌아가기 버튼 아닌경우에만 checked_array에 추가
-        console.log(this);
-        if ($(e.target).attr('id').includes('previous')) {
-          console.log("이전으로 돌아가기 버튼");
-        } else {
-          checked_array.push(this.id);
-          checked_name_array.push(this.name);
-        }
-      });
-
-      if (checked_array.length === 0) {
-        switch ($(e.target).attr('id')) {
-          case 'mood2/':
-            socket.emit('chat message button rule', $(e.target).attr('name'), 'no_mood2');
-            break;
-          case 'exit/':
-            socket.emit('chat message button rule', $(e.target).attr('name'), 'no_exit');
-            break;
-          case 'S4/':
-            socket.emit('chat message button rule', $(e.target).attr('name'), 'no_drink_type');
-            break;
-          case 'price/':
-            socket.emit('chat message button rule', $(e.target).attr('name'), 'no_price');
-            break;
-          case 'S0_2/':
-            socket.emit('chat message button rule', $(e.target).attr('name'), 'no_hobulho_hate');
-            break;
-        }
-      } else {
-        socket.emit('chat message button rule', checked_name_array, ($(e.target).attr('id') + checked_array));
-        $('.messaging-button').hide();
-        $('.messaging-button-colored').hide();
-        $('.messaging-button-checkbox').hide();
-        $('.messaging-button-checkbox').children('input[type=checkbox]').prop('checked', false);
-      }
-    } else if ($(e.target).attr('id')==='location/current'){
-      let arr = getLocation(socket.id);
-      var temp = setTimeout(function() {
-        socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + arr.lat + ',' + arr.lng);
-      }, 2000);
-      $('.checkbox:checked').attr('checked', false);
-      $('.messaging-button').hide();
-      $('.messaging-button-colored').hide();
-      $('.messaging-button-checkbox').hide();
-    } else if ($(e.target).attr('id').includes('S4_1/search_near/')) {
-      getLocation2().then(function (arr) {
-        console.log(arr);
-        if(arr.lat == undefined || arr.lng == undefined) {
-          socket.emit('chat message button rule', $(e.target).attr('name'), 'geolocation_err');
-        } else {
-          socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + arr.lat + ',' + arr.lng);
-        }
-      });
-      $('.checkbox:checked').attr('checked', false);
-      $('.messaging-button').hide();
-      $('.messaging-button-colored').hide();
-      $('.messaging-button-checkbox').hide();
-    } else if ($(e.target).attr('id')==='S2_2/gps') {
-      getLocation2().then(function (arr) {
-        console.log(arr);
-        if(arr.lat == undefined || arr.lng == undefined) {
-          socket.emit('chat message button rule', $(e.target).attr('name'), 'geolocation_err');
-        } else {
-          socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id') + `:${arr.lat},${arr.lng}`);
-        }
-      });
-      $('.checkbox:checked').attr('checked', false);
-      $('.messaging-button').hide();
-      $('.messaging-button-colored').hide();
-      $('.messaging-button-checkbox').hide();
-    } else if($(e.target).attr('id').includes('previous')) {
-        console.log('previous1 clicked');
-        let userStack = $(e.target).attr('id').replace(/@/gi, `"`).slice(9);
-        console.log(userStack);
-        let stack = JSON.parse("["+userStack+"]");
-        let element = stack.pop();
-        console.log(element.state);
-        stack = JSON.stringify(stack);
-        stack = stack.slice(1, -1);
-        console.log(stack);
-        function getFinalStack(callback) {
-          return new Promise(function (resolve, reject) {
-            if(stack === '') {
-              console.log("stack 빔");
-              resolve('null');
-            } else {
-              console.log("Stack 남아있음");
-              resolve(stack);
-            }
-          });
-        }
-        getFinalStack().then(function (stack){
-          console.log(stack);
-          const info = {
-            url: "/api/v1/users/update_user",
-            method: 'POST',
-            body: {
-              kakao_id: socket.id,
-              stack: stack,
-            },
-            success: function(res) {
-              const prevElement = $('.bot-message').children(':last').parent().prev();
-              if (prevElement.attr('class') == 'bot-message') {
-                if (prevElement.children(':last').attr('class') == 'img-fluid rest-img') {
-                  prevElement.hide();
-                }
-              }
-              $('#m').prop('disabled', true);
-              $('#input-button').attr('disabled', true);
-              $('.messaging-button').hide();
-              $('.messaging-button-colored').hide();
-              $('.messaging-button-checkbox').hide();
-              $('.bot-message').children(':last').hide();
-              const info2 ={
-                url: "/api/v1/users/update_user",
-                method: 'POST',
-                body: {
-                  kakao_id: socket.id,
-                  state: element.state,
-                },
-                success: function(res) {
-                  socket.emit('chat message button rule previous', stack, element.value);
-                },
-                error: function (e) {
-                  console.log(e);
-                }
-              }
-              sendReq(info2);
-            },
-            error: function (e) {
-              console.log(e);
-            }
-          }
-          sendReq(info);
-        });
-
-    } else {
-      socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id'));
-      $('.checkbox:checked').attr('checked', false);
-      $('.messaging-button').hide();
-      $('.messaging-button-colored').hide();
-      $('.messaging-button-checkbox').hide();
-    }
-  });
-
-  $('body').on('click', '.messaging-button-colored', (e) => {
-    // $('#m').autocomplete('disable');
-    socket.emit('chat message button rule', $(e.target).attr('name'), $(e.target).attr('id'));
+    console.log($(e.target).attr('id'), $(e.target).attr('name'));
+    socket.emit('chat message tour', $(e.target).attr('id'), sessionStorage, $(e.target).attr('name'));
     $('.checkbox:checked').attr('checked', false);
     $('.messaging-button').hide();
     $('.messaging-button-colored').hide();
@@ -339,97 +165,6 @@ $(function () {
       $('.messaging-button').hide();
       $('.messaging-button-colored').hide();
       $('.messaging-button-checkbox').hide();
-      if($(e.target).attr('id') === '999'){
-        // socket.emit('chat message button rule', $(e.target).attr('name'), 'exit/'+$(e.target).attr('id'));
-        socket.emit('chat message button rule', $(e.target).attr('name'), 'S4_1/exit/'+$(e.target).attr('id'));
-      } else if ($(e.target).attr('id') === '998'){
-        // socket.emit('chat message button rule', $(e.target).attr('name'), 'mood2/'+$(e.target).attr('id'));
-        socket.emit('chat message button rule', $(e.target).attr('name'), 'S4_1/mood2/'+$(e.target).attr('id'));
-      } else if ($(e.target).attr('id') === '900'){
-          socket.emit('chat message button rule', $(e.target).attr('name'), 'S0_2/'+$(e.target).attr('id'));
-      } else {
-        socket.emit('chat message button rule', $(e.target).attr('name'), 'S4/'+$(e.target).attr('id'));
-      }
-    } else if($(e.target).attr('id').includes('previous')) {
-        $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').prop('checked', false);
-        $('.messaging-button-checkbox:not(hidden)').removeClass('messaging-button-checkbox-checked');
-        $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').removeClass('messaging-button-checkbox-checked');
-
-        let userStack = $(e.target).attr('id').replace(/@/gi, `"`).slice(9);
-        console.log(userStack);
-        let stack = JSON.parse("["+userStack+"]");
-        let element = stack.pop();
-        console.log(element.state);
-        stack = JSON.stringify(stack);
-        stack = stack.slice(1, -1);
-        console.log(stack);
-        function getFinalStack(callback) {
-          return new Promise(function (resolve, reject) {
-            if(stack === '') {
-              console.log("stack 빔");
-              resolve('null');
-            } else {
-              console.log("Stack 남아있음");
-              resolve(stack);
-            }
-          });
-        }
-        getFinalStack().then(function (stack){
-          console.log(stack);
-          const info = {
-            url: "/api/v1/users/update_user",
-            method: 'POST',
-            body: {
-              kakao_id: socket.id,
-              stack: stack,
-            },
-            success: function(res) {
-              const parentElement = $('.bot-message').children(':last').parent(); // bot message요소의 <div> parent
-              // img 포함일때 지우기
-              if (parentElement.prev().attr('class') == 'bot-message') {
-                if (parentElement.prev().children(':last').attr('class') == 'img-fluid rest-img') {
-                  parentElement.prev().hide();
-                }
-              }
-              // map 포함일때 지우기
-              else if (parentElement.next().children(':first').attr('href') != null) {
-                parentElement.next().hide();
-              }
-              $('#m').prop('disabled', true);
-              $('#input-button').attr('disabled', true);
-              $('.messaging-button').hide();
-              $('.messaging-button-colored').hide();
-              $('.messaging-button-checkbox').hide();
-              $('.bot-message').children(':last').hide();
-              const info2 ={
-                url: "/api/v1/users/update_user",
-                method: 'POST',
-                body: {
-                  kakao_id: socket.id,
-                  state: element.state,
-                },
-                success: function(res) {
-                  socket.emit('chat message button rule previous', stack, element.value);
-                },
-                error: function (e) {
-                  console.log(e);
-                }
-              }
-              sendReq(info2);
-            },
-            error: function (e) {
-              console.log(e);
-            }
-          }
-          sendReq(info);
-        });
-
-    } else {
-      // $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').prop('checked', false);
-      // $('.messaging-button-checkbox:not(:hidden)').first().removeClass('messaging-button-checkbox-checked');
-      // $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkbox]').removeClass('messaging-button-checkbox-checked');
-
-      // $(e.target).children('input[type=checkbox]').click();
     }
 
     if($(e.target).children('input[type=checkbox]').prop('checked')){
@@ -461,26 +196,27 @@ $(function () {
   $('body').on("submit", "form", function(){
     console.log('submit')
     console.log($('#m').val());
-    if (sessionStorage.getItem('stage') === 'input_name') {
+    const stage = sessionStorage.getItem('stage');
+    console.log(stage);
+    if (stage === 'input_name') {
       sessionStorage.setItem('tour_name', $('#m').val());
-      socket.emit('chat message tour', $('#m').val(), sessionStorage);
-    } else if (sessionStorage.getItem('stage') === 'input_savenumber') {
+      socket.emit('chat message tour', $('#m').val(), sessionStorage, $('#m').val());
+    } else if (stage === 'input_savenumber') {
       var itIsNumber = /^\d{4}$/.test($('#m').val());
       console.log(itIsNumber);
       if (itIsNumber) {
         sessionStorage.setItem('save_number', $('#m').val());
-        socket.emit('chat message tour', $('#m').val(), sessionStorage);
+        socket.emit('chat message tour', $('#m').val(), sessionStorage, $('#m').val());
       } else {
         sessionStorage.setItem('rewrite_password', 'rewrite');
-        socket.emit('chat message tour', $('#m').val(), sessionStorage);
+        socket.emit('chat message tour', $('#m').val(), sessionStorage, $('#m').val());
       }
-
-      // if ($('#m').val().length === 4) {
-      //
-      // } else {
-      //   socket.emit('chat message tour', $('#m').val(), sessionStorage);
-      // }
-
+    } else if (stage === 'tour2') {
+      sessionStorage.setItem('tour_name', $('#m').val());
+      socket.emit('chat message tour', 'tour2_1', sessionStorage, $('#m').val());
+    } else if (stage === 'tour2_1' || stage === 'tour2_2') {
+      sessionStorage.setItem('save_number', $('#m').val());
+      socket.emit('chat message tour', 'tour2_3', sessionStorage, $('#m').val());
     }
     $('#m').val('');
     return false;
@@ -711,8 +447,8 @@ $(function () {
     await sessionStorage.setItem(item, value);
   });
 
-  socket.on('get session items', async (socket_id, value) => {
-    await socket.emit('get session items return', value, {name:sessionStorage.getItem('name_MBTI'), stack:sessionStorage.getItem('stack')});
+  socket.on('get session items', async (socket_id, item) => {
+    await socket.emit('get session items return', item, sessionStorage.getItem(item));
   });
 
   socket.on('set session item stack push', async (socket_id, value) => {

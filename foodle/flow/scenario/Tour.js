@@ -6,7 +6,7 @@ const info_update = new Info();
 const error_msg = '오류가 발생했습니다.';
 const random_pick = (arr) => arr[Math.floor(arr.length * Math.random())];
 const random_num = (num1, num2) => (num1<num2 ? num1 : num2) + Math.floor((Math.abs(num1-num2)+1) * Math.random());   // num1~num2 사이의 랜덤정수 리턴
-const retest_button = ['tour0', 'Go back to the beginning'];
+const get_started_button = ['tour0', 'Go back to the beginning'];
 
 class Tour {
   constructor(value, socket, sessionItems) {
@@ -48,56 +48,16 @@ class Tour {
       'tour3': this.tour3,
       'tour3_1': this.tour3_1,
       'tour3_2': this.tour3_2,
-      'tour3_3': this.tour3_3,
 
       'tour4': this.tour4,
 
       'tour_type': this.tour_type,
-      // 'tour11': this.tour11,
-      // 'tour11_1': this.tour11_1,
-      // 'tour11_2': this.tour11_2,
-      // 'tour11_3': this.tour11_3,
-      //
-      // 'tour12': this.tour12,
-      // 'tour12_1': this.tour12_1,
-      // 'tour12_2': this.tour12_2,
-      // 'tour12_3': this.tour12_3,
-      //
-      // 'tour13': this.tour13,
-      // 'tour13_1': this.tour13_1,
-      // 'tour13_2': this.tour13_2,
-      // 'tour13_3': this.tour13_3,
-      //
-      // 'tour14': this.tour14,
-      // 'tour14_1': this.tour14_1,
-      // 'tour14_2': this.tour14_2,
-      // 'tour14_3': this.tour14_3,
-      //
-      // 'tour15': this.tour15,
-      // 'tour15_1': this.tour15_1,
-      // 'tour15_2': this.tour15_2,
-      // 'tour15_3': this.tour15_3,
-      //
-      // 'tour16': this.tour16,
-      // 'tour16_1': this.tour16_1,
-      // 'tour16_2': this.tour16_2,
-      // 'tour16_3': this.tour16_3,
-      //
-      // 'tour17': this.tour17,
-      // 'tour17_1': this.tour17_1,
-      // 'tour17_2': this.tour17_2,
-      // 'tour17_3': this.tour17_3,
-      //
-      // 'tour18': this.tour18,
-      // 'tour18_1': this.tour18_1,
-      // 'tour18_2': this.tour18_2,
-      // 'tour18_3': this.tour18_3,
     };
     this.execute(key, value, socket, sessionItems);
   }
 
   execute(key, value, socket, sessionItems) {
-    this.strategies[key] == null ? index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button)
+    this.strategies[key] == null ? index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button)
                                  : this.strategies[key](value, socket, sessionItems);
   }
 
@@ -108,7 +68,7 @@ class Tour {
         const button = [['tour1', 'Make a new plan'], ['tour2', 'Show my plan']];
         await index.sendSocketMessage(socket.id, 'chat message button', msg, ...button);
       } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
       }
     }());
@@ -121,7 +81,7 @@ class Tour {
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'input_name');
         await index.sendSocketMessage(socket.id, 'chat message button', msg);
       } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
       }
     }());
@@ -134,7 +94,7 @@ class Tour {
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'input_name');
         await index.sendSocketMessage(socket.id, 'chat message button', msg);
       } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
       }
     }());
@@ -147,7 +107,7 @@ class Tour {
         const button = [['tour1_2', '✈🚀'], ['tour1_0', 'Rewrite']];
         await index.sendSocketMessage(socket.id, 'chat message button', msg, ...button);
       } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
       }
     }());
@@ -161,7 +121,7 @@ class Tour {
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'input_savenumber');
         await index.sendSocketMessage(socket.id, 'chat message button', msg);
       } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
       }
     }());
@@ -175,7 +135,7 @@ class Tour {
         // const button = [['tour1_1', 'Make a new plan'], ['tour2_1', 'Show my plan']];
         await index.sendSocketMessage(socket.id, 'chat message button', msg);
       } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
       }
     }());
@@ -188,7 +148,7 @@ class Tour {
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'tour2');
         await index.sendSocketMessage(socket.id, 'chat message button', msg);
       } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
       }
     }());
@@ -201,7 +161,7 @@ class Tour {
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'tour2_1');
         await index.sendSocketMessage(socket.id, 'chat message button', msg);
       } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
       }
     }());
@@ -214,7 +174,31 @@ class Tour {
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'tour2_2');
         await index.sendSocketMessage(socket.id, 'chat message button', msg);
       } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
+        console.log(e);
+      }
+    }());
+  }
+
+  tour2_3(value, socket, sessionItems) {
+    (async function () {
+      try {
+        const search_name = sessionItems.tour_name;
+        const search_code = sessionItems.save_number;
+        const result = await info_update.tourAPI.search_plan(socket.id, search_name, search_code);
+        await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'tour2_3');
+        console.log("**** RESULT ****");
+        console.log(result);
+        if (result.success) {
+          const msg = `Gotcha! Your plan was like...`;
+          await index.sendSocketMessage(socket.id, 'chat message button', msg, get_started_button);
+        } else {
+          // tour2_2 로 가도록
+          const msg = `Todo: tour2_2로 가도록 구현`;
+          await index.sendSocketMessage(socket.id, 'chat message button', msg, get_started_button);
+        }
+      } catch (e) {
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
       }
     }());
@@ -230,7 +214,7 @@ class Tour {
         await index.sendSocketMessage(socket.id, 'chat message button', msg[0]);
         await index.sendSocketMessage(socket.id, 'chat message button', msg[1], ...button);
       } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
       }
     }());
@@ -244,7 +228,7 @@ class Tour {
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'tour3_1');
         await index.sendSocketMessage(socket.id, 'chat message button', msg, ...button);
       } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
       }
     }());
@@ -258,7 +242,7 @@ class Tour {
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'tour3_2');
         await index.sendSocketMessage(socket.id, 'chat message button', msg, ...button);
       } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
       }
     }());
@@ -272,7 +256,7 @@ class Tour {
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'tour4');
         await index.sendSocketMessage(socket.id, 'chat message button', msg, ...button);
       } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
       }
     }());
@@ -284,12 +268,13 @@ class Tour {
         const msg = `Wait a second, making your own plan...`;
         const type = 'type' + value.slice(-1) + random_num(1, 3);
         const button = [['tour0', 'Finish']];
+        await info_update.tourAPI.save_plan(socket.id, sessionItems.tour_name, sessionItems.save_number, type);
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'tour_type');
         await index.sendSocketMessage(socket.id, 'chat message button', msg);
         await index.sendSocketMessage(socket.id, 'chat message loader', 500);
         await index.sendSocketMessage(socket.id, 'chat message button', type, ...button);
       } catch (e) {
-        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
       }
     }());

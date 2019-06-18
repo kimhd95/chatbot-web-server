@@ -6,7 +6,8 @@ let list  = [
     'food',
     'drink',
     'cafe',
-    'mbti'
+    'mbti',
+    'tourAPI'
 ];
 
 let List = function() {

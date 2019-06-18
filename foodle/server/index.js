@@ -147,8 +147,8 @@ module.exports = function(){
 			new Food_MBTI(value, socket, items);
 		});
 
-		socket.on('chat message tour', function(value, items){
-			io.to(socket.id).emit('chat message_self', value);
+		socket.on('chat message tour', function(value, items, txt){
+			io.to(socket.id).emit('chat message_self', txt);
 			console.log('value: '+value+', socket: '+socket);
 			new Tour(value, socket, items);
 		});
