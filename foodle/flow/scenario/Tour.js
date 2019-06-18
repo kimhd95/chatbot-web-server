@@ -22,6 +22,8 @@ class Tour {
           key = 'tour1_2';
         }
       }
+    } else if (key.startsWith('tour_type')) {
+      key = 'tour_type';
     }
 
     this.strategies = {
@@ -45,38 +47,46 @@ class Tour {
 
       'tour4': this.tour4,
 
-      'tour11': this.tour11,
-      'tour11_1': this.tour11_1,
-      'tour11_2': this.tour11_2,
-      'tour11_3': this.tour11_3,
-
-      'tour12_1': this.tour12_1,
-      'tour12_2': this.tour12_2,
-      'tour12_3': this.tour12_3,
-
-      'tour13_1': this.tour13_1,
-      'tour13_2': this.tour13_2,
-      'tour13_3': this.tour13_3,
-
-      'tour14_1': this.tour14_1,
-      'tour14_2': this.tour14_2,
-      'tour14_3': this.tour14_3,
-
-      'tour15_1': this.tour15_1,
-      'tour15_2': this.tour15_2,
-      'tour15_3': this.tour15_3,
-
-      'tour16_1': this.tour16_1,
-      'tour16_2': this.tour16_2,
-      'tour16_3': this.tour16_3,
-
-      'tour17_1': this.tour17_1,
-      'tour17_2': this.tour17_2,
-      'tour17_3': this.tour17_3,
-
-      'tour18_1': this.tour18_1,
-      'tour18_2': this.tour18_2,
-      'tour18_3': this.tour18_3,
+      'tour_type': this.tour_type,
+      // 'tour11': this.tour11,
+      // 'tour11_1': this.tour11_1,
+      // 'tour11_2': this.tour11_2,
+      // 'tour11_3': this.tour11_3,
+      //
+      // 'tour12': this.tour12,
+      // 'tour12_1': this.tour12_1,
+      // 'tour12_2': this.tour12_2,
+      // 'tour12_3': this.tour12_3,
+      //
+      // 'tour13': this.tour13,
+      // 'tour13_1': this.tour13_1,
+      // 'tour13_2': this.tour13_2,
+      // 'tour13_3': this.tour13_3,
+      //
+      // 'tour14': this.tour14,
+      // 'tour14_1': this.tour14_1,
+      // 'tour14_2': this.tour14_2,
+      // 'tour14_3': this.tour14_3,
+      //
+      // 'tour15': this.tour15,
+      // 'tour15_1': this.tour15_1,
+      // 'tour15_2': this.tour15_2,
+      // 'tour15_3': this.tour15_3,
+      //
+      // 'tour16': this.tour16,
+      // 'tour16_1': this.tour16_1,
+      // 'tour16_2': this.tour16_2,
+      // 'tour16_3': this.tour16_3,
+      //
+      // 'tour17': this.tour17,
+      // 'tour17_1': this.tour17_1,
+      // 'tour17_2': this.tour17_2,
+      // 'tour17_3': this.tour17_3,
+      //
+      // 'tour18': this.tour18,
+      // 'tour18_1': this.tour18_1,
+      // 'tour18_2': this.tour18_2,
+      // 'tour18_3': this.tour18_3,
     };
     this.execute(key, value, socket, sessionItems);
   }
@@ -90,7 +100,7 @@ class Tour {
     (async function () {
       try {
         const msg = 'Hi😊 I will be your tour guide during your stay in Korea. How can I help you?';
-        const button = [['tour1_1', 'Make a new plan'], ['tour2_1', 'Show my plan']];
+        const button = [['tour1', 'Make a new plan'], ['tour2', 'Show my plan']];
         await index.sendSocketMessage(socket.id, 'chat message button', msg, ...button);
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
@@ -103,7 +113,6 @@ class Tour {
     (async function () {
       try {
         const msg = `Okay, Let's make an unforgettable plan for your Korea trip. What's your first name?`;
-        // const button = [['tour1_1', 'Make a new plan'], ['tour2_1', 'Show my plan']];
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'input_name');
         await index.sendSocketMessage(socket.id, 'chat message button', msg);
       } catch (e) {
@@ -117,7 +126,6 @@ class Tour {
     (async function () {
       try {
         const msg = `Please rewrite your first name.`;
-        // const button = [['tour1_1', 'Make a new plan'], ['tour2_1', 'Show my plan']];
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'input_name');
         await index.sendSocketMessage(socket.id, 'chat message button', msg);
       } catch (e) {
@@ -227,7 +235,7 @@ class Tour {
     (async function () {
       try {
         const msg = `Since you only have limited time, I guess visiting the closest town around here would be the best choice! Are you hungry?`;
-        const button = [['tour11', 'Go back'], ['tour11', 'Yes, I need something to eat.'], ['tour12', 'No, a cup of coffee would be good☕']];
+        const button = [['tour_type_11', 'Go back'], ['tour_type_11', 'Yes, I need something to eat.'], ['tour_type_12', 'No, a cup of coffee would be good☕']];
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'tour3_1');
         await index.sendSocketMessage(socket.id, 'chat message button', msg, ...button);
       } catch (e) {
@@ -241,7 +249,7 @@ class Tour {
     (async function () {
       try {
         const msg = `Among these, which option interests you the most?`;
-        const button = [['tour13', 'Activities (Waterpark)'], ['tour14', 'City Tour (A new and fancy city in Incheon)'], ['tour4', 'Enjoying Korean-Chinese Tradition']];
+        const button = [['tour_type_13', 'Activities (Waterpark)'], ['tour_type_14', 'City Tour (A new and fancy city in Incheon)'], ['tour4', 'Enjoying Korean-Chinese Tradition']];
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'tour3_2');
         await index.sendSocketMessage(socket.id, 'chat message button', msg, ...button);
       } catch (e) {
@@ -255,9 +263,26 @@ class Tour {
     (async function () {
       try {
         const msg = `TRADITION!!!👑👑 Which place/experience attracts you the most?`;
-        const button = [['tour15', 'Local Market'], ['tour16', 'Costume Experience'], ['tour17', 'Park'], ['tour18', 'Trick Art Museum for children']];
+        const button = [['tour_type_15', 'Local Market'], ['tour_type_16', 'Costume Experience'], ['tour_type_17', 'Park'], ['tour_type_18', 'Trick Art Museum for children']];
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'tour4');
         await index.sendSocketMessage(socket.id, 'chat message button', msg, ...button);
+      } catch (e) {
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
+        console.log(e);
+      }
+    }());
+  }
+
+  tour_type(value, socket, sessionItems) {
+    (async function () {
+      try {
+        const msg = `Wait a second, making your own plan...`;
+        const type = 'type' + value.slice(-1) + random_num(1, 3);
+        const button = [['tour0', 'Finish']];
+        await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'tour_type');
+        await index.sendSocketMessage(socket.id, 'chat message button', msg);
+        await index.sendSocketMessage(socket.id, 'chat message loader', 500);
+        await index.sendSocketMessage(socket.id, 'chat message button', type, ...button);
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, retest_button);
         console.log(e);
