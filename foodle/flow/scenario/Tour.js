@@ -240,11 +240,7 @@ class Tour {
     (async function () {
       try {
         const msg = `Since you only have limited time, I guess visiting the closest town around here would be the best choice! Are you hungry?`;
-<<<<<<< HEAD
         const button = [['tour_type_11', 'Go back'], ['tour_type_11', 'Yes, I need something to eat.'], ['tour_type_12', 'No, a cup of coffee would be good☕']];
-=======
-        const button = [['tour3', 'Go back'], ['tour11', 'Yes, I need something to eat.'], ['tour12', 'No, a cup of coffee would be good☕']];
->>>>>>> 391d3a70c0fcc65264dffd65c22592d96e25c195
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'tour3_1');
         await index.sendSocketMessage(socket.id, 'chat message button', msg, ...button);
       } catch (e) {
