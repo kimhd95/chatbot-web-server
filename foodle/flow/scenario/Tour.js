@@ -11,6 +11,7 @@ const retest_button = ['tour0', 'Go back to the beginning'];
 class Tour {
   constructor(value, socket, sessionItems) {
     let key = value;
+    console.log("constructor 함수안");
     console.log(key, sessionItems);
     if (!key.startsWith('tour')) {
       if (sessionItems.stage === 'input_name') {
@@ -19,7 +20,11 @@ class Tour {
         if (sessionItems.save_number) {
           key = 'tour3';
         } else {
-          key = 'tour1_2';
+          if (sessionItems.rewrite_password) {
+            key = 'tour1_3';
+          } else {
+            key = 'tour1_2';
+          }
         }
       }
     }
@@ -227,7 +232,7 @@ class Tour {
     (async function () {
       try {
         const msg = `Since you only have limited time, I guess visiting the closest town around here would be the best choice! Are you hungry?`;
-        const button = [['tour11', 'Go back'], ['tour11', 'Yes, I need something to eat.'], ['tour12', 'No, a cup of coffee would be good☕']];
+        const button = [['tour3', 'Go back'], ['tour11', 'Yes, I need something to eat.'], ['tour12', 'No, a cup of coffee would be good☕']];
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'tour3_1');
         await index.sendSocketMessage(socket.id, 'chat message button', msg, ...button);
       } catch (e) {

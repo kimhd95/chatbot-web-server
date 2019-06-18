@@ -465,12 +465,21 @@ $(function () {
       sessionStorage.setItem('tour_name', $('#m').val());
       socket.emit('chat message tour', $('#m').val(), sessionStorage);
     } else if (sessionStorage.getItem('stage') === 'input_savenumber') {
-      sessionStorage.setItem('save_number', $('#m').val());
-      if ($('#m').val().length === 4) {
+      var itIsNumber = /^\d{4}$/.test($('#m').val());
+      console.log(itIsNumber);
+      if (itIsNumber) {
+        sessionStorage.setItem('save_number', $('#m').val());
         socket.emit('chat message tour', $('#m').val(), sessionStorage);
       } else {
+        sessionStorage.setItem('rewrite_password', 'rewrite');
         socket.emit('chat message tour', $('#m').val(), sessionStorage);
       }
+
+      // if ($('#m').val().length === 4) {
+      //
+      // } else {
+      //   socket.emit('chat message tour', $('#m').val(), sessionStorage);
+      // }
 
     }
     $('#m').val('');
