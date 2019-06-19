@@ -46,7 +46,7 @@
 npm init
 npm start
 ```
-> 현재 코드에선, 기본 포트로 9001을 사용하고 있다. 
+> 현재 코드에선, 기본 포트로 9001을 사용하고 있다.
 
 ----
 
@@ -77,7 +77,7 @@ npm start
 
 **[api/api_prototype](./api/api_prototype.js)**
 
-- 모든 api 호출에서 사용될 특징을 모아둔 module이다. api 호출 함수를 작성하다 보니 가독성이 떨어지고 error 처리와 log를 남기는 부분이 반복되는 것 같아서 이러한 함수를 만들어 관리하는 방식을 취하였다. 
+- 모든 api 호출에서 사용될 특징을 모아둔 module이다. api 호출 함수를 작성하다 보니 가독성이 떨어지고 error 처리와 log를 남기는 부분이 반복되는 것 같아서 이러한 함수를 만들어 관리하는 방식을 취하였다.
 
 **[api/info_update](./api/info_update)**
 
@@ -112,7 +112,7 @@ npm start
 7. 2개 후보 추천 및 선택
 8. 최종 음식점 정보 제공
 
-각 시나리오의 사용자의 선택 마다, 사용자 DB의 해당 칼럼을 업데이트 시키면서, 최종적으로 사용자의 정보를 가지고 음식점을 추천해준다. 
+각 시나리오의 사용자의 선택 마다, 사용자 DB의 해당 칼럼을 업데이트 시키면서, 최종적으로 사용자의 정보를 가지고 음식점을 추천해준다.
 
 >사용자가 이 시나리오를 진행하는 시간이 점심일 경우, 점심 메뉴 여부도 알려준다.
 >
@@ -126,7 +126,7 @@ npm start
 
 **[시나리오](./readme_img/decide_drink_scenario.xlsx)** 참고
 
-각 시나리오의 사용자의 선택 마다, 사용자 DB의 해당 칼럼을 업데이트 시키면서, 최종적으로 사용자의 정보를 가지고 술집을 추천해준다. 
+각 시나리오의 사용자의 선택 마다, 사용자 DB의 해당 칼럼을 업데이트 시키면서, 최종적으로 사용자의 정보를 가지고 술집을 추천해준다.
 
 > 30분당 5번만 이 시나리오를 진행할 수 있다.(8-6 참고)
 
@@ -189,11 +189,11 @@ npm start
 
 ![chat-message-button](./readme_img/chat-message-checkbox.JPG)
 
-사용자의 여러 선택을 반영하기 위해 만든 형식이다. 
+사용자의 여러 선택을 반영하기 위해 만든 형식이다.
 
-**출구 선택**과,식당 분위기를 **약속** 으로 선택했을 때 나오는 메세지 형식인데, 
+**출구 선택**과,식당 분위기를 **약속** 으로 선택했을 때 나오는 메세지 형식인데,
 
-이 형식은 버튼을 눌러도 다음시나리오가 진행되지 않고, 체크만 된다. 
+이 형식은 버튼을 눌러도 다음시나리오가 진행되지 않고, 체크만 된다.
 
 해당 버튼을 체크하고, 선택완료 버튼을 누르게 되면, 체크된 값을 판단해서 시나리오에 반영시킨다.
 
@@ -239,7 +239,7 @@ $('#messages').append(bot_messaging_button_finish_checkbox(args[2][0], args[2][1
 
 
 
- 
+
 
 #### chat message card
 
@@ -252,7 +252,7 @@ $('#messages').append(bot_messaging_button_finish_checkbox(args[2][0], args[2][1
 #### chat message image
 ![chat-message-button](./readme_img/chat-message-image.JPG)
 
-최종 음식점을 선택하고, **사진 보기** 를 눌렀을 때, 나오는 사진 슬라이드 이다. 앞선 **chat message card** 와 동일하게, **carousel** 형식을 이용하였다. 
+최종 음식점을 선택하고, **사진 보기** 를 눌렀을 때, 나오는 사진 슬라이드 이다. 앞선 **chat message card** 와 동일하게, **carousel** 형식을 이용하였다.
 
 -----
 
@@ -262,7 +262,7 @@ $('#messages').append(bot_messaging_button_finish_checkbox(args[2][0], args[2][1
 
 #### 6.0 views/index.ejs 수정(메인에서 바로 진입가능한 시나리오에만 해당)
 
-초기 화면에서 바로 진입할 수 있는 시나리오를 만드는 경우, index.ejs 코드에서 진입할 수 있는 버튼을 새로 하나 만들어 주어야한다. 
+초기 화면에서 바로 진입할 수 있는 시나리오를 만드는 경우, index.ejs 코드에서 진입할 수 있는 버튼을 새로 하나 만들어 주어야한다.
 
 ```html
 <div class="message-button">
@@ -313,7 +313,7 @@ class New_scenario {
   constructor(value, socket, user_data) {
     let key;
     key = value;
-    
+
     this.strategies = {
       'new_strategy': this.new_strategy,
     };
@@ -345,7 +345,7 @@ class New_scenario {
       }
     }());
   }
-  
+
   module.exports = New_scenario;
 ```
 
@@ -397,7 +397,7 @@ $('.messaging-button').slice(-6).show();
 if (user_data.state === 'decide_menu') { //사용자의 state이 decide_menu인 경우
       key = 'exitnum';  // input값과 상관없이 exitnum 시나리오로 보내버린다
 }
-     
+
 exitnum(value, socket, user_data) {
     (async function () {
       try {
@@ -421,7 +421,7 @@ exitnum(value, socket, user_data) {
 
 **2.의 경우**
 
-가장 쉽게는 button id를 다르게 해서, 해당되는 모든 id에 똑같은 시나리오를 작성하는 것도 가능하지만, 똑같은 시나리오가 여러군데 존재하는 것이 비효율적이라는 생각에, 
+가장 쉽게는 button id를 다르게 해서, 해당되는 모든 id에 똑같은 시나리오를 작성하는 것도 가능하지만, 똑같은 시나리오가 여러군데 존재하는 것이 비효율적이라는 생각에,
 
 **button id에 공통된 String을 주어서, includes함수로 판단을 해서, 같은 시나리오로 보내게 하였다.**
 
@@ -435,7 +435,7 @@ else if (key.includes('taste/')) { // button_id(=key)가 taste/를 포함하고 
 food_type(value, socket, user_data) {
     (async function () {
       try {
-        const user_taste = value.split('/')[1]; 
+        const user_taste = value.split('/')[1];
         // 각기 다른 button id값에 대해선, split으로 분리를해서 판단 및 처리가 가능하다
         await info_update.profile.update_taste(socket.id, user_taste);
         .
@@ -460,7 +460,7 @@ food_type(value, socket, user_data) {
 
 결국 모든 메세지를 보내는 방식은, 정의된 html,css 형식을 일정 이벤트가 발생했을 때 유저의 채팅창에 append(추가) 시켜주는 방식이다.
 
-그러므로, 일단 event.js 내에 새로운 형식의 html,css를 만들어 주어야 한다. 
+그러므로, 일단 event.js 내에 새로운 형식의 html,css를 만들어 주어야 한다.
 
 형식을 함수로 정의하여, 이벤트가 발생했을 때, 해당 함수를 추가시켜주는 방식을 택하였다.
 
@@ -500,7 +500,7 @@ socket.on('chat message button', (msg, ...args) => {
 
 #### 8-1 사용자 로그인에 따른 처리
 
-사용자의 계정 로그인에 따라, 선택 기록과 메세지를 유지해야 한다. 
+사용자의 계정 로그인에 따라, 선택 기록과 메세지를 유지해야 한다.
 
 그러나, 메세지를 보낼 때 이용하는 웹소켓은 매번 바뀌게 된다.
 
@@ -522,7 +522,7 @@ socket.on('chat message button', (msg, ...args) => {
 
 #### 8-2. 같은 사용자의 연속 메세지 처리
 
-카카오톡이나, 페이스북 메신저 같은 채팅 어플리케이션을 이용하다 보면 나타나는 특징이 있다. 
+카카오톡이나, 페이스북 메신저 같은 채팅 어플리케이션을 이용하다 보면 나타나는 특징이 있다.
 
 바로, 다른 사용자로부터 채팅이 올 때,  해당 사용자의 정보를 표시해주지만(이름, 메세지 보낸 시간), 같은 사용자가 연속으로 보낸 경우에는 그 이후 메세지에서는 사용자의 정보를 생략하는 점이다.
 
@@ -533,14 +533,14 @@ socket.on('chat message button', (msg, ...args) => {
 ```javascript
 // event.js 내 function(bot_messaging)
 if ($('.bot-message > .message-info > .time').last().text() === date) { // 보낸 시간이 같고,
-    if ($('#messages > div:last-child').attr('class') === 'bot-message') { 
+    if ($('#messages > div:last-child').attr('class') === 'bot-message') {
       // 마지막 보낸사람이 봇인 경우
       message_info = `<div class="bot-message">
           <div class="message-text">
               ${message}
           </div>
 
-      </div> 
+      </div>
       `; // 봇의 정보를 생략한다(message-info div를 생략함)
     }
   }
@@ -630,9 +630,9 @@ $('.messaging-button-checkbox:not(:hidden)').first().children('input[type=checkb
 ```javascript
 // event.js
 
-if ($(e.target).attr('id') === '999' || $(e.target).attr('id') === '상관없음') { 
+if ($(e.target).attr('id') === '999' || $(e.target).attr('id') === '상관없음') {
     //상관없음 버튼을 눌렀을 때
-    $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').prop('checked', false); 
+    $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').prop('checked', false);
     // 나머지 버튼들을 선택 해제한다.
     $('.messaging-button-checkbox:not(:hidden)').removeClass('messaging-button-checkbox-checked');
     $('.messaging-button-checkbox:not(:hidden)').children('input[type=checkbox]').removeClass('messaging-button-checkbox-checked');
@@ -648,7 +648,7 @@ $(e.target).toggleClass('messaging-button-checkbox-checked'); // 내부를 채�
 $(e.target).children('input[type=checkbox]').toggleClass('messaging-button-checkbox-checked'); // 내부를 채워주는 클래스를 추가한다.
 ```
 
-**선택완료**를 눌렀을 때에는, 버튼을 눌렀을 때의 이벤트에 조건을 추가하여 정의하였다. 
+**선택완료**를 눌렀을 때에는, 버튼을 눌렀을 때의 이벤트에 조건을 추가하여 정의하였다.
 
 ```javascript
 if ($(e.target).attr('id') === ('mood2/') || $(e.target).attr('id') === ('exit/')) {
@@ -703,13 +703,13 @@ exit_quarter에 B-TREE 인덱스를 적용하여, **Full-Text-Search** 방식을
 
 #### 8-8. 음식점 폐점 여부 판단
 
-음식점을 골라줄 때, closedown이 1인 음식점은 추천대상에서 제외되는데, 
+음식점을 골라줄 때, closedown이 1인 음식점은 추천대상에서 제외되는데,
 
-closedown은 음식점의 **폐점 여부**를 나타낸다. 
+closedown은 음식점의 **폐점 여부**를 나타낸다.
 
 음식점의 폐점 여부는 자동으로 업데이트 되는데, 매달 1일 새벽 4시 20분에 페점여부 API를 호출함으로서, 자동으로 모든 음식점의 폐점 여부를 검사하게 된다.
 
->현재 폐점 여부를 체크하는 API는 장고 서버에 있는데, 
+>현재 폐점 여부를 체크하는 API는 장고 서버에 있는데,
 >
 >비동기로 처리를 하지 않아서, 매달 1일 4시20분 부터 약 15분간 챗봇이 오류가 날 수 있다.
 
@@ -737,10 +737,52 @@ closedown은 음식점의 **폐점 여부**를 나타낸다.
 
 #### 1. 캐시서버 도입
 
-기존에는 카카오톡 기반이였으므로, 캐시서버를 도입하는 것이 적절치 못했던 것 같다. 
+기존에는 카카오톡 기반이였으므로, 캐시서버를 도입하는 것이 적절치 못했던 것 같다.
 
 지금은 웹 기반인데, DB의 input output이 너무 자주 발생하므로, redis나 memcached같은 캐시 서버를 도입해서, 자주 사용되는 정보는 캐시에 저장을 하고, 캐시에 없을 시 DB측으로 가는 구조를 고려해봐야 할 것 같다.
 
 -----
 
 2018-12-18
+
+#### 추가된 코드들
+
+#### 1. 이전으로 돌아가기 기능
+
+페이스북 챗봇이나 일반적인 챗봇의 경우는 버튼 또는 text input의 value에 따라 다음 시나리오가 진행된다. Corgi의 경우는 시나리오 가지들의 연결이 하위가지로 뿐만이 아니라 상위가지로도 연결되는 경우가 있기 때문에 value 외에도 현재 user가 어떤 시나리오 가지에 있는지 state를 db에 저장해서 유저의 state와 value 두가지에 의해 다음 시나리오가 결정된다. db에 state와 value를 저장하는 column명은 stack이다.
+
+현재 시나리오에서 이전으로 돌아가기 버튼을 누르게 되면 상위 가지의 시나리오로 연결해야 한다. 현재를 기준으로 이전 또는 다음 시나리오를 진행하기 위해서 필요한 state와 value는 다음과 같다.
+
+현재 유저의 state와 누른 버튼의 value -> 하위 가지로의 시나리오
+이전 유저의 state와 이전에 누른 버튼의 value -> 현재 가지로의 시나리오
+2번 전 유저의 state와 2번 전 누른 버튼의 value -> 상위 가지로의 시나리오
+
+상위 가지로의 시나리오 즉 이전 시나리오로 돌아가기 위해서는 2번 전 유저의 state와 2번 전 누른 버튼의 value가 필요하며 이를 db에 저장하는 방법을 선택하였다. 각 시나리오마다 state와 value들을 저장해주며 db에 저장할때는 {"state": ... "key": ...}식으로 저장하였다. db에 저장하는 방식은 아래 소스코드를 참고.
+
+```javascript
+//최상위 가지 함수안에서 db의 stack column을 만들어준다.
+await info_update.profile.update_stack(socket.id, `{"state": "${user_data.state}", "value": "${value}"}`);
+
+//하위 가지 함수안에서 db의 stack column을 업데이트해준다.
+await info_update.profile.update_stack(socket.id, user_data.stack + `,{"state": "${user_data.state}", "value": "${value}"}`);
+['previous/' + user_data.stack.replace(/"/gi, "@"), '이전으로 돌아가기'] 로 버튼 추가
+
+```
+만약 유저가 이전으로 돌아가기 버튼을 눌렀다면 previous/ 뒤에 db의 user stack이 더해져서 event.js로 넘어간다. 여기서 "를 @로 replace 하는 이유는 "와 '이 겹쳐서 오류가 뜨는 경우가 있기 때문이다.
+event.js에서는 누른 버튼의 value가 previous를 포함할때 처리를 해준다. @을 다시 "로 replace해주고
+현재 stack에서 두번째로 들어간 값이 필요하기 때문에 하나를 pop 해주고 그 다음 값을 가지고 시나리오를 진행한다. event.js에서는 api 호출을 통해 pop한 stack을 가지고 db를 update시켜주고 state도 이전 state로 update해준다.
+
+#### 2. Food_MBTI.js, Tour.js
+
+이 두 서비스는 외식코기와는 별개의 서비스이고 회원가입절차가 따로 필요없다. corgi.jellylab.io 도메인에 /foodtest 를 붙이면 Food_MBTI.js 가 실행되고 /tour를 붙이면 Tour.js 코드가 실행된다.
+
+외식코기의 식당 고르기 코드의 구조를 따라 만들었으며 코드는 훨씬 간단하다.
+하나 다른점은 외식코기의 식당 고르기, 술집 고르기, 카페 고르기 서비스는 회원가입 또는 비회원 이용 버튼 클릭을 통해 db에 유저의 정보를 담은 행이 파진 이후에 시나리오를 따라가지만 Food_MBTI.js, Tour.js는 회원가입절차가 필요없기 때문에 클라이언트의 session에 사용자의 이름이나 정보를 저장해서 db처럼 서버에 넘겨주고 최종 시나리오에서 유저의 총 입력값들을 가지고 행을 만들어준다. 처음에 행을 만들어주고 column들을 update 해주는 방법도 있지만 성과 같이 primary key의 역할을 못해주는 입력값을 받음에 따라 최종 시나리오에서 행을 만들어주는 것이 효과적이라고 생각하였다. 또한 이는 필요없는 행들의 생성을 방지해준다.
+
+#### 3. 소셜 로그인
+
+소셜 로그인은 구글, 페이스북, 네이버, 카카오톡이 가능하다.
+각 소셜 로그인은 각각의 플랫폼에서 제공하는 api를 따라하였다. 소셜 로그인 api의 콜백 파라미터로 유저의 이메일과 이름을 가져와서 lobby창에서 이용할 수 있다.
+ex) 네이버 아이디로 로그인하기 api
+
+2019-06-19
