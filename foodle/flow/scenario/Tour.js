@@ -7,6 +7,7 @@ const error_msg = '오류가 발생했습니다.';
 const random_pick = (arr) => arr[Math.floor(arr.length * Math.random())];
 const random_num = (num1, num2) => (num1<num2 ? num1 : num2) + Math.floor((Math.abs(num1-num2)+1) * Math.random());   // num1~num2 사이의 랜덤정수 리턴
 const get_started_button = ['tour0', 'Go back to the beginning'];
+const back_button = (scenario) => [scenario, 'Go back'];
 
 class Tour {
   constructor(value, socket, sessionItems) {
@@ -79,7 +80,7 @@ class Tour {
       try {
         const msg = `Okay, Let's make an unforgettable plan for your Korea trip. What's your first name?`;
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'input_name');
-        await index.sendSocketMessage(socket.id, 'chat message button', msg);
+        await index.sendSocketMessage(socket.id, 'chat message button text', msg, back_button('tour0'));
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
@@ -146,7 +147,7 @@ class Tour {
       try {
         const msg = `To find your existing plan, let me know your first name.`;
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'tour2');
-        await index.sendSocketMessage(socket.id, 'chat message button', msg);
+        await index.sendSocketMessage(socket.id, 'chat message button text', msg, back_button('tour0'));
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
@@ -159,7 +160,7 @@ class Tour {
       try {
         const msg = `It's you, ${sessionItems.tour_name}! Do you remember the 4-digit code you assigned to this plan? Please write it.`;
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'tour2_1');
-        await index.sendSocketMessage(socket.id, 'chat message button', msg);
+        await index.sendSocketMessage(socket.id, 'chat message button text', msg, back_button('tour0'));
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
@@ -224,7 +225,7 @@ class Tour {
     (async function () {
       try {
         const msg = `Since you only have limited time, I guess visiting the closest town around here would be the best choice! Are you hungry?`;
-        const button = [['tour_type_11', 'Go back'], ['tour_type_11', 'Yes, I need something to eat.'], ['tour_type_12', 'No, a cup of coffee would be good☕']];
+        const button = [back_button('tour_type_11'), ['tour_type_11', 'Yes, I need something to eat.'], ['tour_type_12', 'No, a cup of coffee would be good☕']];
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'tour3_1');
         await index.sendSocketMessage(socket.id, 'chat message button', msg, ...button);
       } catch (e) {
