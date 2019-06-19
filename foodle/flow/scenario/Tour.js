@@ -173,7 +173,7 @@ class Tour {
       try {
         const msg = `Incorrect passcode😭😨 You can either try another code again or make a new plan. `;
         await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'tour2_2');
-        await index.sendSocketMessage(socket.id, 'chat message button', msg);
+        await index.sendSocketMessage(socket.id, 'chat message button text', msg, ['tour1_2', 'Make a new plan']);
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
@@ -195,8 +195,10 @@ class Tour {
           await index.sendSocketMessage(socket.id, 'chat message button', msg, get_started_button);
         } else {
           // tour2_2 로 가도록
-          const msg = `Todo: tour2_2로 가도록 구현`;
-          await index.sendSocketMessage(socket.id, 'chat message button', msg, get_started_button);
+          let object = new Tour('tour2_2', socket, sessionItems);
+
+          // const msg = `Todo: tour2_2로 가도록 구현`;
+          // await index.sendSocketMessage(socket.id, 'chat message button', msg, get_started_button);
         }
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);

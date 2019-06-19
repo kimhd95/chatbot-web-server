@@ -258,7 +258,6 @@ $(function () {
       (args[i][1] === '뒤로가기') ? $('#messages').append(bot_messaging_button_colored(args[i][0], args[i][1]))
                                  : $('#messages').append(bot_messaging_button(args[i][0], args[i][1]));
     }
-
     if (args.length === 0) {
       $('#m').prop('disabled', false);
       $('#input-button').attr('disabled', false);
@@ -268,6 +267,18 @@ $(function () {
       $('#m').prop('disabled', true);
       $('#input-button').attr('disabled', true);
     }
+    $('#messages').scrollTop(1E10);
+  });
+
+  socket.on('chat message button text', (socket_id, msg, ...args) => {
+    $('#messages').append(bot_messaging(msg)).children(':last').hide()
+      .fadeIn(150);
+    for (let i = 0; i < args.length; i += 1) {
+      console.log(args[i][1]);
+      $('#messages').append(bot_messaging_button(args[i][0], args[i][1]));
+    }
+    $('#m').prop('disabled', false);
+    $('#input-button').attr('disabled', false);
     $('#messages').scrollTop(1E10);
   });
 
