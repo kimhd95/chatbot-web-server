@@ -247,13 +247,7 @@ module.exports = function(){
 			server.use(function (req, res, next) {
 				if (req.secure) {
 					console.log("sequre");
-					if (req.hostname == 'https://tour.jellylab.io') {
-						res.redirect(req.hostname + '/tour');
 						next();
-					} else {
-						next();
-					}
-
 				} else {
 					res.redirect('https://' + req.headers.host + req.url);
 				}
@@ -295,16 +289,6 @@ module.exports = function(){
 		server.on('close', function () {
 			console.log("Express 서버 객체가 종료됩니다.");
 		});
-
-		// if (hostname == 'tour.jellylab.io') {
-		// 	httpserver.listen(process.env.PORT || port, function () {
-		// 		console.log('process.env.PORT || server.get(\'port\') || 3000: ' + (process.env.PORT || port) + '. Environment (server.get(env)): ' + server.get('env'));
-		// 	});
-		// } else {
-		// 	httpserver.listen(process.env.PORT || port, function () {
-		// 		console.log('process.env.PORT || server.get(\'port\') || 3000: ' + (process.env.PORT || port) + '. Environment (server.get(env)): ' + server.get('env'));
-		// 	});
-		// }
 
 		httpserver.listen(process.env.PORT || port, function () {
 			console.log('process.env.PORT || server.get(\'port\') || 3000: ' + (process.env.PORT || port) + '. Environment (server.get(env)): ' + server.get('env'));
