@@ -28,7 +28,7 @@ class Tour {
           }
         }
       }
-    } else if (key.startsWith('tour_type')) {
+    } else if (key.startsWith('tour_type') && key != 'tour_type_11') {
       key = 'tour_type';
     }
 
@@ -51,6 +51,18 @@ class Tour {
       'tour3_2': this.tour3_2,
 
       'tour4': this.tour4,
+
+      'tour_type_11': this.tour11_1,
+      'tour11_2': this.tour11_2,
+      'tour11_3': this.tour11_3,
+      'tour11_4': this.tour11_4,
+      'tour11_5': this.tour11_5,
+      'tour11_6': this.tour11_6,
+      'tour11_7': this.tour11_7,
+      'tour11_8': this.tour11_8,
+      'tour11_9': this.tour11_9,
+      'tour11_10': this.tour11_10,
+      'tour11_11': this.tour11_11,
 
       'tour_type': this.tour_type,
     };
@@ -276,6 +288,43 @@ class Tour {
         await index.sendSocketMessage(socket.id, 'chat message button', msg);
         await index.sendSocketMessage(socket.id, 'chat message loader', 500);
         await index.sendSocketMessage(socket.id, 'chat message button', type, ...button);
+      } catch (e) {
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
+        console.log(e);
+      }
+    }());
+  }
+
+// 여기서부터 새로 시나리오 작업을 시작해야함
+// 사용자 응답은 db가 아닌 클라이언트 세션에 저장해놓고 최종 시나리오에서 db에 저장한다.
+  tour11_1(value, socket, sessionItems) {
+    (async function () {
+      try {
+        console.log("tour11_1")
+        const msg = `Would you like to try Korean food?`;
+        // const type = 'type' + value.slice(-1) + random_num(1, 3);
+        const button = [['tour11_2', 'yes'], ['tour11_6', 'no']];
+        //await info_update.tourAPI.save_plan(socket.id, sessionItems.tour_name, sessionItems.save_number, type);
+        // await index.sendSocketMessage(socket.id, 'set session item', 'stage', 'tour_type');
+        // await index.sendSocketMessage(socket.id, 'chat message button', msg);
+        // await index.sendSocketMessage(socket.id, 'chat message loader', 500);
+        await index.sendSocketMessage(socket.id, 'chat message button', msg, ...button);
+      } catch (e) {
+        index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
+        console.log(e);
+      }
+    }());
+  }
+
+  tour11_2(value, socket, sessionItems) {
+    (async function () {
+      try {
+        console.log("tour11_2")
+        const msg = `Which one would you like to try?`;
+        // const button = [['tour11_2', 'yes'], ['tour11_6', 'no']];
+        // await index.sendSocketMessage(socket.id, 'chat message button', msg);
+        // await index.sendSocketMessage(socket.id, 'chat message loader', 500);
+        await index.sendSocketMessage(socket.id, 'chat message button', msg, ...button);
       } catch (e) {
         index.sendSocketMessage(socket.id, 'chat message button', error_msg, get_started_button);
         console.log(e);
