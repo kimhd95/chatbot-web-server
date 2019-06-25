@@ -272,6 +272,7 @@ module.exports = function(){
 			hostname = server.get('hostname'),
 			port = server.get('port');
 			console.log(`port : ${port}`);
+			console.log(`hostname : ${hostname}`);
 		//확인되지 않은 예외 처리 - 서버 프로세스 종료하지 않고 유지함
 		process.on('uncaughtException', function (err) {
 			console.log('uncaughtException 발생 : ' + err);
