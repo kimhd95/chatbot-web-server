@@ -9,7 +9,7 @@
     "local": "cross-env NODE_ENV=local nodemon app.js"
   },
   "dependencies": {
-    "async": "^2.6.1",
+    "async": "^3.2.2",
     "canvas": "^2.4.1",
     "cookie-parser": "~1.4.3",
     "cross-env": "^5.2.0",
